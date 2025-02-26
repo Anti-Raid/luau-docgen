@@ -1,0 +1,18 @@
+[package]
+name = "luau-docgen"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+full_moon = { version = "1", features = ["roblox"] }
+clap = { version = "4", features = ["derive", "string"] }
+log = "0.4"
+tracing = { version = "0.1", optional = true }
+durationfmt = "0.1.1"
+
+[dev-dependencies]
+insta = "1.42.1"
+
+[features]
+default = []
+tracing = ["dep:tracing"]
