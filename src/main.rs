@@ -465,10 +465,10 @@ pub enum Type {
 #[derive(Debug, Clone)]
 struct TypeBlockVisitor {
     pub found_types: Vec<Type>,
-    pub current_type: Option<Type>,
 }
 
 impl TypeBlockVisitor {
+    // Not safe to use in most cases, avoid using
     pub fn extract_comments_from_trivia(
         leading_trivia: Vec<&Token>,
         trailing_trivia: Vec<&Token>,
@@ -502,11 +502,6 @@ impl TypeBlockVisitor {
 
 impl Visitor for TypeBlockVisitor {
     fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
-        // Just in case...
-        if let Some(current_type) = self.current_type.take() {
-            self.found_types.push(current_type);
-        }
-
         // Get node type name
         let name = Self::extract_name_from_tokenref(node.type_declaration().type_name());
 
@@ -670,15 +665,7 @@ impl Visitor for TypeBlockVisitor {
             } // TODO: Support other types of type declarations if required in antiraid typings
         };
 
-        self.current_type = Some(typ);
-    }
-
-    fn visit_exported_type_declaration_end(&mut self, _node: &ExportedTypeDeclaration) {
-        if let Some(current_type) = self.current_type.take() {
-            self.found_types.push(current_type);
-        }
-
-        self.current_type = None;
+        self.found_types.push(typ);
     }
 }
 
@@ -697,7 +684,6 @@ fn main() {
 
     let mut type_visitor = TypeBlockVisitor {
         found_types: Vec::new(),
-        current_type: None,
     };
 
     let result = parse_fallible(&source, full_moon::LuaVersion::luau());
