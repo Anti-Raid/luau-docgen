@@ -1,0 +1,3 @@
+-- Creates the actual documentation. The code here can be modified to change the template used 
+local ast = ...
+return ast.types
