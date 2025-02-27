@@ -94,27 +94,13 @@ pub trait TokenReferenceExtractor: Clone {
 
         let mut comments = Vec::new();
 
-        let mut is_exported_type_decl = false; // Edge case for exported type decl and type decl
         for token_ref in token_refs {
             match token_ref {
                 TaggedTokenReference::Ref { token_ref } => {
                     let trivia = get_comments_from_token_ref(&token_ref);
                     comments.extend(trivia);
                 }
-                TaggedTokenReference::Tag { tag } => {
-                    if tag == "ExportedTypeDeclaration" {
-                        is_exported_type_decl = true;
-                        continue;
-                    } else if tag == "TypeDeclaration" && is_exported_type_decl {
-                        continue;
-                    }
-
-                    if comments.is_empty() {
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
+                TaggedTokenReference::Tag { .. } => {}
                 _ => break,
             }
         }
