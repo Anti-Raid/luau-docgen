@@ -14,3 +14,9 @@ export type a --[[Comment here]] = {
   -- A table
   a: {string}
 }
+
+local function foo(a, b: number) --[[Comment here]] end
+local function bar(a: string, b: number) end
+
+-- Meow
+local function bar(a: string, b: number) end

@@ -9,6 +9,7 @@ clap = { version = "4", features = ["derive", "string"] }
 log = "0.4"
 tracing = { version = "0.1", optional = true }
 durationfmt = "0.1.1"
+serde = "1"
 
 [dev-dependencies]
 insta = "1.42.1"

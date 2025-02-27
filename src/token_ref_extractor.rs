@@ -1,7 +1,7 @@
 //! Accurately extract token references from AST nodes
 
 use full_moon::ast::{
-    BinOp, UnOp,
+    BinOp, LocalFunction, UnOp,
     luau::{
         ElseIfExpression, IfExpression, InterpolatedString, InterpolatedStringSegment,
         TypeAssertion, TypeDeclaration,
@@ -106,6 +106,26 @@ pub trait TokenReferenceExtractor: Clone {
         }
 
         comments
+    }
+
+    fn extract_till_tag(&self, tag: &str) -> Vec<TokenReference> {
+        let token_refs = self.clone().extract_token_refs();
+
+        let mut tagged_refs = Vec::new();
+
+        for token_ref in token_refs {
+            match token_ref {
+                TaggedTokenReference::Tag { tag: t } => {
+                    if t == tag {
+                        break;
+                    }
+                }
+                TaggedTokenReference::Ref { token_ref } => tagged_refs.push(token_ref),
+                _ => continue,
+            }
+        }
+
+        tagged_refs
     }
 }
 
@@ -838,7 +858,20 @@ impl TokenReferenceExtractor for FunctionBody {
         }
         let (start, end) = self.parameters_parentheses().tokens();
         token_refs.push(start.into());
-        token_refs.extend(self.parameters().clone().extract_token_refs());
+
+        for (param, typ_info) in self.parameters().pairs().zip(
+            self.type_specifiers()
+                .chain(std::iter::repeat_with(|| None)),
+        ) {
+            token_refs.extend(param.value().extract_token_refs());
+            if let Some(typ_info) = typ_info {
+                token_refs.extend(typ_info.clone().extract_token_refs());
+            }
+            if let Some(punctuation) = param.punctuation() {
+                token_refs.push(punctuation.into());
+            }
+        }
+
         token_refs.push(end.into());
         if let Some(return_type) = self.return_type() {
             token_refs.extend(return_type.clone().extract_token_refs());
@@ -846,6 +879,18 @@ impl TokenReferenceExtractor for FunctionBody {
         token_refs.extend(self.block().clone().extract_token_refs());
         token_refs.push(self.end_token().into());
 
+        token_refs
+    }
+}
+
+impl TokenReferenceExtractor for LocalFunction {
+    // #[cfg_attr(feature = "luau", display("{local_token}{function_token}{name}{body}"))]
+    fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
+        let mut token_refs = vec!["LocalFunction".into()];
+        token_refs.push(self.local_token().into());
+        token_refs.push(self.function_token().into());
+        token_refs.push(self.name().into());
+        token_refs.extend(self.body().clone().extract_token_refs());
         token_refs
     }
 }
