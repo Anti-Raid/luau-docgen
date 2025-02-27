@@ -14,6 +14,7 @@ use full_moon::{
     tokenizer::TokenReference,
     visitors::Visitor,
 };
+use std::fmt::Write;
 use std::path::PathBuf;
 
 pub fn extract_name_from_tokenref(token_ref: &TokenReference) -> String {
@@ -571,9 +572,11 @@ impl Visitor for TypeBlockVisitor {
 
                 let mut repr = String::new();
                 for token in tokens {
-                    repr.push_str(&token.to_string());
+                    write!(repr, "{}", token).expect("Failed to write to string");
                 }
-                repr
+                write!(repr, "{}", node.body().end_token().token())
+                    .expect("Failed to write end token to string");
+                repr.trim_start_matches('\n').to_string()
             },
             type_comments: comments,
             generics,
