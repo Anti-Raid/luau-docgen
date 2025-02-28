@@ -536,16 +536,17 @@ impl Type {
                 type_comments,
                 ..
             } => {
+                let mut repr = String::new();
+                for comment in type_comments {
+                    writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
+                }
+
                 let fields_str = fields
                     .iter()
                     .map(|f| f.string_repr())
                     .collect::<Vec<_>>()
                     .join(",\n\t");
 
-                let mut repr = String::new();
-                for comment in type_comments {
-                    writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
-                }
                 write!(repr, "type {} = {{\n\t{}\n}}", name, fields_str)
                     .expect("Failed to write type to string");
 
@@ -905,7 +906,10 @@ impl Visitor for TypeBlockVisitor {
                 }
             }
             _ => {
-                self.warn_unsupported("Only table and typeof are supported!");
+                self.warn_unsupported(&format!(
+                    "Only table and typeof are supported: {}",
+                    type_repr
+                ));
                 return;
             } // TODO: Support other types of type declarations if required in antiraid typings
         };

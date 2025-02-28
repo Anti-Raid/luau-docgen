@@ -31,6 +31,7 @@ type TypeSet = {
     iter_types: (self: TypeSet) -> TypeIterator,
 }
 
+-- Begin of documentation generation actual code
 local ast: TypeSet = ...
 
 print(prettyprint(ast.raw_types_table))
@@ -39,8 +40,8 @@ print("Type definitions:")
 for typ in ast:iter_typedefs() do
     assert(typ:type() == "typedef")
     print(prettyprint(typ.inner_data))
-    print(typ:string_repr())
-    print(typ:raw_repr())
+    print("StringRepr:\n" .. typ:string_repr() .. "\n")
+    print("RawRepr\n" .. typ:raw_repr() .. "\n")
 end
 
 print("Functions:")
