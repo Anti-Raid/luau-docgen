@@ -111,6 +111,24 @@ fn main() {
             mlua_scheduler::userdata::patch_coroutine_lib(&lua)
                 .expect("Failed to patch coroutine lib");
 
+            lua.globals()
+                .set(
+                    "prettyprint",
+                    lua.create_function(|_, values: LuaMultiValue| {
+                        if !values.is_empty() {
+                            Ok(values
+                                .iter()
+                                .map(|value| format!("{:#?}", value))
+                                .collect::<Vec<_>>()
+                                .join("\t"))
+                        } else {
+                            Ok("nil".to_string())
+                        }
+                    })
+                    .expect("Failed to create prettyprint function"),
+                )
+                .expect("Failed to set prettyprint global");
+
             lua.sandbox(true).expect("Sandboxed VM"); // Sandbox VM
 
             let f = lua

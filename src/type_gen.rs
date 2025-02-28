@@ -4,7 +4,7 @@
 use crate::token_ref_extractor::TokenReferenceExtractor;
 use full_moon::{
     ast::{
-        Call, Expression, FunctionArgs, LocalFunction, Parameter, Prefix, Suffix,
+        Call, Expression, FunctionArgs, FunctionBody, LocalFunction, Parameter, Prefix, Suffix,
         luau::{
             ExportedTypeDeclaration, GenericParameterInfo, IndexedTypeInfo,
             TypeField as LuauTypeField, TypeFieldKey, TypeInfo,
@@ -454,6 +454,23 @@ impl TypeField {
             field_type: Box::new(type_info),
         }
     }
+
+    pub fn string_repr(&self) -> String {
+        let mut repr = String::new();
+
+        for comment in &self.comments {
+            write!(repr, "-- {}\n\t", comment).expect("Failed to write comment to string");
+        }
+
+        write!(repr, "{}: {}", self.field_name, self.field_type_repr).unwrap();
+        repr
+    }
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub enum FunctionType {
+    Local,
+    Normal,
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -465,6 +482,8 @@ pub enum Type {
         type_comments: Vec<String>,
         /// The fields of the type
         fields: Vec<TypeField>,
+        /// The string representation of the type
+        type_repr: String,
     },
     Function {
         /// The name of the function
@@ -481,7 +500,112 @@ pub enum Type {
         args: Vec<(String, Option<TypeFieldType>)>,
         /// The return type of the function, if present
         ret: Option<TypeFieldType>,
+        /// Type of function
+        function_type: FunctionType,
     },
+}
+
+impl Type {
+    /// Returns the name of the type
+    pub fn name(&self) -> String {
+        match self {
+            Type::TypeDef { name, .. } => name.clone(),
+            Type::Function { name, .. } => name.clone(),
+        }
+    }
+
+    /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
+    /// with a more standardized layout and format
+    pub fn string_repr(&self) -> String {
+        match self {
+            Type::TypeDef {
+                name,
+                fields,
+                type_comments,
+                ..
+            } => {
+                let fields_str = fields
+                    .iter()
+                    .map(|f| f.string_repr())
+                    .collect::<Vec<_>>()
+                    .join(",\n\t");
+
+                let mut repr = String::new();
+                for comment in type_comments {
+                    writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
+                }
+                write!(repr, "type {} = {{\n\t{}\n}}", name, fields_str)
+                    .expect("Failed to write type to string");
+
+                repr
+            }
+            Type::Function {
+                name,
+                type_comments,
+                generics,
+                args,
+                ret,
+                ..
+            } => {
+                let mut repr = String::new();
+                for comment in type_comments {
+                    writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
+                }
+
+                write!(repr, "function {}(", name).expect("Failed to write function to string");
+
+                // Add generics
+                if !generics.is_empty() {
+                    write!(repr, "<").expect("Failed to write generics to string");
+
+                    let generic_params = generics
+                        .iter()
+                        .map(|(name, typ)| {
+                            if let Some(typ) = typ {
+                                format!("{}: {}", name, typ.string_repr())
+                            } else {
+                                name.clone()
+                            }
+                        })
+                        .collect::<Vec<_>>()
+                        .join(", ");
+
+                    write!(repr, "{}", generic_params).expect("Failed to write generics to string");
+                    repr.push('>');
+                }
+
+                let func_args = args
+                    .iter()
+                    .map(|(name, typ)| {
+                        if let Some(typ) = typ {
+                            format!("{}: {}", name, typ.string_repr())
+                        } else {
+                            name.clone()
+                        }
+                    })
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                write!(repr, "{}", func_args).expect("Failed to write arguments to string");
+                repr.push(')');
+                if let Some(ret) = ret {
+                    write!(repr, " -> {}", ret.string_repr())
+                        .expect("Failed to write return type to string");
+                }
+                repr.push_str(" end");
+                repr
+            }
+        }
+    }
+
+    /// Returns the raw (normally unmodified) string representation of the type
+    pub fn raw_repr(&self) -> String {
+        match self {
+            Type::TypeDef { type_repr, .. } => type_repr.clone(),
+            Type::Function {
+                declaration_repr, ..
+            } => declaration_repr.clone(),
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -493,20 +617,21 @@ impl TypeBlockVisitor {
     pub fn warn_unsupported(&self, msg: &str) {
         eprintln!("Warning [unsupported feature]: {}", msg);
     }
-}
 
-impl Visitor for TypeBlockVisitor {
-    fn visit_local_function(&mut self, node: &LocalFunction) {
-        // Get node name
-        let name = extract_name_from_tokenref(node.name());
-
-        // Get node trivia
+    pub fn create_type_from_function<T: TokenReferenceExtractor>(
+        &self,
+        node: &T,
+        name: String,
+        body: &FunctionBody,
+        function_type: FunctionType,
+    ) -> Type {
+        // Extract comments
         let comments = node.get_surrounding_trivia();
 
         // Get out the generics
         let mut generics = Vec::new();
 
-        if let Some(generic) = node.body().generics() {
+        if let Some(generic) = body.generics() {
             for generic_decl_param in generic.generics() {
                 let default_type = generic_decl_param
                     .default_type()
@@ -529,7 +654,7 @@ impl Visitor for TypeBlockVisitor {
 
         // Convert the args to Vec<(Option<String>, TypeFieldType)>
         let mut params = Vec::new();
-        for param in node.body().parameters() {
+        for param in body.parameters() {
             let tokenref = match param {
                 Parameter::Name(name) => name,
                 Parameter::Ellipsis(ellipsis) => ellipsis,
@@ -545,7 +670,7 @@ impl Visitor for TypeBlockVisitor {
         let mut typs = Vec::new();
 
         // The type specifiers of the variables, in the order that they were assigned. (foo: number, bar, baz: boolean) returns an iterator containing: Some(TypeSpecifier(number)), None, Some(TypeSpecifier(boolean)).
-        for typ_specifier in node.body().type_specifiers() {
+        for typ_specifier in body.type_specifiers() {
             let Some(typ_specifier) = typ_specifier else {
                 typs.push(None);
                 continue;
@@ -559,13 +684,12 @@ impl Visitor for TypeBlockVisitor {
         let args = params.into_iter().zip(typs).collect::<Vec<_>>();
 
         // Get the return type
-        let ret = node
-            .body()
+        let ret = body
             .return_type()
             .map(|typ| TypeFieldType::from_luau_typeinfo(typ.type_info()));
 
         // Create the type
-        let typ = Type::Function {
+        Type::Function {
             name,
             declaration_repr: {
                 let tokens = node.extract_till_tag("Block");
@@ -574,7 +698,7 @@ impl Visitor for TypeBlockVisitor {
                 for token in tokens {
                     write!(repr, "{}", token).expect("Failed to write to string");
                 }
-                write!(repr, "{}", node.body().end_token().token())
+                write!(repr, "{}", body.end_token().token())
                     .expect("Failed to write end token to string");
                 repr.trim_start_matches('\n').to_string()
             },
@@ -582,12 +706,35 @@ impl Visitor for TypeBlockVisitor {
             generics,
             args,
             ret,
-        };
+            function_type,
+        }
+    }
+}
 
-        self.found_types.push(typ);
+impl Visitor for TypeBlockVisitor {
+    fn visit_function_declaration(&mut self, node: &full_moon::ast::FunctionDeclaration) {
+        let node_names = node.name().to_string();
+        self.found_types.push(self.create_type_from_function(
+            node,
+            node_names,
+            node.body(),
+            FunctionType::Normal,
+        ));
+    }
+
+    fn visit_local_function(&mut self, node: &LocalFunction) {
+        self.found_types.push(self.create_type_from_function(
+            node,
+            extract_name_from_tokenref(node.name()),
+            node.body(),
+            FunctionType::Local,
+        ));
     }
 
     fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
+        // Get type repr
+        let type_repr = node.to_string();
+
         // Get node type name
         let name = extract_name_from_tokenref(node.type_declaration().type_name());
 
@@ -618,6 +765,7 @@ impl Visitor for TypeBlockVisitor {
                     name,
                     type_comments: comments,
                     fields,
+                    type_repr,
                 }
             }
             TypeInfo::Typeof { inner, .. } => {
@@ -718,6 +866,7 @@ impl Visitor for TypeBlockVisitor {
 
                             if let Some(typ) = typ {
                                 Type::TypeDef {
+                                    type_repr,
                                     name,
                                     type_comments: comments,
                                     fields: typ,

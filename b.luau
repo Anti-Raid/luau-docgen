@@ -10,3 +10,8 @@ export type a = typeof(setmetatable({} :: {
         a: a, b: a
     ) -> a
 }))
+
+local function test(a: a, b: number) --[[Comment here]] end
+
+-- Hello normal function
+function a() end
