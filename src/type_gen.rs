@@ -474,14 +474,24 @@ pub enum FunctionType {
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub enum TypeDefType {
+    /// type T = { ... }
+    Table { fields: Vec<TypeField> },
+    /// typeof(setmetatable) is so common, its a special type
+    TypeOfSetMetatable { fields: Vec<TypeField> },
+    /// Anything else
+    Uncategorized { type_info: TypeFieldType },
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub enum Type {
     TypeDef {
         /// The name of the type
         name: String,
         /// The comments associated with the type
         type_comments: Vec<String>,
-        /// The fields of the type
-        fields: Vec<TypeField>,
+        /// The type of the type
+        type_def_type: TypeDefType,
         /// The string representation of the type
         type_repr: String,
     },
@@ -532,7 +542,7 @@ impl Type {
         match self {
             Type::TypeDef {
                 name,
-                fields,
+                type_def_type,
                 type_comments,
                 ..
             } => {
@@ -541,14 +551,27 @@ impl Type {
                     writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
                 }
 
-                let fields_str = fields
-                    .iter()
-                    .map(|f| f.string_repr())
-                    .collect::<Vec<_>>()
-                    .join(",\n\t");
+                match type_def_type {
+                    TypeDefType::Table { fields } | TypeDefType::TypeOfSetMetatable { fields } => {
+                        let fields_str = fields
+                            .iter()
+                            .map(|f| f.string_repr())
+                            .collect::<Vec<_>>()
+                            .join(",\n\t");
 
-                write!(repr, "type {} = {{\n\t{}\n}}", name, fields_str)
-                    .expect("Failed to write type to string");
+                        write!(repr, "type {} = {{\n\t{}\n}}", name, fields_str)
+                            .expect("Failed to write type to string");
+                    }
+                    TypeDefType::Uncategorized { type_info } => {
+                        write!(
+                            repr,
+                            "type {} = {{\n\t{}\n}}",
+                            name,
+                            type_info.string_repr(),
+                        )
+                        .expect("Failed to write type to string");
+                    }
+                }
 
                 repr
             }
@@ -756,7 +779,7 @@ impl Visitor for TypeBlockVisitor {
 
         // For now, we only want the actual type declarations (not aliases etc)
         //println!("{:?}", node.type_declaration().type_definition());
-        let typ = match node.type_declaration().type_definition() {
+        match node.type_declaration().type_definition() {
             TypeInfo::Table {
                 fields: tfields, ..
             } => {
@@ -774,14 +797,16 @@ impl Visitor for TypeBlockVisitor {
                     }
                 }
 
-                Type::TypeDef {
+                self.found_types.push(Type::TypeDef {
                     name,
                     type_comments: comments,
-                    fields,
                     type_repr,
-                }
+                    type_def_type: TypeDefType::Table { fields },
+                });
+                return;
             }
             TypeInfo::Typeof { inner, .. } => {
+                #[allow(clippy::single_match)]
                 // Handle setmetatable
                 match &**inner {
                     Expression::FunctionCall(fc) => {
@@ -878,42 +903,34 @@ impl Visitor for TypeBlockVisitor {
                             }
 
                             if let Some(typ) = typ {
-                                Type::TypeDef {
+                                self.found_types.push(Type::TypeDef {
                                     type_repr,
                                     name,
                                     type_comments: comments,
-                                    fields: typ,
-                                }
-                            } else {
-                                self.warn_unsupported(
-                                    "Only simple typeof setmetatable cases are supported!",
-                                );
+                                    type_def_type: TypeDefType::TypeOfSetMetatable { fields: typ },
+                                });
                                 return;
                             }
-                        } else {
-                            self.warn_unsupported(
-                                "Only simple typeof setmetatable cases are supported!",
-                            );
-                            return;
                         }
                     }
-                    _ => {
-                        self.warn_unsupported(
-                            "Only simple typeof cases involving setmetatable is supported!",
-                        );
-                        return;
-                    }
+                    _ => {}
                 }
             }
-            _ => {
-                self.warn_unsupported(&format!(
-                    "Only table and typeof are supported: {}",
-                    type_repr
-                ));
-                return;
-            } // TODO: Support other types of type declarations if required in antiraid typings
+            _ => {}
         };
 
-        self.found_types.push(typ);
+        self.found_types.push(
+            // Go default on type definition if not specially supported
+            Type::TypeDef {
+                name,
+                type_comments: comments,
+                type_def_type: TypeDefType::Uncategorized {
+                    type_info: TypeFieldType::from_luau_typeinfo(
+                        node.type_declaration().type_definition(),
+                    ),
+                },
+                type_repr,
+            },
+        );
     }
 }
