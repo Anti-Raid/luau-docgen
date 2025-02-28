@@ -24,8 +24,8 @@ impl TypeSet {
 
 impl LuaUserData for TypeSet {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        // Returns the full internal representation of the type set
-        fields.add_field_method_get("raw_types", |lua, this| {
+        // Returns the full internal representation of the type set as a table
+        fields.add_field_method_get("raw_types_table", |lua, this| {
             // Check for cached serialized data
             let mut cached_data = this
                 .cached_data
@@ -41,6 +41,13 @@ impl LuaUserData for TypeSet {
             *cached_data = Some(v.clone());
 
             Ok(v)
+        });
+
+        // Returns the types in the set as userdata
+        fields.add_field_method_get("raw_types", |_lua, this| {
+            let types = this.types.clone();
+
+            Ok(types)
         });
     }
 
@@ -66,6 +73,13 @@ impl LuaUserData for TypeSet {
                     .cloned()
                     .collect(),
             );
+
+            Ok(iter)
+        });
+
+        // Creates an iterator over all types in the set
+        methods.add_method("iter_all", |_, this, ()| {
+            let iter = TypeIterator::new(this.types.clone());
 
             Ok(iter)
         });
@@ -114,7 +128,7 @@ struct Type {
 impl LuaUserData for Type {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
         // warning: this is not very performant
-        fields.add_field_method_get("debug_data", |lua, this| {
+        fields.add_field_method_get("inner_data", |lua, this| {
             let typ = this.inner_typ.clone();
             let data = lua.to_value(&typ)?;
 
@@ -123,9 +137,19 @@ impl LuaUserData for Type {
     }
 
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
+        methods.add_method("type", |_, this, _: ()| match *this.inner_typ {
+            crate::type_gen::Type::TypeDef { .. } => Ok("typedef".to_string()),
+            crate::type_gen::Type::Function { .. } => Ok("function".to_string()),
+        });
+
         methods.add_method("name", |_, this, _: ()| {
             let name = this.inner_typ.name();
             Ok(name)
+        });
+
+        methods.add_method("type_comments", |_, this, _: ()| {
+            let type_comments = this.inner_typ.type_comments();
+            Ok(type_comments)
         });
 
         // Returns the *constructed* type representation which may differ from the raw input

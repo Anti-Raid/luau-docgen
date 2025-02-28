@@ -514,6 +514,18 @@ impl Type {
         }
     }
 
+    /// Returns the comments associated with the type
+    pub fn type_comments(&self) -> Vec<String> {
+        match self {
+            Type::TypeDef { type_comments, .. } => {
+                type_comments.iter().map(|s| s.trim().to_string()).collect()
+            }
+            Type::Function { type_comments, .. } => {
+                type_comments.iter().map(|s| s.trim().to_string()).collect()
+            }
+        }
+    }
+
     /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
     /// with a more standardized layout and format
     pub fn string_repr(&self) -> String {
