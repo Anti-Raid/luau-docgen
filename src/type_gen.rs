@@ -14,8 +14,8 @@ use full_moon::{
     tokenizer::TokenReference,
     visitors::Visitor,
 };
-use std::fmt::Write;
 use std::path::PathBuf;
+use std::{fmt::Write, rc::Rc};
 
 pub fn extract_name_from_tokenref(token_ref: &TokenReference) -> String {
     // SAFETY: We can discard all the trivia and just get the name
@@ -484,34 +484,48 @@ pub enum TypeDefType {
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct TypeDef {
+    /// The name of the type
+    name: String,
+    /// The comments associated with the type
+    type_comments: Vec<String>,
+    /// The type of the type
+    type_def_type: TypeDefType,
+    /// The string representation of the type
+    type_repr: String,
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct TypeFunction {
+    /// The name of the function
+    name: String,
+    /// String representation of the function declaration
+    declaration_repr: String,
+    /// The comments associated with the type
+    type_comments: Vec<String>,
+    /// Generics
+    ///
+    /// Vec of (name, default type if present)
+    generics: Vec<(String, Option<TypeFieldType>)>,
+    /// The arguments of the function
+    args: Vec<(String, Option<TypeFieldType>)>,
+    /// The return type of the function, if present
+    ret: Option<TypeFieldType>,
+    /// Type of function
+    function_type: FunctionType,
+}
+
+/// A type container
+///
+/// This is an Rc to make it cheap to clone
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub enum Type {
     TypeDef {
-        /// The name of the type
-        name: String,
-        /// The comments associated with the type
-        type_comments: Vec<String>,
-        /// The type of the type
-        type_def_type: TypeDefType,
-        /// The string representation of the type
-        type_repr: String,
+        /// The inner type definition
+        inner: Rc<TypeDef>,
     },
     Function {
-        /// The name of the function
-        name: String,
-        /// String representation of the function declaration
-        declaration_repr: String,
-        /// The comments associated with the type
-        type_comments: Vec<String>,
-        /// Generics
-        ///
-        /// Vec of (name, default type if present)
-        generics: Vec<(String, Option<TypeFieldType>)>,
-        /// The arguments of the function
-        args: Vec<(String, Option<TypeFieldType>)>,
-        /// The return type of the function, if present
-        ret: Option<TypeFieldType>,
-        /// Type of function
-        function_type: FunctionType,
+        inner: Rc<TypeFunction>,
     },
 }
 
@@ -519,20 +533,24 @@ impl Type {
     /// Returns the name of the type
     pub fn name(&self) -> String {
         match self {
-            Type::TypeDef { name, .. } => name.clone(),
-            Type::Function { name, .. } => name.clone(),
+            Type::TypeDef { inner } => inner.name.clone(),
+            Type::Function { inner, .. } => inner.name.clone(),
         }
     }
 
     /// Returns the comments associated with the type
     pub fn type_comments(&self) -> Vec<String> {
         match self {
-            Type::TypeDef { type_comments, .. } => {
-                type_comments.iter().map(|s| s.trim().to_string()).collect()
-            }
-            Type::Function { type_comments, .. } => {
-                type_comments.iter().map(|s| s.trim().to_string()).collect()
-            }
+            Type::TypeDef { inner } => inner
+                .type_comments
+                .iter()
+                .map(|s| s.trim().to_string())
+                .collect(),
+            Type::Function { inner } => inner
+                .type_comments
+                .iter()
+                .map(|s| s.trim().to_string())
+                .collect(),
         }
     }
 
@@ -540,18 +558,13 @@ impl Type {
     /// with a more standardized layout and format
     pub fn string_repr(&self) -> String {
         match self {
-            Type::TypeDef {
-                name,
-                type_def_type,
-                type_comments,
-                ..
-            } => {
+            Type::TypeDef { inner } => {
                 let mut repr = String::new();
-                for comment in type_comments {
+                for comment in inner.type_comments.iter() {
                     writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
                 }
 
-                match type_def_type {
+                match &inner.type_def_type {
                     TypeDefType::Table { fields } | TypeDefType::TypeOfSetMetatable { fields } => {
                         let fields_str = fields
                             .iter()
@@ -559,14 +572,14 @@ impl Type {
                             .collect::<Vec<_>>()
                             .join(",\n\t");
 
-                        write!(repr, "type {} = {{\n\t{}\n}}", name, fields_str)
+                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
                             .expect("Failed to write type to string");
                     }
                     TypeDefType::Uncategorized { type_info } => {
                         write!(
                             repr,
                             "type {} = {{\n\t{}\n}}",
-                            name,
+                            inner.name,
                             type_info.string_repr(),
                         )
                         .expect("Failed to write type to string");
@@ -575,26 +588,21 @@ impl Type {
 
                 repr
             }
-            Type::Function {
-                name,
-                type_comments,
-                generics,
-                args,
-                ret,
-                ..
-            } => {
+            Type::Function { inner } => {
                 let mut repr = String::new();
-                for comment in type_comments {
+                for comment in inner.type_comments.iter() {
                     writeln!(repr, "-- {}", comment).expect("Failed to write comment to string");
                 }
 
-                write!(repr, "function {}(", name).expect("Failed to write function to string");
+                write!(repr, "function {}(", inner.name)
+                    .expect("Failed to write function to string");
 
                 // Add generics
-                if !generics.is_empty() {
+                if !inner.generics.is_empty() {
                     write!(repr, "<").expect("Failed to write generics to string");
 
-                    let generic_params = generics
+                    let generic_params = inner
+                        .generics
                         .iter()
                         .map(|(name, typ)| {
                             if let Some(typ) = typ {
@@ -610,7 +618,8 @@ impl Type {
                     repr.push('>');
                 }
 
-                let func_args = args
+                let func_args = inner
+                    .args
                     .iter()
                     .map(|(name, typ)| {
                         if let Some(typ) = typ {
@@ -623,7 +632,7 @@ impl Type {
                     .join(", ");
                 write!(repr, "{}", func_args).expect("Failed to write arguments to string");
                 repr.push(')');
-                if let Some(ret) = ret {
+                if let Some(ref ret) = inner.ret {
                     write!(repr, " -> {}", ret.string_repr())
                         .expect("Failed to write return type to string");
                 }
@@ -636,10 +645,8 @@ impl Type {
     /// Returns the raw (normally unmodified) string representation of the type
     pub fn raw_repr(&self) -> String {
         match self {
-            Type::TypeDef { type_repr, .. } => type_repr.clone(),
-            Type::Function {
-                declaration_repr, ..
-            } => declaration_repr.clone(),
+            Type::TypeDef { inner } => inner.type_repr.clone(),
+            Type::Function { inner } => inner.declaration_repr.clone(),
         }
     }
 }
@@ -726,23 +733,26 @@ impl TypeBlockVisitor {
 
         // Create the type
         Type::Function {
-            name,
-            declaration_repr: {
-                let tokens = node.extract_till_tag("Block");
+            inner: TypeFunction {
+                name,
+                declaration_repr: {
+                    let tokens = node.extract_till_tag("Block");
 
-                let mut repr = String::new();
-                for token in tokens {
-                    write!(repr, "{}", token).expect("Failed to write to string");
-                }
-                write!(repr, "{}", body.end_token().token())
-                    .expect("Failed to write end token to string");
-                repr.trim_start_matches('\n').to_string()
-            },
-            type_comments: comments,
-            generics,
-            args,
-            ret,
-            function_type,
+                    let mut repr = String::new();
+                    for token in tokens {
+                        write!(repr, "{}", token).expect("Failed to write to string");
+                    }
+                    write!(repr, "{}", body.end_token().token())
+                        .expect("Failed to write end token to string");
+                    repr.trim_start_matches('\n').to_string()
+                },
+                type_comments: comments,
+                generics,
+                args,
+                ret,
+                function_type,
+            }
+            .into(),
         }
     }
 }
@@ -798,10 +808,13 @@ impl Visitor for TypeBlockVisitor {
                 }
 
                 self.found_types.push(Type::TypeDef {
-                    name,
-                    type_comments: comments,
-                    type_repr,
-                    type_def_type: TypeDefType::Table { fields },
+                    inner: TypeDef {
+                        name,
+                        type_comments: comments,
+                        type_repr,
+                        type_def_type: TypeDefType::Table { fields },
+                    }
+                    .into(),
                 });
                 return;
             }
@@ -904,10 +917,15 @@ impl Visitor for TypeBlockVisitor {
 
                             if let Some(typ) = typ {
                                 self.found_types.push(Type::TypeDef {
-                                    type_repr,
-                                    name,
-                                    type_comments: comments,
-                                    type_def_type: TypeDefType::TypeOfSetMetatable { fields: typ },
+                                    inner: TypeDef {
+                                        type_repr,
+                                        name,
+                                        type_comments: comments,
+                                        type_def_type: TypeDefType::TypeOfSetMetatable {
+                                            fields: typ,
+                                        },
+                                    }
+                                    .into(),
                                 });
                                 return;
                             }
@@ -922,14 +940,17 @@ impl Visitor for TypeBlockVisitor {
         self.found_types.push(
             // Go default on type definition if not specially supported
             Type::TypeDef {
-                name,
-                type_comments: comments,
-                type_def_type: TypeDefType::Uncategorized {
-                    type_info: TypeFieldType::from_luau_typeinfo(
-                        node.type_declaration().type_definition(),
-                    ),
-                },
-                type_repr,
+                inner: TypeDef {
+                    name,
+                    type_comments: comments,
+                    type_def_type: TypeDefType::Uncategorized {
+                        type_info: TypeFieldType::from_luau_typeinfo(
+                            node.type_declaration().type_definition(),
+                        ),
+                    },
+                    type_repr,
+                }
+                .into(),
             },
         );
     }

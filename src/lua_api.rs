@@ -11,12 +11,7 @@ pub struct TypeSet {
 impl TypeSet {
     pub fn new(types: Vec<crate::type_gen::Type>) -> Self {
         Self {
-            types: types
-                .into_iter()
-                .map(|t| Type {
-                    inner_typ: Rc::new(t),
-                })
-                .collect(),
+            types: types.into_iter().map(|t| Type { inner_typ: t }).collect(),
             cached_data: RefCell::new(None),
         }
     }
@@ -57,7 +52,7 @@ impl LuaUserData for TypeSet {
             let iter = TypeIterator::new(
                 this.types
                     .iter()
-                    .filter(|t| matches!(*t.inner_typ, crate::type_gen::Type::TypeDef { .. }))
+                    .filter(|t| matches!(t.inner_typ, crate::type_gen::Type::TypeDef { .. }))
                     .cloned()
                     .collect(),
             );
@@ -69,7 +64,7 @@ impl LuaUserData for TypeSet {
             let iter = TypeIterator::new(
                 this.types
                     .iter()
-                    .filter(|t| matches!(*t.inner_typ, crate::type_gen::Type::Function { .. }))
+                    .filter(|t| matches!(t.inner_typ, crate::type_gen::Type::Function { .. }))
                     .cloned()
                     .collect(),
             );
@@ -122,12 +117,11 @@ impl LuaUserData for TypeIterator {
 #[derive(Clone, serde::Serialize, serde::Deserialize)]
 #[serde(transparent)]
 struct Type {
-    inner_typ: Rc<crate::type_gen::Type>,
+    inner_typ: crate::type_gen::Type,
 }
 
 impl LuaUserData for Type {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        // warning: this is not very performant
         fields.add_field_method_get("inner_data", |lua, this| {
             let typ = this.inner_typ.clone();
             let data = lua.to_value(&typ)?;
@@ -137,7 +131,7 @@ impl LuaUserData for Type {
     }
 
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("type", |_, this, _: ()| match *this.inner_typ {
+        methods.add_method("type", |_, this, _: ()| match this.inner_typ {
             crate::type_gen::Type::TypeDef { .. } => Ok("typedef".to_string()),
             crate::type_gen::Type::Function { .. } => Ok("function".to_string()),
         });

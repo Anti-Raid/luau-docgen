@@ -1,5 +1,6 @@
 mod lua_api;
 mod token_ref_extractor;
+mod token_ref_extractor_v2;
 mod type_gen;
 use full_moon::{parse_fallible, visitors::Visitor};
 use lua_api::TypeSet;
