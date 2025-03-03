@@ -20,7 +20,7 @@ impl TypeSet {
 impl LuaUserData for TypeSet {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
         // Returns the full internal representation of the type set as a table
-        fields.add_field_method_get("raw_types_table", |lua, this| {
+        fields.add_field_method_get("dbg__raw_types_table", |lua, this| {
             // Check for cached serialized data
             let mut cached_data = this
                 .cached_data
@@ -122,7 +122,7 @@ struct Type {
 
 impl LuaUserData for Type {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("inner_data", |lua, this| {
+        fields.add_field_method_get("dbg__inner", |lua, this| {
             let typ = this.inner_typ.clone();
             let data = lua.to_value(&typ)?;
 
@@ -136,9 +136,10 @@ impl LuaUserData for Type {
             crate::type_gen::Type::Function { .. } => Ok("function".to_string()),
         });
 
-        methods.add_method("name", |_, this, _: ()| {
+        methods.add_method("name", |lua, this, _: ()| {
             let name = this.inner_typ.name();
-            Ok(name)
+            let v = lua.to_value(name)?;
+            Ok(v)
         });
 
         methods.add_method("type_comments", |_, this, _: ()| {
@@ -156,6 +157,37 @@ impl LuaUserData for Type {
         methods.add_method("raw_repr", |_, this, _: ()| {
             let name = this.inner_typ.raw_repr();
             Ok(name)
+        });
+
+        methods.add_method("typedef", |_, this, _: ()| match &this.inner_typ {
+            crate::type_gen::Type::TypeDef { inner } => Ok(TypeDef {
+                inner_def: inner.clone(),
+            }),
+            _ => Err(LuaError::external("Not a type definition")),
+        })
+    }
+}
+
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
+#[serde(transparent)]
+struct TypeDef {
+    inner_def: Rc<crate::type_gen::TypeDef>,
+}
+
+impl LuaUserData for TypeDef {
+    fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
+        fields.add_field_method_get("dbg__inner", |lua, this| {
+            let typ = this.inner_def.clone();
+            let data = lua.to_value(&typ)?;
+
+            Ok(data)
+        });
+    }
+
+    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
+        methods.add_method("type", |_, this, _: ()| {
+            let typ = this.inner_def.type_def_type();
+            Ok(typ)
         });
     }
 }

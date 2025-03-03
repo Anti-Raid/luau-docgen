@@ -495,6 +495,17 @@ pub struct TypeDef {
     type_repr: String,
 }
 
+impl TypeDef {
+    /// Returns the type def type
+    pub fn type_def_type(&self) -> &'static str {
+        match self.type_def_type {
+            TypeDefType::Table { .. } => "table",
+            TypeDefType::TypeOfSetMetatable { .. } => "typeof_setmetatable",
+            TypeDefType::Uncategorized { .. } => "uncategorized",
+        }
+    }
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeFunction {
     /// The name of the function
@@ -531,10 +542,10 @@ pub enum Type {
 
 impl Type {
     /// Returns the name of the type
-    pub fn name(&self) -> String {
+    pub fn name(&self) -> &str {
         match self {
-            Type::TypeDef { inner } => inner.name.clone(),
-            Type::Function { inner, .. } => inner.name.clone(),
+            Type::TypeDef { inner } => inner.name.as_ref(),
+            Type::Function { inner, .. } => inner.name.as_ref(),
         }
     }
 
