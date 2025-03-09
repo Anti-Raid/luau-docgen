@@ -13,6 +13,14 @@ export type a = typeof(setmetatable({} :: {
     c: string,
     d: string, 
     e: string,
+
+    --- Hello
+    f: {
+      g: boolean
+    },
+
+    --- G
+    h: string
   },
 
   -- Catnip

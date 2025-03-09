@@ -334,26 +334,42 @@ impl TypeFieldType {
     ///
     /// @public_api
     pub fn string_repr(&self) -> String {
+        self._string_repr(0)
+    }
+
+    /// Helper method for string_repr
+    fn _string_repr(&self, depth: usize) -> String {
         match self {
             TypeFieldType::Basic(name) => name.clone(),
             TypeFieldType::String(name) => name.clone(),
             TypeFieldType::Boolean(name) => name.to_string(),
-            TypeFieldType::Array(inner) => format!("{{{}}}", inner.string_repr()),
-            TypeFieldType::Variadic(inner) => format!("...{}", inner.string_repr()),
+            TypeFieldType::Array(inner) => format!("{{{}}}", inner._string_repr(depth + 1)),
+            TypeFieldType::Variadic(inner) => format!("...{}", inner._string_repr(depth + 1)),
             TypeFieldType::Generic(generic_field_type) => generic_field_type.string_repr(),
             TypeFieldType::GenericPack(name) => name.clone(),
             TypeFieldType::Module(tftm) => tftm.string_repr(),
             TypeFieldType::UnknownModule(name) => name.clone(),
             TypeFieldType::TypeOf(contents) => contents.clone(),
-            TypeFieldType::Optional(inner) => format!("{}?", inner.string_repr()),
+            TypeFieldType::Optional(inner) => format!("{}?", inner._string_repr(depth + 1)),
             TypeFieldType::Function(func) => func.string_repr(),
             TypeFieldType::Table(fields) => {
                 let fields_str = fields
                     .iter()
-                    .map(|f| f.string_repr_with_pats("\n\t\t"))
+                    .map(|f| {
+                        f._string_repr_with_pats(
+                            format!("\n{}", "\t".repeat(depth + 2)).as_str(),
+                            depth + 1,
+                        )
+                    })
                     .collect::<Vec<_>>()
-                    .join(",\n\n\t\t");
-                format!("{{\n\t\t{}\n\t}}", fields_str)
+                    .join(&format!(",\n\n{}", "\t".repeat(depth + 2)));
+
+                format!(
+                    "{{\n{}{}\n{}}}",
+                    "\t".repeat(depth + 2),
+                    fields_str,
+                    "\t".repeat(depth + 1)
+                )
             }
             TypeFieldType::Tuple(types) => {
                 let types_str = types
@@ -609,6 +625,7 @@ impl TypeField {
         .into()
     }
 
+    /// @public_api
     pub fn string_repr(&self) -> String {
         let mut repr = String::new();
 
@@ -626,7 +643,12 @@ impl TypeField {
         repr
     }
 
+    /// @public_api
     pub fn string_repr_with_pats(&self, comment_write_pat: &str) -> String {
+        self._string_repr_with_pats(comment_write_pat, 0)
+    }
+
+    fn _string_repr_with_pats(&self, comment_write_pat: &str, depth: usize) -> String {
         let mut repr = String::new();
 
         for comment in &self.comments {
@@ -638,7 +660,7 @@ impl TypeField {
             repr,
             "{}: {}",
             self.field_name,
-            self.field_type.string_repr()
+            self.field_type._string_repr(depth)
         )
         .unwrap();
         repr
