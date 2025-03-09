@@ -297,7 +297,7 @@ end
 
 print("Functions:")
 for func in ast:iter_functions() do
-    assert(func:extract().type == "function")
+    assert(func:extract().type == "Function")
     print(globals.prettyprint(func.dbg__inner))
     print("StringRepr:\n" .. func:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n")
     print("RawRepr\n" .. func:raw_repr() .. "\n")
