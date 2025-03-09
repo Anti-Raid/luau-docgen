@@ -7,19 +7,22 @@
 --- @my_special_comment -> typ="my_special_comment", data=""
 --- @my_special_comment my comment -> typ="my_special_comment", data="my comment"
 --- @my_special_comment my comment1 my comment2 -> typ="my_special_comment", data="my comment1 my comment2"
-type SpecialComment = {
+type InnerComment = {
+    comment_type: "Special",
     --- The type of the special comment
     typ: string,
     --- The data of the special comment
+    data: string,
+} | {
+    comment_type: "Normal",
+    --- The data of the normal comment
     data: string,
 }
 
 --- Contains a parsed list of comments
 type Comment = {
-    --- Special comments
-    special: {SpecialComment},
-    --- Normal comments [in order]
-    normal: {string},
+    --- List of comments (in order of appearance)
+    comments: {InnerComment},
 }
 
 --- Globals
