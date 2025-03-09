@@ -18,6 +18,12 @@ impl LuaUserData for Globals {
                 Ok("nil".to_string())
             }
         });
+
+        methods.add_function("parsecomments", |lua, comments: Vec<String>| {
+            // Parse a comment block
+            let comment = crate::type_gen::parse_comments(comments);
+            lua.to_value(&comment)
+        });
     }
 }
 

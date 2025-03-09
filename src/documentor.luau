@@ -2,10 +2,32 @@
 
 -- Creates the actual documentation. The code here can be modified to change the template used 
 
+--- E.g.
+--- 
+--- @my_special_comment -> typ="my_special_comment", data=""
+--- @my_special_comment my comment -> typ="my_special_comment", data="my comment"
+--- @my_special_comment my comment1 my comment2 -> typ="my_special_comment", data="my comment1 my comment2"
+type SpecialComment = {
+    --- The type of the special comment
+    typ: string,
+    --- The data of the special comment
+    data: string,
+}
+
+--- Contains a parsed list of comments
+type Comment = {
+    --- Special comments
+    special: {SpecialComment},
+    --- Normal comments [in order]
+    normal: {string},
+}
+
 --- Globals
 type Globals = {
     --- Pretty prints a value
-    prettyprint: (...any) -> string
+    prettyprint: (...any) -> string,
+    --- Parse a comment block
+    parsecomments: (comments: {string}) -> Comment,
 }
 
 type TypeIterator = (() -> Type)
@@ -264,9 +286,14 @@ type TypeFieldTypeModule = {
 }
 
 -- Begin of documentation generation actual code
-local ast: TypeSet, globals: Globals = ...
+local ast: TypeSet, _globals: Globals = ...
 
+for typ in ast:iter_all() do
+    assert(typ:extract().type == "TypeDef" or typ:extract().type == "Function")
+    print(typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n")
+end
 
+--[[
 print(globals.prettyprint(ast.dbg__raw_types_table))
 
 print("Type definitions:")
@@ -310,6 +337,28 @@ for typ in ast:iter_typedefs() do
     print()
 end
 
+function a()
+    local a = { 1, 2, 3, 4 }
+    local n = 3
+
+    local start, stop = 1, #a
+
+    while(start <= stop) do
+        local mid = (start + (stop - start) // 2) :: number
+        local value = a[mid]
+        if value == n then 
+            return mid
+        elseif value > n then
+            stop = mid - 1
+        else
+            start = mid + 1
+        end
+    end
+
+    return -1
+end
+
 type A = {
     a: () -> ()
 }
+]]

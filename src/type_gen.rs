@@ -1226,3 +1226,74 @@ impl Visitor for TypeBlockVisitor {
         );
     }
 }
+
+/// E.g.
+///
+/// @my_special_comment -> typ="my_special_comment", data=""
+/// @my_special_comment my comment -> typ="my_special_comment", data="my comment"
+/// @my_special_comment my comment1 my comment2 -> typ="my_special_comment", data="my comment1 my comment2"
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct SpecialComment {
+    pub typ: String,
+    pub data: String,
+}
+
+/// Contains a parsed list of comments
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Comment {
+    pub special: Vec<SpecialComment>,
+    pub normal: Vec<String>,
+}
+
+/// Parses a list of comments into a Comment structure
+pub fn parse_comments(comments: Vec<String>) -> Comment {
+    let mut special = Vec::new();
+    let mut normal = Vec::new();
+
+    for comment in comments {
+        if comment.starts_with('@') {
+            let parts: Vec<&str> = comment.splitn(2, ' ').collect();
+            if parts.len() == 1 {
+                special.push(SpecialComment {
+                    typ: parts[0][1..].to_string(),
+                    data: String::new(),
+                });
+            } else {
+                special.push(SpecialComment {
+                    typ: parts[0][1..].to_string(),
+                    data: parts[1].to_string(),
+                });
+            }
+        } else {
+            normal.push(comment);
+        }
+    }
+
+    Comment { special, normal }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_comments_basic() {
+        let comments = vec![
+            "@my_special_comment".to_string(),
+            "@my_special_comment my comment".to_string(),
+            "@my_special_comment my comment1 my comment2".to_string(),
+            "normal comment".to_string(),
+        ];
+        let parsed = parse_comments(comments);
+        assert_eq!(parsed.special.len(), 3);
+        assert_eq!(parsed.normal.len(), 1);
+        assert_eq!(parsed.special[0].typ, "my_special_comment");
+        assert_eq!(parsed.special[0].data, "");
+        assert_eq!(parsed.special[1].typ, "my_special_comment");
+        assert_eq!(parsed.special[1].data, "my comment");
+        assert_eq!(parsed.special[2].typ, "my_special_comment");
+        assert_eq!(parsed.special[2].data, "my comment1 my comment2");
+
+        assert_eq!(parsed.normal[0], "normal comment");
+    }
+}
