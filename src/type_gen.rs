@@ -350,9 +350,9 @@ impl TypeFieldType {
             TypeFieldType::Table(fields) => {
                 let fields_str = fields
                     .iter()
-                    .map(|f| f.string_repr())
+                    .map(|f| f.string_repr_with_pats("\n\t\t"))
                     .collect::<Vec<_>>()
-                    .join(",\n\t\t");
+                    .join(",\n\n\t\t");
                 format!("{{\n\t\t{}\n\t}}", fields_str)
             }
             TypeFieldType::Tuple(types) => {
@@ -614,6 +614,24 @@ impl TypeField {
 
         for comment in &self.comments {
             write!(repr, "--{}\n\t", comment).expect("Failed to write comment to string");
+        }
+
+        write!(
+            repr,
+            "{}: {}",
+            self.field_name,
+            self.field_type.string_repr()
+        )
+        .unwrap();
+        repr
+    }
+
+    pub fn string_repr_with_pats(&self, comment_write_pat: &str) -> String {
+        let mut repr = String::new();
+
+        for comment in &self.comments {
+            write!(repr, "--{}{}", comment, comment_write_pat)
+                .expect("Failed to write comment to string");
         }
 
         write!(

@@ -7,8 +7,12 @@ export type a = typeof(setmetatable({} :: {
   nanos: number,
   -- Table
   a: {
-    b: string, c: string,
-    d: string, e: string,
+    --- My favorite type
+    b: string, 
+    --- Meow
+    c: string,
+    d: string, 
+    e: string,
   },
 
   -- Catnip

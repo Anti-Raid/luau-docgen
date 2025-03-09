@@ -398,6 +398,20 @@ impl LuaUserData for TypeField {
             })
         });
     }
+
+    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
+        methods.add_method("string_repr", |_, this, _g: ()| {
+            Ok(this.inner.string_repr())
+        });
+
+        methods.add_method(
+            "string_repr_with_pats",
+            |_, this, comment_write_pat: String| {
+                let name = this.inner.string_repr_with_pats(&comment_write_pat);
+                Ok(name)
+            },
+        );
+    }
 }
 
 pub struct TypeFieldType {

@@ -138,6 +138,10 @@ type TypeField = {
     field_name: string,
     --- The type of the field
     field_type: TypeFieldType,
+    --- The string representation of the field type
+    string_repr: (self: TypeField) -> string,
+    --- The string representation of the field type with different seperators
+    string_repr_with_pats: (self: TypeField, comment_write_pat: string) -> string,
 }
 
 --- Compact type information (Any type, such as string, boolean?, number | boolean, etc)
