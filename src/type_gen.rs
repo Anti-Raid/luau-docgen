@@ -315,29 +315,6 @@ pub enum TypeFieldType {
 }
 
 impl TypeFieldType {
-    /// Tries to merge two types together
-    ///
-    /// Works on Tables and Tuples only
-    ///
-    /// @public_api
-    pub fn merge(a: Rc<Self>, other: Rc<Self>) -> Option<Rc<Self>> {
-        match (a.as_ref(), other.as_ref()) {
-            (TypeFieldType::Table(fields), TypeFieldType::Table(other_fields)) => {
-                let mut merged_fields = Vec::with_capacity(fields.len() + other_fields.len());
-                merged_fields.extend(fields.iter().cloned());
-                merged_fields.extend(other_fields.iter().cloned());
-                Some(TypeFieldType::Table(merged_fields).into())
-            }
-            (TypeFieldType::Tuple(types), TypeFieldType::Tuple(other_types)) => {
-                let mut merged_types = Vec::with_capacity(types.len() + other_types.len());
-                merged_types.extend(types.iter().cloned());
-                merged_types.extend(other_types.iter().cloned());
-                Some(TypeFieldType::Tuple(merged_types).into())
-            }
-            _ => None,
-        }
-    }
-
     /// Recursively find the inner set of types that compose/make up a TypeFieldType
     ///
     /// @public_api
@@ -373,10 +350,10 @@ impl TypeFieldType {
             TypeFieldType::Table(fields) => {
                 let fields_str = fields
                     .iter()
-                    .map(|f| f.field_type.string_repr())
+                    .map(|f| f.string_repr())
                     .collect::<Vec<_>>()
-                    .join(", ");
-                format!("{{ {} }}", fields_str)
+                    .join(",\n\t\t");
+                format!("{{\n\t\t{}\n\t}}", fields_str)
             }
             TypeFieldType::Tuple(types) => {
                 let types_str = types
@@ -657,11 +634,21 @@ pub enum FunctionType {
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct TypeDefTypeTypeofSetMetatable {
+    /// The fields of the type
+    pub fields: Vec<Rc<TypeField>>,
+    /// The fields of the types metatable
+    pub metatable_fields: Vec<Rc<TypeField>>,
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub enum TypeDefType {
     /// type T = { ... }
     Table { fields: Vec<Rc<TypeField>> },
     /// typeof(setmetatable) is so common, its a special type
-    TypeOfSetMetatable { fields: Vec<Rc<TypeField>> },
+    TypeOfSetMetatable {
+        type_info: TypeDefTypeTypeofSetMetatable,
+    },
     /// Anything else
     Uncategorized { type_info: Rc<TypeFieldType> },
 }
@@ -746,12 +733,34 @@ impl Type {
                 }
 
                 match &inner.type_def_type {
-                    TypeDefType::Table { fields } | TypeDefType::TypeOfSetMetatable { fields } => {
+                    TypeDefType::Table { fields } => {
                         let fields_str = fields
                             .iter()
                             .map(|f| f.string_repr())
                             .collect::<Vec<_>>()
                             .join(",\n\t");
+
+                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
+                            .expect("Failed to write type to string");
+                    }
+                    TypeDefType::TypeOfSetMetatable { type_info } => {
+                        let mut fields_str = type_info
+                            .fields
+                            .iter()
+                            .map(|f| f.string_repr())
+                            .collect::<Vec<_>>()
+                            .join(",\n\t");
+
+                        fields_str.push_str(",\n\n\t-- Metatable\n\t");
+
+                        let metatable_fields_str = type_info
+                            .metatable_fields
+                            .iter()
+                            .map(|f| f.string_repr())
+                            .collect::<Vec<_>>()
+                            .join(",\n\t");
+
+                        fields_str.push_str(&metatable_fields_str);
 
                         write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
                             .expect("Failed to write type to string");
@@ -828,12 +837,34 @@ impl Type {
                 }
 
                 match &inner.type_def_type {
-                    TypeDefType::Table { fields } | TypeDefType::TypeOfSetMetatable { fields } => {
+                    TypeDefType::Table { fields } => {
                         let fields_str = fields
                             .iter()
                             .map(|f| f.string_repr())
                             .collect::<Vec<_>>()
                             .join(fields_join_pat);
+
+                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
+                            .expect("Failed to write type to string");
+                    }
+                    TypeDefType::TypeOfSetMetatable { type_info } => {
+                        let mut fields_str = type_info
+                            .fields
+                            .iter()
+                            .map(|f| f.string_repr())
+                            .collect::<Vec<_>>()
+                            .join(fields_join_pat);
+
+                        fields_str.push_str(",\n\n\t-- Metatable\n\t");
+
+                        let metatable_fields_str = type_info
+                            .metatable_fields
+                            .iter()
+                            .map(|f| f.string_repr())
+                            .collect::<Vec<_>>()
+                            .join(",\n\t");
+
+                        fields_str.push_str(&metatable_fields_str);
 
                         write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
                             .expect("Failed to write type to string");
@@ -1144,35 +1175,36 @@ impl Visitor for TypeBlockVisitor {
 
                                         //println!("Call: {:?}", fargs);
                                         //println!("Type Assertions: {:?}", type_assertions);
-                                        let mut typ_field: Option<Rc<TypeFieldType>> = None;
+                                        let mut typ_field = (None, None);
                                         for type_assertion in type_assertions {
                                             let type_info = TypeFieldType::from_luau_typeinfo(
                                                 type_assertion.cast_to(),
                                             );
-                                            if let Some(typ_current) = typ_field {
-                                                // This should be non-Option as typ_current and type_info should both be table or tuple anyways
-                                                typ_field =
-                                                    TypeFieldType::merge(typ_current, type_info);
-                                            } else {
-                                                typ_field = Some(type_info);
-                                            }
-                                        }
 
-                                        if let Some(typ_val) = typ_field {
-                                            match &*typ_val {
-                                                TypeFieldType::Table(fields) => {
-                                                    typ = Some(fields.to_vec());
-                                                }
+                                            let type_fields = match *type_info {
+                                                TypeFieldType::Table(ref fields) => fields.to_vec(),
                                                 _ => {
                                                     self.warn_unsupported(
                                                         "Only simple typeof setmetatable cases [non-table TypeFieldType unsupported] are supported!",
                                                     );
                                                     continue;
                                                 }
+                                            };
+
+                                            if typ_field.0.is_none() {
+                                                typ_field.0 = Some(type_fields); // fields
+                                            } else if typ_field.1.is_none() {
+                                                typ_field.1 = Some(type_fields); // metatable
+                                            } else {
+                                                break; // Shouldn't be more than 2 type assertions
                                             }
-                                            break;
-                                        } else {
-                                            continue;
+                                        }
+
+                                        if let (Some(fields), Some(metatable)) = typ_field {
+                                            typ = Some(TypeDefTypeTypeofSetMetatable {
+                                                fields,
+                                                metatable_fields: metatable,
+                                            });
                                         }
                                     }
                                     Suffix::Index(_) => {
@@ -1193,7 +1225,7 @@ impl Visitor for TypeBlockVisitor {
                                         name,
                                         type_comments: comments,
                                         type_def_type: TypeDefType::TypeOfSetMetatable {
-                                            fields: typ,
+                                            type_info: typ,
                                         },
                                     }
                                     .into(),

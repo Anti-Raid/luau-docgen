@@ -113,11 +113,19 @@ type TypeDefType = {
         data: {TypeField}
     } | {
         type: "TypeOfSetMetatable",
-        data: {TypeField}
+        data: TypeDefTypeTypeofSetMetatable,
     } | {
         type: "Uncategorized",
         data: TypeFieldType,
     }
+}
+
+--- Inner data of a TypeOf SetMetatable declaration
+type TypeDefTypeTypeofSetMetatable = {
+    --- The fields of the type
+    fields: {TypeField},
+    --- The metatable fields of the type
+    metatable_fields: {TypeField},
 }
 
 --- A type field used within table types. The foo: number in { foo: number }.
@@ -225,11 +233,6 @@ type TypeFieldType = {
         type: "TypeOf",
         data: string,
     },
-
-    --- Tries to merge two types together returning a new typefieldtype.
-    ---
-    --- Works on Tables and Tuples only
-    merge: (self: TypeFieldType, other: TypeFieldType) -> TypeFieldType?,
 
     --- Recursively find the inner set of types that compose/make up a TypeFieldType
     unwind: (self: TypeFieldType) -> {TypeFieldType},

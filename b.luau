@@ -4,9 +4,20 @@ export type c = {}
 -- Meow
 export type a = typeof(setmetatable({} :: {
   -- Nanos
-  nanos: number
+  nanos: number,
+  -- Table
+  a: {
+    b: string, c: string,
+    d: string, e: string,
+  },
+
+  -- Catnip
+  __meow: string
 }, {} :: {
     __add: (
+        a: a, b: a
+    ) -> a,
+    __sub: (
         a: a, b: a
     ) -> a
 }))

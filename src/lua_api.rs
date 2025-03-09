@@ -328,14 +328,13 @@ impl LuaUserData for TypeDefType {
 
                     ("Table", fields.into_lua(lua)?)
                 }
-                crate::type_gen::TypeDefType::TypeOfSetMetatable { ref fields } => {
-                    let fields = fields
-                        .iter()
-                        .map(|t| TypeField { inner: t.clone() })
-                        .collect::<Vec<_>>();
-
-                    ("TypeOfSetMetatable", fields.into_lua(lua)?)
-                }
+                crate::type_gen::TypeDefType::TypeOfSetMetatable { ref type_info } => (
+                    "TypeOfSetMetatable",
+                    TypeDefTypeTypeofSetMetatable {
+                        inner: type_info.clone(),
+                    }
+                    .into_lua(lua)?,
+                ),
                 crate::type_gen::TypeDefType::Uncategorized { ref type_info } => (
                     "Uncategorized",
                     TypeFieldType {
@@ -350,6 +349,34 @@ impl LuaUserData for TypeDefType {
             tab.set("data", variant_data)?;
 
             Ok(tab)
+        });
+    }
+}
+
+pub struct TypeDefTypeTypeofSetMetatable {
+    pub inner: crate::type_gen::TypeDefTypeTypeofSetMetatable,
+}
+
+impl LuaUserData for TypeDefTypeTypeofSetMetatable {
+    fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
+        fields.add_field_method_get("fields", |_lua, this| {
+            let fields = this
+                .inner
+                .fields
+                .iter()
+                .map(|t| TypeField { inner: t.clone() })
+                .collect::<Vec<_>>();
+            Ok(fields)
+        });
+
+        fields.add_field_method_get("metatable_fields", |_lua, this| {
+            let fields = this
+                .inner
+                .metatable_fields
+                .iter()
+                .map(|t| TypeField { inner: t.clone() })
+                .collect::<Vec<_>>();
+            Ok(fields)
         });
     }
 }
@@ -462,23 +489,6 @@ impl LuaUserData for TypeFieldType {
 
             Ok(tab)
         });
-
-        // Tries to merge two types together returning a new typefieldtype
-        //
-        // Works on Tables and Tuples only
-        methods.add_method(
-            "merge",
-            |_, this: &TypeFieldType, other: LuaUserDataRef<TypeFieldType>| {
-                let merged =
-                    crate::type_gen::TypeFieldType::merge(this.inner.clone(), other.inner.clone());
-
-                if let Some(merged) = merged {
-                    Ok(TypeFieldType { inner: merged })
-                } else {
-                    Err(LuaError::external("Cannot merge types"))
-                }
-            },
-        );
 
         // Recursively find the inner set of types that compose/make up a TypeFieldType
         methods.add_method("unwind", |_, this, _g: ()| {
