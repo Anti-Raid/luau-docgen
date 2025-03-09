@@ -296,7 +296,9 @@ local ast: TypeSet, _globals: Globals = ...
 
 for typ in ast:iter_all() do
     assert(typ:extract().type == "TypeDef" or typ:extract().type == "Function")
-    print(typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n")
+
+    print("# " .. typ:name() .. "\n")
+    print("## Raw Type\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
 end
 
 --[[
