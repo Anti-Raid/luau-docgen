@@ -3,7 +3,7 @@ mod token_ref_extractor;
 mod token_ref_extractor_v2;
 mod type_gen;
 use full_moon::{parse_fallible, visitors::Visitor};
-use lua_api::TypeSet;
+use lua_api::{Globals, TypeSet};
 use mlua::prelude::*;
 use mlua_scheduler::XRc;
 use std::{path::PathBuf, time::Duration};
@@ -112,24 +112,6 @@ fn main() {
             mlua_scheduler::userdata::patch_coroutine_lib(&lua)
                 .expect("Failed to patch coroutine lib");
 
-            lua.globals()
-                .set(
-                    "prettyprint",
-                    lua.create_function(|_, values: LuaMultiValue| {
-                        if !values.is_empty() {
-                            Ok(values
-                                .iter()
-                                .map(|value| format!("{:#?}", value))
-                                .collect::<Vec<_>>()
-                                .join("\t"))
-                        } else {
-                            Ok("nil".to_string())
-                        }
-                    })
-                    .expect("Failed to create prettyprint function"),
-                )
-                .expect("Failed to set prettyprint global");
-
             lua.sandbox(true).expect("Sandboxed VM"); // Sandbox VM
 
             let f = lua
@@ -139,7 +121,7 @@ fn main() {
 
             let th = lua.create_thread(f)?;
 
-            let args = TypeSet::new(type_visitor.found_types)
+            let args = (TypeSet::new(type_visitor.found_types), Globals {})
                 .into_lua_multi(&lua)
                 .expect("Failed to convert TypeSet to LuaMultiValue");
 
