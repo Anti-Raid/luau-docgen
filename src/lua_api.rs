@@ -400,14 +400,16 @@ impl LuaUserData for TypeField {
     }
 
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("string_repr", |_, this, _g: ()| {
-            Ok(this.inner.string_repr())
+        methods.add_method("string_repr", |_, this, depth: Option<usize>| {
+            Ok(this.inner.string_repr(depth.unwrap_or_default()))
         });
 
         methods.add_method(
             "string_repr_with_pats",
-            |_, this, comment_write_pat: String| {
-                let name = this.inner.string_repr_with_pats(&comment_write_pat);
+            |_, this, (comment_write_pat, depth): (String, Option<usize>)| {
+                let name = this
+                    .inner
+                    .string_repr_with_pats(&comment_write_pat, depth.unwrap_or_default());
                 Ok(name)
             },
         );
@@ -516,8 +518,8 @@ impl LuaUserData for TypeFieldType {
             Ok(unwinded)
         });
 
-        methods.add_method("string_repr", |_, this, _g: ()| {
-            Ok(this.inner.string_repr())
+        methods.add_method("string_repr", |_, this, depth: Option<usize>| {
+            Ok(this.inner.string_repr(depth.unwrap_or_default()))
         });
     }
 }

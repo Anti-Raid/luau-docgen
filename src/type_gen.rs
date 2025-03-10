@@ -42,12 +42,12 @@ impl TypedArgument {
     pub fn string_repr(&self, with_punctuation: bool) -> String {
         let mut v = if let Some(ref name) = self.name {
             if let Some(ref typ) = self.typ {
-                format!("{}: {}", name, typ.string_repr())
+                format!("{}: {}", name, typ.string_repr(0))
             } else {
                 name.to_string()
             }
         } else if let Some(ref typ) = self.typ {
-            typ.string_repr()
+            typ.string_repr(0)
         } else {
             "".to_string()
         };
@@ -199,7 +199,7 @@ impl TypeFieldTypeGeneric {
         let generics_str = self
             .generics
             .iter()
-            .map(|g| g.string_repr())
+            .map(|g| g.string_repr(0))
             .collect::<Vec<_>>()
             .join(", ");
         format!("{}<{}>", self.base, generics_str)
@@ -225,7 +225,7 @@ impl TypeFieldTypeModule {
             } else {
                 let generics_str = generics
                     .iter()
-                    .map(|g| g.string_repr())
+                    .map(|g| g.string_repr(0))
                     .collect::<Vec<_>>()
                     .join(", ");
                 format!("{}.{}<{}>", self.module, self.base, generics_str)
@@ -257,7 +257,7 @@ impl TypeFieldTypeFunction {
             .map(|arg| arg.string_repr(false))
             .collect::<Vec<_>>()
             .join(", ");
-        format!("({}) -> {}", args_str, self.ret.string_repr())
+        format!("({}) -> {}", args_str, self.ret.string_repr(0))
     }
 }
 
@@ -333,30 +333,25 @@ impl TypeFieldType {
     /// Returns the string representation of a type field type
     ///
     /// @public_api
-    pub fn string_repr(&self) -> String {
-        self._string_repr(0)
-    }
-
-    /// Helper method for string_repr
-    fn _string_repr(&self, depth: usize) -> String {
+    pub fn string_repr(&self, depth: usize) -> String {
         match self {
             TypeFieldType::Basic(name) => name.clone(),
             TypeFieldType::String(name) => name.clone(),
             TypeFieldType::Boolean(name) => name.to_string(),
-            TypeFieldType::Array(inner) => format!("{{{}}}", inner._string_repr(depth + 1)),
-            TypeFieldType::Variadic(inner) => format!("...{}", inner._string_repr(depth + 1)),
+            TypeFieldType::Array(inner) => format!("{{{}}}", inner.string_repr(depth)),
+            TypeFieldType::Variadic(inner) => format!("...{}", inner.string_repr(depth)),
             TypeFieldType::Generic(generic_field_type) => generic_field_type.string_repr(),
             TypeFieldType::GenericPack(name) => name.clone(),
             TypeFieldType::Module(tftm) => tftm.string_repr(),
             TypeFieldType::UnknownModule(name) => name.clone(),
             TypeFieldType::TypeOf(contents) => contents.clone(),
-            TypeFieldType::Optional(inner) => format!("{}?", inner._string_repr(depth + 1)),
+            TypeFieldType::Optional(inner) => format!("{}?", inner.string_repr(depth)),
             TypeFieldType::Function(func) => func.string_repr(),
             TypeFieldType::Table(fields) => {
                 let fields_str = fields
                     .iter()
                     .map(|f| {
-                        f._string_repr_with_pats(
+                        f.string_repr_with_pats(
                             format!("\n{}", "\t".repeat(depth + 2)).as_str(),
                             depth + 1,
                         )
@@ -374,7 +369,7 @@ impl TypeFieldType {
             TypeFieldType::Tuple(types) => {
                 let types_str = types
                     .iter()
-                    .map(|t| t.string_repr())
+                    .map(|t| t.string_repr(depth))
                     .collect::<Vec<_>>()
                     .join(", ");
                 format!("({})", types_str)
@@ -383,7 +378,7 @@ impl TypeFieldType {
             TypeFieldType::Union(types) => {
                 let types_str = types
                     .iter()
-                    .map(|t| t.string_repr())
+                    .map(|t| t.string_repr(depth))
                     .collect::<Vec<_>>()
                     .join(" | ");
                 types_str
@@ -391,7 +386,7 @@ impl TypeFieldType {
             TypeFieldType::Intersection(types) => {
                 let types_str = types
                     .iter()
-                    .map(|t| t.string_repr())
+                    .map(|t| t.string_repr(depth))
                     .collect::<Vec<_>>()
                     .join(" & ");
                 types_str
@@ -580,7 +575,7 @@ impl TypeField {
                 format!(
                     "{}{}{}",
                     extract_name_from_tokenref(start_bracket),
-                    TypeFieldType::from_luau_typeinfo(inner).string_repr(),
+                    TypeFieldType::from_luau_typeinfo(inner).string_repr(0),
                     extract_name_from_tokenref(end_bracket)
                 )
             }
@@ -626,7 +621,7 @@ impl TypeField {
     }
 
     /// @public_api
-    pub fn string_repr(&self) -> String {
+    pub fn string_repr(&self, depth: usize) -> String {
         let mut repr = String::new();
 
         for comment in &self.comments {
@@ -637,18 +632,14 @@ impl TypeField {
             repr,
             "{}: {}",
             self.field_name,
-            self.field_type.string_repr()
+            self.field_type.string_repr(depth)
         )
         .unwrap();
         repr
     }
 
     /// @public_api
-    pub fn string_repr_with_pats(&self, comment_write_pat: &str) -> String {
-        self._string_repr_with_pats(comment_write_pat, 0)
-    }
-
-    fn _string_repr_with_pats(&self, comment_write_pat: &str, depth: usize) -> String {
+    pub fn string_repr_with_pats(&self, comment_write_pat: &str, depth: usize) -> String {
         let mut repr = String::new();
 
         for comment in &self.comments {
@@ -660,7 +651,7 @@ impl TypeField {
             repr,
             "{}: {}",
             self.field_name,
-            self.field_type._string_repr(depth)
+            self.field_type.string_repr(depth)
         )
         .unwrap();
         repr
@@ -776,7 +767,7 @@ impl Type {
                     TypeDefType::Table { fields } => {
                         let fields_str = fields
                             .iter()
-                            .map(|f| f.string_repr())
+                            .map(|f| f.string_repr(0))
                             .collect::<Vec<_>>()
                             .join(",\n\t");
 
@@ -787,7 +778,7 @@ impl Type {
                         let mut fields_str = type_info
                             .fields
                             .iter()
-                            .map(|f| f.string_repr())
+                            .map(|f| f.string_repr(0))
                             .collect::<Vec<_>>()
                             .join(",\n\t");
 
@@ -796,7 +787,7 @@ impl Type {
                         let metatable_fields_str = type_info
                             .metatable_fields
                             .iter()
-                            .map(|f| f.string_repr())
+                            .map(|f| f.string_repr(0))
                             .collect::<Vec<_>>()
                             .join(",\n\t");
 
@@ -810,7 +801,7 @@ impl Type {
                             repr,
                             "type {} = {{\n\t{}\n}}",
                             inner.name,
-                            type_info.string_repr(),
+                            type_info.string_repr(0),
                         )
                         .expect("Failed to write type to string");
                     }
@@ -853,7 +844,7 @@ impl Type {
 
                 repr.push(')');
                 if let Some(ref ret) = inner.ret {
-                    write!(repr, " -> {}", ret.string_repr())
+                    write!(repr, " -> {}", ret.string_repr(0))
                         .expect("Failed to write return type to string");
                 }
                 repr.push_str(" end");
@@ -880,7 +871,7 @@ impl Type {
                     TypeDefType::Table { fields } => {
                         let fields_str = fields
                             .iter()
-                            .map(|f| f.string_repr())
+                            .map(|f| f.string_repr(0))
                             .collect::<Vec<_>>()
                             .join(fields_join_pat);
 
@@ -891,7 +882,7 @@ impl Type {
                         let mut fields_str = type_info
                             .fields
                             .iter()
-                            .map(|f| f.string_repr())
+                            .map(|f| f.string_repr(0))
                             .collect::<Vec<_>>()
                             .join(fields_join_pat);
 
@@ -900,7 +891,7 @@ impl Type {
                         let metatable_fields_str = type_info
                             .metatable_fields
                             .iter()
-                            .map(|f| f.string_repr())
+                            .map(|f| f.string_repr(0))
                             .collect::<Vec<_>>()
                             .join(",\n\t");
 
@@ -914,7 +905,7 @@ impl Type {
                             repr,
                             "type {} = {{\n\t{}\n}}",
                             inner.name,
-                            type_info.string_repr(),
+                            type_info.string_repr(0),
                         )
                         .expect("Failed to write type to string");
                     }
@@ -957,7 +948,7 @@ impl Type {
 
                 repr.push(')');
                 if let Some(ref ret) = inner.ret {
-                    write!(repr, " -> {}", ret.string_repr())
+                    write!(repr, " -> {}", ret.string_repr(0))
                         .expect("Failed to write return type to string");
                 }
                 repr.push_str(" end");
