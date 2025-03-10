@@ -1,5 +1,3 @@
---!strict
-
 -- Creates the actual documentation. The code here can be modified to change the template used 
 
 --- E.g.
@@ -7,7 +5,7 @@
 --- @my_special_comment -> typ="my_special_comment", data=""
 --- @my_special_comment my comment -> typ="my_special_comment", data="my comment"
 --- @my_special_comment my comment1 my comment2 -> typ="my_special_comment", data="my comment1 my comment2"
-type InnerComment = {
+export type InnerComment = {
     comment_type: "Special",
     --- The type of the special comment
     typ: string,
@@ -19,23 +17,43 @@ type InnerComment = {
     data: string,
 }
 
---- Contains a parsed list of comments
-type Comment = {
+--- Contains a parsed list of comments from globals.parsecomments
+export type Comment = {
     --- List of comments (in order of appearance)
     comments: {InnerComment},
 }
 
+--- Contains a single parsed argument from globals.parsedocumentorargs
+export type ParsedArg = {
+    --- The name of the argument
+    name: string,
+    --- The values passed to the argument
+    values: {string},
+    --- Whether the argument is short (-a) or long (--abc)
+    short: boolean,
+}
+
+--- Contains a parsed list of arguments from globals.parsedocumentorargs
+export type ParsedArgs = {
+    --- List of arguments (in order of appearance)
+    args: {ParsedArg},
+}
+
 --- Globals
-type Globals = {
+export type Globals = {
+    --- Documentor args
+    documentor_args: {string},
     --- Pretty prints a value
     prettyprint: (...any) -> string,
     --- Parse a comment block
     parsecomments: (comments: {string}, ignore_nondoc: boolean?) -> Comment,
+    --- Parse documentor args
+    parsedocumentorargs: (args: {string}) -> ParsedArgs,
 }
 
-type TypeIterator = (() -> Type)
+export type TypeIterator = (() -> Type)
 
-type TypeSet = {
+export type TypeSet = {
     --- the raw types of the type set as a table
     dbg__raw_types_table: any,
     --- the raw types in the type set as userdata
@@ -49,7 +67,7 @@ type TypeSet = {
 }
 
 --- A documentable type 
-type Type = {
+export type Type = {
     --- the inner data of the type
     dbg__inner: any,
     --- Extract out the type and variant name
@@ -73,7 +91,7 @@ type Type = {
 }
 
 --- A type definition
-type TypeDef = {
+export type TypeDef = {
     dbg__inner: any,
     --- Name of the typedef
     name: string,
@@ -88,7 +106,7 @@ type TypeDef = {
 }
 
 --- A type function
-type TypeFunction = {
+export type TypeFunction = {
     --- the inner data of the type
     dbg__inner: any,
     --- Name of the function
@@ -108,7 +126,7 @@ type TypeFunction = {
 }
 
 --- specifialized type definition type information
-type TypeDefType = {
+export type TypeDefType = {
     --- Extract out the type and variant name
     extract: (self: TypeDefType) -> {
         type: "Table",
@@ -123,7 +141,7 @@ type TypeDefType = {
 }
 
 --- Inner data of a TypeOf SetMetatable declaration
-type TypeDefTypeTypeofSetMetatable = {
+export type TypeDefTypeTypeofSetMetatable = {
     --- The fields of the type
     fields: {TypeField},
     --- The metatable fields of the type
@@ -131,7 +149,7 @@ type TypeDefTypeTypeofSetMetatable = {
 }
 
 --- A type field used within table types. The foo: number in { foo: number }.
-type TypeField = {
+export type TypeField = {
     --- The string representation of the type field
     repr: string,
     --- The comments associated with the type field
@@ -147,7 +165,7 @@ type TypeField = {
 }
 
 --- Compact type information (Any type, such as string, boolean?, number | boolean, etc)
-type TypeFieldType = {
+export type TypeFieldType = {
     --- Extract out the type and variant name
     extract: (self: TypeFieldType) -> 
     -- A basic primitive type (string, number, etc)
@@ -248,7 +266,7 @@ type TypeFieldType = {
 }
 
 --- A typed argument with an optional name and typ
-type TypedArgument = {
+export type TypedArgument = {
     --- The name of the argument (may be null with arguments like bare ...number)
     name: string?,
     --- The type of the argument (may be null with generics without a default type)
@@ -264,7 +282,7 @@ type TypedArgument = {
 }
 
 --- Inner data of a Function TypeFieldType
-type TypeFieldTypeFunction = {
+export type TypeFieldTypeFunction = {
     --- The arguments of the function
     args: {TypedArgument},
     --- The return type of the function
@@ -276,7 +294,7 @@ type TypeFieldTypeFunction = {
 --- Inner data of a Generic TypeFieldType
 --- 
 --- A type using generics, such as map<number, string> [base<generic 1, generic 2...>]
-type TypeFieldTypeGeneric = {
+export type TypeFieldTypeGeneric = {
     --- The base type name of the generic type field
     base: string,
     --- The generic arguments of the type
@@ -288,7 +306,7 @@ type TypeFieldTypeGeneric = {
 --- Inner data of a Module TypeFieldType
 ---
 --- A type coming from a module, such as module.Foo
-type TypeFieldTypeModule = {
+export type TypeFieldTypeModule = {
     --- The module name of the type
     module: string,
     --- The base type name of the module
@@ -299,70 +317,4 @@ type TypeFieldTypeModule = {
     string_repr: (self: TypeFieldTypeModule) -> string,
 }
 
--- Begin of documentation generation actual code
-local ast: TypeSet, globals: Globals = ...
-local output = "" -- Final output string
-
-type ConvertCommentResponse = {
-    output: string,
-    skip: boolean
-}
-
-local function convertComments(typecomments: {string}): ConvertCommentResponse 
-    -- Modify this function to change how special comments are converted to markdown
-    local _specialcommentmap = {
-        warning = function(output: ConvertCommentResponse, data: string)
-            output.output ..= "<div class=\"warning\">\n" .. data .. "\n</div>\n"
-        end,
-        skip = function(output: ConvertCommentResponse, data: string)
-            output.skip = true
-        end,
-    }
-
-    local comments = globals.parsecomments(typecomments, true)
-
-    local output: ConvertCommentResponse = {
-        output = "",
-        skip = false,
-    }
-
-    for _, comment in comments.comments do 
-        if comment.comment_type == "Normal" then
-            output.output ..= comment.data .. "\n"
-        elseif comment.comment_type == "Special" then
-            local data = comment.data
-            local typ = comment.typ
-            if _specialcommentmap[typ] then
-                _specialcommentmap[typ](output, data)
-            else
-                output.output ..= "@" .. typ .. " " .. data .. "\n" -- Readd the comment if no special comment handler is found
-            end
-        end
-    end
-
-    return output
-end
-
-for typ in ast:iter_typedefs() do
-    local convComments = convertComments(typ:type_comments())
-
-    if convComments.skip then
-        continue -- Ignore explicitly skipped types
-    end
-
-    output ..= ("# " .. typ:name() .. "\n\n" .. convComments.output .. "\n")
-    output ..= ("## Raw Type\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
-end
-
-for typ in ast:iter_functions() do
-    local convComments = convertComments(typ:type_comments())
-
-    if convComments.skip then
-        continue -- Ignore explicitly skipped types
-    end
-
-    output ..= ("# " .. typ:name() .. "\n\n" .. convComments.output .. "\n")
-    output ..= ("## Function Signature\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
-end
-
-return output
+return {}

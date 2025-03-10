@@ -1,3 +1,4 @@
+mod args;
 mod comments;
 mod lua_api;
 mod token_ref_extractor;
@@ -5,13 +6,14 @@ mod token_ref_extractor_v2;
 mod type_gen;
 
 use full_moon::{parse_fallible, visitors::Visitor};
+use include_dir::{Dir, include_dir};
 use lua_api::{Globals, TypeSet};
 use mlua::prelude::*;
 use mlua_scheduler::XRc;
 use std::{path::PathBuf, time::Duration};
 use type_gen::TypeBlockVisitor;
 
-pub static DEFAULT_DOCUMENTOR: &str = include_str!("documentor.luau");
+pub static BUILTINS: Dir = include_dir!("$CARGO_MANIFEST_DIR/src/builtins");
 
 #[derive(Debug, clap::Parser)]
 struct CliArgs {
@@ -34,6 +36,9 @@ struct CliArgs {
     ///
     /// Defaults to false
     include_nonexported_types: bool,
+
+    #[arg(trailing_var_arg = true, allow_hyphen_values = true, hide = true)]
+    args: Vec<String>,
 }
 
 fn main() {
@@ -83,7 +88,12 @@ fn main() {
             std::process::exit(1);
         })
     } else {
-        DEFAULT_DOCUMENTOR.to_string()
+        BUILTINS
+            .get_file("documentor.luau")
+            .expect("Failed to get documentor.luau")
+            .contents_utf8()
+            .expect("Failed to get documentor.luau contents as UTF-8")
+            .to_string()
     };
 
     // Create tokio runtime and use spawn_local
@@ -137,6 +147,39 @@ fn main() {
             mlua_scheduler::userdata::patch_coroutine_lib(&lua)
                 .expect("Failed to patch coroutine lib");
 
+            lua.globals()
+                .set(
+                    "require",
+                    lua.create_function(|lua, pat: String| {
+                        let mut pat = pat.trim_start_matches("./").to_string();
+
+                        if !pat.ends_with(".luau") {
+                            pat = format!("{}.luau", pat);
+                        }
+
+                        // Get required file from builtins
+                        if let Some(file) = BUILTINS.get_file(&pat) {
+                            let file_contents = file
+                                .contents_utf8()
+                                .ok_or_else(|| {
+                                    LuaError::external(format!(
+                                        "Failed to get {} contents as UTF-8",
+                                        pat
+                                    ))
+                                })?
+                                .to_string();
+
+                            // Execute the file
+                            lua.load(file_contents)
+                                .set_name(&pat)
+                                .eval::<LuaMultiValue>()
+                        } else {
+                            Err(LuaError::external(format!("Failed to get {}", pat)))
+                        }
+                    })?,
+                )
+                .expect("Failed to set require global");
+
             lua.sandbox(true).expect("Sandboxed VM"); // Sandbox VM
 
             let f = lua
@@ -146,7 +189,12 @@ fn main() {
 
             let th = lua.create_thread(f)?;
 
-            let args = (TypeSet::new(type_visitor.found_types), Globals {})
+            let args = (
+                TypeSet::new(type_visitor.found_types),
+                Globals {
+                    documentor_args: args.args,
+                },
+            )
                 .into_lua_multi(&lua)
                 .expect("Failed to convert TypeSet to LuaMultiValue");
 

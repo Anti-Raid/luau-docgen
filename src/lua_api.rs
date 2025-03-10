@@ -3,9 +3,17 @@
 use mlua::prelude::*;
 use std::{cell::RefCell, rc::Rc};
 
-pub struct Globals {}
+pub struct Globals {
+    pub documentor_args: Vec<String>,
+}
 
 impl LuaUserData for Globals {
+    fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
+        fields.add_field_method_get("documentor_args", |lua, this| {
+            lua.to_value(&this.documentor_args)
+        });
+    }
+
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
         methods.add_function("prettyprint", |_lua, values: LuaMultiValue| {
             if !values.is_empty() {
@@ -29,6 +37,15 @@ impl LuaUserData for Globals {
                 let comment =
                     crate::comments::parse_comments(comments, ignore_nondoc.unwrap_or(false));
                 lua.to_value(&comment)
+            },
+        );
+
+        methods.add_function(
+            "parsedocumentorargs",
+            |lua, documentor_args: Vec<String>| {
+                // Parse a comment block
+                let pargs = crate::args::parse_args(documentor_args);
+                lua.to_value(&pargs)
             },
         );
     }
