@@ -16,6 +16,7 @@ export type a = typeof(setmetatable({} :: {
 
     --- Hello
     f: {
+      -- World
       g: boolean
     },
 
@@ -42,4 +43,14 @@ function a<T>()
     return 1
   end
   return 2 + 2
+end
+
+--- @export
+local foo: {
+  bar: () -> string
+} = {}
+
+--- Help
+function foo.bar() 
+  return "Hello"
 end

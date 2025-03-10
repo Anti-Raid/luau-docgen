@@ -7,7 +7,7 @@ use full_moon::{
         Call, Expression, FunctionArgs, FunctionBody, LocalFunction, Parameter, Prefix, Suffix,
         luau::{
             ExportedTypeDeclaration, GenericDeclaration, GenericParameterInfo, IndexedTypeInfo,
-            TypeField as LuauTypeField, TypeFieldKey, TypeInfo,
+            TypeDeclaration, TypeField as LuauTypeField, TypeFieldKey, TypeInfo,
         },
         punctuated::Pair,
     },
@@ -43,15 +43,15 @@ impl TypedArgument {
         let mut v = if let Some(ref name) = self.name {
             if let Some(ref typ) = self.typ {
                 if is_generic {
-                    format!("{} = {}", name, typ.string_repr(0))
+                    format!("{} = {}", name, typ.string_repr(1))
                 } else {
-                    format!("{}: {}", name, typ.string_repr(0))
+                    format!("{}: {}", name, typ.string_repr(1))
                 }
             } else {
                 name.to_string()
             }
         } else if let Some(ref typ) = self.typ {
-            typ.string_repr(0)
+            typ.string_repr(1)
         } else {
             "".to_string()
         };
@@ -261,7 +261,7 @@ impl TypeFieldTypeFunction {
             .map(|arg| arg.string_repr(false, false))
             .collect::<Vec<_>>()
             .join(", ");
-        format!("({}) -> {}", args_str, self.ret.string_repr(0))
+        format!("({}) -> {}", args_str, self.ret.string_repr(1))
     }
 }
 
@@ -356,18 +356,18 @@ impl TypeFieldType {
                     .iter()
                     .map(|f| {
                         f.string_repr_with_pats(
-                            format!("\n{}", "\t".repeat(depth + 2)).as_str(),
+                            format!("\n{}", "\t".repeat(depth + 1)).as_str(),
                             depth + 1,
                         )
                     })
                     .collect::<Vec<_>>()
-                    .join(&format!(",\n\n{}", "\t".repeat(depth + 2)));
+                    .join(&format!(",\n\n{}", "\t".repeat(depth + 1)));
 
                 format!(
                     "{{\n{}{}\n{}}}",
-                    "\t".repeat(depth + 2),
+                    "\t".repeat(depth + 1),
                     fields_str,
-                    "\t".repeat(depth + 1)
+                    "\t".repeat(depth)
                 )
             }
             TypeFieldType::Tuple(types) => {
@@ -579,7 +579,7 @@ impl TypeField {
                 format!(
                     "{}{}{}",
                     extract_name_from_tokenref(start_bracket),
-                    TypeFieldType::from_luau_typeinfo(inner).string_repr(0),
+                    TypeFieldType::from_luau_typeinfo(inner).string_repr(1),
                     extract_name_from_tokenref(end_bracket)
                 )
             }
@@ -795,7 +795,7 @@ impl Type {
                     TypeDefType::Table { fields } => {
                         let fields_str = fields
                             .iter()
-                            .map(|f| f.string_repr(0))
+                            .map(|f| f.string_repr(1))
                             .collect::<Vec<_>>()
                             .join(fields_join_pat);
 
@@ -806,7 +806,7 @@ impl Type {
                         let mut fields_str = type_info
                             .fields
                             .iter()
-                            .map(|f| f.string_repr(0))
+                            .map(|f| f.string_repr(1))
                             .collect::<Vec<_>>()
                             .join(fields_join_pat);
 
@@ -815,7 +815,7 @@ impl Type {
                         let metatable_fields_str = type_info
                             .metatable_fields
                             .iter()
-                            .map(|f| f.string_repr(0))
+                            .map(|f| f.string_repr(1))
                             .collect::<Vec<_>>()
                             .join(",\n\t");
 
@@ -825,13 +825,8 @@ impl Type {
                             .expect("Failed to write type to string");
                     }
                     TypeDefType::Uncategorized { type_info } => {
-                        write!(
-                            repr,
-                            "type {} = {{\n\t{}\n}}",
-                            inner.name,
-                            type_info.string_repr(0),
-                        )
-                        .expect("Failed to write type to string");
+                        write!(repr, "{}", type_info.string_repr(1),)
+                            .expect("Failed to write type to string");
                     }
                 }
 
@@ -871,7 +866,7 @@ impl Type {
                 write!(repr, "({})", func_args).expect("Failed to write arguments to string");
 
                 if let Some(ref ret) = inner.ret {
-                    write!(repr, " -> {}", ret.string_repr(0))
+                    write!(repr, " -> {}", ret.string_repr(1))
                         .expect("Failed to write return type to string");
                 }
                 repr.push_str(" end");
@@ -892,15 +887,18 @@ impl Type {
 #[derive(Debug, Clone)]
 pub struct TypeBlockVisitor {
     pub found_types: Vec<Type>,
+    pub include_nonexported_types: bool,
+    pub unsupported_count: usize,
 }
 
 impl TypeBlockVisitor {
-    pub fn warn_unsupported(&self, msg: &str) {
+    pub fn warn_unsupported(&mut self, msg: &str) {
         eprintln!("Warning [unsupported feature]: {}", msg);
+        self.unsupported_count += 1;
     }
 
     pub fn create_typed_arguments_from_generic_declaration(
-        &self,
+        &mut self,
         generic: &GenericDeclaration,
     ) -> Vec<TypedArgument> {
         let mut generics = Vec::with_capacity(generic.generics().len());
@@ -927,7 +925,7 @@ impl TypeBlockVisitor {
     }
 
     pub fn create_type_from_function<T: TokenReferenceExtractor>(
-        &self,
+        &mut self,
         node: &T,
         name: String,
         body: &FunctionBody,
@@ -1006,40 +1004,19 @@ impl TypeBlockVisitor {
             .into(),
         }
     }
-}
 
-impl Visitor for TypeBlockVisitor {
-    fn visit_function_declaration(&mut self, node: &full_moon::ast::FunctionDeclaration) {
-        let node_names = node.name().to_string();
-        self.found_types.push(self.create_type_from_function(
-            node,
-            node_names,
-            node.body(),
-            FunctionType::Normal,
-        ));
-    }
-
-    fn visit_local_function(&mut self, node: &LocalFunction) {
-        self.found_types.push(self.create_type_from_function(
-            node,
-            extract_name_from_tokenref(node.name()),
-            node.body(),
-            FunctionType::Local,
-        ));
-    }
-
-    fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
+    pub fn create_type_from_type_decl(&mut self, node: &TypeDeclaration) -> Option<Type> {
         // Get type repr
         let type_repr = node.to_string();
 
         // Get node type name
-        let name = extract_name_from_tokenref(node.type_declaration().type_name());
+        let name = extract_name_from_tokenref(node.type_name());
 
         // Get node trivia
         let comments = node.get_surrounding_trivia();
 
         // Get generics
-        let generics = if let Some(generic) = node.type_declaration().generics() {
+        let generics = if let Some(generic) = node.generics() {
             self.create_typed_arguments_from_generic_declaration(generic)
         } else {
             Vec::with_capacity(0)
@@ -1047,7 +1024,7 @@ impl Visitor for TypeBlockVisitor {
 
         // For now, we only want the actual type declarations (not aliases etc)
         //println!("{:?}", node.type_declaration().type_definition());
-        match node.type_declaration().type_definition() {
+        match node.type_definition() {
             TypeInfo::Table {
                 fields: tfields, ..
             } => {
@@ -1065,7 +1042,7 @@ impl Visitor for TypeBlockVisitor {
                     }
                 }
 
-                self.found_types.push(Type::TypeDef {
+                return Some(Type::TypeDef {
                     inner: TypeDef {
                         name,
                         generics,
@@ -1075,7 +1052,6 @@ impl Visitor for TypeBlockVisitor {
                     }
                     .into(),
                 });
-                return;
             }
             TypeInfo::Typeof { inner, .. } => {
                 #[allow(clippy::single_match)]
@@ -1088,7 +1064,7 @@ impl Visitor for TypeBlockVisitor {
                             self.warn_unsupported(
                                 "Only simple typeof setmetatable cases are supported!",
                             );
-                            return;
+                            return None;
                         };
 
                         if extract_name_from_tokenref(s) == "setmetatable" {
@@ -1104,8 +1080,8 @@ impl Visitor for TypeBlockVisitor {
                                             Call::MethodCall(mc) => mc.args(),
                                             _ => {
                                                 self.warn_unsupported(
-                                                    "Only simple typeof setmetatable cases [Call unsupported] are supported!",
-                                                );
+                                                            "Only simple typeof setmetatable cases [Call unsupported] are supported!",
+                                                        );
                                                 continue;
                                             }
                                         };
@@ -1125,19 +1101,19 @@ impl Visitor for TypeBlockVisitor {
                                             }
                                             FunctionArgs::String(_) => {
                                                 self.warn_unsupported(
-                                                    "Only simple typeof setmetatable cases [String unsupported] are supported!",
-                                                );
+                                                            "Only simple typeof setmetatable cases [String unsupported] are supported!",
+                                                        );
                                                 continue;
                                             }
                                             FunctionArgs::TableConstructor(_) => {
                                                 self.warn_unsupported(
-                                                    "Only simple typeof setmetatable cases [TableConstructor unsupported] are supported!",
-                                                );
+                                                            "Only simple typeof setmetatable cases [TableConstructor unsupported] are supported!",
+                                                        );
                                             }
                                             _ => {
                                                 self.warn_unsupported(
-                                                    "Only simple typeof setmetatable cases [FunctionArgs unsupported] are supported!",
-                                                );
+                                                            "Only simple typeof setmetatable cases [FunctionArgs unsupported] are supported!",
+                                                        );
                                                 continue;
                                             }
                                         };
@@ -1154,8 +1130,8 @@ impl Visitor for TypeBlockVisitor {
                                                 TypeFieldType::Table(ref fields) => fields.to_vec(),
                                                 _ => {
                                                     self.warn_unsupported(
-                                                        "Only simple typeof setmetatable cases [non-table TypeFieldType unsupported] are supported!",
-                                                    );
+                                                                "Only simple typeof setmetatable cases [non-table TypeFieldType unsupported] are supported!",
+                                                            );
                                                     continue;
                                                 }
                                             };
@@ -1188,7 +1164,7 @@ impl Visitor for TypeBlockVisitor {
                             }
 
                             if let Some(typ) = typ {
-                                self.found_types.push(Type::TypeDef {
+                                return Some(Type::TypeDef {
                                     inner: TypeDef {
                                         repr: type_repr,
                                         name,
@@ -1200,7 +1176,6 @@ impl Visitor for TypeBlockVisitor {
                                     }
                                     .into(),
                                 });
-                                return;
                             }
                         }
                     }
@@ -1210,112 +1185,54 @@ impl Visitor for TypeBlockVisitor {
             _ => {}
         };
 
-        self.found_types.push(
-            // Go default on type definition if not specially supported
-            Type::TypeDef {
-                inner: TypeDef {
-                    name,
-                    generics,
-                    type_comments: comments,
-                    type_def_type: TypeDefType::Uncategorized {
-                        type_info: TypeFieldType::from_luau_typeinfo(
-                            node.type_declaration().type_definition(),
-                        ),
-                    },
-                    repr: type_repr,
-                }
-                .into(),
-            },
-        );
+        // Go default on type definition if not specially supported
+        Some(Type::TypeDef {
+            inner: TypeDef {
+                name,
+                generics,
+                type_comments: comments,
+                type_def_type: TypeDefType::Uncategorized {
+                    type_info: TypeFieldType::from_luau_typeinfo(node.type_definition()),
+                },
+                repr: type_repr,
+            }
+            .into(),
+        })
     }
 }
 
-/// E.g.
-///
-/// @my_special_comment -> typ="my_special_comment", data=""
-/// @my_special_comment my comment -> typ="my_special_comment", data="my comment"
-/// @my_special_comment my comment1 my comment2 -> typ="my_special_comment", data="my comment1 my comment2"
-#[derive(PartialEq, Eq, Debug, Clone, serde::Serialize, serde::Deserialize)]
-#[serde(tag = "comment_type")]
-pub enum InnerComment {
-    Normal { data: String },
-    Special { typ: String, data: String },
-}
+impl Visitor for TypeBlockVisitor {
+    fn visit_function_declaration(&mut self, node: &full_moon::ast::FunctionDeclaration) {
+        let node_names = node.name().to_string();
+        let typ =
+            self.create_type_from_function(node, node_names, node.body(), FunctionType::Normal);
+        self.found_types.push(typ);
+    }
 
-/// Contains a parsed list of comments
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-pub struct Comment {
-    pub comments: Vec<InnerComment>,
-}
+    fn visit_local_function(&mut self, node: &LocalFunction) {
+        let node_name = extract_name_from_tokenref(node.name());
+        let typ = self.create_type_from_function(node, node_name, node.body(), FunctionType::Local);
+        self.found_types.push(typ);
+    }
 
-/// Parses a list of comments into a Comment structure
-pub fn parse_comments(comments: Vec<String>) -> Comment {
-    let mut i_comments = Vec::with_capacity(comments.len());
+    fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
+        // If include_nonexported_types is set, do nothing here as the visit_type_declaration will handle it
+        if !self.include_nonexported_types {
+            let Some(typ) = self.create_type_from_type_decl(node.type_declaration()) else {
+                return;
+            };
 
-    for comment in comments {
-        if comment.starts_with('@') {
-            let parts: Vec<&str> = comment.splitn(2, ' ').collect();
-            if parts.len() == 1 {
-                i_comments.push(InnerComment::Special {
-                    typ: parts[0][1..].to_string(),
-                    data: String::new(),
-                });
-            } else {
-                i_comments.push(InnerComment::Special {
-                    typ: parts[0][1..].to_string(),
-                    data: parts[1].to_string(),
-                });
-            }
-        } else {
-            i_comments.push(InnerComment::Normal { data: comment });
+            self.found_types.push(typ);
         }
     }
 
-    Comment {
-        comments: i_comments,
-    }
-}
+    fn visit_type_declaration(&mut self, node: &TypeDeclaration) {
+        if self.include_nonexported_types {
+            let Some(typ) = self.create_type_from_type_decl(node) else {
+                return;
+            };
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_parse_comments_basic() {
-        let comments = vec![
-            "@my_special_comment".to_string(),
-            "@my_special_comment my comment".to_string(),
-            "@my_special_comment my comment1 my comment2".to_string(),
-            "normal comment".to_string(),
-        ];
-        let parsed = parse_comments(comments);
-        assert_eq!(parsed.comments.len(), 4);
-        assert_eq!(
-            parsed.comments[0],
-            InnerComment::Special {
-                typ: "my_special_comment".to_string(),
-                data: "".to_string(),
-            }
-        );
-        assert_eq!(
-            parsed.comments[1],
-            InnerComment::Special {
-                typ: "my_special_comment".to_string(),
-                data: "my comment".to_string(),
-            }
-        );
-        assert_eq!(
-            parsed.comments[2],
-            InnerComment::Special {
-                typ: "my_special_comment".to_string(),
-                data: "my comment1 my comment2".to_string(),
-            }
-        );
-        assert_eq!(
-            parsed.comments[3],
-            InnerComment::Normal {
-                data: "normal comment".to_string(),
-            }
-        );
+            self.found_types.push(typ);
+        }
     }
 }

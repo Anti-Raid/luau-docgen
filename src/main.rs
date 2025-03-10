@@ -1,7 +1,9 @@
+mod comments;
 mod lua_api;
 mod token_ref_extractor;
 mod token_ref_extractor_v2;
 mod type_gen;
+
 use full_moon::{parse_fallible, visitors::Visitor};
 use lua_api::{Globals, TypeSet};
 use mlua::prelude::*;
@@ -20,6 +22,18 @@ struct CliArgs {
     #[arg(long = "documentor")]
     /// The path to the documentor script
     documentor: Option<PathBuf>,
+
+    #[arg(long = "error-on-unsupported", default_value_t = true)]
+    /// Whether to error on unsupported types
+    ///
+    /// Defaults to true
+    error_on_unsupported: bool,
+
+    #[arg(long = "include-nonexported-types", default_value_t = false)]
+    /// Whether to visit non-exported types
+    ///
+    /// Defaults to false
+    include_nonexported_types: bool,
 }
 
 fn main() {
@@ -37,6 +51,8 @@ fn main() {
 
     let mut type_visitor = TypeBlockVisitor {
         found_types: Vec::new(),
+        unsupported_count: 0,
+        include_nonexported_types: args.include_nonexported_types,
     };
 
     let result = parse_fallible(&source, full_moon::LuaVersion::luau());
@@ -51,6 +67,16 @@ fn main() {
     let ast = result.into_ast();
 
     type_visitor.visit_ast(&ast);
+
+    if type_visitor.unsupported_count > 0 {
+        eprintln!(
+            "Error: Found {} unsupported types",
+            type_visitor.unsupported_count
+        );
+        if args.error_on_unsupported {
+            std::process::exit(1);
+        }
+    }
 
     let documentor = if let Some(documentor_path) = args.documentor {
         std::fs::read_to_string(documentor_path).unwrap_or_else(|_| {
