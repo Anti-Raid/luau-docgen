@@ -343,7 +343,7 @@ local function convertComments(typecomments: {string}): ConvertCommentResponse
     return output
 end
 
-for typ in ast:iter_all() do
+for typ in ast:iter_typedefs() do
     local convComments = convertComments(typ:type_comments())
 
     if convComments.skip then
@@ -352,6 +352,17 @@ for typ in ast:iter_all() do
 
     output ..= ("# " .. typ:name() .. "\n\n" .. convComments.output .. "\n")
     output ..= ("## Raw Type\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
+end
+
+for typ in ast:iter_functions() do
+    local convComments = convertComments(typ:type_comments())
+
+    if convComments.skip then
+        continue -- Ignore explicitly skipped types
+    end
+
+    output ..= ("# " .. typ:name() .. "\n\n" .. convComments.output .. "\n")
+    output ..= ("## Function Signature\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
 end
 
 return output

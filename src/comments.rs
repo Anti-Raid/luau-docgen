@@ -45,6 +45,7 @@ pub fn parse_comments(comments: Vec<String>, ignore_nondoc: bool) -> Comment {
         };
 
         if ignore_nondoc && !comment.starts_with('-') {
+            i += 1;
             continue;
         }
 
@@ -68,6 +69,7 @@ pub fn parse_comments(comments: Vec<String>, ignore_nondoc: bool) -> Comment {
         // Multiline block comment
         else if comment.starts_with("#") {
             let Some(comment) = comment.strip_prefix('#') else {
+                i += 1;
                 continue;
             };
             let block_comment = comment.trim().to_string();
@@ -81,6 +83,7 @@ pub fn parse_comments(comments: Vec<String>, ignore_nondoc: bool) -> Comment {
                 let next_comment = &comments[i];
 
                 if ignore_nondoc && !next_comment.starts_with('-') {
+                    i += 1;
                     continue;
                 }
 
