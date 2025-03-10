@@ -352,6 +352,10 @@ impl TypeFieldType {
             TypeFieldType::Optional(inner) => format!("{}?", inner.string_repr(depth)),
             TypeFieldType::Function(func) => func.string_repr(),
             TypeFieldType::Table(fields) => {
+                if fields.is_empty() {
+                    return "{}".to_string();
+                }
+
                 let fields_str = fields
                     .iter()
                     .map(|f| {
@@ -793,14 +797,18 @@ impl Type {
 
                 match &inner.type_def_type {
                     TypeDefType::Table { fields } => {
-                        let fields_str = fields
-                            .iter()
-                            .map(|f| f.string_repr(1))
-                            .collect::<Vec<_>>()
-                            .join(fields_join_pat);
+                        if fields.is_empty() {
+                            repr.push_str("{}");
+                        } else {
+                            let fields_str = fields
+                                .iter()
+                                .map(|f| f.string_repr(1))
+                                .collect::<Vec<_>>()
+                                .join(fields_join_pat);
 
-                        write!(repr, "{{\n\t{}\n}}", fields_str)
-                            .expect("Failed to write type to string");
+                            write!(repr, "{{\n\t{}\n}}", fields_str)
+                                .expect("Failed to write type to string");
+                        }
                     }
                     TypeDefType::TypeOfSetMetatable { type_info } => {
                         let mut fields_str = type_info
