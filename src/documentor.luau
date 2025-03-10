@@ -258,7 +258,9 @@ type TypedArgument = {
     --- The string representation of the argument.
     ---
     --- If with_punctuation is true, the punctuation will be included in the string representation (default: false)
-    string_repr: (self: TypedArgument, with_punctuation: boolean?) -> string,
+    ---
+    --- If is_generic is true, the argument will be treated as a generic argument (default: false)
+    string_repr: (self: TypedArgument, with_punctuation: boolean?, is_generic: boolean?) -> string,
 }
 
 --- Inner data of a Function TypeFieldType

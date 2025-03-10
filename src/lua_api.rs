@@ -553,9 +553,15 @@ impl LuaUserData for TypedArgument {
     }
 
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("string_repr", |_, this, with_punctuation: Option<bool>| {
-            Ok(this.inner.string_repr(with_punctuation.unwrap_or(false)))
-        });
+        methods.add_method(
+            "string_repr",
+            |_, this, (with_punctuation, is_generic): (Option<bool>, Option<bool>)| {
+                Ok(this.inner.string_repr(
+                    with_punctuation.unwrap_or(false),
+                    is_generic.unwrap_or(false),
+                ))
+            },
+        );
     }
 }
 

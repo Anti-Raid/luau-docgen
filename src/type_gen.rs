@@ -39,10 +39,14 @@ pub struct TypedArgument {
 
 impl TypedArgument {
     /// Returns the string representation of a typed argument
-    pub fn string_repr(&self, with_punctuation: bool) -> String {
+    pub fn string_repr(&self, with_punctuation: bool, is_generic: bool) -> String {
         let mut v = if let Some(ref name) = self.name {
             if let Some(ref typ) = self.typ {
-                format!("{}: {}", name, typ.string_repr(0))
+                if is_generic {
+                    format!("{} = {}", name, typ.string_repr(0))
+                } else {
+                    format!("{}: {}", name, typ.string_repr(0))
+                }
             } else {
                 name.to_string()
             }
@@ -254,7 +258,7 @@ impl TypeFieldTypeFunction {
         let args_str = self
             .args
             .iter()
-            .map(|arg| arg.string_repr(false))
+            .map(|arg| arg.string_repr(false, false))
             .collect::<Vec<_>>()
             .join(", ");
         format!("({}) -> {}", args_str, self.ret.string_repr(0))
@@ -777,7 +781,7 @@ impl Type {
                     let generic_params = inner
                         .generics
                         .iter()
-                        .map(|arg| arg.string_repr(false))
+                        .map(|arg| arg.string_repr(false, true))
                         .collect::<Vec<_>>()
                         .join(generics_join_pat);
 
@@ -839,7 +843,7 @@ impl Type {
                     writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
                 }
 
-                write!(repr, "function {}(", inner.name)
+                write!(repr, "function {}", inner.name)
                     .expect("Failed to write function to string");
 
                 // Add generics
@@ -849,7 +853,7 @@ impl Type {
                     let generic_params = inner
                         .generics
                         .iter()
-                        .map(|arg| arg.string_repr(false))
+                        .map(|arg| arg.string_repr(false, true))
                         .collect::<Vec<_>>()
                         .join(generics_join_pat);
 
@@ -860,13 +864,12 @@ impl Type {
                 let func_args = inner
                     .args
                     .iter()
-                    .map(|arg| arg.string_repr(false))
+                    .map(|arg| arg.string_repr(false, false))
                     .collect::<Vec<_>>()
                     .join(args_join_pat);
 
-                write!(repr, "{}", func_args).expect("Failed to write arguments to string");
+                write!(repr, "({})", func_args).expect("Failed to write arguments to string");
 
-                repr.push(')');
                 if let Some(ref ret) = inner.ret {
                     write!(repr, " -> {}", ret.string_repr(0))
                         .expect("Failed to write return type to string");

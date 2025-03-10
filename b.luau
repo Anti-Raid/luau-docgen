@@ -1,5 +1,5 @@
 --- My favorite type
-export type c = {}
+export type c<U, T = string> = {}
 
 -- Meow
 export type a = typeof(setmetatable({} :: {
@@ -37,4 +37,9 @@ export type a = typeof(setmetatable({} :: {
 local function test(a: a, b: number) --[[Comment here]] end
 
 -- Hello normal function
-function a() end
+function a<T>() 
+  if 1 == 1 then 
+    return 1
+  end
+  return 2 + 2
+end
