@@ -6,7 +6,7 @@ use full_moon::{
     ast::{
         Call, Expression, FunctionArgs, FunctionBody, LocalFunction, Parameter, Prefix, Suffix,
         luau::{
-            ExportedTypeDeclaration, GenericParameterInfo, IndexedTypeInfo,
+            ExportedTypeDeclaration, GenericDeclaration, GenericParameterInfo, IndexedTypeInfo,
             TypeField as LuauTypeField, TypeFieldKey, TypeInfo,
         },
         punctuated::Pair,
@@ -620,22 +620,11 @@ impl TypeField {
         .into()
     }
 
+    /// Returns the string representation of the type at a given depth with default patterns
+    ///
     /// @public_api
     pub fn string_repr(&self, depth: usize) -> String {
-        let mut repr = String::new();
-
-        for comment in &self.comments {
-            write!(repr, "--{}\n\t", comment).expect("Failed to write comment to string");
-        }
-
-        write!(
-            repr,
-            "{}: {}",
-            self.field_name,
-            self.field_type.string_repr(depth)
-        )
-        .unwrap();
-        repr
+        self.string_repr_with_pats("\n\t", depth)
     }
 
     /// @public_api
@@ -688,6 +677,8 @@ pub enum TypeDefType {
 pub struct TypeDef {
     /// The name of the type
     pub name: String,
+    /// The generics of the function
+    pub generics: Vec<TypedArgument>,
     /// The comments associated with the type
     pub type_comments: Vec<String>,
     /// The type of the type
@@ -755,105 +746,15 @@ impl Type {
 
     /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
     /// with a more standardized layout and format
+    ///
+    /// @public_api
     pub fn string_repr(&self) -> String {
-        match self {
-            Type::TypeDef { inner } => {
-                let mut repr = String::new();
-                for comment in inner.type_comments.iter() {
-                    writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-                }
-
-                match &inner.type_def_type {
-                    TypeDefType::Table { fields } => {
-                        let fields_str = fields
-                            .iter()
-                            .map(|f| f.string_repr(0))
-                            .collect::<Vec<_>>()
-                            .join(",\n\t");
-
-                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
-                            .expect("Failed to write type to string");
-                    }
-                    TypeDefType::TypeOfSetMetatable { type_info } => {
-                        let mut fields_str = type_info
-                            .fields
-                            .iter()
-                            .map(|f| f.string_repr(0))
-                            .collect::<Vec<_>>()
-                            .join(",\n\t");
-
-                        fields_str.push_str(",\n\n\t-- Metatable\n\t");
-
-                        let metatable_fields_str = type_info
-                            .metatable_fields
-                            .iter()
-                            .map(|f| f.string_repr(0))
-                            .collect::<Vec<_>>()
-                            .join(",\n\t");
-
-                        fields_str.push_str(&metatable_fields_str);
-
-                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
-                            .expect("Failed to write type to string");
-                    }
-                    TypeDefType::Uncategorized { type_info } => {
-                        write!(
-                            repr,
-                            "type {} = {{\n\t{}\n}}",
-                            inner.name,
-                            type_info.string_repr(0),
-                        )
-                        .expect("Failed to write type to string");
-                    }
-                }
-
-                repr
-            }
-            Type::Function { inner } => {
-                let mut repr = String::new();
-                for comment in inner.type_comments.iter() {
-                    writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-                }
-
-                write!(repr, "function {}(", inner.name)
-                    .expect("Failed to write function to string");
-
-                // Add generics
-                if !inner.generics.is_empty() {
-                    write!(repr, "<").expect("Failed to write generics to string");
-
-                    let generic_params = inner
-                        .generics
-                        .iter()
-                        .map(|arg| arg.string_repr(false))
-                        .collect::<Vec<_>>()
-                        .join(", ");
-
-                    write!(repr, "{}", generic_params).expect("Failed to write generics to string");
-                    repr.push('>');
-                }
-
-                let func_args = inner
-                    .args
-                    .iter()
-                    .map(|arg| arg.string_repr(false))
-                    .collect::<Vec<_>>()
-                    .join(", ");
-
-                write!(repr, "{}", func_args).expect("Failed to write arguments to string");
-
-                repr.push(')');
-                if let Some(ref ret) = inner.ret {
-                    write!(repr, " -> {}", ret.string_repr(0))
-                        .expect("Failed to write return type to string");
-                }
-                repr.push_str(" end");
-                repr
-            }
-        }
+        self.string_repr_with_pats(",\n\t", ", ", ", ")
     }
 
     /// Returns the *constructed* string representation of the type with applied transformations
+    ///
+    /// @public_api
     pub fn string_repr_with_pats(
         &self,
         fields_join_pat: &str,
@@ -867,6 +768,25 @@ impl Type {
                     writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
                 }
 
+                write!(repr, "type {}", inner.name).expect("Failed to write type name to repr");
+
+                // Add generics
+                if !inner.generics.is_empty() {
+                    write!(repr, "<").expect("Failed to write generics to string");
+
+                    let generic_params = inner
+                        .generics
+                        .iter()
+                        .map(|arg| arg.string_repr(false))
+                        .collect::<Vec<_>>()
+                        .join(generics_join_pat);
+
+                    write!(repr, "{}", generic_params).expect("Failed to write generics to string");
+                    repr.push('>');
+                }
+
+                repr.push_str(" = ");
+
                 match &inner.type_def_type {
                     TypeDefType::Table { fields } => {
                         let fields_str = fields
@@ -875,7 +795,7 @@ impl Type {
                             .collect::<Vec<_>>()
                             .join(fields_join_pat);
 
-                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
+                        write!(repr, "{{\n\t{}\n}}", fields_str)
                             .expect("Failed to write type to string");
                     }
                     TypeDefType::TypeOfSetMetatable { type_info } => {
@@ -897,7 +817,7 @@ impl Type {
 
                         fields_str.push_str(&metatable_fields_str);
 
-                        write!(repr, "type {} = {{\n\t{}\n}}", inner.name, fields_str)
+                        write!(repr, "{{\n\t{}\n}}", fields_str)
                             .expect("Failed to write type to string");
                     }
                     TypeDefType::Uncategorized { type_info } => {
@@ -976,6 +896,33 @@ impl TypeBlockVisitor {
         eprintln!("Warning [unsupported feature]: {}", msg);
     }
 
+    pub fn create_typed_arguments_from_generic_declaration(
+        &self,
+        generic: &GenericDeclaration,
+    ) -> Vec<TypedArgument> {
+        let mut generics = Vec::with_capacity(generic.generics().len());
+        for generic_decl_param in generic.generics() {
+            let default_type = generic_decl_param
+                .default_type()
+                .map(TypeFieldType::from_luau_typeinfo);
+
+            let name = match generic_decl_param.parameter() {
+                GenericParameterInfo::Name(name) => extract_name_from_tokenref(name),
+                GenericParameterInfo::Variadic { name, .. } => {
+                    format!("...{}", extract_name_from_tokenref(name))
+                }
+                _ => {
+                    self.warn_unsupported("Only simple function generics are supported!");
+                    continue;
+                }
+            };
+
+            generics.push((name, default_type).into());
+        }
+
+        generics
+    }
+
     pub fn create_type_from_function<T: TokenReferenceExtractor>(
         &self,
         node: &T,
@@ -988,27 +935,7 @@ impl TypeBlockVisitor {
 
         // Get the generics
         let generics = if let Some(generic) = body.generics() {
-            let mut generics = Vec::with_capacity(generic.generics().len());
-            for generic_decl_param in generic.generics() {
-                let default_type = generic_decl_param
-                    .default_type()
-                    .map(TypeFieldType::from_luau_typeinfo);
-
-                let name = match generic_decl_param.parameter() {
-                    GenericParameterInfo::Name(name) => extract_name_from_tokenref(name),
-                    GenericParameterInfo::Variadic { name, .. } => {
-                        format!("...{}", extract_name_from_tokenref(name))
-                    }
-                    _ => {
-                        self.warn_unsupported("Only simple function generics are supported!");
-                        continue;
-                    }
-                };
-
-                generics.push((name, default_type).into());
-            }
-
-            generics
+            self.create_typed_arguments_from_generic_declaration(generic)
         } else {
             Vec::with_capacity(0)
         };
@@ -1108,6 +1035,13 @@ impl Visitor for TypeBlockVisitor {
         // Get node trivia
         let comments = node.get_surrounding_trivia();
 
+        // Get generics
+        let generics = if let Some(generic) = node.type_declaration().generics() {
+            self.create_typed_arguments_from_generic_declaration(generic)
+        } else {
+            Vec::with_capacity(0)
+        };
+
         // For now, we only want the actual type declarations (not aliases etc)
         //println!("{:?}", node.type_declaration().type_definition());
         match node.type_declaration().type_definition() {
@@ -1131,6 +1065,7 @@ impl Visitor for TypeBlockVisitor {
                 self.found_types.push(Type::TypeDef {
                     inner: TypeDef {
                         name,
+                        generics,
                         type_comments: comments,
                         repr: type_repr,
                         type_def_type: TypeDefType::Table { fields },
@@ -1254,6 +1189,7 @@ impl Visitor for TypeBlockVisitor {
                                     inner: TypeDef {
                                         repr: type_repr,
                                         name,
+                                        generics,
                                         type_comments: comments,
                                         type_def_type: TypeDefType::TypeOfSetMetatable {
                                             type_info: typ,
@@ -1276,6 +1212,7 @@ impl Visitor for TypeBlockVisitor {
             Type::TypeDef {
                 inner: TypeDef {
                     name,
+                    generics,
                     type_comments: comments,
                     type_def_type: TypeDefType::Uncategorized {
                         type_info: TypeFieldType::from_luau_typeinfo(

@@ -228,6 +228,15 @@ impl LuaUserData for TypeDef {
         });
 
         fields.add_field_method_get("name", |_lua, this| Ok(this.inner.name.clone()));
+        fields.add_field_method_get("generics", |_lua, this| {
+            Ok(this
+                .inner
+                .generics
+                .iter()
+                .map(|arg| TypedArgument { inner: arg.clone() })
+                .collect::<Vec<_>>())
+        });
+
         fields.add_field_method_get("type_comments", |_lua, this| {
             Ok(this.inner.type_comments.clone())
         });

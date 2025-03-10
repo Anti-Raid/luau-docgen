@@ -77,6 +77,8 @@ type TypeDef = {
     dbg__inner: any,
     --- Name of the typedef
     name: string,
+    --- generic arguments of the typedef
+    generics: {TypedArgument},
     --- type comments attached to the typedef
     type_comments: string,
     --- The type definition type of the typedef
