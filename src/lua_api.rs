@@ -11,7 +11,10 @@ impl LuaUserData for Globals {
             if !values.is_empty() {
                 Ok(values
                     .iter()
-                    .map(|value| format!("{:#?}", value))
+                    .map(|value| match value {
+                        LuaValue::String(s) => s.to_string_lossy(),
+                        _ => format!("{:#?}", value),
+                    })
                     .collect::<Vec<_>>()
                     .join("\t"))
             } else {
@@ -19,11 +22,15 @@ impl LuaUserData for Globals {
             }
         });
 
-        methods.add_function("parsecomments", |lua, comments: Vec<String>| {
-            // Parse a comment block
-            let comment = crate::comments::parse_comments(comments);
-            lua.to_value(&comment)
-        });
+        methods.add_function(
+            "parsecomments",
+            |lua, (comments, ignore_nondoc): (Vec<String>, Option<bool>)| {
+                // Parse a comment block
+                let comment =
+                    crate::comments::parse_comments(comments, ignore_nondoc.unwrap_or(false));
+                lua.to_value(&comment)
+            },
+        );
     }
 }
 

@@ -50,9 +50,8 @@ fn main() {
     });
 
     let mut type_visitor = TypeBlockVisitor {
-        found_types: Vec::new(),
-        unsupported_count: 0,
         include_nonexported_types: args.include_nonexported_types,
+        ..Default::default()
     };
 
     let result = parse_fallible(&source, full_moon::LuaVersion::luau());
@@ -168,7 +167,12 @@ fn main() {
             "{}",
             values
                 .iter()
-                .map(|value| format!("{:#?}", value))
+                .map(|value| {
+                    match value {
+                        LuaValue::String(s) => s.to_string_lossy(),
+                        _ => format!("{:#?}", value),
+                    }
+                })
                 .collect::<Vec<_>>()
                 .join("\t")
         );

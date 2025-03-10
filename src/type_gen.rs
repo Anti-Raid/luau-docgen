@@ -884,11 +884,16 @@ impl Type {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct TypeBlockVisitor {
     pub found_types: Vec<Type>,
     pub include_nonexported_types: bool,
     pub unsupported_count: usize,
+
+    /// Book keeping to avoid typedef duplication
+    ///
+    /// This works because two typedefs cannot have the same name
+    pub last_typedef: Option<String>,
 }
 
 impl TypeBlockVisitor {
@@ -1005,15 +1010,16 @@ impl TypeBlockVisitor {
         }
     }
 
-    pub fn create_type_from_type_decl(&mut self, node: &TypeDeclaration) -> Option<Type> {
+    pub fn create_type_from_type_decl(
+        &mut self,
+        comments: Vec<String>,
+        node: &TypeDeclaration,
+    ) -> Option<Type> {
         // Get type repr
         let type_repr = node.to_string();
 
         // Get node type name
         let name = extract_name_from_tokenref(node.type_name());
-
-        // Get node trivia
-        let comments = node.get_surrounding_trivia();
 
         // Get generics
         let generics = if let Some(generic) = node.generics() {
@@ -1058,7 +1064,7 @@ impl TypeBlockVisitor {
                 // Handle setmetatable
                 match &**inner {
                     Expression::FunctionCall(fc) => {
-                        println!("{:?}", fc.prefix());
+                        //println!("{:?}", fc.prefix());
 
                         let Prefix::Name(s) = fc.prefix() else {
                             self.warn_unsupported(
@@ -1216,19 +1222,31 @@ impl Visitor for TypeBlockVisitor {
     }
 
     fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
-        // If include_nonexported_types is set, do nothing here as the visit_type_declaration will handle it
-        if !self.include_nonexported_types {
-            let Some(typ) = self.create_type_from_type_decl(node.type_declaration()) else {
-                return;
-            };
-
-            self.found_types.push(typ);
-        }
+        let Some(typ) =
+            self.create_type_from_type_decl(node.get_surrounding_trivia(), node.type_declaration())
+        else {
+            return;
+        };
+        self.last_typedef = Some(extract_name_from_tokenref(
+            node.type_declaration().type_name(),
+        )); // Mark the last typedef. Duplication can't happen in the exported type declaration case sooo
+        self.found_types.push(typ);
     }
 
     fn visit_type_declaration(&mut self, node: &TypeDeclaration) {
         if self.include_nonexported_types {
-            let Some(typ) = self.create_type_from_type_decl(node) else {
+            let type_name = extract_name_from_tokenref(node.type_name());
+
+            // Ensure we don't duplicate typedefs
+            if let Some(last_typedef) = &self.last_typedef {
+                if *last_typedef == type_name {
+                    return;
+                }
+            }
+
+            self.last_typedef = Some(type_name);
+            let Some(typ) = self.create_type_from_type_decl(node.get_surrounding_trivia(), node)
+            else {
                 return;
             };
 

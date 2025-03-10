@@ -30,7 +30,7 @@ type Globals = {
     --- Pretty prints a value
     prettyprint: (...any) -> string,
     --- Parse a comment block
-    parsecomments: (comments: {string}) -> Comment,
+    parsecomments: (comments: {string}, ignore_nondoc: boolean?) -> Comment,
 }
 
 type TypeIterator = (() -> Type)
@@ -63,7 +63,7 @@ type Type = {
     --- the name of the type
     name: (self: Type) -> string,
     --- the type comments attached to the type
-    type_comments: (self: Type) -> string,
+    type_comments: (self: Type) -> {string},
     --- the string representation of the type
     string_repr: (self: Type) -> string,
     --- the string representation of the type with different seperators
@@ -80,7 +80,7 @@ type TypeDef = {
     --- generic arguments of the typedef
     generics: {TypedArgument},
     --- type comments attached to the typedef
-    type_comments: string,
+    type_comments: {string},
     --- The type definition type of the typedef
     type_def_type: TypeDefType,
     --- The string representation of the typedef
@@ -96,7 +96,7 @@ type TypeFunction = {
     --- The string representation of the function
     repr: string,
     --- type comments attached to the function
-    type_comments: string,
+    type_comments: {string},
     --- generic arguments of the function
     generics: {TypedArgument},
     --- arguments of the function
@@ -300,81 +300,58 @@ type TypeFieldTypeModule = {
 }
 
 -- Begin of documentation generation actual code
-local ast: TypeSet, _globals: Globals = ...
+local ast: TypeSet, globals: Globals = ...
+local output = "" -- Final output string
 
-for typ in ast:iter_all() do
-    assert(typ:extract().type == "TypeDef" or typ:extract().type == "Function")
+type ConvertCommentResponse = {
+    output: string,
+    skip: boolean
+}
 
-    print("# " .. typ:name() .. "\n")
-    print("## Raw Type\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
-end
+local function convertComments(typecomments: {string}): ConvertCommentResponse 
+    -- Modify this function to change how special comments are converted to markdown
+    local _specialcommentmap = {
+        warning = function(output: ConvertCommentResponse, data: string)
+            output.output ..= "<div class=\"warning\">\n" .. data .. "\n</div>\n"
+        end,
+        skip = function(output: ConvertCommentResponse, data: string)
+            output.skip = true
+        end,
+    }
 
---[[
-print(globals.prettyprint(ast.dbg__raw_types_table))
+    local comments = globals.parsecomments(typecomments, true)
 
-print("Type definitions:")
-for typ in ast:iter_typedefs() do
-    assert(typ:extract().type == "TypeDef")
-    print(globals.prettyprint(typ.dbg__inner))
-    print("StringRepr:\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n")
-    print("RawRepr\n" .. typ:raw_repr() .. "\n")
-    print("Name: " .. typ:name())
+    local output: ConvertCommentResponse = {
+        output = "",
+        skip = false,
+    }
 
-    local extracted = typ:extract()
-    if extracted.type == "TypeDef" then 
-        local typedefinner = extracted.data.type_def_type:extract()
-
-        if typedefinner.type == "Uncategorized" then 
-            local innera = typedefinner.data :: TypeFieldType
-            local extracteda = innera:extract();
-            if extracteda.type == "Boolean" then
-                assert(extracteda.data == true)
-            elseif extracteda.type == "UnknownModule" then 
-                assert(extracteda.data == "")
+    for _, comment in comments.comments do 
+        if comment.comment_type == "Normal" then
+            output.output ..= comment.data .. "\n"
+        elseif comment.comment_type == "Special" then
+            local data = comment.data
+            local typ = comment.typ
+            if _specialcommentmap[typ] then
+                _specialcommentmap[typ](output, data)
+            else
+                output.output ..= "@" .. typ .. " " .. data .. "\n" -- Readd the comment if no special comment handler is found
             end
         end
-    else
-        print(extracted.data.function_type)
-    end
-end
-
-print("Functions:")
-for func in ast:iter_functions() do
-    assert(func:extract().type == "Function")
-    print(globals.prettyprint(func.dbg__inner))
-    print("StringRepr:\n" .. func:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n")
-    print("RawRepr\n" .. func:raw_repr() .. "\n")
-    print("Name: " .. func:name())
-end 
-
-for typ in ast:iter_typedefs() do
-    print("# "  .. typ:name())
-    print(typ:string_repr_with_pats(",\n\n\t", ", ", ", "))
-    print()
-end
-
-function a()
-    local a = { 1, 2, 3, 4 }
-    local n = 3
-
-    local start, stop = 1, #a
-
-    while(start <= stop) do
-        local mid = (start + (stop - start) // 2) :: number
-        local value = a[mid]
-        if value == n then 
-            return mid
-        elseif value > n then
-            stop = mid - 1
-        else
-            start = mid + 1
-        end
     end
 
-    return -1
+    return output
 end
 
-type A = {
-    a: () -> ()
-}
-]]
+for typ in ast:iter_all() do
+    local convComments = convertComments(typ:type_comments())
+
+    if convComments.skip then
+        continue -- Ignore explicitly skipped types
+    end
+
+    output ..= ("# " .. typ:name() .. "\n\n" .. convComments.output .. "\n")
+    output ..= ("## Raw Type\n\n```luau\n" .. typ:string_repr_with_pats(",\n\n\t", ", ", ", ") .. "\n```\n")
+end
+
+return output
