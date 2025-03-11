@@ -10,7 +10,10 @@ pub struct Globals {
 impl LuaUserData for Globals {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("documentor_args", |lua, this| {
-            lua.to_value(&this.documentor_args)
+            lua.to_value_with(
+                &this.documentor_args,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
         });
     }
 
@@ -36,7 +39,10 @@ impl LuaUserData for Globals {
                 // Parse a comment block
                 let comment =
                     crate::comments::parse_comments(comments, ignore_nondoc.unwrap_or(false));
-                lua.to_value(&comment)
+                lua.to_value_with(
+                    &comment,
+                    LuaSerializeOptions::new().serialize_none_to_null(false),
+                )
             },
         );
 
@@ -45,7 +51,10 @@ impl LuaUserData for Globals {
             |lua, documentor_args: Vec<String>| {
                 // Parse a comment block
                 let pargs = crate::args::parse_args(documentor_args);
-                lua.to_value(&pargs)
+                lua.to_value_with(
+                    &pargs,
+                    LuaSerializeOptions::new().serialize_none_to_null(false),
+                )
             },
         );
     }
@@ -79,7 +88,10 @@ impl LuaUserData for TypeSet {
                 return Ok(v.clone());
             }
 
-            let v = lua.to_value(&this.types)?;
+            let v = lua.to_value_with(
+                &this.types,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )?;
 
             *cached_data = Some(v.clone());
 
@@ -172,7 +184,10 @@ impl LuaUserData for Type {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("dbg__inner", |lua, this| {
             let typ = this.inner_typ.clone();
-            let data = lua.to_value(&typ)?;
+            let data = lua.to_value_with(
+                &typ,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )?;
 
             Ok(data)
         });
@@ -208,7 +223,10 @@ impl LuaUserData for Type {
 
         methods.add_method("name", |lua, this, _: ()| {
             let name = this.inner_typ.name();
-            let v = lua.to_value(name)?;
+            let v = lua.to_value_with(
+                name,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )?;
             Ok(v)
         });
 
@@ -246,7 +264,10 @@ impl LuaUserData for TypeDef {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("dbg__inner", |lua, this| {
             let typ = this.inner.clone();
-            let data = lua.to_value(&typ)?;
+            let data = lua.to_value_with(
+                &typ,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )?;
 
             Ok(data)
         });
@@ -272,6 +293,24 @@ impl LuaUserData for TypeDef {
         });
 
         fields.add_field_method_get("repr", |_lua, this| Ok(this.inner.repr.clone()));
+    }
+
+    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
+        // Returns the *constructed* type representation which may differ from the raw input
+        methods.add_method("string_repr", |_, this, _: ()| {
+            let name = this.inner.string_repr();
+            Ok(name)
+        });
+
+        methods.add_method(
+            "string_repr_with_pats",
+            |_, this, (fields_join_pat, generics_join_pat): (String, String)| {
+                let name = this
+                    .inner
+                    .string_repr_with_pats(&fields_join_pat, &generics_join_pat);
+                Ok(name)
+            },
+        );
     }
 }
 
@@ -303,13 +342,26 @@ impl LuaUserData for TypeFunction {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
         fields.add_field_method_get("dbg__inner", |lua, this| {
             let typ = this.inner.clone();
-            let data = lua.to_value(&typ)?;
+            let data = lua.to_value_with(
+                &typ,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )?;
 
             Ok(data)
         });
 
-        fields.add_field_method_get("name", |lua, this| lua.to_value(&this.inner.name));
-        fields.add_field_method_get("repr", |lua, this| lua.to_value(&this.inner.repr));
+        fields.add_field_method_get("name", |lua, this| {
+            lua.to_value_with(
+                &this.inner.name,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
+        });
+        fields.add_field_method_get("repr", |lua, this| {
+            lua.to_value_with(
+                &this.inner.repr,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
+        });
         fields.add_field_method_get("type_comments", |lua, this| {
             lua.to_value(&this.inner.type_comments)
         });
@@ -342,6 +394,24 @@ impl LuaUserData for TypeFunction {
                 crate::type_gen::FunctionType::Local => Ok("Local"),
             }
         });
+    }
+
+    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
+        // Returns the *constructed* type representation which may differ from the raw input
+        methods.add_method("string_repr", |_, this, _: ()| {
+            let name = this.inner.string_repr();
+            Ok(name)
+        });
+
+        methods.add_method(
+            "string_repr_with_pats",
+            |_, this, (args_join_pat, generics_join_pat): (String, String)| {
+                let name = this
+                    .inner
+                    .string_repr_with_pats(&args_join_pat, &generics_join_pat);
+                Ok(name)
+            },
+        );
     }
 }
 
@@ -420,10 +490,23 @@ pub struct TypeField {
 
 impl LuaUserData for TypeField {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("repr", |lua, this| lua.to_value(&this.inner.repr));
-        fields.add_field_method_get("comments", |lua, this| lua.to_value(&this.inner.comments));
+        fields.add_field_method_get("repr", |lua, this| {
+            lua.to_value_with(
+                &this.inner.repr,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
+        });
+        fields.add_field_method_get("comments", |lua, this| {
+            lua.to_value_with(
+                &this.inner.comments,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
+        });
         fields.add_field_method_get("field_name", |lua, this| {
-            lua.to_value(&this.inner.field_name)
+            lua.to_value_with(
+                &this.inner.field_name,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
         });
         fields.add_field_method_get("field_type", |_lua, this| {
             Ok(TypeFieldType {
@@ -563,7 +646,12 @@ pub struct TypedArgument {
 
 impl LuaUserData for TypedArgument {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("name", |lua, this| lua.to_value(&this.inner.name));
+        fields.add_field_method_get("name", |lua, this| {
+            lua.to_value_with(
+                &this.inner.name,
+                LuaSerializeOptions::new().serialize_none_to_null(false),
+            )
+        });
         fields.add_field_method_get("typ", |lua, this| {
             if let Some(ref typ) = this.inner.typ {
                 TypeFieldType { inner: typ.clone() }.into_lua(lua)

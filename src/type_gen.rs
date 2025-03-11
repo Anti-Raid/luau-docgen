@@ -695,6 +695,89 @@ pub struct TypeDef {
     pub repr: String,
 }
 
+impl TypeDef {
+    /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
+    /// with a more standardized layout and format
+    ///
+    /// @public_api
+    pub fn string_repr(&self) -> String {
+        self.string_repr_with_pats(",\n\t", ", ")
+    }
+
+    /// Returns the *constructed* string representation of the type with applied transformations
+    ///
+    /// @public_api
+    pub fn string_repr_with_pats(&self, fields_join_pat: &str, generics_join_pat: &str) -> String {
+        let mut repr = String::new();
+        for comment in self.type_comments.iter() {
+            writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
+        }
+
+        write!(repr, "type {}", self.name).expect("Failed to write type name to repr");
+
+        // Add generics
+        if !self.generics.is_empty() {
+            write!(repr, "<").expect("Failed to write generics to string");
+
+            let generic_params = self
+                .generics
+                .iter()
+                .map(|arg| arg.string_repr(false, true))
+                .collect::<Vec<_>>()
+                .join(generics_join_pat);
+
+            write!(repr, "{}", generic_params).expect("Failed to write generics to string");
+            repr.push('>');
+        }
+
+        repr.push_str(" = ");
+
+        match &self.type_def_type {
+            TypeDefType::Table { fields } => {
+                if fields.is_empty() {
+                    repr.push_str("{}");
+                } else {
+                    let fields_str = fields
+                        .iter()
+                        .map(|f| f.string_repr(1))
+                        .collect::<Vec<_>>()
+                        .join(fields_join_pat);
+
+                    write!(repr, "{{\n\t{}\n}}", fields_str)
+                        .expect("Failed to write type to string");
+                }
+            }
+            TypeDefType::TypeOfSetMetatable { type_info } => {
+                let mut fields_str = type_info
+                    .fields
+                    .iter()
+                    .map(|f| f.string_repr(1))
+                    .collect::<Vec<_>>()
+                    .join(fields_join_pat);
+
+                fields_str.push_str(",\n\n\t-- Metatable\n\t");
+
+                let metatable_fields_str = type_info
+                    .metatable_fields
+                    .iter()
+                    .map(|f| f.string_repr(1))
+                    .collect::<Vec<_>>()
+                    .join(",\n\t");
+
+                fields_str.push_str(&metatable_fields_str);
+
+                write!(repr, "{{\n\t{}\n}}", fields_str).expect("Failed to write type to string");
+            }
+            TypeDefType::Uncategorized { type_info } => {
+                write!(repr, "{}", type_info.string_repr(1),)
+                    .expect("Failed to write type to string");
+            }
+        }
+
+        repr
+    }
+}
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeFunction {
     /// The name of the function
@@ -711,6 +794,59 @@ pub struct TypeFunction {
     pub ret: Option<Rc<TypeFieldType>>,
     /// Type of function
     pub function_type: FunctionType,
+}
+
+impl TypeFunction {
+    /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
+    /// with a more standardized layout and format
+    ///
+    /// @public_api
+    pub fn string_repr(&self) -> String {
+        self.string_repr_with_pats(", ", ", ")
+    }
+
+    /// Returns the *constructed* string representation of the type with applied transformations
+    ///
+    /// @public_api
+    pub fn string_repr_with_pats(&self, args_join_pat: &str, generics_join_pat: &str) -> String {
+        let mut repr = String::new();
+        for comment in self.type_comments.iter() {
+            writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
+        }
+
+        write!(repr, "function {}", self.name).expect("Failed to write function to string");
+
+        // Add generics
+        if !self.generics.is_empty() {
+            write!(repr, "<").expect("Failed to write generics to string");
+
+            let generic_params = self
+                .generics
+                .iter()
+                .map(|arg| arg.string_repr(false, true))
+                .collect::<Vec<_>>()
+                .join(generics_join_pat);
+
+            write!(repr, "{}", generic_params).expect("Failed to write generics to string");
+            repr.push('>');
+        }
+
+        let func_args = self
+            .args
+            .iter()
+            .map(|arg| arg.string_repr(false, false))
+            .collect::<Vec<_>>()
+            .join(args_join_pat);
+
+        write!(repr, "({})", func_args).expect("Failed to write arguments to string");
+
+        if let Some(ref ret) = self.ret {
+            write!(repr, " -> {}", ret.string_repr(1))
+                .expect("Failed to write return type to string");
+        }
+        repr.push_str(" end");
+        repr
+    }
 }
 
 /// A type container
@@ -771,114 +907,10 @@ impl Type {
     ) -> String {
         match self {
             Type::TypeDef { inner } => {
-                let mut repr = String::new();
-                for comment in inner.type_comments.iter() {
-                    writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-                }
-
-                write!(repr, "type {}", inner.name).expect("Failed to write type name to repr");
-
-                // Add generics
-                if !inner.generics.is_empty() {
-                    write!(repr, "<").expect("Failed to write generics to string");
-
-                    let generic_params = inner
-                        .generics
-                        .iter()
-                        .map(|arg| arg.string_repr(false, true))
-                        .collect::<Vec<_>>()
-                        .join(generics_join_pat);
-
-                    write!(repr, "{}", generic_params).expect("Failed to write generics to string");
-                    repr.push('>');
-                }
-
-                repr.push_str(" = ");
-
-                match &inner.type_def_type {
-                    TypeDefType::Table { fields } => {
-                        if fields.is_empty() {
-                            repr.push_str("{}");
-                        } else {
-                            let fields_str = fields
-                                .iter()
-                                .map(|f| f.string_repr(1))
-                                .collect::<Vec<_>>()
-                                .join(fields_join_pat);
-
-                            write!(repr, "{{\n\t{}\n}}", fields_str)
-                                .expect("Failed to write type to string");
-                        }
-                    }
-                    TypeDefType::TypeOfSetMetatable { type_info } => {
-                        let mut fields_str = type_info
-                            .fields
-                            .iter()
-                            .map(|f| f.string_repr(1))
-                            .collect::<Vec<_>>()
-                            .join(fields_join_pat);
-
-                        fields_str.push_str(",\n\n\t-- Metatable\n\t");
-
-                        let metatable_fields_str = type_info
-                            .metatable_fields
-                            .iter()
-                            .map(|f| f.string_repr(1))
-                            .collect::<Vec<_>>()
-                            .join(",\n\t");
-
-                        fields_str.push_str(&metatable_fields_str);
-
-                        write!(repr, "{{\n\t{}\n}}", fields_str)
-                            .expect("Failed to write type to string");
-                    }
-                    TypeDefType::Uncategorized { type_info } => {
-                        write!(repr, "{}", type_info.string_repr(1),)
-                            .expect("Failed to write type to string");
-                    }
-                }
-
-                repr
+                inner.string_repr_with_pats(fields_join_pat, generics_join_pat)
             }
             Type::Function { inner } => {
-                let mut repr = String::new();
-                for comment in inner.type_comments.iter() {
-                    writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-                }
-
-                write!(repr, "function {}", inner.name)
-                    .expect("Failed to write function to string");
-
-                // Add generics
-                if !inner.generics.is_empty() {
-                    write!(repr, "<").expect("Failed to write generics to string");
-
-                    let generic_params = inner
-                        .generics
-                        .iter()
-                        .map(|arg| arg.string_repr(false, true))
-                        .collect::<Vec<_>>()
-                        .join(generics_join_pat);
-
-                    write!(repr, "{}", generic_params).expect("Failed to write generics to string");
-                    repr.push('>');
-                }
-
-                let func_args = inner
-                    .args
-                    .iter()
-                    .map(|arg| arg.string_repr(false, false))
-                    .collect::<Vec<_>>()
-                    .join(args_join_pat);
-
-                write!(repr, "({})", func_args).expect("Failed to write arguments to string");
-
-                if let Some(ref ret) = inner.ret {
-                    write!(repr, " -> {}", ret.string_repr(1))
-                        .expect("Failed to write return type to string");
-                }
-                repr.push_str(" end");
-                repr
+                inner.string_repr_with_pats(args_join_pat, generics_join_pat)
             }
         }
     }

@@ -101,8 +101,12 @@ export type TypeDef = {
     type_comments: {string},
     --- The type definition type of the typedef
     type_def_type: TypeDefType,
-    --- The string representation of the typedef
+    --- The *raw* string representation of the typedef
     repr: string,
+    --- the string representation of the type
+    string_repr: (self: TypeDef) -> string,
+    --- the string representation of the type with different seperators
+    string_repr_with_pats: (self: TypeDef, fields_join_pat: string, generics_join_pat: string) -> string,    
 }
 
 --- A type function
@@ -111,7 +115,7 @@ export type TypeFunction = {
     dbg__inner: any,
     --- Name of the function
     name: string,
-    --- The string representation of the function
+    --- The *raw* string representation of the function
     repr: string,
     --- type comments attached to the function
     type_comments: {string},
@@ -122,7 +126,11 @@ export type TypeFunction = {
     --- return type of the function
     ret: TypeFieldType?,
     --- the function type of the function
-    function_type: "Normal" | "Local"
+    function_type: "Normal" | "Local",
+    --- the string representation of the type
+    string_repr: (self: TypeFunction) -> string,
+    --- the string representation of the type with different seperators
+    string_repr_with_pats: (self: TypeFunction, args_join_pat: string, generics_join_pat: string) -> string,        
 }
 
 --- specifialized type definition type information

@@ -6,4 +6,9 @@ export type SkipMe = {
 ---# warning
 ---Use at your own risk \
 ---Something else here...
-export type DangerType = {}
+export type DangerType = {
+    --- A
+    a: number,
+    --- B
+    b: number
+}
