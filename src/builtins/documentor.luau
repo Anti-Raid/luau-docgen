@@ -1,12 +1,15 @@
 --!strict
 local types = require("types.luau")
 local convertComments = require("convertcomments.luau")
-local parseArguments = require("argparser.luau")
+local argparser = require("argparser.luau")
 local mdutils = require("mdutils.luau")
 local transformRepr = require("transformrepr.luau")
 
 -- Begin of documentation generation actual code
 local ast: types.TypeSet, globals: types.Globals = ...
+
+-- Parse arguments at top-level
+local md = argparser.parseArguments(globals)
 
 --- Intermediary data used when parsing a type field
 type TypeFieldIData = {
@@ -22,7 +25,7 @@ local function parseTypeField(depth: number, typ: types.TypeField, idata: TypeFi
     end
 
     --print(globals.prettyprint(convertComments(globals, typ.comments)))
-    local convertedComments = convertComments(globals, typ.comments);
+    local convertedComments = convertComments(globals, typ.comments, md.ignorenondoc);
 
     if convertedComments.skip then
         return "" -- Ignore explicitly skipped type fields
@@ -34,7 +37,6 @@ local function parseTypeField(depth: number, typ: types.TypeField, idata: TypeFi
         mdutils.createHeading(depth, typ.field_name),
     }
 
-    -- Function type
     if convertedComments.output ~= "" then
         args[#args + 1] = convertedComments.output
     end    
@@ -72,7 +74,7 @@ local function parseTypeField(depth: number, typ: types.TypeField, idata: TypeFi
 end
 
 local function parseTypeDef(depth: number, typ: types.TypeDef): string 
-    local convComments = convertComments(globals, typ.type_comments)
+    local convComments = convertComments(globals, typ.type_comments, md.ignorenondoc)
 
     if convComments.skip then
         return "" -- Ignore explicitly skipped types
@@ -94,12 +96,12 @@ local function parseTypeDef(depth: number, typ: types.TypeDef): string
         local methods: {types.TypeField} = {}
         local fields: {types.TypeField} = {}
         for _, field in extractedType.data do 
-            print("RustReprP", field:string_repr_with_pats("\n\t", depth))
-            print("LuauTransformReprP", transformRepr.transformTypeFieldReprWithPat(field, depth, "\n\t", function(_, typ) return typ end))
+            --print("RustReprP", field:string_repr_with_pats("\n\t", depth))
+            --print("LuauTransformReprP", transformRepr.transformTypeFieldReprWithPat(field, depth, "\n\t", function(_, typ) return typ end))
             assert(transformRepr.transformTypeFieldReprWithPat(field, depth, "\n\t", function(_, typ): string return typ end) == field:string_repr_with_pats("\n\t", depth), "Inconsistent state: transformTypeField and string_repr_with_pats return differing results?")
 
-            print("RustRepr", field.field_type:string_repr(1))
-            print("LuauTransformRepr", transformRepr.transformRepr(field.field_type, 1, function(_: string, a: string) return a end))
+            --print("RustRepr", field.field_type:string_repr(1))
+            --print("LuauTransformRepr", transformRepr.transformRepr(field.field_type, 1, function(_: string, a: string) return a end))
             assert(transformRepr.transformRepr(field.field_type, 1, function(_: string, a: string) return a end) == field.field_type:string_repr(1), "Inconsistant state: transformRepr and string_repr(1) return differing results?")
 
             if field.field_type:extract().type == "Function" then
@@ -133,9 +135,6 @@ local function parseTypeFunction(depth: number, typ: types.TypeFunction): string
 end
 
 local output = "" -- Final output string
-
--- First insert module name
-local md = parseArguments(globals)
 
 --- Global header depth to use as the basis in the markdown generation
 local globalHeaderDepth = 1

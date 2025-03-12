@@ -30,8 +30,8 @@ local specialcommentmap = {
 }
 
 --- Converts comments to markdown (with other metadata attached to it)
-local function convertComments(globals: types.Globals, typecomments: {string}): ConvertCommentResponse 
-    local comments = globals.parsecomments(typecomments, true)
+local function convertComments(globals: types.Globals, typecomments: {string}, ignorenondoc: boolean?): ConvertCommentResponse 
+    local comments = globals.parsecomments(typecomments, ignorenondoc)
 
     local output: ConvertCommentResponse = {
         output = "",

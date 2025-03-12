@@ -4,13 +4,18 @@ local types = require("types.luau")
 type ParsedArgumentResult = {
     --- Name of module being documented
     modname: string,
+    --- Whether or not to ignore non doc comments
+    ignorenondoc: boolean,
 }
 
 -- Modify this function to change how special comments are converted to markdown
 local argmap = {
     modname = function(output: ParsedArgumentResult, values: {string}, short: boolean) 
         output.modname = table.concat(values, "|")
-    end
+    end,
+    ignorenondoc = function(output: ParsedArgumentResult, values: {string}, short: boolean) 
+        output.ignorenondoc = values[1] == "true"
+    end,
 }
 
 -- Parses arguments from globals.documentor_args into a set of parsed arguments 
@@ -19,6 +24,7 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
 
     local output: ParsedArgumentResult = {
         modname = "",
+        ignorenondoc = false,
     }
 
     for _, arg in parsedArgs.args do
@@ -30,4 +36,7 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
     return output
 end
 
-return parseArguments
+return {
+    parseArguments = parseArguments,
+    argmap = argmap
+}

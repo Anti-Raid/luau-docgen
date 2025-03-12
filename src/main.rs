@@ -10,7 +10,7 @@ use include_dir::{Dir, include_dir};
 use lua_api::{Globals, TypeSet};
 use mlua::prelude::*;
 use mlua_scheduler::XRc;
-use std::{path::PathBuf, time::Duration};
+use std::{cell::RefCell, path::PathBuf, rc::Rc, time::Duration};
 use type_gen::TypeBlockVisitor;
 
 pub static BUILTINS: Dir = include_dir!("$CARGO_MANIFEST_DIR/src/builtins");
@@ -147,34 +147,46 @@ fn main() {
             mlua_scheduler::userdata::patch_coroutine_lib(&lua)
                 .expect("Failed to patch coroutine lib");
 
+            let require_builtins: Rc<RefCell<bool>> = Rc::new(RefCell::new(true));
+            let lua_api_require_builtins = require_builtins.clone();
+
+            let old_require = lua
+                .globals()
+                .get::<mlua::Function>("require")
+                .expect("Failed to get require global");
+
             lua.globals()
                 .set(
                     "require",
-                    lua.create_function(|lua, pat: String| {
-                        let mut pat = pat.trim_start_matches("./").to_string();
+                    lua.create_function(move |lua, pat: String| {
+                        if *require_builtins.borrow() {
+                            let mut pat = pat.trim_start_matches("./").to_string();
 
-                        if !pat.ends_with(".luau") {
-                            pat = format!("{}.luau", pat);
-                        }
+                            if !pat.ends_with(".luau") {
+                                pat = format!("{}.luau", pat);
+                            }
 
-                        // Get required file from builtins
-                        if let Some(file) = BUILTINS.get_file(&pat) {
-                            let file_contents = file
-                                .contents_utf8()
-                                .ok_or_else(|| {
-                                    LuaError::external(format!(
-                                        "Failed to get {} contents as UTF-8",
-                                        pat
-                                    ))
-                                })?
-                                .to_string();
+                            // Get required file from builtins
+                            if let Some(file) = BUILTINS.get_file(&pat) {
+                                let file_contents = file
+                                    .contents_utf8()
+                                    .ok_or_else(|| {
+                                        LuaError::external(format!(
+                                            "Failed to get {} contents as UTF-8",
+                                            pat
+                                        ))
+                                    })?
+                                    .to_string();
 
-                            // Execute the file
-                            lua.load(file_contents)
-                                .set_name(&pat)
-                                .eval::<LuaMultiValue>()
+                                // Execute the file
+                                lua.load(file_contents)
+                                    .set_name(&pat)
+                                    .eval::<LuaMultiValue>()
+                            } else {
+                                Err(LuaError::external(format!("Failed to get {}", pat)))
+                            }
                         } else {
-                            Err(LuaError::external(format!("Failed to get {}", pat)))
+                            old_require.call::<LuaMultiValue>(pat)
                         }
                     })?,
                 )
@@ -193,6 +205,7 @@ fn main() {
                 TypeSet::new(type_visitor.found_types),
                 Globals {
                     documentor_args: args.args,
+                    require_builtins: lua_api_require_builtins,
                 },
             )
                 .into_lua_multi(&lua)

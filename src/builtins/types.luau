@@ -42,7 +42,9 @@ export type ParsedArgs = {
 --- Globals
 export type Globals = {
     --- Documentor args
-    documentor_args: {string},
+    read documentor_args: {string},
+    --- Whether requires should require on a builtin or a local file. Can be modified
+    require_builtins: boolean,
     --- Pretty prints a value
     prettyprint: (...any) -> string,
     --- Parse a comment block

@@ -5,6 +5,7 @@ use std::{cell::RefCell, rc::Rc};
 
 pub struct Globals {
     pub documentor_args: Vec<String>,
+    pub require_builtins: Rc<RefCell<bool>>,
 }
 
 impl LuaUserData for Globals {
@@ -14,6 +15,15 @@ impl LuaUserData for Globals {
                 &this.documentor_args,
                 LuaSerializeOptions::new().serialize_none_to_null(false),
             )
+        });
+
+        fields.add_field_method_get("require_builtins", |_, this| {
+            Ok(*this.require_builtins.borrow())
+        });
+
+        fields.add_field_method_set("require_builtins", |_, this, value: bool| {
+            *this.require_builtins.borrow_mut() = value;
+            Ok(())
         });
     }
 
