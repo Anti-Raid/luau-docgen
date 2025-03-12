@@ -1,3 +1,4 @@
+--!strict
 --- My favorite type
 export type c<U, T = string> = {}
 
@@ -45,12 +46,13 @@ function a<T>()
   return 2 + 2
 end
 
---- @export
-local foo: {
-  bar: () -> string
-} = {}
-
---- Help
-function foo.bar() 
-  return "Hello"
-end
+local n: {
+  {[string]: number}
+} = {
+  {
+    a = 1
+  },
+  {
+    b = 2
+  }
+}

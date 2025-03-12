@@ -1,8 +1,9 @@
 --!strict
 local types = require("types.luau")
+local markdown = require("markdown.luau")
 
-type ConvertCommentResponse = {
-    output: string,
+export type ConvertCommentResponse = {
+    output: {markdown.MarkdownNode},
     skip: boolean,
     fieldDocs: {[string]: string} -- Useful to document functions etc
 }
@@ -10,7 +11,10 @@ type ConvertCommentResponse = {
 -- Modify this function to change how special comments are converted to markdown
 local specialcommentmap = {
     warning = function(output: ConvertCommentResponse, data: string)
-        output.output ..= "<div class=\"warning\">\n" .. data .. "\n</div>"
+        output.output[#output.output + 1] = {
+            type = "Warning" :: "Warning",
+            text = markdown.NewMarkdownText_FromRaw(data)
+        }
     end,
     skip = function(output: ConvertCommentResponse, data: string)
         output.skip = true
@@ -34,34 +38,35 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
     local comments = globals.parsecomments(typecomments, ignorenondoc)
 
     local output: ConvertCommentResponse = {
-        output = "",
+        output = {},
         skip = false,
         fieldDocs = {},
     }
 
     for i, comment in comments.comments do 
-        local addNl = false
         if comment.comment_type == "Normal" then
-            output.output ..= comment.data 
-            addNl = true
+            if comment.data == "!strict" then continue end
+            output.output[#output.output + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw(comment.data)
+            }
         elseif comment.comment_type == "Special" then
             local data = comment.data
             local typ = comment.typ
             if specialcommentmap[typ] then
                 specialcommentmap[typ](output, data)
-                addNl = false
             else
-                output.output ..= "@" .. typ .. " " .. data -- Readd the comment if no special comment handler is found
-                addNl = true
+                output.output[#output.output + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw("@" .. typ .. " " .. data) -- Default to just outputting the comment
+                }
             end
         end
-
-        if addNl and i ~= #comments.comments then
-            output.output ..= "\n"
-        end    
     end
 
     return output
 end
 
-return convertComments
+return {
+    convertComments = convertComments,
+}

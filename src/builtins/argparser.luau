@@ -6,6 +6,8 @@ type ParsedArgumentResult = {
     modname: string,
     --- Whether or not to ignore non doc comments
     ignorenondoc: boolean,
+    --- Whether or not to enable debug mode
+    debugmode: boolean,
 }
 
 -- Modify this function to change how special comments are converted to markdown
@@ -16,6 +18,9 @@ local argmap = {
     ignorenondoc = function(output: ParsedArgumentResult, values: {string}, short: boolean) 
         output.ignorenondoc = values[1] == "true"
     end,
+    debugmode = function(output: ParsedArgumentResult, values: {string}, short: boolean) 
+        output.debugmode = values[1] == "true"
+    end,
 }
 
 -- Parses arguments from globals.documentor_args into a set of parsed arguments 
@@ -25,6 +30,7 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
     local output: ParsedArgumentResult = {
         modname = "",
         ignorenondoc = false,
+        debugmode = false,
     }
 
     for _, arg in parsedArgs.args do

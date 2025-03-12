@@ -1,0 +1,146 @@
+--!strict
+
+local types = require("types.luau")
+local tableext = require("table.luau")
+local markdown = require("markdown.luau")
+
+local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
+    if n.style == "Italics" then 
+        local stringified = table.concat(
+            tableext.arraymap(
+                n.node, 
+                function(node: markdown.MarkdownTextNode): string
+                    return MarkdownTextNode_String(node)
+                end,
+                ""
+            )
+        )
+        return "*" .. stringified .. "*" 
+    elseif n.style == "Bold" then 
+        local stringified = table.concat(
+            tableext.arraymap(
+                n.node, 
+                function(node: markdown.MarkdownTextNode): string
+                    return MarkdownTextNode_String(node)
+                end,
+                ""
+            )
+        )
+        return "**" .. stringified .. "**" 
+    elseif n.style == "Unstyled" then return "" .. n.text:gsub("*", "\*")
+    elseif n.style == "Raw" then return n.text 
+    else return n.node end
+end
+
+function MarkdownText_String(t: markdown.MarkdownText): string 
+    return table.concat(
+        tableext.arraymap(
+            t.nodes, 
+            function(node: markdown.MarkdownTextNode): string
+                return MarkdownTextNode_String(node)
+            end,
+            ""
+        )
+    )
+end
+
+--- Converts a markdown node to a string using mdbook-compatible formatting
+---
+--- For other markdown variants, it may be desirable to make a custom markdown formatter
+local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownNode, strictValidation: boolean?, depth: number?, label: string?): string
+    local nodeDepth = depth or 0
+    --print(n.type) --globals.prettyprint(n))
+    --print("Processing " .. n.type .. " with depth " .. tostring(nodeDepth) .. " and label " .. tostring(label) .. " and fragment " .. globals.prettyprint(n))
+    if n.type == "Heading" then 
+        if strictValidation and n.level and n.level < nodeDepth then
+            error(`Internal error - Invalid IR: n.level of {n.level} < nodeDepth of {nodeDepth}`)
+        end
+
+        local depthToUse = n.level or nodeDepth
+
+        if depthToUse > 5 then
+            depthToUse = 5
+        end
+
+        return string.rep("#", depthToUse) .. " " .. MarkdownText_String(n.headingText) .. "\n\n"
+    elseif n.type == "CodeBlock" then 
+        local codeblock = "```" .. n.language .. "\n" .. n.text .. "\n```"
+
+        -- For formatting, make it a details block for formatting purposes
+        codeblock = "<details>\n<summary>" .. (n.description or "Code Block") .. "</summary>\n\n" .. codeblock .. "\n\n</details>\n\n"
+
+        return codeblock
+    elseif n.type == "Block" then 
+        return table.concat(
+            tableext.arraymap(
+                n.nodes, 
+                function(node: markdown.MarkdownNode): string
+                    --print("Processing block node " .. globals.prettyprint(node) .. " with label " .. tostring(label))
+                    return MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Block@" .. tostring(nodeDepth))
+                end,
+                "\n\n"
+            )
+        )
+    elseif n.type == "Warning" then
+        return "<div class=\"warning\">\n" .. MarkdownText_String(n.text) .. "\n</div>\n\n"
+    elseif n.type == "Text" then
+        return MarkdownText_String(n.text) .. "\n\n"
+    elseif n.type == "Link" then
+        return "[" .. MarkdownText_String(n.text) .. "](" .. n.url .. ")"
+    elseif n.type == "List" then
+        local output = ""
+
+        for i, item in n.entries do
+            if i == #n.entries then
+                output ..= "- " .. MarkdownText_String(item) .. "\n\n"
+            else
+                output ..= "- " .. MarkdownText_String(item) .. "\n"
+            end
+        end
+    
+        return output    
+    elseif n.type == "Table" then 
+        local function parseCell(cell: markdown.MarkdownText): string
+            return MarkdownText_String(cell):gsub("\n", "<br>") :: string
+        end
+    
+        local output = "|"
+    
+        for _, header in ipairs(n.headers) do
+            output ..= MarkdownText_String(header) .. "|"
+        end
+    
+        output ..= "\n|"
+    
+        for _ = 1, #n.headers do
+            output ..= "---|"
+        end
+    
+        output ..= "\n"
+    
+        for i, row in ipairs(n.rowset) do
+            output ..= "|"
+    
+            for _, cell in ipairs(row) do
+                output ..= parseCell(cell) .. "|"
+            end
+    
+            if i ~= #n.rowset then
+                output ..= "\n"
+            end
+        end
+    
+        return output    
+    else
+        return "" -- Unsupported
+    end
+end
+
+--- Default markdown formatter for mdbook
+---
+--- For other markdown variants, it may be desirable to make a custom markdown formatter
+return {
+    MarkdownTextNode_String = MarkdownTextNode_String,
+    MarkdownText_String = MarkdownText_String,
+    MarkdownNode_String = MarkdownNode_String,
+}
