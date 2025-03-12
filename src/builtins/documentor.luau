@@ -10,12 +10,7 @@ local tableext = require("table.luau")
 -- Begin of documentation generation actual code
 local ast: types.TypeSet, globals: types.Globals = ...
 
-local p = tableext.extend({a = 1}, {b = 2}, {c = 3})
-assert(p.a == 1, "Inconsistent state: tableext.extend failed to copy over a")
-assert(p.b == 2, "Inconsistent state: tableext.extend failed to copy over b")
-assert(p.c == 3, "Inconsistent state: tableext.extend failed to copy over c")
-
-local p1 = tableext.arrayextend({2}, {4})
+local p1 = tableext.extend({2}, {4})
 assert(p1[1] == 2, "Inconsistent state: tableext.arrayextend failed to copy over 1")
 assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over 2")
 
@@ -146,7 +141,7 @@ local function parseTypeDef(typ: types.TypeDef): {markdown.MarkdownNode}
 
     if #convComments.output > 0 then
         -- Add converted comments output as well
-        blockNodes = tableext.extend(blockNodes, convComments.output)
+        tableext.extend(blockNodes, convComments.output)
     end
 
     -- Add code block of the type

@@ -45,20 +45,9 @@ local function fold<K, V, A>(table: {[K]: V}, f: (A, V) -> A, initial: A): A
 end
 
 --- Extends ``table`` with the contents of ``other`` returning ``table``
-local function arrayextend<V>(target: {V}, ...: {V}): {V}
+local function extend<V>(target: {V}, ...: {V}): {V}
     for i, tab in ... do
         table.insert(target, tab)
-    end
-
-    return target
-end
-
---- Extends ``target`` with the contents of ``other`` returning ``table``
-local function extend<K, V>(target: {[K]: V}, ...: {[K]: V}): {[K]: V}
-    for _, table in {...} do
-        for k, v in table do
-            target[k] = v
-        end
     end
 
     return target
@@ -71,7 +60,6 @@ return table.freeze({
     filter = filter,
     fold = fold,
     extend = extend,
-    arrayextend = arrayextend,
 
     -- re-exports of the table library
     clear = table.clear,

@@ -3,6 +3,7 @@ export type SimpleType = {
     a: (a: string) -> ()
 }
 
+--- hello
 export type SimpleType2 = {
     ---@field a Number of times to call ourselves
     a: (a: string) -> ()
