@@ -244,6 +244,8 @@ impl TypeFieldTypeModule {
 /// Inner data of a Function TypeFieldType
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeFieldTypeFunction {
+    /// The generics of the function
+    pub generics: Vec<TypedArgument>,
     /// The arguments of the function
     pub args: Vec<TypedArgument>,
     /// The return type of the function
@@ -261,7 +263,24 @@ impl TypeFieldTypeFunction {
             .map(|arg| arg.string_repr(false, false))
             .collect::<Vec<_>>()
             .join(", ");
-        format!("({}) -> {}", args_str, self.ret.string_repr(1))
+
+        let generics_str = self
+            .generics
+            .iter()
+            .map(|arg| arg.string_repr(false, true))
+            .collect::<Vec<_>>()
+            .join(", ");
+
+        let mut repr = String::new();
+
+        if !generics_str.is_empty() {
+            write!(repr, "<{}>", generics_str).expect("Failed to write generics to string");
+        }
+
+        write!(repr, "({}) -> {}", args_str, self.ret.string_repr(1))
+            .expect("Failed to write function to string");
+
+        repr
     }
 }
 
@@ -403,10 +422,10 @@ impl TypeFieldType {
     }
 
     /// Given a TypeInfo, convert it to a TypeField
-    pub fn from_luau_typeinfo(typ_info: &TypeInfo) -> Rc<Self> {
+    pub fn from_luau_typeinfo(tbv: &mut TypeBlockVisitor, typ_info: &TypeInfo) -> Rc<Self> {
         match typ_info {
             TypeInfo::Array { type_info, .. } => {
-                TypeFieldType::Array(TypeFieldType::from_luau_typeinfo(type_info)).into()
+                TypeFieldType::Array(TypeFieldType::from_luau_typeinfo(tbv, type_info)).into()
             }
             TypeInfo::Basic(basic_type) => {
                 let type_name = extract_name_from_tokenref(basic_type);
@@ -426,7 +445,7 @@ impl TypeFieldType {
                 for pair in fields.pairs() {
                     match pair {
                         Pair::Punctuated(field, _) | Pair::End(field) => {
-                            type_fields.push(TypeField::from_luau_type_field(field));
+                            type_fields.push(TypeField::from_luau_type_field(tbv, field));
                         }
                     }
                 }
@@ -436,6 +455,7 @@ impl TypeFieldType {
             TypeInfo::Callback {
                 arguments,
                 return_type,
+                generics,
                 ..
             } => {
                 let mut args = Vec::new();
@@ -445,7 +465,7 @@ impl TypeFieldType {
                         args.push(
                             (
                                 None,
-                                TypeFieldType::from_luau_typeinfo(arg.type_info()),
+                                TypeFieldType::from_luau_typeinfo(tbv, arg.type_info()),
                                 None,
                             )
                                 .into(),
@@ -454,13 +474,19 @@ impl TypeFieldType {
                     };
 
                     let name = extract_name_from_tokenref(name);
-                    let typ = TypeFieldType::from_luau_typeinfo(arg.type_info());
+                    let typ = TypeFieldType::from_luau_typeinfo(tbv, arg.type_info());
                     args.push((Some(name), typ, punctuation.to_string()).into());
                 }
 
+                let generics = if let Some(generic) = generics {
+                    tbv.create_typed_arguments_from_generic_declaration(generic)
+                } else {
+                    Vec::with_capacity(0)
+                };
                 TypeFieldType::Function(TypeFieldTypeFunction {
                     args,
-                    ret: TypeFieldType::from_luau_typeinfo(return_type),
+                    ret: TypeFieldType::from_luau_typeinfo(tbv, return_type),
+                    generics,
                 })
                 .into()
             }
@@ -469,7 +495,7 @@ impl TypeFieldType {
                 let mut generics_arr = Vec::new();
 
                 for generic in generics.iter() {
-                    generics_arr.push(TypeFieldType::from_luau_typeinfo(generic));
+                    generics_arr.push(TypeFieldType::from_luau_typeinfo(tbv, generic));
                 }
 
                 TypeFieldType::Generic(TypeFieldTypeGeneric {
@@ -486,7 +512,7 @@ impl TypeFieldType {
                 let mut union_types = Vec::new();
 
                 for typ in types.types() {
-                    union_types.push(TypeFieldType::from_luau_typeinfo(typ));
+                    union_types.push(TypeFieldType::from_luau_typeinfo(tbv, typ));
                 }
 
                 TypeFieldType::Union(union_types).into()
@@ -495,7 +521,7 @@ impl TypeFieldType {
                 let mut intersection_types = Vec::new();
 
                 for typ in types.types() {
-                    intersection_types.push(TypeFieldType::from_luau_typeinfo(typ));
+                    intersection_types.push(TypeFieldType::from_luau_typeinfo(tbv, typ));
                 }
 
                 TypeFieldType::Intersection(intersection_types).into()
@@ -520,7 +546,7 @@ impl TypeFieldType {
                         let mut generics_arr = Vec::new();
 
                         for generic in generics.iter() {
-                            generics_arr.push(TypeFieldType::from_luau_typeinfo(generic));
+                            generics_arr.push(TypeFieldType::from_luau_typeinfo(tbv, generic));
                         }
 
                         TypeFieldType::Module(TypeFieldTypeModule {
@@ -534,19 +560,19 @@ impl TypeFieldType {
                 }
             }
             TypeInfo::Optional { base, .. } => {
-                TypeFieldType::Optional(TypeFieldType::from_luau_typeinfo(base)).into()
+                TypeFieldType::Optional(TypeFieldType::from_luau_typeinfo(tbv, base)).into()
             }
             TypeInfo::Tuple { types, .. } => {
                 let mut tuple_types = Vec::new();
 
                 for typ in types {
-                    tuple_types.push(TypeFieldType::from_luau_typeinfo(typ));
+                    tuple_types.push(TypeFieldType::from_luau_typeinfo(tbv, typ));
                 }
 
                 TypeFieldType::Tuple(tuple_types).into()
             }
             TypeInfo::Variadic { type_info, .. } => {
-                TypeFieldType::Variadic(TypeFieldType::from_luau_typeinfo(type_info)).into()
+                TypeFieldType::Variadic(TypeFieldType::from_luau_typeinfo(tbv, type_info)).into()
             }
             TypeInfo::VariadicPack { name, .. } => {
                 let name = extract_name_from_tokenref(name);
@@ -575,7 +601,7 @@ pub struct TypeField {
 
 impl TypeField {
     /// Given a LuauTypeField, convert it to a TypeField
-    pub fn from_luau_type_field(typ_field: &LuauTypeField) -> Rc<Self> {
+    pub fn from_luau_type_field(tbv: &mut TypeBlockVisitor, typ_field: &LuauTypeField) -> Rc<Self> {
         let key = match typ_field.key() {
             TypeFieldKey::Name(name) => extract_name_from_tokenref(name),
             TypeFieldKey::IndexSignature { brackets, inner } => {
@@ -583,7 +609,7 @@ impl TypeField {
                 format!(
                     "{}{}{}",
                     extract_name_from_tokenref(start_bracket),
-                    TypeFieldType::from_luau_typeinfo(inner).string_repr(1),
+                    TypeFieldType::from_luau_typeinfo(tbv, inner).string_repr(1),
                     extract_name_from_tokenref(end_bracket)
                 )
             }
@@ -617,7 +643,7 @@ impl TypeField {
 
         let comments = typ_field.get_surrounding_trivia();
 
-        let type_info = TypeFieldType::from_luau_typeinfo(value);
+        let type_info = TypeFieldType::from_luau_typeinfo(tbv, value);
 
         Self {
             repr: typ_field.to_string(),
@@ -950,7 +976,7 @@ impl TypeBlockVisitor {
         for generic_decl_param in generic.generics() {
             let default_type = generic_decl_param
                 .default_type()
-                .map(TypeFieldType::from_luau_typeinfo);
+                .map(|t| TypeFieldType::from_luau_typeinfo(self, t));
 
             let name = match generic_decl_param.parameter() {
                 GenericParameterInfo::Name(name) => extract_name_from_tokenref(name),
@@ -1011,6 +1037,7 @@ impl TypeBlockVisitor {
             };
 
             typs.push(Some(TypeFieldType::from_luau_typeinfo(
+                self,
                 typ_specifier.type_info(),
             )));
         }
@@ -1023,7 +1050,7 @@ impl TypeBlockVisitor {
         // Get the return type
         let ret = body
             .return_type()
-            .map(|typ| TypeFieldType::from_luau_typeinfo(typ.type_info()));
+            .map(|typ| TypeFieldType::from_luau_typeinfo(self, typ.type_info()));
 
         // Create the type
         Type::Function {
@@ -1082,7 +1109,7 @@ impl TypeBlockVisitor {
                 for pair in tfields.pairs() {
                     match pair {
                         Pair::Punctuated(field, _) | Pair::End(field) => {
-                            let field = TypeField::from_luau_type_field(field);
+                            let field = TypeField::from_luau_type_field(self, field);
                             fields.push(field);
                         }
                     }
@@ -1169,6 +1196,7 @@ impl TypeBlockVisitor {
                                         let mut typ_field = (None, None);
                                         for type_assertion in type_assertions {
                                             let type_info = TypeFieldType::from_luau_typeinfo(
+                                                self,
                                                 type_assertion.cast_to(),
                                             );
 
@@ -1238,7 +1266,7 @@ impl TypeBlockVisitor {
                 generics,
                 type_comments: comments,
                 type_def_type: TypeDefType::Uncategorized {
-                    type_info: TypeFieldType::from_luau_typeinfo(node.type_definition()),
+                    type_info: TypeFieldType::from_luau_typeinfo(self, node.type_definition()),
                 },
                 repr: type_repr,
             }

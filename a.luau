@@ -13,7 +13,7 @@ export type a --[[Comment here]] = {
   [string]: a,
 
   --- C
-  d: (self: a, a: number, b: string, c: a) -> (),
+  d: <T>(self: a, a: number, b: string, c: a) -> (),
 
   --- A table
   a: {string}
@@ -23,7 +23,11 @@ local function foo(a, b: number) --[[Comment here]] end
 local function bar(a: string, b: number) end
 
 -- Meow
-local function bar(a: string, b: number) end
+---@field a Input string
+---@field b Number of times to call ourselves
+---@returns 1 sa String
+---@returns 2 ri Numberz
+local function baz(a: string, b: number): (string, number) return "", 0 end
 
 local b = ""
 for i = 1, 10 do 

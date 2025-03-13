@@ -293,6 +293,8 @@ export type TypedArgument = {
 
 --- Inner data of a Function TypeFieldType
 export type TypeFieldTypeFunction = {
+    --- The generic arguments of the function
+    generics: {TypedArgument},
     --- The arguments of the function
     args: {TypedArgument},
     --- The return type of the function

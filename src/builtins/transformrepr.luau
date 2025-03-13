@@ -205,6 +205,13 @@ function transformFunctionRepr(s: types.TypeFieldTypeFunction, transformStr: (ty
         format!("({}) -> {}", args_str, self.ret.string_repr(1))
     ]]
 
+    local genericsStr = table.concat(
+        tableext.arraymap(s.generics, function(g: types.TypedArgument)
+            return transformTypedArgumentRepr(g, true, false, transformStr)
+        end), 
+        ", "
+    )
+
     local argsStr = table.concat(
         tableext.arraymap(s.args, function(arg: types.TypedArgument)
             return transformTypedArgumentRepr(arg, false, false, transformStr)
@@ -212,7 +219,15 @@ function transformFunctionRepr(s: types.TypeFieldTypeFunction, transformStr: (ty
         ", " 
     )
 
-    return string.format("(%s) -> %s", argsStr, transformRepr(s.ret, 1, transformStr))
+    local str = ""
+
+    if #genericsStr > 0 then
+        str = string.format("<%s>", genericsStr)
+    end
+
+    str ..= string.format("(%s) -> %s", argsStr, transformRepr(s.ret, 1, transformStr))
+
+    return str
 end
 
 function transformTypedArgumentRepr(s: types.TypedArgument, generic: boolean?, punctuation: boolean?, transformStr: (typ: string, string) -> string) 

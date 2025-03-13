@@ -17,68 +17,253 @@ assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over
 -- Parse arguments at top-level
 local md = argparser.parseArguments(globals)
 
+--- Helper function to parse return data from converted comments
+local function parseReturnData(convertedComments: convertComments.ConvertCommentResponse, i: number): (string, string)
+    -- Returns have special constraints
+    local retName: string = `ret{i}`
+    local retComment: string = ""
+
+    local potComment: string? = nil
+
+    if convertedComments.returns[tostring(i)] then 
+        potComment = convertedComments.returns[tostring(i)]
+    else
+        -- Last chance, check if there is a single return comment
+        local potRetName: string? = nil
+        for k in pairs(convertedComments.returns) do 
+            potRetName = k
+            break
+        end
+
+        if potRetName then
+            return potRetName, convertedComments.returns[potRetName]
+        end
+    end
+
+    if potComment then 
+        -- Split by space, first part is the name, second part is the comment
+        local split = potComment:split(" ")
+        if #split == 1 then
+            retName = split[1]
+        else
+            retName = split[1]
+            retComment = table.concat(split, " ", 2)
+        end
+    end 
+
+    return retName, retComment
+end
+
+--- Helper method to process a function
+local function parseFunction(
+    originRepr: string?,
+    convertedComments: convertComments.ConvertCommentResponse,
+    generics: {types.TypedArgument},
+    args: {types.TypedArgument},
+    ret: types.TypeFieldType?
+): {markdown.MarkdownNode} 
+    local blockNodes: {markdown.MarkdownNode} = {}
+    
+    -- Code block of the function as a string
+    if originRepr then
+        blockNodes[#blockNodes + 1] = {
+            type = "CodeBlock" :: "CodeBlock",
+            description = "Function Signature",
+            language = "luau",
+            text = originRepr,
+        }
+    end
+
+    -- Add in the generics
+    if #generics > 0 then 
+        local genericlist: {markdown.MarkdownText} = {}
+        for i, generic in generics do 
+            local stringRepr = "any"
+            if generic.typ then
+                stringRepr = generic.typ:string_repr()
+            end
+
+            -- Add in the argument properly
+            local nodes: {markdown.MarkdownTextNode} = {
+                markdown.NewMarkdownTextNode_Bold(
+                    markdown.NewMarkdownTextNode_Unstyled(generic.name or ("generic" .. tostring(i)))
+                ),
+                markdown.NewMarkdownTextNode_Unstyled(" "),
+                markdown.NewMarkdownTextNode_Italics(
+                    markdown.NewMarkdownTextNode_Unstyled("(" .. stringRepr .. ")")
+                )
+            }
+
+            if generic.name and convertedComments.genericDocs[generic.name] then
+                nodes[#nodes + 1] = markdown.NewMarkdownTextNode_Unstyled(" - " .. convertedComments.genericDocs[generic.name])
+            end
+
+            genericlist[#genericlist + 1] = markdown.NewMarkdownText_FromNodeArray(
+                nodes
+            )
+        end
+
+        blockNodes[#blockNodes + 1] = {
+            type = "Heading" :: "Heading",
+            level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+            headingText = markdown.NewMarkdownText_FromRaw("Generics")
+        }
+
+        blockNodes[#blockNodes + 1] = {
+            type = "List" :: "List",
+            entries = genericlist
+        }
+    end
+
+    -- Add in the arguments
+    if #args > 0 then
+        --blockNodes[#blockNodes + 1]
+
+        local arglist: {markdown.MarkdownText} = {}
+        for i, arg in args do 
+            if arg.name == "self" then
+                -- Skip self argument
+                continue
+            end
+
+            local stringRepr = "any"
+            if arg.typ then
+                stringRepr = arg.typ:string_repr()
+            end
+
+            -- Add in the argument properly
+            local nodes: {markdown.MarkdownTextNode} = {
+                markdown.NewMarkdownTextNode_Bold(
+                    markdown.NewMarkdownTextNode_Unstyled(arg.name or ("arg" .. tostring(i)))
+                ),
+                markdown.NewMarkdownTextNode_Unstyled(" "),
+                markdown.NewMarkdownTextNode_Italics(
+                    markdown.NewMarkdownTextNode_Unstyled("(" .. stringRepr .. ")")
+                )
+            } :: {markdown.MarkdownTextNode}
+
+            if arg.name and convertedComments.fieldDocs[arg.name] then
+                nodes[#nodes + 1] = markdown.NewMarkdownTextNode_Unstyled(" - " .. convertedComments.fieldDocs[arg.name])
+            end
+
+            arglist[#arglist + 1] = markdown.NewMarkdownText_FromNodeArray(
+                nodes
+            )
+        end
+
+        blockNodes[#blockNodes + 1] = {
+            type = "Heading" :: "Heading",
+            level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+            headingText = markdown.NewMarkdownText_FromRaw("Arguments")
+        } :: markdown.MarkdownNode
+
+        blockNodes[#blockNodes + 1] = {
+            type = "List" :: "List",
+            entries = arglist
+        }
+
+        if ret then
+            local extractedRet = ret:extract()
+            if extractedRet.type ~= "Tuple" or #extractedRet.data > 0 then 
+                blockNodes[#blockNodes + 1] = {
+                    type = "Heading" :: "Heading",
+                    level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+                    headingText = markdown.NewMarkdownText_FromRaw("Returns")
+                } :: markdown.MarkdownNode
+
+                if extractedRet.type == "Tuple" then 
+                    -- Special case for tuples
+                    local retlist: {markdown.MarkdownText} = {}
+
+                    for i, ret in extractedRet.data do 
+                        local stringRepr = "any"
+                        if ret then
+                            stringRepr = ret:string_repr()
+                        end
+
+                        -- Returns have special constraints
+                        local retName, retComment = parseReturnData(convertedComments, i)
+
+                        local nodes: {markdown.MarkdownTextNode} = {
+                            markdown.NewMarkdownTextNode_Bold(
+                                markdown.NewMarkdownTextNode_Unstyled(retName)
+                            ),
+                            markdown.NewMarkdownTextNode_Unstyled(" "),
+                            markdown.NewMarkdownTextNode_Italics(
+                                markdown.NewMarkdownTextNode_Unstyled("(" .. stringRepr .. ")")
+                            )
+                        } :: {markdown.MarkdownTextNode}
+        
+                        if retComment ~= "" then
+                            nodes[#nodes + 1] = markdown.NewMarkdownTextNode_Unstyled(" - " .. retComment)
+                        end
+        
+                        retlist[#retlist + 1] = markdown.NewMarkdownText_FromNodeArray(
+                            nodes
+                        )        
+                    end
+
+                    blockNodes[#blockNodes + 1] = {
+                        type = "List" :: "List",
+                        entries = retlist
+                    }
+                else
+                    -- Normal case
+                    local stringRepr = "any"
+                    if ret then
+                        stringRepr = ret:string_repr()
+                    end
+
+                    -- Returns have special constraints
+                    local retName, retComment = parseReturnData(convertedComments, 1)
+
+                    local nodes: {markdown.MarkdownTextNode} = {
+                        markdown.NewMarkdownTextNode_Bold(
+                            markdown.NewMarkdownTextNode_Unstyled(retName)
+                        ),
+                        markdown.NewMarkdownTextNode_Unstyled(" "),
+                        markdown.NewMarkdownTextNode_Italics(
+                            markdown.NewMarkdownTextNode_Unstyled("(" .. stringRepr .. ")")
+                        )
+                    } :: {markdown.MarkdownTextNode}
+
+                    if retComment ~= "" then
+                        nodes[#nodes + 1] = markdown.NewMarkdownTextNode_Unstyled(" - " .. retComment)
+                    end
+
+                    blockNodes[#blockNodes + 1] = {
+                        type = "List" :: "List",
+                        entries = {
+                            markdown.NewMarkdownText_FromNodeArray(
+                                nodes
+                            )
+                        }
+                    } :: markdown.MarkdownNode
+                end
+            end
+        end
+    end
+
+    return blockNodes
+end
+
 --- Parses a TypeFieldType (number or () -> number etc.)
 local function parseTypeFieldType(originField: types.TypeField?, typ: types.TypeFieldType, convertedComments: convertComments.ConvertCommentResponse): {markdown.MarkdownNode} 
     local blockNodes: {markdown.MarkdownNode} = {} 
 
     local fieldtype = typ:extract()
     if fieldtype.type == "Function" then
-        -- Code block of the function as a string
+        local originRepr = nil
         if originField then
-            blockNodes[#blockNodes + 1] = {
-                type = "CodeBlock" :: "CodeBlock",
-                description = "Function Signature",
-                language = "luau",
-                text = originField:string_repr_with_pats("\n"),
-            }
+            originRepr = originField:string_repr_with_pats("\n")
         end
-
-        -- Add in the arguments
-        if #fieldtype.data.args > 0 then
-            --blockNodes[#blockNodes + 1]
-
-            local arglist: {markdown.MarkdownText} = {}
-            for i, arg in fieldtype.data.args do 
-                if arg.name == "self" then
-                    -- Skip self argument
-                    continue
-                end
-
-                local stringRepr = "any"
-                if arg.typ then
-                    stringRepr = arg.typ:string_repr()
-                end
-
-                --
-                local nodes: {markdown.MarkdownTextNode} = {
-                    markdown.NewMarkdownTextNode_Unstyled(arg.name or ("arg" .. tostring(i))),
-                    markdown.NewMarkdownTextNode_Italics(
-                        markdown.NewMarkdownTextNode_Unstyled(" (" .. stringRepr .. ")")
-                    )
-                }
-
-                if arg.name and convertedComments.fieldDocs[arg.name] then
-                    nodes[#nodes + 1] = markdown.NewMarkdownTextNode_Unstyled(" - " .. convertedComments.fieldDocs[arg.name])
-                end
-
-                arglist[#arglist + 1] = markdown.NewMarkdownText_FromNodes(
-                    markdown.NewMarkdownTextNode_BoldArray(
-                        nodes
-                    )
-                )
-            end
-
-            blockNodes[#blockNodes + 1] = {
-                type = "Heading" :: "Heading",
-                level = nil :: number?, -- Bug in luau new type solver needs this (for now)
-                headingText = markdown.NewMarkdownText_FromRaw("Arguments")
-            }
-
-            blockNodes[#blockNodes + 1] = {
-                type = "List" :: "List",
-                entries = arglist
-            }
-        end
+        return parseFunction(
+            originRepr,
+            convertedComments,
+            fieldtype.data.generics,
+            fieldtype.data.args,
+            fieldtype.data.ret
+        )
     elseif fieldtype.type == "Array" then 
         return parseTypeFieldType(originField, fieldtype.data, convertedComments)
     else
@@ -211,13 +396,37 @@ local function parseTypeDef(typ: types.TypeDef): {markdown.MarkdownNode}
 end
 
 local function parseTypeFunction(typ: types.TypeFunction): {markdown.MarkdownNode} 
-    return {
-        {
-            type = "Heading" :: "Heading",
-            level = nil :: number?, -- Bug in luau new type solver needs this (for now)
-            headingText = markdown.NewMarkdownText_FromRaw(typ.name)    
-        },
-    } :: {markdown.MarkdownNode}
+    local convComments = convertComments.convertComments(globals, typ.type_comments, md.ignorenondoc)
+
+    if convComments.skip then
+        return {} -- Ignore explicitly skipped types
+    end
+
+    -- Initial content/prelude
+    local blockNodes: {markdown.MarkdownNode} = {}
+
+    -- Add header node
+    blockNodes[#blockNodes + 1] = {
+        type = "Heading" :: "Heading",
+        level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+        headingText = markdown.NewMarkdownText_FromRaw(typ.name)    
+    }
+
+    if #convComments.output > 0 then
+        -- Add converted comments output as well
+        tableext.extend(blockNodes, convComments.output)
+    end
+
+    tableext.extend(blockNodes, parseFunction(
+        typ:string_repr(),
+        convComments,
+        typ.generics,
+        typ.args,
+        typ.ret
+    ))
+
+
+    return blockNodes
 end
 
 -- First add in the typedefs

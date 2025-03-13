@@ -693,6 +693,15 @@ pub struct TypeFieldTypeFunction {
 
 impl LuaUserData for TypeFieldTypeFunction {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
+        fields.add_field_method_get("generics", |lua, this| {
+            this.inner
+                .generics
+                .iter()
+                .map(|t| TypedArgument { inner: t.clone() })
+                .collect::<Vec<_>>()
+                .into_lua(lua)
+        });
+
         fields.add_field_method_get("args", |lua, this| {
             this.inner
                 .args

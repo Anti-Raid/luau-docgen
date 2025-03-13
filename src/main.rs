@@ -37,6 +37,10 @@ struct CliArgs {
     /// Defaults to false
     include_nonexported_types: bool,
 
+    /// Target file to write the output to
+    #[arg(long, default_value = "stdout")]
+    output: String,
+
     #[arg(trailing_var_arg = true, allow_hyphen_values = true, hide = true)]
     args: Vec<String>,
 }
@@ -223,19 +227,26 @@ fn main() {
         })
         .expect("Error: Creation of documentation failed");
 
-    if !values.is_empty() {
-        println!(
-            "{}",
-            values
-                .iter()
-                .map(|value| {
-                    match value {
-                        LuaValue::String(s) => s.to_string_lossy(),
-                        _ => format!("{:#?}", value),
-                    }
-                })
-                .collect::<Vec<_>>()
-                .join("\t")
-        );
+    let output = if !values.is_empty() {
+        values
+            .iter()
+            .map(|value| match value {
+                LuaValue::String(s) => s.to_string_lossy(),
+                _ => format!("{:#?}", value),
+            })
+            .collect::<Vec<_>>()
+            .join("\t")
+    } else {
+        eprintln!("Error: No output from documentor");
+        std::process::exit(1);
+    };
+
+    if args.output == "stdout" {
+        println!("{}", output);
+    } else {
+        std::fs::write(&args.output, output).unwrap_or_else(|_| {
+            eprintln!("Error: Failed to write output to file: {:?}", args.output);
+            std::process::exit(1);
+        });
     }
 }
