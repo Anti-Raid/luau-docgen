@@ -995,9 +995,7 @@ impl TypeBlockVisitor {
         generics
     }
 
-    pub fn create_type_from_function<
-        T: TokenReferenceExtractor + crate::token_ref_extractor_v2::TokenReferenceExtractor,
-    >(
+    pub fn create_type_from_function<T: TokenReferenceExtractor>(
         &mut self,
         node: &T,
         name: String,
@@ -1277,35 +1275,21 @@ impl TypeBlockVisitor {
     }
 
     // Gets surrounding trivia for nodes using two different implementations
-    pub fn get_surrounding_trivia_for_node<
-        T: TokenReferenceExtractor + crate::token_ref_extractor_v2::TokenReferenceExtractor,
-    >(
+    pub fn get_surrounding_trivia_for_node<T: TokenReferenceExtractor>(
         &self,
         node: &T,
     ) -> Vec<String> {
         let instant_now = std::time::Instant::now();
         let comments = TokenReferenceExtractor::get_surrounding_trivia(node);
         let elapsed_n = instant_now.elapsed();
-        let comments_v2 =
-            crate::token_ref_extractor_v2::TokenReferenceExtractor::get_surrounding_trivia(node);
-        let elapsed_v2 = instant_now.elapsed();
 
-        assert_eq!(comments, comments_v2);
-
-        println!(
-            "Elapsed: {:?} (v1) vs {:?} (v2)",
-            elapsed_n.as_micros(),
-            elapsed_v2.as_micros()
-        );
+        log::trace!("Elapsed: {:?}", elapsed_n.as_micros());
 
         comments
     }
 
     /// Extract till tag using two different implementations
-    pub fn extract_till_tag<
-        'a,
-        T: TokenReferenceExtractor + crate::token_ref_extractor_v2::TokenReferenceExtractor,
-    >(
+    pub fn extract_till_tag<'a, T: TokenReferenceExtractor>(
         &self,
         node: &'a T,
         tag: &str,
@@ -1313,20 +1297,10 @@ impl TypeBlockVisitor {
         let instant_now = std::time::Instant::now();
         let tokens = TokenReferenceExtractor::extract_till_tag(node, tag);
         let elapsed_n = instant_now.elapsed();
-        let tokens_v2 =
-            crate::token_ref_extractor_v2::TokenReferenceExtractor::extract_till_tag(node, tag);
-        let elapsed_v2 = instant_now.elapsed();
 
-        assert_eq!(
-            tokens.iter().map(|c| c.to_string()).collect::<Vec<_>>(),
-            tokens_v2.iter().map(|c| c.to_string()).collect::<Vec<_>>(),
-        );
-        assert_eq!(tokens, tokens_v2);
-
-        println!(
-            "Elapsed: {:?} (v1) vs {:?} (v2) [extract_till_tag]",
+        log::trace!(
+            "Elapsed: {:?} (v1) [extract_till_tag]",
             elapsed_n.as_micros(),
-            elapsed_v2.as_micros()
         );
 
         tokens
