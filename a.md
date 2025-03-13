@@ -153,7 +153,7 @@ Meow
 ---@field b Number of times to call ourselves
 ---@returns 1 sa String
 ---@returns 2 ri Numberz
-function baz(a: string, b: number) -> (string, number) end
+function baz(a: string, b: {number}) -> (string, number) end
 ```
 
 </details>
@@ -161,7 +161,7 @@ function baz(a: string, b: number) -> (string, number) end
 ## Arguments
 
 - **a** *(string)* - Input string
-- **b** *(number)* - Number of times to call ourselves
+- **b** *({number})* - Number of times to call ourselves
 
 ## Returns
 

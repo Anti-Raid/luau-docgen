@@ -27,7 +27,7 @@ local function bar(a: string, b: number) end
 ---@field b Number of times to call ourselves
 ---@returns 1 sa String
 ---@returns 2 ri Numberz
-local function baz(a: string, b: number): (string, number) return "", 0 end
+local function baz(a: string, b: {number}): (string, number) return "", 0 end
 
 local b = ""
 for i = 1, 10 do 
