@@ -1,10 +1,15 @@
 use full_moon::{
     ast::{
-        Assignment, Block, Call, Expression, Field, FunctionArgs, FunctionName, Index, LastStmt,
-        MethodCall, Parameter, Prefix, Return, Stmt, Suffix, TableConstructor, Var, VarExpression,
+        Assignment, BinOp, Block, Call, Expression, Field, FunctionArgs, FunctionBody,
+        FunctionCall, FunctionDeclaration, FunctionName, Index, LastStmt, LocalFunction,
+        MethodCall, Parameter, Prefix, Return, Stmt, Suffix, TableConstructor, UnOp, Var,
+        VarExpression,
         luau::{
-            GenericDeclaration, GenericDeclarationParameter, GenericParameterInfo, IndexedTypeInfo,
-            TypeArgument, TypeField, TypeFieldKey, TypeInfo, TypeIntersection, TypeUnion,
+            ElseIfExpression, ExportedTypeDeclaration, GenericDeclaration,
+            GenericDeclarationParameter, GenericParameterInfo, IfExpression, IndexedTypeInfo,
+            InterpolatedString, InterpolatedStringSegment, TypeArgument, TypeAssertion,
+            TypeDeclaration, TypeField, TypeFieldKey, TypeInfo, TypeIntersection, TypeSpecifier,
+            TypeUnion,
         },
         punctuated::{Pair, Punctuated},
     },
@@ -108,14 +113,24 @@ impl<T: Iterator, U: Iterator<Item = T::Item>, V: Iterator<Item = T::Item>> Iter
 
 /// Abstraction to extract token references from compatible types
 ///
-/// This should be much faster than v1 of token reference extractor and safer too.
+/// This should be (maybe?) faster than v1 of token reference extractor and safer too.
 pub trait TokenReferenceExtractor: Clone {
     fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)>;
 
     fn get_surrounding_trivia(&self) -> Vec<String> {
         let mut comments = Vec::new();
 
-        for (token_ref, ..) in self.extract_token_refs() {
+        for (token_ref, tag) in self.extract_token_refs() {
+            /*println!(
+                "Tag: {}, token: {:?}",
+                tag,
+                token_ref.map(|t| t.to_string())
+            );*/
+
+            if ["Punctuated", "PairPunctuated", "PairEnd"].contains(&tag) {
+                break; // Useful heuristic to avoid getting comments from the entire segment, TODO: Replace this with something better
+            }
+
             let Some(token_ref) = token_ref else {
                 continue;
             };
@@ -124,6 +139,26 @@ pub trait TokenReferenceExtractor: Clone {
         }
 
         comments
+    }
+
+    fn extract_till_tag(&self, tag: &str) -> Vec<&TokenReference> {
+        let token_refs = self.extract_token_refs();
+
+        let mut tagged_refs = Vec::new();
+
+        for (token_ref, p_tag) in token_refs {
+            let Some(token_ref) = token_ref else {
+                continue;
+            };
+
+            if p_tag == tag {
+                break;
+            }
+
+            tagged_refs.push(token_ref);
+        }
+
+        tagged_refs
     }
 }
 
@@ -170,9 +205,9 @@ impl<T: TokenReferenceExtractor> TokenReferenceExtractor for Pair<T> {
                 std::iter::once((token_ref.into(), "PairPunctuated"))
                     .chain(item.extract_token_refs()),
             ),
-            Pair::End(item) => Either::Right(
-                std::iter::once((None, "PairPunctuated")).chain(item.extract_token_refs()),
-            ),
+            Pair::End(item) => {
+                Either::Right(std::iter::once((None, "PairEnd")).chain(item.extract_token_refs()))
+            }
         }
     }
 }
@@ -180,7 +215,8 @@ impl<T: TokenReferenceExtractor> TokenReferenceExtractor for Pair<T> {
 /// Punctuated impl
 impl<T: TokenReferenceExtractor> TokenReferenceExtractor for Punctuated<T> {
     fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
-        self.pairs().flat_map(|p| p.extract_token_refs())
+        std::iter::once((None, "Punctuated"))
+            .chain_with(|| self.pairs().flat_map(|p| p.extract_token_refs()))
     }
 }
 
@@ -818,6 +854,18 @@ impl TokenReferenceExtractor for TypeField {
     }
 }
 
+impl TokenReferenceExtractor for TypeAssertion {
+    /*
+        pub(crate) assertion_op: TokenReference,
+    pub(crate) cast_to: TypeInfo,
+     */
+
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((Some(self.assertion_op()), "TypeAssertion"))
+            .chain_with(|| self.cast_to().extract_token_refs())
+    }
+}
+
 /*
    /// A key in the format of `[expression] = value`
    #[display(
@@ -1241,16 +1289,271 @@ impl TokenReferenceExtractor for FunctionName {
     }
 }
 
-// TODO
-impl TokenReferenceExtractor for Stmt {
+impl TokenReferenceExtractor for TypeSpecifier {
     fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
-        std::iter::once(todo!())
+        // #[display("{punctuation}{type_info}")]
+        std::iter::once((None, "TypeSpecifier"))
+            .chain_with(|| std::iter::once((Some(self.punctuation()), "TypeSpecifier")))
+            .chain_with(|| self.type_info().extract_token_refs())
+    }
+}
+
+impl TokenReferenceExtractor for FunctionBody {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        /*
+                   "{}{}{}{}{}{}{}",
+           display_option(self.generics.as_ref()),
+           self.parameters_parentheses.tokens().0,
+           join_type_specifiers(&self.parameters, self.type_specifiers()),
+           self.parameters_parentheses.tokens().1,
+           display_option(self.return_type.as_ref()),
+           self.block,
+           self.end_token
+        */
+
+        std::iter::once((None, "FunctionBody"))
+            .chain_with(|| {
+                self.generics()
+                    .into_iter()
+                    .flat_map(|g| g.extract_token_refs())
+            })
+            .chain_with(|| {
+                std::iter::once((
+                    Some(self.parameters_parentheses().tokens().0),
+                    "FunctionBody",
+                ))
+            })
+            .chain_with(|| {
+                self.parameters()
+                    .iter()
+                    .flat_map(|p| p.extract_token_refs())
+            })
+            .chain_with(|| {
+                std::iter::once((
+                    Some(self.parameters_parentheses().tokens().1),
+                    "FunctionBody",
+                ))
+            })
+            .chain_with(|| {
+                self.return_type()
+                    .into_iter()
+                    .flat_map(|rt| rt.extract_token_refs())
+            })
+            .chain_with(|| self.block().extract_token_refs())
+            .chain_with(|| std::iter::once((Some(self.end_token()), "FunctionBody")))
+    }
+}
+
+impl TokenReferenceExtractor for FunctionCall {
+    // #[display("{}{}", prefix, join_vec(suffixes))]
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "FunctionCall"))
+            .chain_with(|| self.prefix().extract_token_refs())
+            .chain_with(|| self.suffixes().flat_map(|s| s.extract_token_refs()))
+    }
+}
+
+impl TokenReferenceExtractor for BinOp {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((Some(self.token()), "BinOp"))
+    }
+}
+
+impl TokenReferenceExtractor for UnOp {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((Some(self.token()), "UnOp"))
+    }
+}
+
+/*
+#[display(
+    "{}{}{}{}{}{}{}",
+    if_token,
+    condition,
+    then_token,
+    if_expression,
+    display_option(else_if_expressions.as_ref().map(join_vec)),
+    else_token,
+    else_expression
+)]
+pub struct IfExpression {
+*/
+impl TokenReferenceExtractor for IfExpression {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((Some(self.if_token()), "IfExpression"))
+            .chain_with(|| self.condition().extract_token_refs())
+            .chain_with(|| std::iter::once((Some(self.then_token()), "IfExpression")))
+            .chain_with(|| self.if_expression().extract_token_refs())
+            .chain_with(|| {
+                self.else_if_expressions()
+                    .into_iter()
+                    .flat_map(|e| e.extract_token_refs())
+            })
+            .chain_with(|| std::iter::once((Some(self.else_token()), "IfExpression")))
+            .chain_with(|| self.else_expression().extract_token_refs())
+    }
+}
+
+impl TokenReferenceExtractor for ElseIfExpression {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((Some(self.else_if_token()), "ElseIfExpression"))
+            .chain_with(|| self.condition().extract_token_refs())
+            .chain_with(|| std::iter::once((Some(self.then_token()), "ElseIfExpression")))
+            .chain_with(|| self.expression().extract_token_refs())
+    }
+}
+
+impl TokenReferenceExtractor for InterpolatedString {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        // #[display("{}{}", join_vec(segments), last_string)]
+        std::iter::once((None, "InterpolatedString"))
+            .chain_with(|| self.segments().flat_map(|s| s.extract_token_refs()))
+            .chain_with(|| self.last_string().extract_token_refs())
+    }
+}
+
+impl TokenReferenceExtractor for InterpolatedStringSegment {
+    // #[display("{literal}{expression}")]
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "InterpolatedStringSegment"))
+            .chain_with(|| self.literal.extract_token_refs())
+            .chain_with(|| self.expression.extract_token_refs())
     }
 }
 
 // TODO
+impl TokenReferenceExtractor for Stmt {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "Stmt")) // Not needed (?)
+    }
+}
+
 impl TokenReferenceExtractor for Expression {
     fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
-        std::iter::once(todo!())
+        let iter: Box<dyn Iterator<Item = (Option<&TokenReference>, &'static str)>> = match self {
+            Expression::BinaryOperator { lhs, binop, rhs } => Box::new(
+                lhs.extract_token_refs()
+                    .chain_with(|| binop.extract_token_refs())
+                    .chain_with(|| rhs.extract_token_refs()),
+            ),
+            Expression::Parentheses {
+                contained,
+                expression,
+            } => Box::new(
+                std::iter::once((Some(contained.tokens().0), "Expression"))
+                    .chain_with(|| expression.extract_token_refs())
+                    .chain_with(|| std::iter::once((Some(contained.tokens().1), "Expression"))),
+            ),
+            Expression::UnaryOperator { unop, expression } => Box::new(Box::new(
+                std::iter::once((None, "Expression"))
+                    .chain_with(|| unop.extract_token_refs())
+                    .chain_with(|| expression.extract_token_refs()),
+            )),
+            Expression::Function(f) => Box::new(
+                std::iter::once((None, "Expression"))
+                    .chain_with(|| std::iter::once((Some(&f.0), "Expression")))
+                    .chain_with(|| f.1.extract_token_refs()),
+            ),
+            Expression::FunctionCall(fc) => Box::new(
+                std::iter::once((None, "Expression")).chain_with(|| fc.extract_token_refs()),
+            ),
+            Expression::IfExpression(ie) => Box::new(
+                std::iter::once((None, "Expression")).chain_with(|| ie.extract_token_refs()),
+            ),
+            Expression::InterpolatedString(is) => Box::new(
+                std::iter::once((None, "Expression")).chain_with(|| is.extract_token_refs()),
+            ),
+            Expression::TableConstructor(tc) => Box::new(
+                std::iter::once((None, "Expression")).chain_with(|| tc.extract_token_refs()),
+            ),
+            Expression::Number(tr) | Expression::String(tr) | Expression::Symbol(tr) => {
+                Box::new(std::iter::once((Some(tr), "Expression")))
+            }
+            Expression::TypeAssertion {
+                expression,
+                type_assertion,
+            } => Box::new(
+                std::iter::once((None, "Expression"))
+                    .chain_with(|| expression.extract_token_refs())
+                    .chain_with(|| type_assertion.extract_token_refs()),
+            ),
+            Expression::Var(v) => Box::new(
+                std::iter::once((None, "Expression")).chain_with(|| v.extract_token_refs()),
+            ),
+            _ => todo!("Expression"),
+        };
+
+        iter
+    }
+}
+
+impl TokenReferenceExtractor for TypeDeclaration {
+    /*
+        #[display(
+        "{}{}{}{}{}",
+        type_token,
+        base,
+        display_option(generics),
+        equal_token,
+        declare_as
+    )]
+    */
+
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "TypeDeclaration"))
+            .chain_with(|| std::iter::once((Some(self.type_token()), "TypeDeclaration")))
+            .chain_with(|| self.type_name().extract_token_refs())
+            .chain_with(|| {
+                self.generics()
+                    .into_iter()
+                    .flat_map(|g| g.extract_token_refs())
+            })
+            .chain_with(|| std::iter::once((Some(self.equal_token()), "TypeDeclaration")))
+            .chain_with(|| self.type_definition().extract_token_refs())
+    }
+}
+
+impl TokenReferenceExtractor for ExportedTypeDeclaration {
+    /*
+    #[display(
+        "{}{}{}{}{}{}{}",
+        export_token,
+        type_token,
+        base,
+        display_option(generics),
+        equal_token,
+        declare_as,
+        semicolon_token
+    )]
+    */
+
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "ExportedTypeDeclaration"))
+            .chain_with(|| std::iter::once((Some(self.export_token()), "ExportedTypeDeclaration")))
+            .chain_with(|| self.type_declaration().extract_token_refs())
+    }
+}
+
+/*
+#[cfg_attr(feature = "luau", display("{function_token}{name}{body}"))]
+pub struct FunctionDeclaration {
+ */
+impl TokenReferenceExtractor for FunctionDeclaration {
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "FunctionDeclaration"))
+            .chain_with(|| std::iter::once((Some(self.function_token()), "FunctionDeclaration")))
+            .chain_with(|| self.name().extract_token_refs())
+            .chain_with(|| self.body().extract_token_refs())
+    }
+}
+
+impl TokenReferenceExtractor for LocalFunction {
+    // #[cfg_attr(feature = "luau", display("{local_token}{function_token}{name}{body}"))]
+    fn extract_token_refs(&self) -> impl Iterator<Item = (Option<&TokenReference>, &'static str)> {
+        std::iter::once((None, "LocalFunction"))
+            .chain_with(|| std::iter::once((Some(self.local_token()), "LocalFunction")))
+            .chain_with(|| std::iter::once((Some(self.function_token()), "LocalFunction")))
+            .chain_with(|| self.name().extract_token_refs())
+            .chain_with(|| self.body().extract_token_refs())
     }
 }

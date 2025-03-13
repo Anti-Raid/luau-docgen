@@ -18,7 +18,6 @@ use full_moon::{
             TypeFieldKey, TypeInfo, TypeIntersection, TypeSpecifier, TypeUnion,
         },
         punctuated::{Pair, Punctuated},
-        span::ContainedSpan,
     },
     tokenizer::{TokenReference, TokenType},
 };
@@ -45,17 +44,13 @@ pub fn get_comments_from_token_ref(token_ref: &TokenReference) -> Vec<String> {
     comments
 }
 
-pub enum TaggedTokenReference {
+pub enum TaggedTokenReference<'a> {
     Ref {
-        token_ref: TokenReference,
+        token_ref: &'a TokenReference,
     },
-    Vec,
     Punctuated,
     PairPunctuated,
     PairEnd,
-    ContainedSpan,
-    BinOp,
-    UnOp,
 
     #[allow(dead_code)]
     Tag {
@@ -63,21 +58,13 @@ pub enum TaggedTokenReference {
     },
 }
 
-impl From<TokenReference> for TaggedTokenReference {
-    fn from(token_ref: TokenReference) -> Self {
+impl<'a> From<&'a TokenReference> for TaggedTokenReference<'a> {
+    fn from(token_ref: &'a TokenReference) -> Self {
         Self::Ref { token_ref }
     }
 }
 
-impl From<&TokenReference> for TaggedTokenReference {
-    fn from(token_ref: &TokenReference) -> Self {
-        Self::Ref {
-            token_ref: token_ref.clone(),
-        }
-    }
-}
-
-impl From<&str> for TaggedTokenReference {
+impl From<&str> for TaggedTokenReference<'_> {
     fn from(tag: &str) -> Self {
         Self::Tag {
             tag: tag.to_string(),
@@ -86,18 +73,18 @@ impl From<&str> for TaggedTokenReference {
 }
 
 /// Abstraction to extract token references from compatible types
-pub trait TokenReferenceExtractor: Clone {
+pub trait TokenReferenceExtractor {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference>;
 
     fn get_surrounding_trivia(&self) -> Vec<String> {
-        let token_refs = self.clone().extract_token_refs();
+        let token_refs = self.extract_token_refs();
 
         let mut comments = Vec::new();
 
         for token_ref in token_refs {
             match token_ref {
                 TaggedTokenReference::Ref { token_ref } => {
-                    let trivia = get_comments_from_token_ref(&token_ref);
+                    let trivia = get_comments_from_token_ref(token_ref);
                     comments.extend(trivia);
                 }
                 TaggedTokenReference::Tag { .. } => {}
@@ -108,8 +95,8 @@ pub trait TokenReferenceExtractor: Clone {
         comments
     }
 
-    fn extract_till_tag(&self, tag: &str) -> Vec<TokenReference> {
-        let token_refs = self.clone().extract_token_refs();
+    fn extract_till_tag(&self, tag: &str) -> Vec<&TokenReference> {
+        let token_refs = self.extract_token_refs();
 
         let mut tagged_refs = Vec::new();
 
@@ -139,7 +126,7 @@ impl TokenReferenceExtractor for TokenReference {
 /// Vec impl
 impl<T: TokenReferenceExtractor> TokenReferenceExtractor for Vec<T> {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
-        let mut token_refs = vec![TaggedTokenReference::Vec];
+        let mut token_refs = Vec::with_capacity(self.len());
         for item in self {
             token_refs.extend(item.extract_token_refs());
         }
@@ -175,18 +162,6 @@ impl<T: TokenReferenceExtractor> TokenReferenceExtractor for Punctuated<T> {
             token_refs.extend(pair.extract_token_refs());
         }
         token_refs
-    }
-}
-
-// A really common type
-impl TokenReferenceExtractor for ContainedSpan {
-    fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
-        let (start, end) = self.tokens();
-        vec![
-            TaggedTokenReference::ContainedSpan,
-            start.into(),
-            end.into(),
-        ]
     }
 }
 
@@ -229,12 +204,12 @@ impl TokenReferenceExtractor for GenericParameterInfo {
 impl TokenReferenceExtractor for GenericDeclarationParameter {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["GenericDeclarationParameter".into()];
-        token_refs.extend(self.parameter().clone().extract_token_refs());
+        token_refs.extend(self.parameter().extract_token_refs());
         if let Some(equals) = self.equals() {
             token_refs.push(equals.into());
         }
         if let Some(default_type) = self.default_type() {
-            token_refs.extend(default_type.clone().extract_token_refs());
+            token_refs.extend(default_type.extract_token_refs());
         }
         token_refs
     }
@@ -246,7 +221,7 @@ impl TokenReferenceExtractor for GenericDeclaration {
         let mut token_refs = vec!["GenericDeclaration".into()];
         let (start, end) = self.arrows().tokens();
         token_refs.push(start.into());
-        token_refs.extend(self.generics().clone().extract_token_refs());
+        token_refs.extend(self.generics().extract_token_refs());
         token_refs.push(end.into());
 
         token_refs
@@ -267,7 +242,7 @@ impl TokenReferenceExtractor for TypeIntersection {
             token_refs.push(leading.into());
         }
 
-        token_refs.extend(self.types().clone().extract_token_refs());
+        token_refs.extend(self.types().extract_token_refs());
         token_refs
     }
 }
@@ -286,7 +261,7 @@ impl TokenReferenceExtractor for TypeUnion {
             token_refs.push(leading.into());
         }
 
-        token_refs.extend(self.types().clone().extract_token_refs());
+        token_refs.extend(self.types().extract_token_refs());
         token_refs
     }
 }
@@ -344,9 +319,9 @@ impl TokenReferenceExtractor for TypeArgument {
         if let Some((identifier, punctuation)) = self.name() {
             token_refs.push(identifier.into());
             token_refs.push(punctuation.into());
-            token_refs.extend(self.type_info().clone().extract_token_refs());
+            token_refs.extend(self.type_info().extract_token_refs());
         } else {
-            token_refs.extend(self.type_info().clone().extract_token_refs());
+            token_refs.extend(self.type_info().extract_token_refs());
         }
 
         token_refs
@@ -370,7 +345,7 @@ impl TokenReferenceExtractor for TypeSpecifier {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["TypeSpecifier".into()];
         token_refs.push(self.punctuation().into());
-        token_refs.extend(self.type_info().clone().extract_token_refs());
+        token_refs.extend(self.type_info().extract_token_refs());
         token_refs
     }
 }
@@ -383,7 +358,7 @@ impl TokenReferenceExtractor for Return {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["Return".into()];
         token_refs.push(self.token().into());
-        token_refs.extend(self.returns().clone().extract_token_refs());
+        token_refs.extend(self.returns().extract_token_refs());
         token_refs
     }
 }
@@ -486,7 +461,7 @@ impl TokenReferenceExtractor for TableConstructor {
         let mut token_refs = vec!["TableConstructor".into()];
         let (start, end) = self.braces().tokens();
         token_refs.push(start.into());
-        token_refs.extend(self.fields().clone().extract_token_refs());
+        token_refs.extend(self.fields().extract_token_refs());
         token_refs.push(end.into());
         token_refs
     }
@@ -548,10 +523,10 @@ pub struct FunctionCall {
 */
 impl TokenReferenceExtractor for FunctionCall {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
-        let mut token_refs = Vec::new();
-        token_refs.extend(self.prefix().clone().extract_token_refs());
+        let mut token_refs: Vec<TaggedTokenReference<'_>> = Vec::new();
+        token_refs.extend(self.prefix().extract_token_refs());
         for suffix in self.suffixes() {
-            token_refs.extend(suffix.clone().extract_token_refs());
+            token_refs.extend(suffix.extract_token_refs());
         }
         token_refs
     }
@@ -559,7 +534,6 @@ impl TokenReferenceExtractor for FunctionCall {
 
 /*
 /// A method call, such as `x:y()`
-#[derive(Clone, Debug, Display, PartialEq, Node, Visit)]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[display("{colon_token}{name}{args}")]
 pub struct MethodCall {
@@ -569,7 +543,7 @@ impl TokenReferenceExtractor for MethodCall {
         let mut token_refs = vec!["MethodCall".into()];
         token_refs.push(self.colon_token().into());
         token_refs.push(self.name().into());
-        token_refs.extend(self.args().clone().extract_token_refs());
+        token_refs.extend(self.args().extract_token_refs());
         token_refs
     }
 }
@@ -659,9 +633,9 @@ pub struct VarExpression {
 impl TokenReferenceExtractor for VarExpression {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = Vec::new();
-        token_refs.extend(self.prefix().clone().extract_token_refs());
+        token_refs.extend(self.prefix().extract_token_refs());
         for suffix in self.suffixes() {
-            token_refs.extend(suffix.clone().extract_token_refs());
+            token_refs.extend(suffix.extract_token_refs());
         }
         token_refs
     }
@@ -695,9 +669,9 @@ impl TokenReferenceExtractor for Assignment {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         // #[display("{var_list}{equal_token}{expr_list}")]
         let mut token_refs = vec!["Assignment".into()];
-        token_refs.extend(self.variables().clone().extract_token_refs());
+        token_refs.extend(self.variables().extract_token_refs());
         token_refs.push(self.equal_token().into());
-        token_refs.extend(self.expressions().clone().extract_token_refs());
+        token_refs.extend(self.expressions().extract_token_refs());
         token_refs
     }
 }
@@ -734,7 +708,7 @@ pub struct Block {
 impl TokenReferenceExtractor for Block {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["Block".into()];
-        for (stmt, token_ref) in self.stmts_with_semicolon().cloned() {
+        for (stmt, token_ref) in self.stmts_with_semicolon() {
             // First push stmt
             token_refs.extend(stmt.extract_token_refs());
             // Then push the semicolon
@@ -743,7 +717,7 @@ impl TokenReferenceExtractor for Block {
             }
         }
 
-        if let Some((last_stmt, last_token_ref)) = self.last_stmt_with_semicolon().cloned() {
+        if let Some((last_stmt, last_token_ref)) = self.last_stmt_with_semicolon() {
             // First push last_stmt
             token_refs.extend(last_stmt.extract_token_refs());
             // Then push the semicolon
@@ -768,7 +742,7 @@ pub struct FunctionName {
 impl TokenReferenceExtractor for FunctionName {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["FunctionName".into()];
-        token_refs.extend(self.names().clone().extract_token_refs());
+        token_refs.extend(self.names().extract_token_refs());
         if let Some(method_colon) = self.method_colon() {
             token_refs.push(method_colon.into());
         }
@@ -791,7 +765,7 @@ impl TokenReferenceExtractor for GenericFor {
         ) {
             token_refs.push(parameter.value().into());
             if let Some(type_specifier) = type_specifier {
-                token_refs.extend(type_specifier.clone().extract_token_refs());
+                token_refs.extend(type_specifier.extract_token_refs());
             }
             if let Some(punctuation) = parameter.punctuation() {
                 token_refs.push(punctuation.into());
@@ -802,13 +776,13 @@ impl TokenReferenceExtractor for GenericFor {
         token_refs.push(self.in_token().into());
 
         // Expression list
-        token_refs.extend(self.expressions().clone().extract_token_refs());
+        token_refs.extend(self.expressions().extract_token_refs());
 
         // Do token
         token_refs.push(self.do_token().into());
 
         // Block
-        token_refs.extend(self.block().clone().extract_token_refs());
+        token_refs.extend(self.block().extract_token_refs());
 
         // End token
         token_refs.push(self.end_token().into());
@@ -824,7 +798,7 @@ impl TokenReferenceExtractor for Do {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["Do".into()];
         token_refs.push(self.do_token().into());
-        token_refs.extend(self.block().clone().extract_token_refs());
+        token_refs.extend(self.block().extract_token_refs());
         token_refs.push(self.end_token().into());
         token_refs
     }
@@ -838,8 +812,8 @@ impl TokenReferenceExtractor for FunctionDeclaration {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["FunctionDeclaration".into()];
         token_refs.push(self.function_token().into());
-        token_refs.extend(self.name().clone().extract_token_refs());
-        token_refs.extend(self.body().clone().extract_token_refs());
+        token_refs.extend(self.name().extract_token_refs());
+        token_refs.extend(self.body().extract_token_refs());
         token_refs
     }
 }
@@ -854,7 +828,7 @@ impl TokenReferenceExtractor for FunctionBody {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["FunctionBody".into()];
         if let Some(generics) = self.generics() {
-            token_refs.extend(generics.clone().extract_token_refs());
+            token_refs.extend(generics.extract_token_refs());
         }
         let (start, end) = self.parameters_parentheses().tokens();
         token_refs.push(start.into());
@@ -865,7 +839,7 @@ impl TokenReferenceExtractor for FunctionBody {
         ) {
             token_refs.extend(param.value().extract_token_refs());
             if let Some(typ_info) = typ_info {
-                token_refs.extend(typ_info.clone().extract_token_refs());
+                token_refs.extend(typ_info.extract_token_refs());
             }
             if let Some(punctuation) = param.punctuation() {
                 token_refs.push(punctuation.into());
@@ -874,9 +848,9 @@ impl TokenReferenceExtractor for FunctionBody {
 
         token_refs.push(end.into());
         if let Some(return_type) = self.return_type() {
-            token_refs.extend(return_type.clone().extract_token_refs());
+            token_refs.extend(return_type.extract_token_refs());
         }
-        token_refs.extend(self.block().clone().extract_token_refs());
+        token_refs.extend(self.block().extract_token_refs());
         token_refs.push(self.end_token().into());
 
         token_refs
@@ -890,7 +864,7 @@ impl TokenReferenceExtractor for LocalFunction {
         token_refs.push(self.local_token().into());
         token_refs.push(self.function_token().into());
         token_refs.push(self.name().into());
-        token_refs.extend(self.body().clone().extract_token_refs());
+        token_refs.extend(self.body().extract_token_refs());
         token_refs
     }
 }
@@ -899,20 +873,20 @@ impl TokenReferenceExtractor for TypeAssertion {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["TypeAssertion".into()];
         token_refs.push(self.assertion_op().into());
-        token_refs.extend(self.cast_to().clone().extract_token_refs());
+        token_refs.extend(self.cast_to().extract_token_refs());
         token_refs
     }
 }
 
 impl TokenReferenceExtractor for BinOp {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
-        vec![TaggedTokenReference::BinOp, self.token().into()]
+        vec!["BinOp".into(), self.token().into()]
     }
 }
 
 impl TokenReferenceExtractor for UnOp {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
-        vec![TaggedTokenReference::UnOp, self.token().into()]
+        vec!["UnOp".into(), self.token().into()]
     }
 }
 
@@ -933,14 +907,14 @@ impl TokenReferenceExtractor for IfExpression {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["IfExpression".into()];
         token_refs.push(self.if_token().into());
-        token_refs.extend(self.condition().clone().extract_token_refs());
+        token_refs.extend(self.condition().extract_token_refs());
         token_refs.push(self.then_token().into());
-        token_refs.extend(self.if_expression().clone().extract_token_refs());
+        token_refs.extend(self.if_expression().extract_token_refs());
         if let Some(else_if_expressions) = self.else_if_expressions() {
-            token_refs.extend(else_if_expressions.clone().extract_token_refs());
+            token_refs.extend(else_if_expressions.extract_token_refs());
         }
         token_refs.push(self.else_token().into());
-        token_refs.extend(self.else_expression().clone().extract_token_refs());
+        token_refs.extend(self.else_expression().extract_token_refs());
 
         token_refs
     }
@@ -954,9 +928,9 @@ impl TokenReferenceExtractor for ElseIfExpression {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["ElseIfExpression".into()];
         token_refs.push(self.else_if_token().into());
-        token_refs.extend(self.condition().clone().extract_token_refs());
+        token_refs.extend(self.condition().extract_token_refs());
         token_refs.push(self.then_token().into());
-        token_refs.extend(self.expression().clone().extract_token_refs());
+        token_refs.extend(self.expression().extract_token_refs());
 
         token_refs
     }
@@ -969,7 +943,7 @@ pub struct InterpolatedStringSegment {
 impl TokenReferenceExtractor for InterpolatedStringSegment {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["InterpolatedStringSegment".into()];
-        token_refs.push(self.literal.clone().into());
+        token_refs.push((&self.literal).into());
         token_refs.extend(self.expression.extract_token_refs());
         token_refs
     }
@@ -984,7 +958,7 @@ impl TokenReferenceExtractor for InterpolatedString {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["InterpolatedString".into()];
         for segment in self.segments() {
-            token_refs.extend(segment.clone().extract_token_refs());
+            token_refs.extend(segment.extract_token_refs());
         }
         token_refs.push(self.last_string().into());
         token_refs
@@ -1020,7 +994,7 @@ impl TokenReferenceExtractor for Expression {
             }
             Self::Function(func) => {
                 let mut token_refs = vec!["Expression.Function".into()];
-                token_refs.push(func.0.clone().into());
+                token_refs.push((&func.0).into());
                 token_refs.extend(func.1.extract_token_refs());
                 token_refs
             }
@@ -1204,7 +1178,7 @@ impl TokenReferenceExtractor for TypeInfo {
                 inner,
             } => {
                 /*
-                                   /// A type in the form of `typeof(foo)`.
+                    /// A type in the form of `typeof(foo)`.
                    #[display(
                        "{}{}{}{}",
                        typeof_token,
@@ -1317,13 +1291,13 @@ impl TokenReferenceExtractor for LuauTypeField {
         }
 
         // Get the key
-        token_refs.extend(self.key().clone().extract_token_refs());
+        token_refs.extend(self.key().extract_token_refs());
 
         // Colon
         token_refs.push(self.colon_token().into());
 
         // Value
-        token_refs.extend(self.value().clone().extract_token_refs());
+        token_refs.extend(self.value().extract_token_refs());
 
         token_refs
     }
@@ -1345,11 +1319,11 @@ impl TokenReferenceExtractor for TypeDeclaration {
         let mut token_refs = vec!["TypeDeclaration".into()];
         token_refs.push(self.type_token().into());
         token_refs.push(self.type_name().into());
-        if let Some(generics) = self.generics().cloned() {
+        if let Some(generics) = self.generics() {
             token_refs.extend(generics.extract_token_refs());
         }
         token_refs.push(self.equal_token().into());
-        token_refs.extend(self.type_definition().clone().extract_token_refs());
+        token_refs.extend(self.type_definition().extract_token_refs());
 
         token_refs
     }
@@ -1359,7 +1333,7 @@ impl TokenReferenceExtractor for ExportedTypeDeclaration {
     fn extract_token_refs(&self) -> Vec<TaggedTokenReference> {
         let mut token_refs = vec!["ExportedTypeDeclaration".into()];
         token_refs.push(self.export_token().into());
-        token_refs.extend(self.type_declaration().clone().extract_token_refs());
+        token_refs.extend(self.type_declaration().extract_token_refs());
         token_refs
     }
 }

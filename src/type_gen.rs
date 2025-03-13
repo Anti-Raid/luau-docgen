@@ -641,7 +641,7 @@ impl TypeField {
         // Visit the field to get the comments
         comment_visitor.visit_type_field(typ_field);
 
-        let comments = typ_field.get_surrounding_trivia();
+        let comments = tbv.get_surrounding_trivia_for_node(typ_field);
 
         let type_info = TypeFieldType::from_luau_typeinfo(tbv, value);
 
@@ -995,7 +995,9 @@ impl TypeBlockVisitor {
         generics
     }
 
-    pub fn create_type_from_function<T: TokenReferenceExtractor>(
+    pub fn create_type_from_function<
+        T: TokenReferenceExtractor + crate::token_ref_extractor_v2::TokenReferenceExtractor,
+    >(
         &mut self,
         node: &T,
         name: String,
@@ -1003,7 +1005,7 @@ impl TypeBlockVisitor {
         function_type: FunctionType,
     ) -> Type {
         // Extract comments
-        let comments = node.get_surrounding_trivia();
+        let comments = self.get_surrounding_trivia_for_node(node);
 
         // Get the generics
         let generics = if let Some(generic) = body.generics() {
@@ -1057,7 +1059,7 @@ impl TypeBlockVisitor {
             inner: TypeFunction {
                 name,
                 repr: {
-                    let tokens = node.extract_till_tag("Block");
+                    let tokens = self.extract_till_tag(node, "Block");
 
                     let mut repr = String::new();
                     for token in tokens {
@@ -1273,6 +1275,62 @@ impl TypeBlockVisitor {
             .into(),
         })
     }
+
+    // Gets surrounding trivia for nodes using two different implementations
+    pub fn get_surrounding_trivia_for_node<
+        T: TokenReferenceExtractor + crate::token_ref_extractor_v2::TokenReferenceExtractor,
+    >(
+        &self,
+        node: &T,
+    ) -> Vec<String> {
+        let instant_now = std::time::Instant::now();
+        let comments = TokenReferenceExtractor::get_surrounding_trivia(node);
+        let elapsed_n = instant_now.elapsed();
+        let comments_v2 =
+            crate::token_ref_extractor_v2::TokenReferenceExtractor::get_surrounding_trivia(node);
+        let elapsed_v2 = instant_now.elapsed();
+
+        assert_eq!(comments, comments_v2);
+
+        println!(
+            "Elapsed: {:?} (v1) vs {:?} (v2)",
+            elapsed_n.as_micros(),
+            elapsed_v2.as_micros()
+        );
+
+        comments
+    }
+
+    /// Extract till tag using two different implementations
+    pub fn extract_till_tag<
+        'a,
+        T: TokenReferenceExtractor + crate::token_ref_extractor_v2::TokenReferenceExtractor,
+    >(
+        &self,
+        node: &'a T,
+        tag: &str,
+    ) -> Vec<&'a TokenReference> {
+        let instant_now = std::time::Instant::now();
+        let tokens = TokenReferenceExtractor::extract_till_tag(node, tag);
+        let elapsed_n = instant_now.elapsed();
+        let tokens_v2 =
+            crate::token_ref_extractor_v2::TokenReferenceExtractor::extract_till_tag(node, tag);
+        let elapsed_v2 = instant_now.elapsed();
+
+        assert_eq!(
+            tokens.iter().map(|c| c.to_string()).collect::<Vec<_>>(),
+            tokens_v2.iter().map(|c| c.to_string()).collect::<Vec<_>>(),
+        );
+        assert_eq!(tokens, tokens_v2);
+
+        println!(
+            "Elapsed: {:?} (v1) vs {:?} (v2) [extract_till_tag]",
+            elapsed_n.as_micros(),
+            elapsed_v2.as_micros()
+        );
+
+        tokens
+    }
 }
 
 impl Visitor for TypeBlockVisitor {
@@ -1290,9 +1348,10 @@ impl Visitor for TypeBlockVisitor {
     }
 
     fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
-        let Some(typ) =
-            self.create_type_from_type_decl(node.get_surrounding_trivia(), node.type_declaration())
-        else {
+        let Some(typ) = self.create_type_from_type_decl(
+            self.get_surrounding_trivia_for_node(node),
+            node.type_declaration(),
+        ) else {
             return;
         };
         self.last_typedef = Some(extract_name_from_tokenref(
@@ -1313,7 +1372,8 @@ impl Visitor for TypeBlockVisitor {
             }
 
             self.last_typedef = Some(type_name);
-            let Some(typ) = self.create_type_from_type_decl(node.get_surrounding_trivia(), node)
+            let Some(typ) =
+                self.create_type_from_type_decl(self.get_surrounding_trivia_for_node(node), node)
             else {
                 return;
             };
