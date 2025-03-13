@@ -1,3 +1,4 @@
-local l = require"b.luau"
+local l = require"b"
 assert(l.b == 1)
+
 return {a=1}
