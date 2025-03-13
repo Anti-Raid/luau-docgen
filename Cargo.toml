@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 full_moon = { version = "1", features = ["roblox"] }
 clap = { version = "4", features = ["derive", "string"] }
+env_logger = "0.11"
 log = "0.4"
 tracing = { version = "0.1", optional = true }
 durationfmt = "0.1.1"

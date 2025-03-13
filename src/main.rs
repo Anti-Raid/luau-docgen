@@ -50,6 +50,8 @@ struct CliArgs {
 }
 
 fn main() {
+    env_logger::init();
+
     let args = <CliArgs as clap::Parser>::parse();
 
     if !args.script.exists() {
@@ -177,37 +179,32 @@ fn main() {
                             };
                             log::debug!("Current path: {:?} when requiring {}", curr_path, pat);
                             let mut pat = {
-                                if pat.starts_with("./") || pat.starts_with("../") {
-                                    let mut path = current_path.borrow_mut();
+                                let mut path = current_path.borrow_mut();
 
-                                    path.push(&pat);
+                                path.push(&pat);
 
-                                    *path = normalize_path(&path);
+                                *path = normalize_path(&path);
 
-                                    let end_file = match path.file_name() {
-                                        Some(c) => c.to_string_lossy().to_string(),
-                                        None => {
-                                            // Restore the current path
-                                            *path = curr_path;
+                                let end_file = match path.file_name() {
+                                    Some(c) => c.to_string_lossy().to_string(),
+                                    None => {
+                                        // Restore the current path
+                                        *path = curr_path;
 
-                                            return Err(LuaError::external(format!(
-                                                "Failed to get file name from path: {:?}",
-                                                path
-                                            )));
-                                        }
-                                    };
+                                        return Err(LuaError::external(format!(
+                                            "Failed to get file name from path: {:?}",
+                                            path
+                                        )));
+                                    }
+                                };
 
-                                    path.pop();
+                                path.pop();
 
-                                    let path_joined =
-                                        path.join(end_file).to_string_lossy().to_string();
+                                let path_joined = path.join(end_file).to_string_lossy().to_string();
 
-                                    drop(path);
+                                drop(path);
 
-                                    path_joined
-                                } else {
-                                    pat
-                                }
+                                path_joined
                             };
 
                             if !pat.ends_with(".luau") {

@@ -18,6 +18,11 @@ assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over
 -- Parse arguments at top-level
 local md = argparser.parseArguments(globals)
 
+print("Running reqtest self-test for requires")
+local a = require"reqtest/a.luau"
+assert(a.a == 1) -- Ensure stable requires
+
+
 --- Parses a TypeFieldType (number or () -> number etc.)
 local function parseTypeFieldType(originField: types.TypeField?, typ: types.TypeFieldType, convertedComments: convertComments.ConvertCommentResponse): {markdown.MarkdownNode} 
     local blockNodes: {markdown.MarkdownNode} = {} 
