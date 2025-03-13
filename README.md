@@ -27,3 +27,11 @@ target/debug/luau-docgen ~/staging/infra/templating-types/discord-luau-correctio
 4. Moonwave is based mostly on comments, while luau-docgen is based on Luau type definitions (and minimal use of 'doc comments' where Luau type definitions are not enough) 
 
 5. luau-docgen has an emphasized use case on embedding a Luau API into a bigger documentation (for example, luau-docgen generates a second lower-level 'markdown IR' allowing for the formatter code to be quickly and easily adjusted when switching between markdown doc providers like mdbook and mkdocs) while moonwave is a full documentation site generator that is harder to directly embed in a mdbook/mkdocs site.
+
+Basically, if your project:
+
+- is written in Luau
+- is part of a bigger project that contains its own established documentation
+- uses standard Luau type definitions for typings
+
+then luau-docgen might be a good fit for you.
