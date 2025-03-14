@@ -60,6 +60,8 @@ local function parseTypeFieldType(
         return blockNodes
     elseif fieldtype.type == "Array" then 
         return parseTypeFieldType(globals, md, originField, fieldtype.data, convertedComments)
+    elseif fieldtype.type == "Optional" then 
+        return parseTypeFieldType(globals, md, originField, fieldtype.data, convertedComments)    
     else
         -- Fallback
         blockNodes[#blockNodes + 1] = {

@@ -30,25 +30,28 @@ type GetAuditLogOptions = {
 
 The action type to filter by
 
-[Documentor] Unsupported type: Optional
+[Documentor] Unsupported type: Module
 
 ### user_id
 
 The user ID to filter by
 
-[Documentor] Unsupported type: Optional
+[Documentor] Unsupported type: Module
 
 ### before
 
 The audit log entry ID to filter
 
-[Documentor] Unsupported type: Optional
+[Documentor] Unsupported type: Module
 
 ### limit
 
 The number of entries to return
 
-[Documentor] Unsupported type: Optional
+Field with the following constraints:
+
+- Type: number
+- Constraints: None
 
 ## GetAutoModerationRuleOptions
 
@@ -516,19 +519,22 @@ type GetGuildBansOptions = {
 
 The limit of bans to get (max 100)
 
-[Documentor] Unsupported type: Optional
+Field with the following constraints:
+
+- Type: number
+- Constraints: None
 
 ### before
 
 Before a certain user ID
 
-[Documentor] Unsupported type: Optional
+[Documentor] Unsupported type: Module
 
 ### after
 
 After a certain user ID
 
-[Documentor] Unsupported type: Optional
+[Documentor] Unsupported type: Module
 
 ## CreateMessageOptions
 
@@ -723,13 +729,19 @@ The channel ID
 
 The target message
 
-[Documentor] Unsupported type: Optional
+Field with the following constraints:
+
+- Type: MessagePagination
+- Constraints: None
 
 ### limit
 
 The limit of messages to get
 
-[Documentor] Unsupported type: Optional
+Field with the following constraints:
+
+- Type: number
+- Constraints: None
 
 ## GetMessageOptions
 
