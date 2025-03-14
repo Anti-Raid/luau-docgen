@@ -53,12 +53,11 @@ local function parseFunction(
     
     -- Code block of the function as a string
     if originRepr then
-        blockNodes[#blockNodes + 1] = {
-            type = "CodeBlock" :: "CodeBlock",
-            description = "Function Signature",
+        blockNodes[#blockNodes + 1] = markdown.MarkdownNode_CreateSnippet("Function Signature", {
+            type = "CodeBlock",
             language = "luau",
             text = originRepr,
-        }
+        })
     end
 
     -- Add in the generics
@@ -79,7 +78,7 @@ local function parseFunction(
                 markdown.NewMarkdownTextNode_Italics(
                     markdown.NewMarkdownTextNode_Unstyled("(" .. stringRepr .. ")")
                 )
-            }
+            } :: {markdown.MarkdownTextNode}
 
             if generic.name and convertedComments.genericDocs[generic.name] then
                 nodes[#nodes + 1] = markdown.NewMarkdownTextNode_Unstyled(" - " .. convertedComments.genericDocs[generic.name])
@@ -94,7 +93,7 @@ local function parseFunction(
             type = "Heading" :: "Heading",
             level = nil :: number?, -- Bug in luau new type solver needs this (for now)
             headingText = markdown.NewMarkdownText_FromRaw("Generics")
-        }
+        } :: markdown.MarkdownNode
 
         blockNodes[#blockNodes + 1] = {
             type = "List" :: "List",

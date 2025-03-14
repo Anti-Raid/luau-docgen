@@ -52,14 +52,11 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
     local nodeDepth = depth or 0
     --print(n.type) --globals.prettyprint(n))
     --print("Processing " .. n.type .. " with depth " .. tostring(nodeDepth) .. " and label " .. tostring(label) .. " and fragment " .. globals.prettyprint(n))
-    local typ = n.type
-    assert(typ, "Invalid IR: Node must have a type")
     if n.type == "Heading" then 
-        if strictValidation and n.level and n.level < nodeDepth then
+        local depthToUse = n.level or nodeDepth
+        if strictValidation and depthToUse and depthToUse < nodeDepth then
             error(`Internal error - Invalid IR: n.level of {n.level} < nodeDepth of {nodeDepth}`)
         end
-
-        local depthToUse = n.level or nodeDepth
 
         if depthToUse > 5 then
             depthToUse = 5
@@ -67,16 +64,21 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
 
         return string.rep("#", depthToUse) .. " " .. MarkdownText_String(globals, n.headingText) .. "\n\n"
     elseif n.type == "CodeBlock" then 
-        local codeblock = "```" .. n.language .. "\n" .. n.text .. "\n```"
-
-        -- For formatting, make it a details block for formatting purposes
-        codeblock = "<details>\n<summary>" .. (n.description or "Code Block") .. "</summary>\n\n" .. codeblock .. "\n\n</details>\n\n"
-
-        return codeblock
+        local language = n.language
+        local text = n.text :: string
+        return "```" .. language .. "\n" .. text .. "\n```"
+    elseif n.type == "Snippet" then 
+        local detailsText = n.detailsText
+        local node = n.node
+        assert(detailsText, "Invalid IR: Snippet node must have a details text")
+        assert(node, "Invalid IR: Snippet node must have a node")
+        return "<details>\n<summary>" .. detailsText .. "</summary>\n\n" .. MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Snippet@" .. tostring(nodeDepth)) .. "\n\n</details>\n\n"
     elseif n.type == "Block" then 
+        local nodes = n.nodes
+        assert(nodes, "Invalid IR: Block node must have nodes")
         return table.concat(
             tableext.arraymap(
-                n.nodes, 
+                nodes, 
                 function(node: markdown.MarkdownNode): string
                     --print("Processing block node " .. globals.prettyprint(node) .. " with label " .. tostring(label))
                     return MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Block@" .. tostring(nodeDepth))
@@ -85,20 +87,26 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             )
         )
     elseif n.type == "Warning" then
-        return "<div class=\"warning\">\n" .. MarkdownText_String(globals, n.text) .. "\n</div>\n\n"
+        local text = n.text :: markdown.MarkdownText
+        assert(text, "Invalid IR: Warning node must have text")
+        return "<div class=\"warning\">\n" .. MarkdownText_String(globals, text) .. "\n</div>\n\n"
     elseif n.type == "Text" then
-        --print("Processing text node " .. globals.prettyprint(n) .. " with label " .. tostring(label)) 
-        assert(n.text, "Invalid IR: Text node must have text")
-        return MarkdownText_String(globals, n.text) .. "\n\n"
+        local text = n.text :: markdown.MarkdownText
+        assert(text, "Invalid IR: Text node must have text")
+        return MarkdownText_String(globals, text) .. "\n\n"
     elseif n.type == "Link" then
-        assert(n.url, "Invalid IR: Link node must have a URL")
-        assert(n.text, "Invalid IR: Link node must have text")
-        return "[" .. MarkdownText_String(globals, n.text) .. "](" .. n.url .. ")"
+        local url = n.url
+        local text = n.text :: markdown.MarkdownText
+        assert(url, "Invalid IR: Link node must have a URL")
+        assert(text, "Invalid IR: Link node must have text")
+        return "[" .. MarkdownText_String(globals, text) .. "](" .. url .. ")"
     elseif n.type == "List" then
+        local entries = n.entries :: {markdown.MarkdownText}
+        assert(entries, "Invalid IR: List node must have entries")
+
         local output = ""
-        assert(n.entries, "Invalid IR: List node must have entries")
-        for i, item in n.entries do
-            if i == #n.entries then
+        for i, item in entries do
+            if i == #entries then
                 output ..= "- " .. MarkdownText_String(globals, item) .. "\n\n"
             else
                 output ..= "- " .. MarkdownText_String(globals, item) .. "\n"
@@ -107,39 +115,46 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
     
         return output    
     elseif n.type == "Table" then 
+        local tabData = n :: any -- Luau type solver workaround
+        local headers = tabData.headers :: {markdown.MarkdownText}
+        local rowset = tabData.rowset :: {{markdown.MarkdownText}}
+        assert(headers, "Invalid IR: Table node must have headers")
+        assert(rowset, "Invalid IR: Table node must have rowset")
+
         local function parseCell(cell: markdown.MarkdownText): string
             return MarkdownText_String(globals, cell):gsub("\n", "<br>") :: string
         end
     
         local output = "|"
     
-        for _, header in ipairs(n.headers) do
+        for _, header in ipairs(headers) do
             output ..= MarkdownText_String(globals, header) .. "|"
         end
     
         output ..= "\n|"
     
-        for _ = 1, #n.headers do
+        for _ = 1, #headers do
             output ..= "---|"
         end
     
         output ..= "\n"
     
-        for i, row in ipairs(n.rowset) do
+        for i, row in ipairs(rowset) do
             output ..= "|"
     
             for _, cell in ipairs(row) do
                 output ..= parseCell(cell) .. "|"
             end
     
-            if i ~= #n.rowset then
+            if i ~= #rowset then
                 output ..= "\n"
             end
         end
     
         return output    
-    else
-        return "" -- Unsupported
+    else 
+        error("Invalid IR: MarkdownNode must have a valid type: " .. globals.prettyprint(n.type)) 
+
     end
 end
 

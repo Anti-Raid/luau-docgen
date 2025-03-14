@@ -91,7 +91,10 @@ export type MarkdownNode = {
     type: "CodeBlock",
     language: string, 
     text: string, 
-    description: string,
+} | {
+    type: "Snippet", -- A snippet is a node contained within a <details>
+    detailsText: string,
+    node: MarkdownNode,
 } | {
     type: "Block",
     nodes: {MarkdownNode}
@@ -115,6 +118,17 @@ export type MarkdownNode = {
     entries: {MarkdownText}
 }
 
+local function MarkdownNode_CreateSnippet(
+    detailsText: string,
+    node: MarkdownNode
+): MarkdownNode
+    return {
+        type = "Snippet",
+        detailsText = detailsText,
+        node = node
+    }
+end
+
 --- To allow for more seamless markdown handling, a second 'markdown IR (intermediate representation)' is constructed which is then
 --- converted to the final markdown
 return {
@@ -127,4 +141,5 @@ return {
     NewMarkdownText_FromNodeArray = NewMarkdownText_FromNodeArray,
     NewMarkdownText_FromNodes = NewMarkdownText_FromNodes,
     NewMarkdownText_FromRaw = NewMarkdownText_FromRaw,
+    MarkdownNode_CreateSnippet = MarkdownNode_CreateSnippet,
 }

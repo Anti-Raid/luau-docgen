@@ -86,12 +86,11 @@ local function parseTypeDef(globals: types.Globals, md: argparser.ParsedArgument
     end
 
     -- Add code block of the type
-    blockNodes[#blockNodes + 1] = {
-        type = "CodeBlock" :: "CodeBlock",
-        description = "Raw Type",
+    blockNodes[#blockNodes + 1] = markdown.MarkdownNode_CreateSnippet("Raw Type", {
+        type = "CodeBlock", 
         language = "luau",
         text = typ:string_repr_with_pats(",\n\n\t", ", ")
-    }
+    })
 
     local extractedType = typ.type_def_type:extract()
 
