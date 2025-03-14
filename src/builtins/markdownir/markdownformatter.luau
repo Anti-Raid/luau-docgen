@@ -27,6 +27,17 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
             )
         )
         return "**" .. stringified .. "**" 
+    elseif n.style == "Code" then 
+        local stringified = table.concat(
+            tableext.arraymap(
+                n.node, 
+                function(node: markdown.MarkdownTextNode): string
+                    return MarkdownTextNode_String(node)
+                end,
+                ""
+            )
+        )
+        return "`" .. stringified .. "`"    
     elseif n.style == "Unstyled" then return "" .. n.text:gsub("*", "\*")
     elseif n.style == "Raw" then return n.text 
     else return n.node end

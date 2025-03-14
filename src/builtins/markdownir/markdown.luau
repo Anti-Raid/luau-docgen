@@ -10,6 +10,9 @@ export type MarkdownTextNode = {
     node: {MarkdownTextNode},
     style: "Italics"
 } | {
+    node: {MarkdownTextNode},
+    style: "Code",
+} | {
     text: string,
     style: "Unstyled"
 }
@@ -96,10 +99,10 @@ export type MarkdownNode = {
     detailsText: string,
     node: MarkdownNode,
 } | {
-    type: "Block",
+    type: "Block", -- A block allows for a set of nodes to be nested within it with increasing depth
     nodes: {MarkdownNode}
 } | {
-    type: "InlineBlock",
+    type: "InlineBlock", -- An inline block allows for a set of nodes to be nested within it with the same depth
     nodes: {MarkdownNode},
 } | {
     type: "Warning",
