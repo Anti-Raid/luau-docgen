@@ -56,9 +56,14 @@ The number of entries to return
 
 *This field is optional and may not be specified*
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: number
+```luau
+number?
+```
+
+</details>
 
 ## GetAutoModerationRuleOptions
 
@@ -107,9 +112,14 @@ type CreateAutoModerationRuleOptions = {
 
 The reason for creating the rule
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ### data
 
@@ -150,9 +160,14 @@ The rule ID
 
 The reason for editing the rule
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ### data
 
@@ -190,9 +205,14 @@ The rule ID
 
 The reason for deleting the rule
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ## GetChannelOptions
 
@@ -250,9 +270,14 @@ The channel ID
 
 The reason for the edit
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ### data
 
@@ -290,9 +315,14 @@ The channel ID
 
 The reason for the deletion
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ## EditChannelPermissionsOptions
 
@@ -360,9 +390,14 @@ The type of the target
 
 The reason for the edit
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ## AddGuildMemberRoleOptions
 
@@ -403,9 +438,14 @@ The role ID
 
 The reason for adding the role
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ## RemoveGuildMemberRoleOptions
 
@@ -446,9 +486,14 @@ The role ID
 
 The reason for adding the role
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ## RemoveGuildMemberOptions
 
@@ -480,9 +525,14 @@ The member ID
 
 The reason for removing the member
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ## GetGuildBansOptions
 
@@ -519,9 +569,14 @@ The limit of bans to get (max 100)
 
 *This field is optional and may not be specified*
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: number
+```luau
+number?
+```
+
+</details>
 
 ### before
 
@@ -627,9 +682,14 @@ The interaction ID
 
 The interaction token
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ### data
 
@@ -661,9 +721,14 @@ type CreateFollowupMessageOptions = {
 
 The interaction token
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: string
+```luau
+string
+```
+
+</details>
 
 ### data
 
@@ -694,33 +759,48 @@ type MessagePagination = {
 Union with variants:
 
 <details>
-<summary>Variant $1</summary>
+<summary>Variant 1</summary>
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: "After" (a string literal)
+```luau
+"After" | "Around" | "Before"
+```
+
+</details>
 
 
 
 </details>
 
 <details>
-<summary>Variant $2</summary>
+<summary>Variant 2</summary>
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: "Around" (a string literal)
+```luau
+"After" | "Around" | "Before"
+```
+
+</details>
 
 
 
 </details>
 
 <details>
-<summary>Variant $3</summary>
+<summary>Variant 3</summary>
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: "Before" (a string literal)
+```luau
+"After" | "Around" | "Before"
+```
+
+</details>
 
 
 
@@ -765,9 +845,14 @@ The target message
 
 *This field is optional and may not be specified*
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: MessagePagination
+```luau
+MessagePagination?
+```
+
+</details>
 
 ### limit
 
@@ -775,9 +860,14 @@ The limit of messages to get
 
 *This field is optional and may not be specified*
 
-Field with the following constraints:
+<details>
+<summary>Type Signature</summary>
 
-- Type: number
+```luau
+number?
+```
+
+</details>
 
 ## GetMessageOptions
 
@@ -910,11 +1000,22 @@ get_audit_logs: (self: DiscordExecutor, data: GetAuditLogOptions) -> promise.Lua
 
 #### Arguments
 
-- **data** *(GetAuditLogOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+GetAuditLogOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyAuditLogObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### list_auto_moderation_rules
 
@@ -934,7 +1035,9 @@ list_auto_moderation_rules: (self: DiscordExecutor) -> promise.LuaPromise<LazyAu
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyAutomoderationRuleObjectList&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_auto_moderation_rule
 
@@ -952,11 +1055,22 @@ get_auto_moderation_rule: (self: DiscordExecutor, data: GetAutoModerationRuleOpt
 
 #### Arguments
 
-- **data** *(GetAutoModerationRuleOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+GetAutoModerationRuleOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyAutomoderationRuleObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### create_auto_moderation_rule
 
@@ -974,11 +1088,22 @@ create_auto_moderation_rule: (self: DiscordExecutor, data: CreateAutoModerationR
 
 #### Arguments
 
-- **data** *(CreateAutoModerationRuleOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+CreateAutoModerationRuleOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyAutomoderationRuleObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### edit_auto_moderation_rule
 
@@ -996,11 +1121,22 @@ edit_auto_moderation_rule: (self: DiscordExecutor, data: EditAutoModerationRuleO
 
 #### Arguments
 
-- **data** *(EditAutoModerationRuleOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+EditAutoModerationRuleOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyAutomoderationRuleObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### delete_auto_moderation_rule
 
@@ -1018,11 +1154,22 @@ delete_auto_moderation_rule: (self: DiscordExecutor, data: DeleteAutoModerationR
 
 #### Arguments
 
-- **data** *(DeleteAutoModerationRuleOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+DeleteAutoModerationRuleOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyAutomoderationRuleObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_channel
 
@@ -1040,11 +1187,22 @@ get_channel: (self: DiscordExecutor, data: GetChannelOptions) -> promise.LuaProm
 
 #### Arguments
 
-- **data** *(GetChannelOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+GetChannelOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyChannelObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### edit_channel
 
@@ -1062,11 +1220,22 @@ edit_channel: (self: DiscordExecutor, data: EditChannelOptions) -> promise.LuaPr
 
 #### Arguments
 
-- **data** *(EditChannelOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+EditChannelOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyChannelObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### delete_channel
 
@@ -1084,11 +1253,22 @@ delete_channel: (self: DiscordExecutor, data: DeleteChannelOptions) -> promise.L
 
 #### Arguments
 
-- **data** *(DeleteChannelOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+DeleteChannelOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyChannelObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### edit_channel_permissions
 
@@ -1106,11 +1286,22 @@ edit_channel_permissions: (self: DiscordExecutor, data: EditChannelPermissionsOp
 
 #### Arguments
 
-- **data** *(EditChannelPermissionsOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+EditChannelPermissionsOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;nil&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### add_guild_member_role
 
@@ -1128,11 +1319,22 @@ add_guild_member_role: (self: DiscordExecutor, data: AddGuildMemberRoleOptions) 
 
 #### Arguments
 
-- **data** *(AddGuildMemberRoleOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+AddGuildMemberRoleOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;nil&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### remove_guild_member_role
 
@@ -1150,11 +1352,22 @@ remove_guild_member_role: (self: DiscordExecutor, data: RemoveGuildMemberRoleOpt
 
 #### Arguments
 
-- **data** *(RemoveGuildMemberRoleOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+RemoveGuildMemberRoleOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;nil&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### remove_guild_member
 
@@ -1172,11 +1385,22 @@ remove_guild_member: (self: DiscordExecutor, data: RemoveGuildMemberOptions) -> 
 
 #### Arguments
 
-- **data** *(RemoveGuildMemberOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+RemoveGuildMemberOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;nil&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_guild_bans
 
@@ -1194,11 +1418,22 @@ get_guild_bans: (self: DiscordExecutor, data: GetGuildBansOptions) -> promise.Lu
 
 #### Arguments
 
-- **data** *(GetGuildBansOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+GetGuildBansOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyBanObjectList&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_guild_roles
 
@@ -1216,11 +1451,15 @@ get_guild_roles: (self: DiscordExecutor, guild_id: discord.Snowflake) -> promise
 
 #### Arguments
 
-- **guild_id** *(discord.Snowflake)*
+##### guild_id
+
+[Documentor] Unsupported type: Module
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyRolesMap&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_messages
 
@@ -1238,11 +1477,22 @@ get_messages: (self: DiscordExecutor, data: GetMessagesOptions) -> promise.LuaPr
 
 #### Arguments
 
-- **data** *(GetMessagesOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+GetMessagesOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyMessagesObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_message
 
@@ -1260,11 +1510,22 @@ get_message: (self: DiscordExecutor, data: GetMessageOptions) -> promise.LuaProm
 
 #### Arguments
 
-- **data** *(GetMessageOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+GetMessageOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyMessageObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### create_message
 
@@ -1282,11 +1543,22 @@ create_message: (self: DiscordExecutor, data: CreateMessageOptions) -> promise.L
 
 #### Arguments
 
-- **data** *(CreateMessageOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+CreateMessageOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyMessageObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### create_interaction_response
 
@@ -1304,11 +1576,22 @@ create_interaction_response: (self: DiscordExecutor, data: CreateInteractionResp
 
 #### Arguments
 
-- **data** *(CreateInteractionResponseOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+CreateInteractionResponseOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;nil&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### create_followup_message
 
@@ -1326,11 +1609,22 @@ create_followup_message: (self: DiscordExecutor, data: CreateFollowupMessageOpti
 
 #### Arguments
 
-- **data** *(CreateFollowupMessageOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+CreateFollowupMessageOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyMessageObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_original_interaction_response
 
@@ -1348,11 +1642,22 @@ get_original_interaction_response: (self: DiscordExecutor, interaction_token: st
 
 #### Arguments
 
-- **interaction_token** *(string)*
+##### interaction_token
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+string
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyMessageObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### get_guild_commands
 
@@ -1372,7 +1677,9 @@ get_guild_commands: (self: DiscordExecutor) -> promise.LuaPromise<LazyApplicatio
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyApplicationCommandObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 ### create_guild_command
 
@@ -1390,11 +1697,22 @@ create_guild_command: (self: DiscordExecutor, data: CreateCommandOptions) -> pro
 
 #### Arguments
 
-- **data** *(CreateCommandOptions)*
+##### data
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+CreateCommandOptions
+```
+
+</details>
 
 #### Returns
 
-- **ret1** *(promise.LuaPromise&lt;LazyApplicationCommandObject&gt;)*
+##### ret1
+
+[Documentor] Unsupported type: Module
 
 # Functions
 
@@ -1411,10 +1729,26 @@ function new(token: Primitives.TemplateContext, scope: ExecutorScope.ExecutorSco
 
 ## Arguments
 
-- **token** *(Primitives.TemplateContext)*
-- **scope** *(ExecutorScope.ExecutorScope?)*
+### token
+
+[Documentor] Unsupported type: Module
+
+### scope
+
+*This field is optional and may not be specified*
+
+[Documentor] Unsupported type: Module
 
 ## Returns
 
-- **ret1** *(DiscordExecutor)*
+### ret1
+
+<details>
+<summary>Type Signature</summary>
+
+```luau
+DiscordExecutor
+```
+
+</details>
 

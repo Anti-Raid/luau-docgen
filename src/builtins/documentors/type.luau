@@ -1,7 +1,6 @@
 --!strict
 local types = require("../types")
 local markdown = require("../markdownir/markdown")
-local functionDocumentor = require("./function")
 local convertComments = require("../convertcomments")
 local tableext = require("../table")
 local argparser = require("../argparser")
@@ -118,7 +117,7 @@ local function parseTypeDef(globals: types.Globals, md: argparser.ParsedArgument
     end
 
     return blockNodes
-end
+end 
 
 local function parseTypeFunction(globals: types.Globals, md: argparser.ParsedArgumentResult, typ: types.TypeFunction): {markdown.MarkdownNode} 
     local convComments = convertComments.convertComments(globals, typ.type_comments, md.ignorenondoc)
@@ -142,7 +141,9 @@ local function parseTypeFunction(globals: types.Globals, md: argparser.ParsedArg
         tableext.extend(blockNodes, convComments.output)
     end
 
-    tableext.extend(blockNodes, functionDocumentor.parseFunction(
+    tableext.extend(blockNodes, typefieldDocumentor.parseFunction(
+        globals,
+        md,
         typ:string_repr(),
         convComments,
         typ.generics,

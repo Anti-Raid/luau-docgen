@@ -77,13 +77,13 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
     elseif n.type == "CodeBlock" then 
         local language = n.language
         local text = n.text :: string
-        return "```" .. language .. "\n" .. text .. "\n```"
+        return "```" .. language .. "\n" .. text .. "\n```\n\n"
     elseif n.type == "Snippet" then 
         local detailsText = n.detailsText
         local node = n.node
         assert(detailsText, "Invalid IR: Snippet node must have a details text")
         assert(node, "Invalid IR: Snippet node must have a node")
-        return "<details>\n<summary>" .. detailsText .. "</summary>\n\n" .. MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Snippet@" .. tostring(nodeDepth)) .. "\n\n</details>\n\n"
+        return "<details>\n<summary>" .. detailsText .. "</summary>\n\n" .. MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Snippet@" .. tostring(nodeDepth)) .. "</details>\n\n"
     elseif n.type == "Block" then 
         local nodes = n.nodes
         assert(nodes, "Invalid IR: Block node must have nodes")

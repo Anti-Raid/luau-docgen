@@ -1,6 +1,6 @@
 --!strict
 
---- Helper function to parse anonymous argument data from converted comments
+--- Helper function to parse anonymous argument data [name and docs to use] from converted comments
 ---
 --- Used in function return values and unions
 local function parseAnonymousArgData(
@@ -15,8 +15,8 @@ local function parseAnonymousArgData(
 
     if docsMap[tostring(i)] then 
         potComment = docsMap[tostring(i)]
-    else
-        -- Last chance, check if there is a single return comment
+    elseif i == 1 then 
+        -- Last chance, check if there is a single return comment if i == 1
         local potRetName: string? = nil
         for k in pairs(docsMap) do 
             potRetName = k

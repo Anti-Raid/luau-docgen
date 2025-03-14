@@ -2,18 +2,191 @@
 
 local types = require("../types")
 local markdown = require("../markdownir/markdown")
-local functionDocumentor = require("./function")
 local convertComments = require("../convertcomments")
 local tableext = require("../table")
 local argparser = require("../argparser")
-local simplefieldDocumentor = require("./simplefield")
-local args = require("./arg.luau") 
+local arg = require("./arg.luau") 
 
---- Parses a TypeFieldType (number or () -> number etc.)
-local function parseTypeFieldType(
+--- Helper method to process a function
+local function parseFunction(
+    globals: types.Globals,
+    md: argparser.ParsedArgumentResult,
+    originRepr: string?,
+    convertedComments: convertComments.ConvertCommentResponse,
+    generics: {types.TypedArgument},
+    args: {types.TypedArgument},
+    ret: types.TypeFieldType?
+): {markdown.MarkdownNode} 
+    local blockNodes: {markdown.MarkdownNode} = {}
+    
+    -- Code block of the function as a string
+    if originRepr then
+        blockNodes[#blockNodes + 1] = markdown.MarkdownNode_CreateSnippet("Function Signature", {
+            type = "CodeBlock",
+            language = "luau",
+            text = originRepr,
+        })
+    end
+
+    -- Add in the generics
+    if #generics > 0 then 
+        blockNodes[#blockNodes + 1] = {
+            type = "Heading" :: "Heading",
+            level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+            headingText = markdown.NewMarkdownText_FromRaw("Generics")
+        } :: markdown.MarkdownNode
+
+        for i, generic in generics do 
+            local baseNodes: {markdown.MarkdownNode} = {
+                {
+                    type = "Heading" :: "Heading",
+                    headingText = markdown.NewMarkdownText_FromRaw(generic.name or ("generic" .. tostring(i)))
+                } :: markdown.MarkdownNode
+            }
+
+            if generic.name and convertedComments.genericDocs[generic.name] then
+                baseNodes[#baseNodes + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(convertedComments.genericDocs[generic.name])
+                } :: markdown.MarkdownNode
+            end
+
+            local typ = generic.typ
+            if typ then
+                tableext.extend(baseNodes, parseTypeFieldType(globals, md, generic:string_repr(false, true), typ, typ, convertedComments))
+            else
+                baseNodes[#baseNodes + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw("This generic is unconstrained and can be any type")
+                } :: markdown.MarkdownNode
+            end
+
+            blockNodes[#blockNodes + 1] = {
+                type = "Block" :: "Block",
+                nodes = baseNodes
+            }                
+        end
+    end
+
+    -- Add in the arguments
+    if #args > 0 then
+        --blockNodes[#blockNodes + 1]
+
+        blockNodes[#blockNodes + 1] = {
+            type = "Heading" :: "Heading",
+            level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+            headingText = markdown.NewMarkdownText_FromRaw("Arguments")
+        } :: markdown.MarkdownNode
+
+        for i, arg in args do 
+            if arg.name == "self" then
+                -- Skip self argument
+                continue
+            end
+
+            local baseNodes: {markdown.MarkdownNode} = {
+                {
+                    type = "Heading" :: "Heading",
+                    headingText = markdown.NewMarkdownText_FromRaw(arg.name or ("arg" .. tostring(i)))
+                } :: markdown.MarkdownNode
+            }
+
+            if arg.name and convertedComments.fieldDocs[arg.name] then
+                baseNodes[#baseNodes + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(convertedComments.fieldDocs[arg.name])
+                } :: markdown.MarkdownNode
+            end
+
+            local typ = arg.typ
+            if typ then
+                tableext.extend(baseNodes, parseTypeFieldType(globals, md, arg:string_repr(), typ, typ, convertedComments))
+            else
+                baseNodes[#baseNodes + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw("No type specified!!!")
+                } :: markdown.MarkdownNode
+            end
+
+            blockNodes[#blockNodes + 1] = {
+                type = "Block" :: "Block",
+                nodes = baseNodes
+            }
+        end
+    end
+
+    if ret then
+        local extractedRet = ret:extract()
+        if extractedRet.type ~= "Tuple" or #extractedRet.data > 0 then 
+            blockNodes[#blockNodes + 1] = {
+                type = "Heading" :: "Heading",
+                level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+                headingText = markdown.NewMarkdownText_FromRaw("Returns")
+            } :: markdown.MarkdownNode
+
+            if extractedRet.type == "Tuple" then 
+                -- Special case for tuples
+                for i, ret in extractedRet.data do 
+                    -- Returns have special constraints
+                    local retName, retComment = arg.parseAnonymousArgData(`ret{i}`, convertedComments.returns, i)
+
+                    local baseNodes: {markdown.MarkdownNode} = {
+                        {
+                            type = "Heading" :: "Heading",
+                            headingText = markdown.NewMarkdownText_FromRaw(retName)
+                        } :: markdown.MarkdownNode
+                    }
+
+                    if retComment ~= "" then
+                        baseNodes[#baseNodes + 1] = {
+                            type = "Text" :: "Text",
+                            text = markdown.NewMarkdownText_FromRaw(retComment)
+                        } :: markdown.MarkdownNode
+                    end
+
+                    tableext.extend(baseNodes, parseTypeFieldType(globals, md, ret:string_repr(), ret, ret, convertedComments))
+
+                    blockNodes[#blockNodes + 1] = {
+                        type = "Block" :: "Block",
+                        nodes = baseNodes
+                    }        
+                end
+            else
+                -- Returns have special constraints
+                local retName, retComment = arg.parseAnonymousArgData(`ret1`, convertedComments.returns, 1)
+
+                local baseNodes: {markdown.MarkdownNode} = {
+                    {
+                        type = "Heading" :: "Heading",
+                        headingText = markdown.NewMarkdownText_FromRaw(retName)
+                    } :: markdown.MarkdownNode
+                }
+
+                if retComment ~= "" then
+                    baseNodes[#baseNodes + 1] = {
+                        type = "Text" :: "Text",
+                        text = markdown.NewMarkdownText_FromRaw(retComment)
+                    } :: markdown.MarkdownNode
+                end
+
+                tableext.extend(baseNodes, parseTypeFieldType(globals, md, ret:string_repr(), ret, ret, convertedComments))
+
+                blockNodes[#blockNodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = baseNodes
+                }        
+            end
+        end
+    end
+
+    return blockNodes
+end
+
+--- Parses a TypeFieldType (number or () -> number etc.) in a table
+function parseTypeFieldType(
     globals: types.Globals, 
     md: argparser.ParsedArgumentResult,
-    originField: types.TypeField?, 
+    originRepr: string?,
     origType: types.TypeFieldType,
     typ: types.TypeFieldType, 
     convertedComments: convertComments.ConvertCommentResponse
@@ -22,23 +195,26 @@ local function parseTypeFieldType(
 
     local fieldtype = typ:extract()
     if fieldtype.type == "Function" then
-        local originRepr: string? = nil
-        if originField then
-            originRepr = originField:string_repr_with_pats("\n")
-        end
-        return functionDocumentor.parseFunction(
+        return parseFunction(
+            globals,
+            md,
             originRepr,
             convertedComments,
             fieldtype.data.generics,
             fieldtype.data.args,
             fieldtype.data.ret
         )
-    elseif fieldtype.type == "Basic" or fieldtype.type == "String" or fieldtype.type == "Boolean"  then
-        local originRepr: string? = nil
-        if originField then
-            originRepr = originField:string_repr_with_pats("\n")
-        end
-        return simplefieldDocumentor.parseSimpleField(originRepr, fieldtype.type, tostring(fieldtype.data), convertedComments)
+    elseif fieldtype.type == "Basic" or fieldtype.type == "String" or fieldtype.type == "Boolean" then                                
+        -- TODO: make this look nicer
+        local irNodes: {markdown.MarkdownNode} = {} 
+
+        irNodes[#irNodes + 1] = {
+            type = "CodeBlock" :: "CodeBlock",
+            language = "luau",
+            text = origType:string_repr()
+    } :: any
+        
+        return irNodes
     elseif fieldtype.type == "Table" then
         local parsedFields: {markdown.MarkdownNode} = {
             {
@@ -72,7 +248,7 @@ local function parseTypeFieldType(
                     )
                 },
             },
-            parseTypeFieldType(globals, md, originField, origType, fieldtype.data, convertedComments)
+            parseTypeFieldType(globals, md, originRepr, origType, fieldtype.data, convertedComments)
         )
 
         return nodes
@@ -88,7 +264,7 @@ local function parseTypeFieldType(
                     )
                 },
             },
-            parseTypeFieldType(globals, md, originField, origType, fieldtype.data, convertedComments)
+            parseTypeFieldType(globals, md, originRepr, origType, fieldtype.data, convertedComments)
         )
 
         return nodes  
@@ -96,7 +272,7 @@ local function parseTypeFieldType(
         local pnodes = tableext.arraymap(
             fieldtype.data,
             function(typ: types.TypeFieldType): {markdown.MarkdownNode}
-                return parseTypeFieldType(globals, md, originField, origType, typ, convertedComments)
+                return parseTypeFieldType(globals, md, originRepr, origType, typ, convertedComments)
             end
         )
 
@@ -111,7 +287,7 @@ local function parseTypeFieldType(
 
         for i, pnode in pnodes do 
             if #pnode > 0 then
-                local variantName, variantComment = args.parseAnonymousArgData(`Variant ${i}`, convertedComments.variantDocs, i)
+                local variantName, variantComment = arg.parseAnonymousArgData(`Variant {i}`, convertedComments.variantDocs, i)
                 
                 if variantComment ~= "" then 
                     pnode = {
@@ -177,13 +353,21 @@ function parseTypeField(globals: types.Globals, md: argparser.ParsedArgumentResu
 
     blockNodes[#blockNodes + 1] = {
         type = "Block" :: "Block",
-        nodes = parseTypeFieldType(globals, md, typ, typ.field_type, typ.field_type, convertedComments)
+        nodes = parseTypeFieldType(
+            globals, 
+            md, 
+            typ:string_repr_with_pats("\n"), 
+            typ.field_type, 
+            typ.field_type, 
+            convertedComments
+        )
     }
 
     return blockNodes
 end
 
 return {
+    parseFunction = parseFunction,
     parseTypeField = parseTypeField,
     parseTypeFieldType = parseTypeFieldType
 }
