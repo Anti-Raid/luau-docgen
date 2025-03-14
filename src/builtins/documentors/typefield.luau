@@ -6,6 +6,7 @@ local functionDocumentor = require("./function")
 local convertComments = require("../convertcomments")
 local tableext = require("../table")
 local argparser = require("../argparser")
+local simplefieldDocumentor = require("./simplefield")
 
 --- Parses a TypeFieldType (number or () -> number etc.)
 local function parseTypeFieldType(
@@ -30,6 +31,12 @@ local function parseTypeFieldType(
             fieldtype.data.args,
             fieldtype.data.ret
         )
+    elseif fieldtype.type == "Basic" or fieldtype.type == "String" or fieldtype.type == "Boolean"  then
+        local originRepr: string? = nil
+        if originField then
+            originRepr = originField:string_repr_with_pats("\n")
+        end
+        return simplefieldDocumentor.parseSimpleField(originRepr, fieldtype.type, tostring(fieldtype.data), convertedComments)
     elseif fieldtype.type == "Table" then
         local parsedFields: {markdown.MarkdownNode} = {
             {

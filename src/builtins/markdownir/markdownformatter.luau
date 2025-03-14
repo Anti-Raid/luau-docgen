@@ -32,7 +32,8 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
     else return n.node end
 end
 
-function MarkdownText_String(t: markdown.MarkdownText): string 
+function MarkdownText_String(globals: types.Globals, t: markdown.MarkdownText): string 
+    assert(t.nodes, "Invalid IR: MarkdownText must have nodes: [" .. globals.prettyprint(t) .. "]")
     return table.concat(
         tableext.arraymap(
             t.nodes, 
@@ -51,6 +52,8 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
     local nodeDepth = depth or 0
     --print(n.type) --globals.prettyprint(n))
     --print("Processing " .. n.type .. " with depth " .. tostring(nodeDepth) .. " and label " .. tostring(label) .. " and fragment " .. globals.prettyprint(n))
+    local typ = n.type
+    assert(typ, "Invalid IR: Node must have a type")
     if n.type == "Heading" then 
         if strictValidation and n.level and n.level < nodeDepth then
             error(`Internal error - Invalid IR: n.level of {n.level} < nodeDepth of {nodeDepth}`)
@@ -62,7 +65,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             depthToUse = 5
         end
 
-        return string.rep("#", depthToUse) .. " " .. MarkdownText_String(n.headingText) .. "\n\n"
+        return string.rep("#", depthToUse) .. " " .. MarkdownText_String(globals, n.headingText) .. "\n\n"
     elseif n.type == "CodeBlock" then 
         local codeblock = "```" .. n.language .. "\n" .. n.text .. "\n```"
 
@@ -82,32 +85,36 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             )
         )
     elseif n.type == "Warning" then
-        return "<div class=\"warning\">\n" .. MarkdownText_String(n.text) .. "\n</div>\n\n"
+        return "<div class=\"warning\">\n" .. MarkdownText_String(globals, n.text) .. "\n</div>\n\n"
     elseif n.type == "Text" then
-        return MarkdownText_String(n.text) .. "\n\n"
+        --print("Processing text node " .. globals.prettyprint(n) .. " with label " .. tostring(label)) 
+        assert(n.text, "Invalid IR: Text node must have text")
+        return MarkdownText_String(globals, n.text) .. "\n\n"
     elseif n.type == "Link" then
-        return "[" .. MarkdownText_String(n.text) .. "](" .. n.url .. ")"
+        assert(n.url, "Invalid IR: Link node must have a URL")
+        assert(n.text, "Invalid IR: Link node must have text")
+        return "[" .. MarkdownText_String(globals, n.text) .. "](" .. n.url .. ")"
     elseif n.type == "List" then
         local output = ""
-
+        assert(n.entries, "Invalid IR: List node must have entries")
         for i, item in n.entries do
             if i == #n.entries then
-                output ..= "- " .. MarkdownText_String(item) .. "\n\n"
+                output ..= "- " .. MarkdownText_String(globals, item) .. "\n\n"
             else
-                output ..= "- " .. MarkdownText_String(item) .. "\n"
+                output ..= "- " .. MarkdownText_String(globals, item) .. "\n"
             end
         end
     
         return output    
     elseif n.type == "Table" then 
         local function parseCell(cell: markdown.MarkdownText): string
-            return MarkdownText_String(cell):gsub("\n", "<br>") :: string
+            return MarkdownText_String(globals, cell):gsub("\n", "<br>") :: string
         end
     
         local output = "|"
     
         for _, header in ipairs(n.headers) do
-            output ..= MarkdownText_String(header) .. "|"
+            output ..= MarkdownText_String(globals, header) .. "|"
         end
     
         output ..= "\n|"

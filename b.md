@@ -65,7 +65,10 @@ type a = {
 
 Nanos
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: number
+- Constraints: None
 
 ### a
 
@@ -77,21 +80,33 @@ Table
 
 My favorite type
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ##### c
 
 Meow
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ##### d
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ##### e
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ##### f
 
@@ -103,19 +118,28 @@ Hello
 
 World
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: boolean
+- Constraints: None
 
 ##### h
 
 G
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ### __meow
 
 Catnip
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ### Metatable Fields
 
