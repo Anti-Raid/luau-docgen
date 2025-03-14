@@ -86,6 +86,19 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
                 "\n\n"
             )
         )
+    elseif n.type == "InlineBlock" then
+        local nodes = n.nodes
+        assert(nodes, "Invalid IR: InlineBlock node must have nodes")
+        return table.concat(
+            tableext.arraymap(
+                nodes, 
+                function(node: markdown.MarkdownNode): string
+                    --print("Processing inline block node " .. globals.prettyprint(node) .. " with label " .. tostring(label))
+                    return MarkdownNode_String(globals, node, strictValidation, nodeDepth, tostring(label) .. "/InlineBlock")
+                end,
+                "\n\n"
+            )
+        )
     elseif n.type == "Warning" then
         local text = n.text :: markdown.MarkdownText
         assert(text, "Invalid IR: Warning node must have text")
@@ -101,7 +114,8 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
         assert(text, "Invalid IR: Link node must have text")
         return "[" .. MarkdownText_String(globals, text) .. "](" .. url .. ")"
     elseif n.type == "List" then
-        local entries = n.entries :: {markdown.MarkdownText}
+        local tabData = n :: any -- Luau type solver workaround
+        local entries = tabData.entries :: {markdown.MarkdownText}
         assert(entries, "Invalid IR: List node must have entries")
 
         local output = ""

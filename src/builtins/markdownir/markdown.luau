@@ -99,6 +99,9 @@ export type MarkdownNode = {
     type: "Block",
     nodes: {MarkdownNode}
 } | {
+    type: "InlineBlock",
+    nodes: {MarkdownNode},
+} | {
     type: "Warning",
     text: MarkdownText,
 } | {
