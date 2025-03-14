@@ -67,7 +67,7 @@ local function parseFunction(
         for i, generic in generics do 
             local stringRepr = "any"
             if generic.typ then
-                stringRepr = generic.typ:string_repr()
+                stringRepr = generic.typ:string_repr():gsub("<", "&lt;"):gsub(">", "&gt;")
             end
 
             -- Add in the argument properly
@@ -115,7 +115,7 @@ local function parseFunction(
 
             local stringRepr = "any"
             if arg.typ then
-                stringRepr = arg.typ:string_repr()
+                stringRepr = arg.typ:string_repr():gsub("<", "&lt;"):gsub(">", "&gt;")
             end
 
             -- Add in the argument properly
@@ -165,7 +165,7 @@ local function parseFunction(
                     for i, ret in extractedRet.data do 
                         local stringRepr = "any"
                         if ret then
-                            stringRepr = ret:string_repr()
+                            stringRepr = ret:string_repr():gsub("<", "&lt;"):gsub(">", "&gt;")
                         end
 
                         -- Returns have special constraints
@@ -198,7 +198,7 @@ local function parseFunction(
                     -- Normal case
                     local stringRepr = "any"
                     if ret then
-                        stringRepr = ret:string_repr()
+                        stringRepr = ret:string_repr():gsub("<", "&lt;"):gsub(">", "&gt;")
                     end
 
                     -- Returns have special constraints

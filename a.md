@@ -41,17 +41,26 @@ type a = {
 
 A
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: number
+- Constraints: None
 
 ### [string]
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: a
+- Constraints: None
 
 ### a
 
 A table
 
-[Documentor] Unsupported type: Basic
+Field with the following constraints:
+
+- Type: string
+- Constraints: None
 
 ### c
 
