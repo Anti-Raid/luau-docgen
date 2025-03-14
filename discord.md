@@ -56,14 +56,9 @@ The number of entries to return
 
 *This field is optional and may not be specified*
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 number?
 ```
-
-</details>
 
 ## GetAutoModerationRuleOptions
 
@@ -112,14 +107,9 @@ type CreateAutoModerationRuleOptions = {
 
 The reason for creating the rule
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ### data
 
@@ -160,14 +150,9 @@ The rule ID
 
 The reason for editing the rule
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ### data
 
@@ -205,14 +190,9 @@ The rule ID
 
 The reason for deleting the rule
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ## GetChannelOptions
 
@@ -270,14 +250,9 @@ The channel ID
 
 The reason for the edit
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ### data
 
@@ -315,14 +290,9 @@ The channel ID
 
 The reason for the deletion
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ## EditChannelPermissionsOptions
 
@@ -390,14 +360,9 @@ The type of the target
 
 The reason for the edit
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ## AddGuildMemberRoleOptions
 
@@ -438,14 +403,9 @@ The role ID
 
 The reason for adding the role
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ## RemoveGuildMemberRoleOptions
 
@@ -486,14 +446,9 @@ The role ID
 
 The reason for adding the role
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ## RemoveGuildMemberOptions
 
@@ -525,14 +480,9 @@ The member ID
 
 The reason for removing the member
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ## GetGuildBansOptions
 
@@ -569,14 +519,9 @@ The limit of bans to get (max 100)
 
 *This field is optional and may not be specified*
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 number?
 ```
-
-</details>
 
 ### before
 
@@ -682,14 +627,9 @@ The interaction ID
 
 The interaction token
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ### data
 
@@ -721,14 +661,9 @@ type CreateFollowupMessageOptions = {
 
 The interaction token
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 ### data
 
@@ -761,48 +696,27 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 "After" | "Around" | "Before"
 ```
-
-</details>
-
-
 
 </details>
 
 <details>
 <summary>Variant 2</summary>
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 "After" | "Around" | "Before"
 ```
-
-</details>
-
-
 
 </details>
 
 <details>
 <summary>Variant 3</summary>
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 "After" | "Around" | "Before"
 ```
-
-</details>
-
-
 
 </details>
 
@@ -845,14 +759,9 @@ The target message
 
 *This field is optional and may not be specified*
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 MessagePagination?
 ```
-
-</details>
 
 ### limit
 
@@ -860,14 +769,9 @@ The limit of messages to get
 
 *This field is optional and may not be specified*
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 number?
 ```
-
-</details>
 
 ## GetMessageOptions
 
@@ -1002,14 +906,9 @@ get_audit_logs: (self: DiscordExecutor, data: GetAuditLogOptions) -> promise.Lua
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 GetAuditLogOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1057,14 +956,9 @@ get_auto_moderation_rule: (self: DiscordExecutor, data: GetAutoModerationRuleOpt
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 GetAutoModerationRuleOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1090,14 +984,9 @@ create_auto_moderation_rule: (self: DiscordExecutor, data: CreateAutoModerationR
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 CreateAutoModerationRuleOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1123,14 +1012,9 @@ edit_auto_moderation_rule: (self: DiscordExecutor, data: EditAutoModerationRuleO
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 EditAutoModerationRuleOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1156,14 +1040,9 @@ delete_auto_moderation_rule: (self: DiscordExecutor, data: DeleteAutoModerationR
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 DeleteAutoModerationRuleOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1189,14 +1068,9 @@ get_channel: (self: DiscordExecutor, data: GetChannelOptions) -> promise.LuaProm
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 GetChannelOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1222,14 +1096,9 @@ edit_channel: (self: DiscordExecutor, data: EditChannelOptions) -> promise.LuaPr
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 EditChannelOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1255,14 +1124,9 @@ delete_channel: (self: DiscordExecutor, data: DeleteChannelOptions) -> promise.L
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 DeleteChannelOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1288,14 +1152,9 @@ edit_channel_permissions: (self: DiscordExecutor, data: EditChannelPermissionsOp
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 EditChannelPermissionsOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1321,14 +1180,9 @@ add_guild_member_role: (self: DiscordExecutor, data: AddGuildMemberRoleOptions) 
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 AddGuildMemberRoleOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1354,14 +1208,9 @@ remove_guild_member_role: (self: DiscordExecutor, data: RemoveGuildMemberRoleOpt
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 RemoveGuildMemberRoleOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1387,14 +1236,9 @@ remove_guild_member: (self: DiscordExecutor, data: RemoveGuildMemberOptions) -> 
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 RemoveGuildMemberOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1420,14 +1264,9 @@ get_guild_bans: (self: DiscordExecutor, data: GetGuildBansOptions) -> promise.Lu
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 GetGuildBansOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1479,14 +1318,9 @@ get_messages: (self: DiscordExecutor, data: GetMessagesOptions) -> promise.LuaPr
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 GetMessagesOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1512,14 +1346,9 @@ get_message: (self: DiscordExecutor, data: GetMessageOptions) -> promise.LuaProm
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 GetMessageOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1545,14 +1374,9 @@ create_message: (self: DiscordExecutor, data: CreateMessageOptions) -> promise.L
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 CreateMessageOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1578,14 +1402,9 @@ create_interaction_response: (self: DiscordExecutor, data: CreateInteractionResp
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 CreateInteractionResponseOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1611,14 +1430,9 @@ create_followup_message: (self: DiscordExecutor, data: CreateFollowupMessageOpti
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 CreateFollowupMessageOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1644,14 +1458,9 @@ get_original_interaction_response: (self: DiscordExecutor, interaction_token: st
 
 ##### interaction_token
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 string
 ```
-
-</details>
 
 #### Returns
 
@@ -1699,14 +1508,9 @@ create_guild_command: (self: DiscordExecutor, data: CreateCommandOptions) -> pro
 
 ##### data
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 CreateCommandOptions
 ```
-
-</details>
 
 #### Returns
 
@@ -1743,12 +1547,7 @@ function new(token: Primitives.TemplateContext, scope: ExecutorScope.ExecutorSco
 
 ### ret1
 
-<details>
-<summary>Type Signature</summary>
-
 ```luau
 DiscordExecutor
 ```
-
-</details>
 
