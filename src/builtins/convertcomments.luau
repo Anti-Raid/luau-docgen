@@ -5,6 +5,7 @@ local markdown = require("markdownir/markdown.luau")
 export type ConvertCommentResponse = {
     output: {markdown.MarkdownNode},
     skip: boolean,
+    variantDocs: {[string]: string}, -- Useful for documenting multivariant unions
     fieldDocs: {[string]: string}, -- Useful to document functions etc
     genericDocs: {[string]: string}, -- Useful to document functions etc
     returns: {[string]: string}, -- Useful to document functions etc
@@ -57,6 +58,18 @@ local specialcommentmap = {
 
         output.genericDocs[fieldName] = fieldData
     end,
+    variant = function(output: ConvertCommentResponse, data: string)
+        -- Split data by space
+        local split = data:split(" ")
+        if #split < 2 then
+            return
+        end
+
+        local fieldName = split[1]
+        local fieldData = table.concat(split, " ", 2)
+
+        output.genericDocs[fieldName] = fieldData
+    end,
 }
 
 --- Converts comments to markdown (with other metadata attached to it)
@@ -66,6 +79,7 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
     local output: ConvertCommentResponse = {
         output = {},
         skip = false,
+        variantDocs = {},
         fieldDocs = {},
         genericDocs = {},
         returns = {},

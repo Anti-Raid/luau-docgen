@@ -178,8 +178,8 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
     
         return output    
     else 
-        error("Invalid IR: MarkdownNode must have a valid type: " .. globals.prettyprint(n.type)) 
-
+        print("Invalid IR: MarkdownNode must have a valid type: " .. globals.prettyprint(n.type) .. " with type " .. globals.prettyprint(n) .. " and label " .. tostring(label) .. "!") 
+        error("Invalid IR: MarkdownNode must have a valid type. See above for more details")
     end
 end
 

@@ -30,11 +30,15 @@ type GetAuditLogOptions = {
 
 The action type to filter by
 
+*This field is optional and may not be specified*
+
 [Documentor] Unsupported type: Module
 
 ### user_id
 
 The user ID to filter by
+
+*This field is optional and may not be specified*
 
 [Documentor] Unsupported type: Module
 
@@ -42,16 +46,19 @@ The user ID to filter by
 
 The audit log entry ID to filter
 
+*This field is optional and may not be specified*
+
 [Documentor] Unsupported type: Module
 
 ### limit
 
 The number of entries to return
 
+*This field is optional and may not be specified*
+
 Field with the following constraints:
 
 - Type: number
-- Constraints: None
 
 ## GetAutoModerationRuleOptions
 
@@ -103,7 +110,6 @@ The reason for creating the rule
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ### data
 
@@ -147,7 +153,6 @@ The reason for editing the rule
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ### data
 
@@ -188,7 +193,6 @@ The reason for deleting the rule
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ## GetChannelOptions
 
@@ -249,7 +253,6 @@ The reason for the edit
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ### data
 
@@ -290,7 +293,6 @@ The reason for the deletion
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ## EditChannelPermissionsOptions
 
@@ -361,7 +363,6 @@ The reason for the edit
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ## AddGuildMemberRoleOptions
 
@@ -405,7 +406,6 @@ The reason for adding the role
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ## RemoveGuildMemberRoleOptions
 
@@ -449,7 +449,6 @@ The reason for adding the role
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ## RemoveGuildMemberOptions
 
@@ -484,7 +483,6 @@ The reason for removing the member
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ## GetGuildBansOptions
 
@@ -519,20 +517,25 @@ type GetGuildBansOptions = {
 
 The limit of bans to get (max 100)
 
+*This field is optional and may not be specified*
+
 Field with the following constraints:
 
 - Type: number
-- Constraints: None
 
 ### before
 
 Before a certain user ID
+
+*This field is optional and may not be specified*
 
 [Documentor] Unsupported type: Module
 
 ### after
 
 After a certain user ID
+
+*This field is optional and may not be specified*
 
 [Documentor] Unsupported type: Module
 
@@ -627,7 +630,6 @@ The interaction token
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ### data
 
@@ -662,7 +664,6 @@ The interaction token
 Field with the following constraints:
 
 - Type: string
-- Constraints: None
 
 ### data
 
@@ -690,7 +691,40 @@ type MessagePagination = {
 
 ### type
 
-[Documentor] Unsupported type: Union
+Union with variants:
+
+<details>
+<summary>Variant $1</summary>
+
+Field with the following constraints:
+
+- Type: "After" (a string literal)
+
+
+
+</details>
+
+<details>
+<summary>Variant $2</summary>
+
+Field with the following constraints:
+
+- Type: "Around" (a string literal)
+
+
+
+</details>
+
+<details>
+<summary>Variant $3</summary>
+
+Field with the following constraints:
+
+- Type: "Before" (a string literal)
+
+
+
+</details>
 
 ### id
 
@@ -729,19 +763,21 @@ The channel ID
 
 The target message
 
+*This field is optional and may not be specified*
+
 Field with the following constraints:
 
 - Type: MessagePagination
-- Constraints: None
 
 ### limit
 
 The limit of messages to get
 
+*This field is optional and may not be specified*
+
 Field with the following constraints:
 
 - Type: number
-- Constraints: None
 
 ## GetMessageOptions
 

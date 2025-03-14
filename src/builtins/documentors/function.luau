@@ -3,42 +3,11 @@
 local markdown = require("../markdownir/markdown.luau")
 local convertComments = require("../convertcomments.luau")
 local types = require("../types.luau")
- 
+local args = require("./arg.luau") 
+
 --- Helper function to parse return data from converted comments
 local function parseReturnData(convertedComments: convertComments.ConvertCommentResponse, i: number): (string, string)
-    -- Returns have special constraints
-    local retName: string = `ret{i}`
-    local retComment: string = ""
-
-    local potComment: string? = nil
-
-    if convertedComments.returns[tostring(i)] then 
-        potComment = convertedComments.returns[tostring(i)]
-    else
-        -- Last chance, check if there is a single return comment
-        local potRetName: string? = nil
-        for k in pairs(convertedComments.returns) do 
-            potRetName = k
-            break
-        end
-
-        if potRetName then
-            return potRetName, convertedComments.returns[potRetName]
-        end
-    end
-
-    if potComment then 
-        -- Split by space, first part is the name, second part is the comment
-        local split = potComment:split(" ")
-        if #split == 1 then
-            retName = split[1]
-        else
-            retName = split[1]
-            retComment = table.concat(split, " ", 2)
-        end
-    end 
-
-    return retName, retComment
+    return args.parseAnonymousArgData(`ret{i}`, convertedComments.returns, i)
 end
 
 --- Helper method to process a function

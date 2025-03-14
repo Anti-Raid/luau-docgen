@@ -7,12 +7,14 @@ local convertComments = require("../convertcomments")
 local tableext = require("../table")
 local argparser = require("../argparser")
 local simplefieldDocumentor = require("./simplefield")
+local args = require("./arg.luau") 
 
 --- Parses a TypeFieldType (number or () -> number etc.)
 local function parseTypeFieldType(
     globals: types.Globals, 
     md: argparser.ParsedArgumentResult,
     originField: types.TypeField?, 
+    origType: types.TypeFieldType,
     typ: types.TypeFieldType, 
     convertedComments: convertComments.ConvertCommentResponse
 ): {markdown.MarkdownNode} 
@@ -59,9 +61,87 @@ local function parseTypeFieldType(
         end
         return blockNodes
     elseif fieldtype.type == "Array" then 
-        return parseTypeFieldType(globals, md, originField, fieldtype.data, convertedComments)
+        local nodes: {markdown.MarkdownNode} = tableext.extend(
+            {
+                {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromNodes(
+                        markdown.NewMarkdownTextNode_Italics(
+                            markdown.NewMarkdownTextNode_Unstyled("This field is an array type")
+                        )
+                    )
+                },
+            },
+            parseTypeFieldType(globals, md, originField, origType, fieldtype.data, convertedComments)
+        )
+
+        return nodes
     elseif fieldtype.type == "Optional" then 
-        return parseTypeFieldType(globals, md, originField, fieldtype.data, convertedComments)    
+        local nodes: {markdown.MarkdownNode} = tableext.extend(
+            {
+                {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromNodes(
+                        markdown.NewMarkdownTextNode_Italics(
+                            markdown.NewMarkdownTextNode_Unstyled("This field is optional and may not be specified")
+                        )
+                    )
+                },
+            },
+            parseTypeFieldType(globals, md, originField, origType, fieldtype.data, convertedComments)
+        )
+
+        return nodes  
+    elseif fieldtype.type == "Union" then
+        local pnodes = tableext.arraymap(
+            fieldtype.data,
+            function(typ: types.TypeFieldType): {markdown.MarkdownNode}
+                return parseTypeFieldType(globals, md, originField, origType, typ, convertedComments)
+            end
+        )
+
+        local nodes: {markdown.MarkdownNode} = {
+            {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromNodes(
+                    markdown.NewMarkdownTextNode_Unstyled("Union with variants:")
+                )    
+            }
+        } :: {markdown.MarkdownNode}
+
+        for i, pnode in pnodes do 
+            if #pnode > 0 then
+                local variantName, variantComment = args.parseAnonymousArgData(`Variant ${i}`, convertedComments.variantDocs, i)
+                
+                if variantComment ~= "" then 
+                    pnode = {
+                        type = "InlineBlock" :: "InlineBlock",
+                        nodes = tableext.extend(
+                            {
+                                {
+                                    type = "Text" :: "Text",
+                                    text = markdown.NewMarkdownTextNode_Raw(variantComment)
+                                }
+                            },
+                            pnode
+                        ),
+                    }
+                else 
+                    pnode = {
+                        type = "InlineBlock" :: "InlineBlock",
+                        nodes = pnode,
+                    }
+                end
+                
+                nodes[#nodes + 1] = {
+                    type = "Snippet",
+                    detailsText = variantName,-- fieldtype.data[i]:string_repr(),
+                    node = pnode :: markdown.MarkdownNode,
+                }
+            end
+        end
+
+        return nodes :: {markdown.MarkdownNode}
     else
         -- Fallback
         blockNodes[#blockNodes + 1] = {
@@ -97,7 +177,7 @@ function parseTypeField(globals: types.Globals, md: argparser.ParsedArgumentResu
 
     blockNodes[#blockNodes + 1] = {
         type = "Block" :: "Block",
-        nodes = parseTypeFieldType(globals, md, typ, typ.field_type, convertedComments)
+        nodes = parseTypeFieldType(globals, md, typ, typ.field_type, typ.field_type, convertedComments)
     }
 
     return blockNodes

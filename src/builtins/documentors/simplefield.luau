@@ -1,6 +1,8 @@
+--!strict
+
 local markdown = require("../markdownir/markdown.luau")
-local convertComments = require("../convertcomments.luau")
- 
+local convertComments = require("../convertcomments.luau") 
+
 --- Helper function to parse a simple (Basic/String/Boolean literal) field
 local function parseSimpleField(
     originRepr: string?,
@@ -9,24 +11,24 @@ local function parseSimpleField(
     convertedComments: convertComments.ConvertCommentResponse
 ): {markdown.MarkdownNode} 
     local fieldType: string = data
-    local fieldConstraints: string = "None"
     if type == "Boolean" then
-        fieldConstraints = "true/false"
+        fieldType ..= " (a boolean literal)"
+    elseif type == "String" then
+        fieldType ..= " (a string literal)"
     end
 
     local blockNodes: {markdown.MarkdownNode} = {
         {
-            type = "Text",
+            type = "Text" :: "Text",
             text = markdown.NewMarkdownText_FromRaw("Field with the following constraints:")
         },
         {
-            type = "List",
+            type = "List" :: "List",
             entries = {
                 markdown.NewMarkdownText_FromRaw("Type: " .. fieldType),
-                markdown.NewMarkdownText_FromRaw("Constraints: " .. fieldConstraints)
             }
         }
-    }
+    } :: {markdown.MarkdownNode}
 
     return blockNodes
 end
