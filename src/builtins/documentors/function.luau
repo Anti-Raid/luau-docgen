@@ -1,9 +1,9 @@
 --!strict
 
-local markdown = require("../markdown.luau")
+local markdown = require("../markdownir/markdown.luau")
 local convertComments = require("../convertcomments.luau")
 local types = require("../types.luau")
-
+ 
 --- Helper function to parse return data from converted comments
 local function parseReturnData(convertedComments: convertComments.ConvertCommentResponse, i: number): (string, string)
     -- Returns have special constraints

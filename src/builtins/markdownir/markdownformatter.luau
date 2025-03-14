@@ -1,7 +1,7 @@
 --!strict
 
-local types = require("types.luau")
-local tableext = require("table.luau")
+local types = require("../types.luau")
+local tableext = require("../table.luau")
 local markdown = require("markdown.luau")
 
 local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string

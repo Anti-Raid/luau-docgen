@@ -1,7 +1,7 @@
 --!strict
 local types = require("types.luau")
 
-type ParsedArgumentResult = {
+export type ParsedArgumentResult = {
     --- Name of module being documented
     modname: string,
     --- Whether or not to ignore non doc comments
