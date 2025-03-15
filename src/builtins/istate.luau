@@ -73,7 +73,8 @@ local function loadPlugin(istate: IState, path: string): Plugin
 
     istate.globals.require_builtins = true -- Reset to default to avoid side effects
 
-    assert(plugin.plugin_header == PLUGIN_HEADER, "Invalid plugin load request. Plugin header mismatch: " .. plugin.plugin_header .. " != " .. PLUGIN_HEADER)
+    assert(type(plugin) == "table" or type(plugin) == "userdata", "Invalid plugin load request. Plugin is not a table or userdata: " .. tostring(plugin))
+    assert(plugin.plugin_header == PLUGIN_HEADER, "Invalid plugin load request. Plugin header mismatch: " .. tostring(plugin.plugin_header) .. " != " .. PLUGIN_HEADER)
 
     return plugin
 end
