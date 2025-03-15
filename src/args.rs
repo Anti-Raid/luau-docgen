@@ -41,14 +41,13 @@ pub fn parse_args<T: AsRef<str>>(args: Vec<T>) -> ParsedArgs {
     let args = args
         .into_iter()
         .map(|x| x.as_ref().to_string())
-        .map(|x| {
+        .flat_map(|x| {
             if let Some((name, value)) = x.split_once('=') {
                 vec![name.to_string(), value.to_string()]
             } else {
                 vec![x]
             }
         })
-        .flatten()
         .collect::<Vec<_>>();
 
     let mut i = 0;
