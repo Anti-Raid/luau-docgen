@@ -6,6 +6,8 @@ export type ParsedArgumentResult = {
     modname: string,
     --- Files to document
     files: {string},
+    --- What plugin file (if any) to load
+    plugin: string?,
     --- Ignore non exported types or not
     ignorenonexportedtypes: boolean,
     --- Whether or not to error on unsupported types
@@ -16,6 +18,9 @@ export type ParsedArgumentResult = {
     debugmode: boolean,
     --- Target file to write to
     output: string,
+    -- Options set by the user
+    -- This is a table of the parsed arguments
+    optionsSet: types.ParsedArgs,
 }
 
 -- Modify this function to change how special comments are converted to markdown
@@ -38,6 +43,9 @@ local argmap = {
     output = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
         output.output = values[1] or "stdout"
     end,
+    plugin = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+        output.plugin = values[1]
+    end,
 }
 
 -- Parses arguments from globals.documentor_args into a set of parsed arguments 
@@ -47,21 +55,20 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
     local output: ParsedArgumentResult = {
         modname = "",
         files = {},
+        plugin = nil,
         ignorenondoc = false,
         debugmode = false,
         erroronunsupported = false,
         ignorenonexportedtypes = false,
-        output = "stdout"
+        output = "stdout",
+        optionsSet = parsedArgs
     }
 
     for _, arg in parsedArgs.args do
         -- Handle values as files to load and document
-        print(arg.arg_type)
         if arg.arg_type == "Value" then
             output.files[#output.files + 1] = arg.name
-        end
-
-        if argmap[arg.name] then
+        elseif argmap[arg.name] then
             argmap[arg.name](output, arg.values, arg.arg_type)
         end
     end

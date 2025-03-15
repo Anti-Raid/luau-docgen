@@ -315,6 +315,56 @@ function parseTypeFieldType(
         end
 
         return nodes :: {markdown.MarkdownNode}
+    elseif fieldtype.type == "Intersection" then
+        local pnodes = tableext.arraymap(
+            fieldtype.data,
+            function(typ: types.TypeFieldType): {markdown.MarkdownNode}
+                return parseTypeFieldType(istate, originRepr, origType, typ, convertedComments)
+            end
+        )
+
+        local nodes: {markdown.MarkdownNode} = {
+            {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromNodes(
+                    markdown.NewMarkdownTextNode_Unstyled("Intersection of:")
+                )    
+            }
+        } :: {markdown.MarkdownNode}
+
+        for i, pnode in pnodes do 
+            if #pnode > 0 then
+                local variantName, variantComment = arg.parseAnonymousArgData(`Type {i}`, convertedComments.variantDocs, i)
+                
+                if variantComment ~= "" then 
+                    pnode = {
+                        type = "InlineBlock" :: "InlineBlock",
+                        nodes = tableext.extend(
+                            {
+                                {
+                                    type = "Text" :: "Text",
+                                    text = markdown.NewMarkdownTextNode_Raw(variantComment)
+                                }
+                            },
+                            pnode
+                        ),
+                    }
+                else 
+                    pnode = {
+                        type = "InlineBlock" :: "InlineBlock",
+                        nodes = pnode,
+                    }
+                end
+                
+                nodes[#nodes + 1] = {
+                    type = "Snippet",
+                    detailsText = variantName,-- fieldtype.data[i]:string_repr(),
+                    node = pnode :: markdown.MarkdownNode,
+                }
+            end
+        end
+
+        return nodes :: {markdown.MarkdownNode}
     else
         -- Fallback
         blockNodes[#blockNodes + 1] = {
