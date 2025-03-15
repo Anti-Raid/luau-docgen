@@ -91,7 +91,7 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
             output.output[#output.output + 1] = {
                 type = "Text" :: "Text",
                 text = markdown.NewMarkdownText_FromRaw(comment.data)
-            }
+            } :: markdown.MarkdownNode
         elseif comment.comment_type == "Special" then
             local data = comment.data
             local typ = comment.typ
@@ -101,7 +101,7 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
                 output.output[#output.output + 1] = {
                     type = "Text" :: "Text",
                     text = markdown.NewMarkdownText_FromRaw("@" .. typ .. " " .. data) -- Default to just outputting the comment
-                }
+                } :: markdown.MarkdownNode
             end
         end
     end

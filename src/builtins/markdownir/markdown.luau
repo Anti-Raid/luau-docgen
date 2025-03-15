@@ -45,6 +45,20 @@ local function NewMarkdownTextNode_Italics(...: MarkdownTextNode): MarkdownTextN
     }
 end
 
+local function NewMarkdownTextNode_CodeArray(nodes: {MarkdownTextNode}): MarkdownTextNode
+    return {
+        node = nodes,
+        style = "Code"
+    }
+end
+
+local function NewMarkdownTextNode_Code(...: MarkdownTextNode): MarkdownTextNode
+    return {
+        node = {...},
+        style = "Code"
+    }
+end
+
 local function NewMarkdownTextNode_Unstyled(node: string): MarkdownTextNode
     return {
         text = node,
@@ -100,19 +114,22 @@ export type MarkdownNode = {
     node: MarkdownNode,
 } | {
     type: "Block", -- A block allows for a set of nodes to be nested within it with increasing depth
-    nodes: {MarkdownNode}
+    nodes: {MarkdownNode},
 } | {
     type: "InlineBlock", -- An inline block allows for a set of nodes to be nested within it with the same depth
     nodes: {MarkdownNode},
+    inline: boolean?, -- Whether to add a newline between each element of the block (default: false)
 } | {
     type: "Warning",
     text: MarkdownText,
 } | {
     type: "Text",
     text: MarkdownText,
+    inline: boolean?, -- Whether to add a newline between each element of the block (default: false)
 } | {
     type: "Link",
     text: MarkdownText, 
+    inline: boolean?, -- Whether to add a newline between each element of the block (default: false)
     url: string -- May be relative to a Heading which should be handled in formatter impl
 } | {
     type: "Table",
@@ -142,6 +159,8 @@ return {
     NewMarkdownTextNode_Bold = NewMarkdownTextNode_Bold,
     NewMarkdownTextNode_ItalicsArray = NewMarkdownTextNode_ItalicsArray,
     NewMarkdownTextNode_Italics = NewMarkdownTextNode_Italics,
+    NewMarkdownTextNode_CodeArray = NewMarkdownTextNode_CodeArray,
+    NewMarkdownTextNode_Code = NewMarkdownTextNode_Code,
     NewMarkdownTextNode_Unstyled = NewMarkdownTextNode_Unstyled,
     NewMarkdownTextNode_Raw = NewMarkdownTextNode_Raw,
     NewMarkdownText_FromNodeArray = NewMarkdownText_FromNodeArray,

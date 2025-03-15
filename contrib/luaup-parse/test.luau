@@ -3,6 +3,7 @@ print(args)
 
 local pp = require("./pp")
 local parser = require("./luaup/lossless/parse")
+local utils = require("./luaup/lossless/util")
 local res = parser(args)
 
 if not res.success then
@@ -13,5 +14,6 @@ if not res.success then
 else
     print("Parsed successfully")
     print(pp(res.cst))
-end
 
+    print(utils.tostring(res.cst))
+end

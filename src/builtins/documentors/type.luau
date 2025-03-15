@@ -114,6 +114,19 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
                 nodes = metaNodes
             } :: markdown.MarkdownNode
         end
+    elseif extractedType.type == "Uncategorized" then
+        tableext.extend(blockNodes, typefieldDocumentor.parseTypeFieldType(
+            istate, 
+            extractedType.data:string_repr(),
+            extractedType.data,
+            extractedType.data,
+            convComments
+        ))
+    else
+        blockNodes[#blockNodes + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw("[Documentor]: Unsupported extracted type kind: " .. extractedType.type)
+        } :: markdown.MarkdownNode
     end
 
     return blockNodes

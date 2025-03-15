@@ -264,7 +264,7 @@ function parseTypeFieldType(
                 },
             },
             parseTypeFieldType(istate, originRepr, origType, fieldtype.data, convertedComments)
-        )
+        ) :: {markdown.MarkdownNode}
 
         return nodes
     elseif fieldtype.type == "Optional" then 
@@ -280,7 +280,7 @@ function parseTypeFieldType(
                 },
             },
             parseTypeFieldType(istate, originRepr, origType, fieldtype.data, convertedComments)
-        )
+        ) :: {markdown.MarkdownNode}
 
         return nodes  
     elseif fieldtype.type == "Union" then
@@ -333,6 +333,43 @@ function parseTypeFieldType(
         end
 
         return nodes :: {markdown.MarkdownNode}
+    elseif fieldtype.type == "Generic" then 
+        local nodes: {markdown.MarkdownNode} = {
+            {
+                type = "Text" :: "Text",
+                inline = true,
+                text = markdown.NewMarkdownText_FromNodes(
+                    markdown.NewMarkdownTextNode_Italics(
+                        markdown.NewMarkdownTextNode_Unstyled("This field is a generic type with base")
+                    )
+                ),
+            },
+            {
+                type = "Text" :: "Text",
+                inline = true,
+                text = markdown.NewMarkdownText_FromNodes(
+                    markdown.NewMarkdownTextNode_Unstyled(" ")
+                ),
+            },
+            {
+                type = "Link" :: "Link",
+                url = `#{fieldtype.data.base}`,
+                text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+            }
+        } :: {markdown.MarkdownNode}
+
+        for i, generic in fieldtype.data.generics do 
+            local genericNodes = parseTypeFieldType(istate, generic:string_repr(), generic, generic, convertedComments)
+
+            if #genericNodes > 0 then
+                nodes[#nodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = genericNodes
+                } :: markdown.MarkdownNode
+            end
+        end
+
+        return nodes
     elseif fieldtype.type == "Intersection" then
         local pnodes = tableext.arraymap(
             fieldtype.data,
@@ -388,7 +425,7 @@ function parseTypeFieldType(
         blockNodes[#blockNodes + 1] = {
             type = "Text" :: "Text",
             text = markdown.NewMarkdownText_FromRaw("[Documentor] Unsupported type: " .. fieldtype.type)
-        }
+        } :: markdown.MarkdownNode
     end
 
     return blockNodes
