@@ -56,7 +56,30 @@ local DefaultPlugin: Plugin = {
     end
 }
 
+--- Attempts to load a plugin at path
+local function loadPlugin(istate: IState, path: string): Plugin
+    istate.globals.require_builtins = false
+    local ok, plugin: Plugin? = pcall(require, istate.md.plugin)
+    
+    if not ok then
+        istate.globals.require_builtins = true -- Reset to default to avoid side effects
+        error("Failed to load plugin: " .. path .. " - " .. tostring(plugin) .. " - " .. tostring(ok))
+    end
+    
+    if not plugin then
+        istate.globals.require_builtins = true -- Reset to default to avoid side effects
+        error("Requested plugin " .. path .. " returned no result")
+    end
+
+    istate.globals.require_builtins = true -- Reset to default to avoid side effects
+
+    assert(plugin.plugin_header == PLUGIN_HEADER, "Invalid plugin load request. Plugin header mismatch: " .. plugin.plugin_header .. " != " .. PLUGIN_HEADER)
+
+    return plugin
+end
+
 return {
     PLUGIN_HEADER = PLUGIN_HEADER,
     DefaultPlugin = DefaultPlugin,
+    loadPlugin = loadPlugin,
 }
