@@ -1,11 +1,5 @@
 --!strict
 
--- Before doing anything else, make sure we can safely require stuff
-print("Running reqtest self-test for requires")
-local a = require"reqtest/a.luau"
-assert(a.a == 1) -- Ensure stable requires
-print("Passed reqtest self-test for requires")
-
 local types = require("types.luau")
 local argparser = require("argparser.luau")
 local tableext = require("table.luau")
@@ -33,6 +27,12 @@ local istate: istatemod.IState = {
 if md.plugin then
     istate.plugin = istatemod.loadPlugin(istate, md.plugin)
 end
+
+-- Before doing anything else, make sure we can safely require stuff
+print("Running reqtest self-test for requires")
+local a = require"reqtest/a.luau"
+assert(a.a == 1) -- Ensure stable requires
+print("Passed reqtest self-test for requires")
 
 -- Read files, document and save
 

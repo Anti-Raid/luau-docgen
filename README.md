@@ -35,3 +35,7 @@ Basically, if your project:
 - uses standard Luau type definitions for typings
 
 then luau-docgen might be a good fit for you.
+
+## Plugins
+
+*WIP feature*

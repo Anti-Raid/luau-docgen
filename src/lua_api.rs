@@ -43,8 +43,6 @@ pub fn require(
     req_builtins: bool,
     requires_cache: &RefCell<std::collections::HashMap<String, LuaMultiValue>>,
 ) -> LuaResult<LuaMultiValue> {
-    let mut req_builtins = req_builtins;
-
     let curr_path = {
         let p = current_path.borrow();
         p.clone()
@@ -52,29 +50,8 @@ pub fn require(
 
     log::debug!("Current path: {:?} when requiring {}", curr_path, pat);
     let mut pat = {
-        let path = current_path.borrow();
-        let mut new_path = normalize_path(&path.join(&pat));
-        drop(path);
-
-        // Use builtins if path starts with src/builtins
-        if !req_builtins {
-            let new_path_str = new_path.to_string_lossy();
-            let new_path_str = new_path_str.trim_start_matches(&*curr_path.to_string_lossy());
-
-            if new_path_str.starts_with("src/builtins/")
-                || new_path_str.starts_with("/src/builtins/")
-            {
-                new_path = PathBuf::from(
-                    new_path_str
-                        .trim_start_matches("src/builtins/")
-                        .trim_start_matches("/src/builtins/"),
-                );
-                req_builtins = true;
-            }
-        }
-
         let mut path = current_path.borrow_mut();
-        *path = new_path;
+        *path = normalize_path(&path.join(&pat));
 
         let end_file = match path.file_name() {
             Some(c) => c.to_string_lossy().to_string(),
@@ -97,6 +74,12 @@ pub fn require(
 
         path_joined
     };
+
+    log::debug!(
+        "Resolved: Current path: {:?} when requiring {}",
+        curr_path,
+        pat
+    );
 
     if !pat.ends_with(".luau") {
         pat = format!("{}.luau", pat);
