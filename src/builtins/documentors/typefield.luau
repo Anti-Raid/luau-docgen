@@ -68,7 +68,14 @@ local function parseFunction(
     end
 
     -- Add in the arguments
-    if #args > 0 then
+    local argCount = #args
+
+    if argCount > 0 and args[argCount].name == "self" then
+        -- Remove self from the argument list
+        argCount = argCount - 1
+    end
+
+    if argCount > 0 then
         --blockNodes[#blockNodes + 1]
 
         blockNodes[#blockNodes + 1] = {

@@ -1054,10 +1054,6 @@ list_auto_moderation_rules: (self: DiscordExecutor) -> promise.LuaPromise<LazyAu
 
 </details>
 
-<div id="Arguments"></div>
-
-#### Arguments
-
 <div id="Returns"></div>
 
 #### Returns
@@ -1767,10 +1763,6 @@ get_guild_commands: (self: DiscordExecutor) -> promise.LuaPromise<LazyApplicatio
 ```
 
 </details>
-
-<div id="Arguments"></div>
-
-#### Arguments
 
 <div id="Returns"></div>
 
