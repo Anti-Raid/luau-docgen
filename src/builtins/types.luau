@@ -29,14 +29,24 @@ export type ParsedArg = {
     name: string,
     --- The values passed to the argument
     values: {string},
-    --- Whether the argument is short (-a) or long (--abc)
-    short: boolean,
+    --- Whether the argument is short (-a) or long (--abc) or a value (abc)
+    arg_type: "Short" | "Long" | "Value",
 }
 
 --- Contains a parsed list of arguments from globals.parsedocumentorargs
 export type ParsedArgs = {
     --- List of arguments (in order of appearance)
     args: {ParsedArg},
+}
+
+export type ParseToTypeSetArgs = {
+    -- The contents of the Luau file to parse
+    contents: string,
+
+    --- Whether to visit non-exported types
+    ---
+    --- Defaults to false
+    include_nonexported_types: boolean?,
 }
 
 --- Globals
@@ -51,6 +61,27 @@ export type Globals = {
     parsecomments: (comments: {string}, ignore_nondoc: boolean?) -> Comment,
     --- Parse documentor args
     parsedocumentorargs: (args: {string}) -> ParsedArgs,
+    --- Parse to typeset
+    parsetotypeset: (opts: ParseToTypeSetArgs) -> {
+        unsupported_count: number,
+        typeset: TypeSet,
+    },
+
+    --- Filesystem operations
+    fs_readfile: (path: string) -> string, -- returns the contents of the file
+    fs_writefile: (path: string, contents: string) -> (), -- writes the contents to the file
+    fs_mkdirall: (path: string) -> (), -- creates the directory and all parent directories required
+    fs_rmdirall: (path: string) -> (), -- removes the directory and all parent directories required
+    fs_exists: (path: string) -> boolean, -- checks if the file exists
+    fs_remove: (path: string) -> boolean, -- removes the file
+    fs_stat: (path: string) -> {
+        is_dir: boolean,
+        is_file: boolean,
+        size: number,
+        modified: number,
+        created: number,
+        permissions_readonly: boolean
+    }, -- stats the file for info about it
 }
 
 export type TypeIterator = (() -> Type)

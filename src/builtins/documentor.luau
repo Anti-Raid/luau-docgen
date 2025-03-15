@@ -8,13 +8,12 @@ print("Passed reqtest self-test for requires")
 
 local types = require("types.luau")
 local argparser = require("argparser.luau")
-local markdown = require("markdownir/markdown.luau")
 local tableext = require("table.luau")
-local finalizer = require("finalizer/defaultfinalizer.luau")
-local typeDocumentor = require("documentors/type.luau")
+local istatemod = require("istate.luau")
+local pluginapi = require("pluginsapi/types")
+local typesetDocumentor = require("documentors/typeset.luau")
 
-local ast: types.TypeSet, globals: types.Globals = ... -- Passed as arguments
-assert(ast, "No AST passed to documentor")
+local globals: types.Globals = ... -- Passed as arguments
 assert(globals, "No globals passed to documentor")
 
 local p1 = tableext.extend({2}, {4})
@@ -24,26 +23,44 @@ assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over
 -- Parse arguments at top-level
 local md = argparser.parseArguments(globals)
 
--- First add in the typedefs
-local typedefsBlock: {{markdown.MarkdownNode}} = {}
-for typ in ast:iter_typedefs() do
-    local typedef = typ:extract()
-    assert(typedef.type == "TypeDef")
-    print("Processing " .. typedef.data.name)
-    local td = typeDocumentor.parseTypeDef(globals, md, typedef.data)
+-- Create istate
+local istate: istatemod.IState = {
+    globals = globals,
+    md = md,
+    plugin = pluginapi.DefaultPlugin, -- TODO: Allow users to pass in a plugin
+}
 
-    typedefsBlock[#typedefsBlock + 1] = td -- Add to typedefsblock
+-- Read files, document and save
+
+if #md.files == 0 then
+    error("No files to document")
 end
 
---- Then add in the functions
-local functionsBlock: {{markdown.MarkdownNode}} = {} -- Final output string
-for typ in ast:iter_functions() do
-    local typedef = typ:extract()
-    assert(typedef.type == "Function")
-    print("Processing " .. typedef.data.name)
-    local td = typeDocumentor.parseTypeFunction(globals, md, typedef.data)
+for _, fileIn in md.files do
+    local contents = globals.fs_readfile(fileIn)
+    if not contents then
+        error("Failed to read file: " .. fileIn)
+    end
 
-    functionsBlock[#functionsBlock + 1] = td -- Add to functionsBlock
+    -- Parse the file
+    local resultTab = globals.parsetotypeset({
+        contents = contents,
+        include_nonexported_types = md.ignorenonexportedtypes
+    })
+
+    if resultTab.unsupported_count > 0 and md.erroronunsupported then
+        error("Error: Found " .. tostring(resultTab.unsupported_count) .. " unsupported types")
+    elseif resultTab.unsupported_count > 0 then
+        print("Warning: Found " .. tostring(resultTab.unsupported_count) .. " unsupported types")
+    end
+
+    local ast = resultTab.typeset
+
+    local documentedFile = typesetDocumentor.documentTypeSet(istate, ast)
+
+    if md.output == "stdout" then
+        print(documentedFile)
+    else
+        globals.fs_writefile(md.output, documentedFile)
+    end
 end
-
-return finalizer.finalize(globals, md, typedefsBlock, functionsBlock)

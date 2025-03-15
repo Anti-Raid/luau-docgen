@@ -1,7 +1,19 @@
 //! The luau documentation API
 
+use full_moon::visitors::Visitor;
 use mlua::prelude::*;
 use std::{cell::RefCell, rc::Rc};
+
+#[derive(serde::Serialize, serde::Deserialize)]
+pub struct ParseToTypeSetArgs {
+    /// The contents of the Luau file to parse
+    contents: String,
+
+    /// Whether to visit non-exported types
+    ///
+    /// Defaults to false
+    include_nonexported_types: Option<bool>,
+}
 
 pub struct Globals {
     pub documentor_args: Vec<String>,
@@ -67,6 +79,94 @@ impl LuaUserData for Globals {
                 )
             },
         );
+
+        methods.add_function("parsetotypeset", |lua, data: LuaValue| {
+            let args: ParseToTypeSetArgs = lua.from_value(data)?;
+
+            let result = full_moon::parse_fallible(&args.contents, full_moon::LuaVersion::luau());
+            if !result.errors().is_empty() {
+                let mut error = "ParseScriptFileError\n".to_string();
+                for err in result.errors() {
+                    error.push_str(&format!("{:?}\n", err));
+                }
+                return Err(LuaError::external(error));
+            }
+
+            let mut type_visitor = crate::type_gen::TypeBlockVisitor {
+                include_nonexported_types: args.include_nonexported_types.unwrap_or(false),
+                ..Default::default()
+            };
+
+            let ast = result.into_ast();
+
+            type_visitor.visit_ast(&ast);
+
+            let result_table = lua.create_table()?;
+            result_table.set("unsupported_count", type_visitor.unsupported_count)?;
+            result_table.set("typeset", TypeSet::new(type_visitor.found_types))?;
+
+            Ok(result_table)
+        });
+
+        // TODO: Think of a better way
+        methods.add_function("fs_readfile", |_lua, path: String| {
+            let contents = std::fs::read_to_string(&path)
+                .map_err(|e| LuaError::external(format!("Failed to read file: {}", e)))?;
+            Ok(contents)
+        });
+
+        methods.add_function(
+            "fs_writefile",
+            |_lua, (path, contents): (String, String)| {
+                std::fs::write(&path, &contents)
+                    .map_err(|e| LuaError::external(format!("Failed to write file: {}", e)))?;
+                Ok(())
+            },
+        );
+
+        methods.add_function("fs_mkdirall", |_lua, path: String| {
+            std::fs::create_dir_all(&path)
+                .map_err(|e| LuaError::external(format!("Failed to create directory: {}", e)))?;
+            Ok(())
+        });
+
+        methods.add_function("fs_rmdirall", |_lua, path: String| {
+            std::fs::remove_dir_all(path)
+                .map_err(|e| LuaError::external(format!("Failed to remove directory: {}", e)))?;
+            Ok(())
+        });
+
+        methods.add_function("fs_exists", |_lua, path: String| {
+            let exists = std::fs::exists(&path).unwrap_or_default();
+            Ok(exists)
+        });
+
+        methods.add_function("fs_remove", |_lua, path: String| {
+            std::fs::remove_file(path)
+                .map_err(|e| LuaError::external(format!("Failed to remove file: {}", e)))?;
+            Ok(())
+        });
+
+        methods.add_function("fs_stat", |lua, path: String| {
+            let metadata = std::fs::metadata(&path)
+                .map_err(|e| LuaError::external(format!("Failed to stat file: {}", e)))?;
+            let result_table = lua.create_table()?;
+            result_table.set("is_dir", metadata.is_dir())?;
+            result_table.set("is_file", metadata.is_file())?;
+            result_table.set("size", metadata.len())?;
+            if let Ok(modified) = metadata.modified() {
+                if let Ok(elapsed) = modified.elapsed() {
+                    result_table.set("modified", elapsed.as_secs())?;
+                }
+            }
+            if let Ok(created) = metadata.created() {
+                if let Ok(elapsed) = created.elapsed() {
+                    result_table.set("created", elapsed.as_secs())?;
+                }
+            }
+            result_table.set("permissions_readonly", metadata.permissions().readonly())?;
+            Ok(result_table)
+        });
     }
 }
 

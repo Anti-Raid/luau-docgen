@@ -4,9 +4,8 @@ mod lua_api;
 mod token_ref_extractor;
 mod type_gen;
 
-use full_moon::{parse_fallible, visitors::Visitor};
 use include_dir::{Dir, include_dir};
-use lua_api::{Globals, TypeSet};
+use lua_api::Globals;
 use mlua::prelude::*;
 use mlua_scheduler::XRc;
 use std::{
@@ -15,35 +14,14 @@ use std::{
     rc::Rc,
     time::Duration,
 };
-use type_gen::TypeBlockVisitor;
 
 pub static BUILTINS: Dir = include_dir!("$CARGO_MANIFEST_DIR/src/builtins");
 
 #[derive(Debug, clap::Parser)]
 struct CliArgs {
-    #[arg(name = "path")]
-    /// The path to the script to document
-    script: PathBuf,
-
     #[arg(long = "documentor")]
     /// The path to the documentor script
     documentor: Option<PathBuf>,
-
-    #[arg(long = "error-on-unsupported", default_value_t = true)]
-    /// Whether to error on unsupported types
-    ///
-    /// Defaults to true
-    error_on_unsupported: bool,
-
-    #[arg(long = "include-nonexported-types", default_value_t = false)]
-    /// Whether to visit non-exported types
-    ///
-    /// Defaults to false
-    include_nonexported_types: bool,
-
-    /// Target file to write the output to
-    #[arg(long, default_value = "stdout")]
-    output: String,
 
     #[arg(trailing_var_arg = true, allow_hyphen_values = true, hide = true)]
     args: Vec<String>,
@@ -53,44 +31,6 @@ fn main() {
     env_logger::init();
 
     let args = <CliArgs as clap::Parser>::parse();
-
-    if !args.script.exists() {
-        eprintln!("Error: Script file does not exist: {:?}", args.script);
-        std::process::exit(1);
-    }
-
-    let source = std::fs::read_to_string(&args.script).unwrap_or_else(|_| {
-        eprintln!("Error: Failed to read script file: {:?}", args.script);
-        std::process::exit(1);
-    });
-
-    let mut type_visitor = TypeBlockVisitor {
-        include_nonexported_types: args.include_nonexported_types,
-        ..Default::default()
-    };
-
-    let result = parse_fallible(&source, full_moon::LuaVersion::luau());
-    if !result.errors().is_empty() {
-        eprintln!("Error: Failed to parse script file: {:?}", args.script);
-        for error in result.errors() {
-            eprintln!("Error: {:?}", error);
-        }
-        std::process::exit(1);
-    }
-
-    let ast = result.into_ast();
-
-    type_visitor.visit_ast(&ast);
-
-    if type_visitor.unsupported_count > 0 {
-        eprintln!(
-            "Error: Found {} unsupported types",
-            type_visitor.unsupported_count
-        );
-        if args.error_on_unsupported {
-            std::process::exit(1);
-        }
-    }
 
     let documentor = if let Some(documentor_path) = args.documentor {
         std::fs::read_to_string(documentor_path).unwrap_or_else(|_| {
@@ -284,15 +224,12 @@ fn main() {
 
         let th = lua.create_thread(f)?;
 
-        let args = (
-            TypeSet::new(type_visitor.found_types),
-            Globals {
-                documentor_args: args.args,
-                require_builtins: lua_api_require_builtins,
-            },
-        )
-            .into_lua_multi(&lua)
-            .expect("Failed to convert TypeSet to LuaMultiValue");
+        let args = (Globals {
+            documentor_args: args.args,
+            require_builtins: lua_api_require_builtins,
+        })
+        .into_lua_multi(&lua)
+        .expect("Failed to convert TypeSet to LuaMultiValue");
 
         let scheduler = mlua_scheduler_ext::Scheduler::get(&lua);
         let output = scheduler
@@ -313,27 +250,17 @@ fn main() {
         }
     };
 
-    let output = if !values.is_empty() {
-        values
+    if !values.is_empty() {
+        let output = values
             .iter()
             .map(|value| match value {
                 LuaValue::String(s) => s.to_string_lossy(),
                 _ => format!("{:#?}", value),
             })
             .collect::<Vec<_>>()
-            .join("\t")
-    } else {
-        eprintln!("Error: No output from documentor");
-        std::process::exit(1);
-    };
+            .join("\t");
 
-    if args.output == "stdout" {
         println!("{}", output);
-    } else {
-        std::fs::write(&args.output, output).unwrap_or_else(|_| {
-            eprintln!("Error: Failed to write output to file: {:?}", args.output);
-            std::process::exit(1);
-        });
     }
 }
 

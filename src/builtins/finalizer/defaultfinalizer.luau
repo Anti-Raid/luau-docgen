@@ -2,16 +2,15 @@
 
 local markdown = require("../markdownir/markdown")
 local fmt = require("../markdownir/markdownformatter")
-local types = require("../types")
-local argparser = require("../argparser")
+local istate = require("../istate")
 
-local function finalize(globals: types.Globals, md: argparser.ParsedArgumentResult, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
+local function finalize(istate: istate.IState, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
     -- Finally, combine the two
-    if md.modname ~= "" then
+    if istate.md.modname ~= "" then
         local nodes: {markdown.MarkdownNode} = {
             {
                 type = "Heading" :: "Heading",
-                headingText = markdown.NewMarkdownText_FromRaw(md.modname)
+                headingText = markdown.NewMarkdownText_FromRaw(istate.md.modname)
             }, 
         } :: {markdown.MarkdownNode}
 
@@ -49,10 +48,10 @@ local function finalize(globals: types.Globals, md: argparser.ParsedArgumentResu
             nodes = nodes
         } :: markdown.MarkdownNode
 
-        if md.debugmode then
-            print(globals.prettyprint(block))
+        if istate.md.debugmode then
+            print(istate.globals.prettyprint(block))
         end
-        return fmt.MarkdownNode_String(globals, block, true, 0, "Root") -- Convert to markdown
+        return fmt.MarkdownNode_String(istate.globals, block, true, 0, "Root") -- Convert to markdown
     else
         local nodes: {markdown.MarkdownNode} = {} :: {markdown.MarkdownNode}
 
@@ -89,10 +88,10 @@ local function finalize(globals: types.Globals, md: argparser.ParsedArgumentResu
             nodes = nodes
         } :: markdown.MarkdownNode
 
-        if md.debugmode then
-            print(globals.prettyprint(block))
+        if istate.md.debugmode then
+            print(istate.globals.prettyprint(block))
         end
-        return fmt.MarkdownNode_String(globals, block, true, 0, "Root") -- Convert to markdown
+        return fmt.MarkdownNode_String(istate.globals, block, true, 0, "Root") -- Convert to markdown
     end
 end
 

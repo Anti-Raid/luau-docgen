@@ -3,11 +3,11 @@ local types = require("../types")
 local markdown = require("../markdownir/markdown")
 local convertComments = require("../convertcomments")
 local tableext = require("../table")
-local argparser = require("../argparser")
 local transformRepr = require("../transformrepr")
 local typefieldDocumentor = require("./typefield")
+local istate = require("../istate")
 
-local function parseTypeFieldListOfTypeDef(globals: types.Globals, md: argparser.ParsedArgumentResult, typefields: {types.TypeField}): {markdown.MarkdownNode}
+local function parseTypeFieldListOfTypeDef(istate: istate.IState, typefields: {types.TypeField}): {markdown.MarkdownNode}
     local blockNodes: {markdown.MarkdownNode} = {}
 
     -- First seperate out the data as either methods or fields (which are everything outside of methods)
@@ -33,7 +33,7 @@ local function parseTypeFieldListOfTypeDef(globals: types.Globals, md: argparser
     if #fields > 0 then            
         local parsedFields: {markdown.MarkdownNode} = {}
         for _, field in fields do 
-            tableext.extend(parsedFields, typefieldDocumentor.parseTypeField(globals, md, field))
+            tableext.extend(parsedFields, typefieldDocumentor.parseTypeField(istate, field))
         end
 
         if #parsedFields > 0 then
@@ -48,7 +48,7 @@ local function parseTypeFieldListOfTypeDef(globals: types.Globals, md: argparser
     if #methods > 0 then
         local parsedFields: {markdown.MarkdownNode} = {}
         for _, field in methods do 
-            tableext.extend(parsedFields, typefieldDocumentor.parseTypeField(globals, md, field))
+            tableext.extend(parsedFields, typefieldDocumentor.parseTypeField(istate, field))
         end
 
         if #parsedFields > 0 then
@@ -62,8 +62,8 @@ local function parseTypeFieldListOfTypeDef(globals: types.Globals, md: argparser
     return blockNodes
 end
 
-local function parseTypeDef(globals: types.Globals, md: argparser.ParsedArgumentResult, typ: types.TypeDef): {markdown.MarkdownNode} 
-    local convComments = convertComments.convertComments(globals, typ.type_comments, md.ignorenondoc)
+local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdown.MarkdownNode} 
+    local convComments = convertComments.convertComments(istate.globals, typ.type_comments, istate.md.ignorenondoc)
 
     if convComments.skip then
         return {} -- Ignore explicitly skipped types
@@ -94,9 +94,9 @@ local function parseTypeDef(globals: types.Globals, md: argparser.ParsedArgument
     local extractedType = typ.type_def_type:extract()
 
     if extractedType.type == "Table" then 
-        tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(globals, md, extractedType.data))
+        tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(istate, extractedType.data))
     elseif extractedType.type == "TypeOfSetMetatable" then
-        tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(globals, md, extractedType.data.fields))
+        tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(istate, extractedType.data.fields))
 
         if #extractedType.data.metatable_fields then 
             local metaNodes = tableext.extend(
@@ -106,7 +106,7 @@ local function parseTypeDef(globals: types.Globals, md: argparser.ParsedArgument
                         headingText = markdown.NewMarkdownText_FromRaw("Metatable Fields")
                     },
                 },
-                parseTypeFieldListOfTypeDef(globals, md, extractedType.data.metatable_fields)
+                parseTypeFieldListOfTypeDef(istate, extractedType.data.metatable_fields)
             )
 
             blockNodes[#blockNodes + 1] = {
@@ -119,8 +119,8 @@ local function parseTypeDef(globals: types.Globals, md: argparser.ParsedArgument
     return blockNodes
 end 
 
-local function parseTypeFunction(globals: types.Globals, md: argparser.ParsedArgumentResult, typ: types.TypeFunction): {markdown.MarkdownNode} 
-    local convComments = convertComments.convertComments(globals, typ.type_comments, md.ignorenondoc)
+local function parseTypeFunction(istate: istate.IState, typ: types.TypeFunction): {markdown.MarkdownNode} 
+    local convComments = convertComments.convertComments(istate.globals, typ.type_comments, istate.md.ignorenondoc)
 
     if convComments.skip then
         return {} -- Ignore explicitly skipped types
@@ -142,8 +142,7 @@ local function parseTypeFunction(globals: types.Globals, md: argparser.ParsedArg
     end
 
     tableext.extend(blockNodes, typefieldDocumentor.parseFunction(
-        globals,
-        md,
+        istate,
         typ:string_repr(),
         convComments,
         typ.generics,
