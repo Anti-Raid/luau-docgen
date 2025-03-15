@@ -39,7 +39,7 @@ if md.plugin then
     end
     
     if not plugin then
-        error("Failed to load plugin: " .. md.plugin)
+        error("Requested plugin " .. md.plugin .. " returned no result")
     end
 
     assert(plugin.plugin_header == istatemod.PLUGIN_HEADER, "Invalid plugin load request. Plugin header mismatch: " .. plugin.plugin_header .. " != " .. istatemod.PLUGIN_HEADER)
