@@ -1,4 +1,8 @@
+<div id="Types"></div>
+
 # Types
+
+<div id="GetAuditLogOptions"></div>
 
 ## GetAuditLogOptions
 
@@ -26,6 +30,8 @@ type GetAuditLogOptions = {
 
 </details>
 
+<div id="action_type"></div>
+
 ### action_type
 
 The action type to filter by
@@ -33,6 +39,8 @@ The action type to filter by
 *This field is optional and may not be specified*
 
 [Documentor] Unsupported type: Module
+
+<div id="user_id"></div>
 
 ### user_id
 
@@ -42,6 +50,8 @@ The user ID to filter by
 
 [Documentor] Unsupported type: Module
 
+<div id="before"></div>
+
 ### before
 
 The audit log entry ID to filter
@@ -50,15 +60,17 @@ The audit log entry ID to filter
 
 [Documentor] Unsupported type: Module
 
+<div id="limit"></div>
+
 ### limit
 
 The number of entries to return
 
 *This field is optional and may not be specified*
 
-```luau
-number?
-```
+[number?](#number)
+
+<div id="GetAutoModerationRuleOptions"></div>
 
 ## GetAutoModerationRuleOptions
 
@@ -77,11 +89,15 @@ type GetAutoModerationRuleOptions = {
 
 </details>
 
+<div id="rule_id"></div>
+
 ### rule_id
 
 The rule ID
 
 [Documentor] Unsupported type: Module
+
+<div id="CreateAutoModerationRuleOptions"></div>
 
 ## CreateAutoModerationRuleOptions
 
@@ -103,19 +119,23 @@ type CreateAutoModerationRuleOptions = {
 
 </details>
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for creating the rule
 
-```luau
-string
-```
+[string](#string)
+
+<div id="data"></div>
 
 ### data
 
 The data to create the rule with
 
 [Documentor] Unsupported type: Module
+
+<div id="EditAutoModerationRuleOptions"></div>
 
 ## EditAutoModerationRuleOptions
 
@@ -140,25 +160,31 @@ type EditAutoModerationRuleOptions = {
 
 </details>
 
+<div id="rule_id"></div>
+
 ### rule_id
 
 The rule ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for editing the rule
 
-```luau
-string
-```
+[string](#string)
+
+<div id="data"></div>
 
 ### data
 
 The data to edit the rule with
 
 [Documentor] Unsupported type: Module
+
+<div id="DeleteAutoModerationRuleOptions"></div>
 
 ## DeleteAutoModerationRuleOptions
 
@@ -180,19 +206,23 @@ type DeleteAutoModerationRuleOptions = {
 
 </details>
 
+<div id="rule_id"></div>
+
 ### rule_id
 
 The rule ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for deleting the rule
 
-```luau
-string
-```
+[string](#string)
+
+<div id="GetChannelOptions"></div>
 
 ## GetChannelOptions
 
@@ -211,11 +241,15 @@ type GetChannelOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
+
+<div id="EditChannelOptions"></div>
 
 ## EditChannelOptions
 
@@ -240,25 +274,31 @@ type EditChannelOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for the edit
 
-```luau
-string
-```
+[string](#string)
+
+<div id="data"></div>
 
 ### data
 
 The data to edit the channel with
 
 [Documentor] Unsupported type: Module
+
+<div id="DeleteChannelOptions"></div>
 
 ## DeleteChannelOptions
 
@@ -280,19 +320,23 @@ type DeleteChannelOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for the deletion
 
-```luau
-string
-```
+[string](#string)
+
+<div id="EditChannelPermissionsOptions"></div>
 
 ## EditChannelPermissionsOptions
 
@@ -326,11 +370,15 @@ type EditChannelPermissionsOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
+
+<div id="target_id"></div>
 
 ### target_id
 
@@ -338,11 +386,15 @@ The target ID to edit permissions of
 
 [Documentor] Unsupported type: Module
 
+<div id="allow"></div>
+
 ### allow
 
 The allow permissions
 
 [Documentor] Unsupported type: Module
+
+<div id="deny"></div>
 
 ### deny
 
@@ -350,19 +402,23 @@ The deny permissions
 
 [Documentor] Unsupported type: Module
 
+<div id="kind"></div>
+
 ### kind
 
 The type of the target
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for the edit
 
-```luau
-string
-```
+[string](#string)
+
+<div id="AddGuildMemberRoleOptions"></div>
 
 ## AddGuildMemberRoleOptions
 
@@ -387,11 +443,15 @@ type AddGuildMemberRoleOptions = {
 
 </details>
 
+<div id="user_id"></div>
+
 ### user_id
 
 The member ID
 
 [Documentor] Unsupported type: Module
+
+<div id="role_id"></div>
 
 ### role_id
 
@@ -399,13 +459,15 @@ The role ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for adding the role
 
-```luau
-string
-```
+[string](#string)
+
+<div id="RemoveGuildMemberRoleOptions"></div>
 
 ## RemoveGuildMemberRoleOptions
 
@@ -430,11 +492,15 @@ type RemoveGuildMemberRoleOptions = {
 
 </details>
 
+<div id="user_id"></div>
+
 ### user_id
 
 The member ID
 
 [Documentor] Unsupported type: Module
+
+<div id="role_id"></div>
 
 ### role_id
 
@@ -442,13 +508,15 @@ The role ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for adding the role
 
-```luau
-string
-```
+[string](#string)
+
+<div id="RemoveGuildMemberOptions"></div>
 
 ## RemoveGuildMemberOptions
 
@@ -470,19 +538,23 @@ type RemoveGuildMemberOptions = {
 
 </details>
 
+<div id="user_id"></div>
+
 ### user_id
 
 The member ID
 
 [Documentor] Unsupported type: Module
 
+<div id="reason"></div>
+
 ### reason
 
 The reason for removing the member
 
-```luau
-string
-```
+[string](#string)
+
+<div id="GetGuildBansOptions"></div>
 
 ## GetGuildBansOptions
 
@@ -513,15 +585,17 @@ type GetGuildBansOptions = {
 
 </details>
 
+<div id="limit"></div>
+
 ### limit
 
 The limit of bans to get (max 100)
 
 *This field is optional and may not be specified*
 
-```luau
-number?
-```
+[number?](#number)
+
+<div id="before"></div>
 
 ### before
 
@@ -531,6 +605,8 @@ Before a certain user ID
 
 [Documentor] Unsupported type: Module
 
+<div id="after"></div>
+
 ### after
 
 After a certain user ID
@@ -538,6 +614,8 @@ After a certain user ID
 *This field is optional and may not be specified*
 
 [Documentor] Unsupported type: Module
+
+<div id="CreateMessageOptions"></div>
 
 ## CreateMessageOptions
 
@@ -559,17 +637,23 @@ type CreateMessageOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
 
+<div id="data"></div>
+
 ### data
 
 The data to send the message with
 
 [Documentor] Unsupported type: Module
+
+<div id="CreateCommandOptions"></div>
 
 ## CreateCommandOptions
 
@@ -588,11 +672,15 @@ type CreateCommandOptions = {
 
 </details>
 
+<div id="data"></div>
+
 ### data
 
 The data to create the command with
 
 [Documentor] Unsupported type: Module
+
+<div id="CreateInteractionResponseOptions"></div>
 
 ## CreateInteractionResponseOptions
 
@@ -617,25 +705,31 @@ type CreateInteractionResponseOptions = {
 
 </details>
 
+<div id="interaction_id"></div>
+
 ### interaction_id
 
 The interaction ID
 
 [Documentor] Unsupported type: Module
 
+<div id="interaction_token"></div>
+
 ### interaction_token
 
 The interaction token
 
-```luau
-string
-```
+[string](#string)
+
+<div id="data"></div>
 
 ### data
 
 The data to create the interaction response with
 
 [Documentor] Unsupported type: Module
+
+<div id="CreateFollowupMessageOptions"></div>
 
 ## CreateFollowupMessageOptions
 
@@ -657,19 +751,23 @@ type CreateFollowupMessageOptions = {
 
 </details>
 
+<div id="interaction_token"></div>
+
 ### interaction_token
 
 The interaction token
 
-```luau
-string
-```
+[string](#string)
+
+<div id="data"></div>
 
 ### data
 
 The data to create the followup message with
 
 [Documentor] Unsupported type: Module
+
+<div id="MessagePagination"></div>
 
 ## MessagePagination
 
@@ -689,6 +787,8 @@ type MessagePagination = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
 Union with variants:
@@ -697,7 +797,7 @@ Union with variants:
 <summary>Variant 1</summary>
 
 ```luau
-"After" | "Around" | "Before"
+"After"
 ```
 
 </details>
@@ -706,7 +806,7 @@ Union with variants:
 <summary>Variant 2</summary>
 
 ```luau
-"After" | "Around" | "Before"
+"Around"
 ```
 
 </details>
@@ -715,14 +815,18 @@ Union with variants:
 <summary>Variant 3</summary>
 
 ```luau
-"After" | "Around" | "Before"
+"Before"
 ```
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
 [Documentor] Unsupported type: Module
+
+<div id="GetMessagesOptions"></div>
 
 ## GetMessagesOptions
 
@@ -747,11 +851,15 @@ type GetMessagesOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
+
+<div id="target"></div>
 
 ### target
 
@@ -759,9 +867,9 @@ The target message
 
 *This field is optional and may not be specified*
 
-```luau
-MessagePagination?
-```
+[MessagePagination?](#MessagePagination)
+
+<div id="limit"></div>
 
 ### limit
 
@@ -769,9 +877,9 @@ The limit of messages to get
 
 *This field is optional and may not be specified*
 
-```luau
-number?
-```
+[number?](#number)
+
+<div id="GetMessageOptions"></div>
 
 ## GetMessageOptions
 
@@ -793,17 +901,23 @@ type GetMessageOptions = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
 The channel ID
 
 [Documentor] Unsupported type: Module
 
+<div id="message_id"></div>
+
 ### message_id
 
 The message ID
 
 [Documentor] Unsupported type: Module
+
+<div id="DiscordExecutor"></div>
 
 ## DiscordExecutor
 
@@ -888,6 +1002,8 @@ type DiscordExecutor = {
 
 </details>
 
+<div id="get_audit_logs"></div>
+
 ### get_audit_logs
 
 Gets the audit logs
@@ -902,19 +1018,27 @@ get_audit_logs: (self: DiscordExecutor, data: GetAuditLogOptions) -> promise.Lua
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-GetAuditLogOptions
-```
+[GetAuditLogOptions](#GetAuditLogOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="list_auto_moderation_rules"></div>
 
 ### list_auto_moderation_rules
 
@@ -930,13 +1054,21 @@ list_auto_moderation_rules: (self: DiscordExecutor) -> promise.LuaPromise<LazyAu
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
 
+<div id="Returns"></div>
+
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_auto_moderation_rule"></div>
 
 ### get_auto_moderation_rule
 
@@ -952,19 +1084,27 @@ get_auto_moderation_rule: (self: DiscordExecutor, data: GetAutoModerationRuleOpt
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-GetAutoModerationRuleOptions
-```
+[GetAutoModerationRuleOptions](#GetAutoModerationRuleOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="create_auto_moderation_rule"></div>
 
 ### create_auto_moderation_rule
 
@@ -980,19 +1120,27 @@ create_auto_moderation_rule: (self: DiscordExecutor, data: CreateAutoModerationR
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-CreateAutoModerationRuleOptions
-```
+[CreateAutoModerationRuleOptions](#CreateAutoModerationRuleOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="edit_auto_moderation_rule"></div>
 
 ### edit_auto_moderation_rule
 
@@ -1008,19 +1156,27 @@ edit_auto_moderation_rule: (self: DiscordExecutor, data: EditAutoModerationRuleO
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-EditAutoModerationRuleOptions
-```
+[EditAutoModerationRuleOptions](#EditAutoModerationRuleOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="delete_auto_moderation_rule"></div>
 
 ### delete_auto_moderation_rule
 
@@ -1036,19 +1192,27 @@ delete_auto_moderation_rule: (self: DiscordExecutor, data: DeleteAutoModerationR
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-DeleteAutoModerationRuleOptions
-```
+[DeleteAutoModerationRuleOptions](#DeleteAutoModerationRuleOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_channel"></div>
 
 ### get_channel
 
@@ -1064,19 +1228,27 @@ get_channel: (self: DiscordExecutor, data: GetChannelOptions) -> promise.LuaProm
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-GetChannelOptions
-```
+[GetChannelOptions](#GetChannelOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="edit_channel"></div>
 
 ### edit_channel
 
@@ -1092,19 +1264,27 @@ edit_channel: (self: DiscordExecutor, data: EditChannelOptions) -> promise.LuaPr
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-EditChannelOptions
-```
+[EditChannelOptions](#EditChannelOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="delete_channel"></div>
 
 ### delete_channel
 
@@ -1120,19 +1300,27 @@ delete_channel: (self: DiscordExecutor, data: DeleteChannelOptions) -> promise.L
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-DeleteChannelOptions
-```
+[DeleteChannelOptions](#DeleteChannelOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="edit_channel_permissions"></div>
 
 ### edit_channel_permissions
 
@@ -1148,19 +1336,27 @@ edit_channel_permissions: (self: DiscordExecutor, data: EditChannelPermissionsOp
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-EditChannelPermissionsOptions
-```
+[EditChannelPermissionsOptions](#EditChannelPermissionsOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="add_guild_member_role"></div>
 
 ### add_guild_member_role
 
@@ -1176,19 +1372,27 @@ add_guild_member_role: (self: DiscordExecutor, data: AddGuildMemberRoleOptions) 
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-AddGuildMemberRoleOptions
-```
+[AddGuildMemberRoleOptions](#AddGuildMemberRoleOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="remove_guild_member_role"></div>
 
 ### remove_guild_member_role
 
@@ -1204,19 +1408,27 @@ remove_guild_member_role: (self: DiscordExecutor, data: RemoveGuildMemberRoleOpt
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-RemoveGuildMemberRoleOptions
-```
+[RemoveGuildMemberRoleOptions](#RemoveGuildMemberRoleOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="remove_guild_member"></div>
 
 ### remove_guild_member
 
@@ -1232,19 +1444,27 @@ remove_guild_member: (self: DiscordExecutor, data: RemoveGuildMemberOptions) -> 
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-RemoveGuildMemberOptions
-```
+[RemoveGuildMemberOptions](#RemoveGuildMemberOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_guild_bans"></div>
 
 ### get_guild_bans
 
@@ -1260,19 +1480,27 @@ get_guild_bans: (self: DiscordExecutor, data: GetGuildBansOptions) -> promise.Lu
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-GetGuildBansOptions
-```
+[GetGuildBansOptions](#GetGuildBansOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_guild_roles"></div>
 
 ### get_guild_roles
 
@@ -1288,17 +1516,27 @@ get_guild_roles: (self: DiscordExecutor, guild_id: discord.Snowflake) -> promise
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="guild_id"></div>
 
 ##### guild_id
 
 [Documentor] Unsupported type: Module
 
+<div id="Returns"></div>
+
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_messages"></div>
 
 ### get_messages
 
@@ -1314,19 +1552,27 @@ get_messages: (self: DiscordExecutor, data: GetMessagesOptions) -> promise.LuaPr
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-GetMessagesOptions
-```
+[GetMessagesOptions](#GetMessagesOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_message"></div>
 
 ### get_message
 
@@ -1342,19 +1588,27 @@ get_message: (self: DiscordExecutor, data: GetMessageOptions) -> promise.LuaProm
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-GetMessageOptions
-```
+[GetMessageOptions](#GetMessageOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="create_message"></div>
 
 ### create_message
 
@@ -1370,19 +1624,27 @@ create_message: (self: DiscordExecutor, data: CreateMessageOptions) -> promise.L
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-CreateMessageOptions
-```
+[CreateMessageOptions](#CreateMessageOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="create_interaction_response"></div>
 
 ### create_interaction_response
 
@@ -1398,19 +1660,27 @@ create_interaction_response: (self: DiscordExecutor, data: CreateInteractionResp
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-CreateInteractionResponseOptions
-```
+[CreateInteractionResponseOptions](#CreateInteractionResponseOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="create_followup_message"></div>
 
 ### create_followup_message
 
@@ -1426,19 +1696,27 @@ create_followup_message: (self: DiscordExecutor, data: CreateFollowupMessageOpti
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-CreateFollowupMessageOptions
-```
+[CreateFollowupMessageOptions](#CreateFollowupMessageOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_original_interaction_response"></div>
 
 ### get_original_interaction_response
 
@@ -1454,19 +1732,27 @@ get_original_interaction_response: (self: DiscordExecutor, interaction_token: st
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="interaction_token"></div>
 
 ##### interaction_token
 
-```luau
-string
-```
+[string](#string)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="get_guild_commands"></div>
 
 ### get_guild_commands
 
@@ -1482,13 +1768,21 @@ get_guild_commands: (self: DiscordExecutor) -> promise.LuaPromise<LazyApplicatio
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
 
+<div id="Returns"></div>
+
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
+
+<div id="create_guild_command"></div>
 
 ### create_guild_command
 
@@ -1504,21 +1798,31 @@ create_guild_command: (self: DiscordExecutor, data: CreateCommandOptions) -> pro
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
+
+<div id="data"></div>
 
 ##### data
 
-```luau
-CreateCommandOptions
-```
+[CreateCommandOptions](#CreateCommandOptions)
+
+<div id="Returns"></div>
 
 #### Returns
+
+<div id="ret1"></div>
 
 ##### ret1
 
 [Documentor] Unsupported type: Module
 
+<div id="Functions"></div>
+
 # Functions
+
+<div id="new"></div>
 
 ## new
 
@@ -1531,11 +1835,17 @@ function new(token: Primitives.TemplateContext, scope: ExecutorScope.ExecutorSco
 
 </details>
 
+<div id="Arguments"></div>
+
 ## Arguments
+
+<div id="token"></div>
 
 ### token
 
 [Documentor] Unsupported type: Module
+
+<div id="scope"></div>
 
 ### scope
 
@@ -1543,11 +1853,13 @@ function new(token: Primitives.TemplateContext, scope: ExecutorScope.ExecutorSco
 
 [Documentor] Unsupported type: Module
 
+<div id="Returns"></div>
+
 ## Returns
+
+<div id="ret1"></div>
 
 ### ret1
 
-```luau
-DiscordExecutor
-```
+[DiscordExecutor](#DiscordExecutor)
 

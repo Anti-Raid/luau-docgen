@@ -262,7 +262,7 @@ impl LuaUserData for Globals {
             if !result.errors().is_empty() {
                 let mut error = "ParseScriptFileError\n".to_string();
                 for err in result.errors() {
-                    error.push_str(&format!("{:?}\n", err));
+                    error.push_str(&format!("{}\n", err));
                 }
                 return Err(LuaError::external(error));
             }

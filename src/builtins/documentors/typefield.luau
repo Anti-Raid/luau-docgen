@@ -201,7 +201,7 @@ function parseTypeFieldType(
           fieldtype.data.args,
             fieldtype.data.ret
         )
-    elseif fieldtype.type == "Basic" or fieldtype.type == "String" or fieldtype.type == "Boolean" then                                
+    elseif fieldtype.type == "String" or fieldtype.type == "Boolean" then                                
         -- TODO: make this look nicer
         local irNodes: {markdown.MarkdownNode} = {} 
 
@@ -209,9 +209,20 @@ function parseTypeFieldType(
             type = "CodeBlock" :: "CodeBlock",
             language = "luau",
             text = origType:string_repr()
-    } :: any
+        } :: any
         
         return irNodes
+    elseif fieldtype.type == "Basic" then
+        -- TODO: make this look nicer
+        local irNodes: {markdown.MarkdownNode} = {} 
+
+        irNodes[#irNodes + 1] = {
+            type = "Link" :: "Link",
+            url = `#{fieldtype.data}`,
+            text = markdown.NewMarkdownText_FromRaw(origType:string_repr())
+        } :: any
+        
+        return irNodes        
     elseif fieldtype.type == "Table" then
         local parsedFields: {markdown.MarkdownNode} = {
             {
@@ -269,7 +280,7 @@ function parseTypeFieldType(
         local pnodes = tableext.arraymap(
             fieldtype.data,
             function(typ: types.TypeFieldType): {markdown.MarkdownNode}
-                return parseTypeFieldType(istate, originRepr, origType, typ, convertedComments)
+                return parseTypeFieldType(istate, originRepr, typ, typ, convertedComments)
             end
         )
 
@@ -319,7 +330,7 @@ function parseTypeFieldType(
         local pnodes = tableext.arraymap(
             fieldtype.data,
             function(typ: types.TypeFieldType): {markdown.MarkdownNode}
-                return parseTypeFieldType(istate, originRepr, origType, typ, convertedComments)
+                return parseTypeFieldType(istate, originRepr, typ, typ, convertedComments)
             end
         )
 

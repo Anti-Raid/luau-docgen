@@ -113,7 +113,7 @@ export type MarkdownNode = {
 } | {
     type: "Link",
     text: MarkdownText, 
-    url: string
+    url: string -- May be relative to a Heading which should be handled in formatter impl
 } | {
     type: "Table",
     headers: {MarkdownText},

@@ -73,7 +73,8 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             depthToUse = 5
         end
 
-        return string.rep("#", depthToUse) .. " " .. MarkdownText_String(globals, n.headingText) .. "\n\n"
+        local text = MarkdownText_String(globals, n.headingText)
+        return "<div id=\"" .. text:gsub(" ", "") .. "\"></div>\n\n" .. string.rep("#", depthToUse) .. " " .. text .. "\n\n"
     elseif n.type == "CodeBlock" then 
         local language = n.language
         local text = n.text :: string
@@ -123,7 +124,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
         local text = n.text :: markdown.MarkdownText
         assert(url, "Invalid IR: Link node must have a URL")
         assert(text, "Invalid IR: Link node must have text")
-        return "[" .. MarkdownText_String(globals, text) .. "](" .. url .. ")"
+        return "[" .. MarkdownText_String(globals, text) .. "](" .. url .. ")\n\n"
     elseif n.type == "List" then
         local tabData = n :: any -- Luau type solver workaround
         local entries = tabData.entries :: {markdown.MarkdownText}
