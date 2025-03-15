@@ -23,7 +23,9 @@ struct CliArgs {
     /// The path to the documentor script
     documentor: Option<PathBuf>,
 
-    /// The paths to the root directories to search for builtins when loading plugins
+    /// Root paths are paths that are used to know when something is a builtin require or not
+    ///
+    /// For example, for a plugin that is in the root of the luau-docgen repo, the root path would be "src/builtins"
     #[arg(long = "root-paths")]
     root_paths: Vec<String>,
 
@@ -41,7 +43,7 @@ fn main() {
     } else if let Ok(root_path) = std::env::var("ROOT_PATHS") {
         root_path.split(',').map(|s| s.to_string()).collect()
     } else {
-        vec!["builtins".to_string(), "src/builtins".to_string()]
+        vec!["src/builtins".to_string()]
     };
 
     let documentor = if let Some(documentor_path) = args.documentor {
