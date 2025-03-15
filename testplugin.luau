@@ -1,5 +1,5 @@
-local istate = require("src/builtins/istate.luau")
-local types = require("src/builtins/types.luau")
+local istate = require("src/builtins/istate")
+local types = require("src/builtins/types")
 return {
     plugin_header = istate.PLUGIN_HEADER,
     setTypeSet = function(typeset: types.TypeSet)
