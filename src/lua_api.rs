@@ -2,7 +2,199 @@
 
 use full_moon::visitors::Visitor;
 use mlua::prelude::*;
-use std::{cell::RefCell, rc::Rc};
+use std::{
+    cell::RefCell,
+    path::{Component, Path, PathBuf},
+    rc::Rc,
+};
+
+// From Cargo
+pub fn normalize_path(path: &Path) -> PathBuf {
+    let mut components = path.components().peekable();
+    let mut ret = if let Some(c @ Component::Prefix(..)) = components.peek().cloned() {
+        components.next();
+        PathBuf::from(c.as_os_str())
+    } else {
+        PathBuf::new()
+    };
+
+    for component in components {
+        match component {
+            Component::Prefix(..) => unreachable!(),
+            Component::RootDir => {
+                ret.push(component.as_os_str());
+            }
+            Component::CurDir => {}
+            Component::ParentDir => {
+                ret.pop();
+            }
+            Component::Normal(c) => {
+                ret.push(c);
+            }
+        }
+    }
+    ret
+}
+
+pub fn require(
+    lua: &Lua,
+    current_path: &RefCell<std::path::PathBuf>,
+    pat: String,
+    req_builtins: bool,
+    requires_cache: &RefCell<std::collections::HashMap<String, LuaMultiValue>>,
+) -> LuaResult<LuaMultiValue> {
+    let mut req_builtins = req_builtins;
+
+    let curr_path = {
+        let p = current_path.borrow();
+        p.clone()
+    };
+
+    log::debug!("Current path: {:?} when requiring {}", curr_path, pat);
+    let mut pat = {
+        let path = current_path.borrow();
+        let mut new_path = normalize_path(&path.join(&pat));
+        drop(path);
+
+        // Use builtins if path starts with src/builtins
+        if !req_builtins {
+            let new_path_str = new_path.to_string_lossy();
+            let new_path_str = new_path_str.trim_start_matches(&*curr_path.to_string_lossy());
+
+            if new_path_str.starts_with("src/builtins/")
+                || new_path_str.starts_with("/src/builtins/")
+            {
+                new_path = PathBuf::from(
+                    new_path_str
+                        .trim_start_matches("src/builtins/")
+                        .trim_start_matches("/src/builtins/"),
+                );
+                req_builtins = true;
+            }
+        }
+
+        let mut path = current_path.borrow_mut();
+        *path = new_path;
+
+        let end_file = match path.file_name() {
+            Some(c) => c.to_string_lossy().to_string(),
+            None => {
+                // Restore the current path
+                *path = curr_path;
+
+                return Err(LuaError::external(format!(
+                    "Failed to get file name from path: {:?}",
+                    path
+                )));
+            }
+        };
+
+        path.pop();
+
+        let path_joined = path.join(end_file).to_string_lossy().to_string();
+
+        drop(path);
+
+        path_joined
+    };
+
+    if !pat.ends_with(".luau") {
+        pat = format!("{}.luau", pat);
+    }
+
+    pat = pat
+        .trim_start_matches("/")
+        .trim_start_matches("./")
+        .to_string();
+
+    let file_contents = if req_builtins {
+        // Get required file from builtins
+        if let Some(file) = crate::BUILTINS.get_file(&pat) {
+            if let Some(cached) = requires_cache.borrow().get(&pat) {
+                log::debug!("[Require] Cached: {:?}", cached);
+                // Restore the current path
+                let mut path = current_path.borrow_mut();
+                *path = curr_path;
+                drop(path);
+
+                return Ok(cached.clone());
+            }
+
+            let file_contents = match file.contents_utf8() {
+                Some(str) => str,
+                None => {
+                    // Restore the current path
+                    let mut path = current_path.borrow_mut();
+                    *path = curr_path;
+                    drop(path);
+
+                    return Err(LuaError::external(format!(
+                        "Failed to get {} contents as UTF-8",
+                        pat
+                    )));
+                }
+            };
+
+            file_contents.to_string()
+        } else {
+            // Restore the current path
+            let mut path = current_path.borrow_mut();
+            *path = curr_path;
+            drop(path);
+
+            return Err(LuaError::external(format!(
+                "Failed to get file {} from builtins",
+                pat
+            )));
+        }
+    } else {
+        // Check if the file is cached
+        if let Some(cached) = requires_cache.borrow().get(&pat) {
+            log::debug!("[Require] Cached: {:?}", cached);
+            // Restore the current path
+            let mut path = current_path.borrow_mut();
+            *path = curr_path;
+            drop(path);
+
+            return Ok(cached.clone());
+        }
+
+        // Get required file from current path
+        let file_contents = match std::fs::read_to_string(&pat) {
+            Ok(str) => str,
+            Err(_) => {
+                // Restore the current path
+                let mut path = current_path.borrow_mut();
+                *path = curr_path;
+                drop(path);
+
+                return Err(LuaError::external(format!("Failed to read file {}", pat)));
+            }
+        };
+
+        file_contents
+    };
+
+    // Execute the file
+    let ret = lua
+        .load(file_contents)
+        .set_name(&pat)
+        .eval::<LuaMultiValue>();
+
+    // Restore the current path
+    let mut path = current_path.borrow_mut();
+    *path = curr_path;
+    drop(path);
+
+    if let Ok(ret) = ret {
+        // Cache the result
+        requires_cache.borrow_mut().insert(pat.clone(), ret.clone());
+
+        return Ok(ret);
+    }
+
+    ret
+}
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct ParseToTypeSetArgs {

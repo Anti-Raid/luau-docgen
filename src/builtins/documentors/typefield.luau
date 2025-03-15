@@ -198,7 +198,7 @@ function parseTypeFieldType(
             originRepr,
             convertedComments,
             fieldtype.data.generics,
-            fieldtype.data.args,
+          fieldtype.data.args,
             fieldtype.data.ret
         )
     elseif fieldtype.type == "Basic" or fieldtype.type == "String" or fieldtype.type == "Boolean" then                                

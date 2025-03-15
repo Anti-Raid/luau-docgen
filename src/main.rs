@@ -8,12 +8,7 @@ use include_dir::{Dir, include_dir};
 use lua_api::Globals;
 use mlua::prelude::*;
 use mlua_scheduler::XRc;
-use std::{
-    cell::RefCell,
-    path::{Component, Path, PathBuf},
-    rc::Rc,
-    time::Duration,
-};
+use std::{cell::RefCell, path::PathBuf, rc::Rc, time::Duration};
 
 pub static BUILTINS: Dir = include_dir!("$CARGO_MANIFEST_DIR/src/builtins");
 
@@ -98,147 +93,16 @@ fn main() {
         let require_builtins: Rc<RefCell<bool>> = Rc::new(RefCell::new(true));
         let lua_api_require_builtins = require_builtins.clone();
 
-        let current_path: RefCell<std::path::PathBuf> = RefCell::new(PathBuf::from("/"));
-        let requires_cache: RefCell<std::collections::HashMap<String, LuaMultiValue>> =
-            RefCell::new(std::collections::HashMap::new());
+        let current_path: Rc<RefCell<std::path::PathBuf>> =
+            Rc::new(RefCell::new(PathBuf::from("/")));
+        let requires_cache: Rc<RefCell<std::collections::HashMap<String, LuaMultiValue>>> =
+            Rc::new(RefCell::new(std::collections::HashMap::new()));
         lua.globals()
             .set(
                 "require",
                 lua.create_function(move |lua, pat: String| {
-                    let curr_path = {
-                        let p = current_path.borrow();
-                        p.clone()
-                    };
-                    log::debug!("Current path: {:?} when requiring {}", curr_path, pat);
-                    let mut pat = {
-                        let mut path = current_path.borrow_mut();
-
-                        path.push(&pat);
-
-                        *path = normalize_path(&path);
-
-                        let end_file = match path.file_name() {
-                            Some(c) => c.to_string_lossy().to_string(),
-                            None => {
-                                // Restore the current path
-                                *path = curr_path;
-
-                                return Err(LuaError::external(format!(
-                                    "Failed to get file name from path: {:?}",
-                                    path
-                                )));
-                            }
-                        };
-
-                        path.pop();
-
-                        let path_joined = path.join(end_file).to_string_lossy().to_string();
-
-                        drop(path);
-
-                        path_joined
-                    };
-
-                    if !pat.ends_with(".luau") {
-                        pat = format!("{}.luau", pat);
-                    }
-
-                    pat = pat
-                        .trim_start_matches("/")
-                        .trim_start_matches("./")
-                        .to_string();
-
-                    let req_builtins = *require_builtins.borrow();
-                    let file_contents = if req_builtins {
-                        // Get required file from builtins
-                        if let Some(file) = BUILTINS.get_file(&pat) {
-                            if let Some(cached) = requires_cache.borrow().get(&pat) {
-                                log::debug!("[Require] Cached: {:?}", cached);
-                                // Restore the current path
-                                let mut path = current_path.borrow_mut();
-                                *path = curr_path;
-                                drop(path);
-
-                                return Ok(cached.clone());
-                            }
-
-                            let file_contents = match file.contents_utf8() {
-                                Some(str) => str,
-                                None => {
-                                    // Restore the current path
-                                    let mut path = current_path.borrow_mut();
-                                    *path = curr_path;
-                                    drop(path);
-
-                                    return Err(LuaError::external(format!(
-                                        "Failed to get {} contents as UTF-8",
-                                        pat
-                                    )));
-                                }
-                            };
-
-                            file_contents.to_string()
-                        } else {
-                            // Restore the current path
-                            let mut path = current_path.borrow_mut();
-                            *path = curr_path;
-                            drop(path);
-
-                            return Err(LuaError::external(format!(
-                                "Failed to get file {} from builtins",
-                                pat
-                            )));
-                        }
-                    } else {
-                        // Check if the file is cached
-                        if let Some(cached) = requires_cache.borrow().get(&pat) {
-                            log::debug!("[Require] Cached: {:?}", cached);
-                            // Restore the current path
-                            let mut path = current_path.borrow_mut();
-                            *path = curr_path;
-                            drop(path);
-
-                            return Ok(cached.clone());
-                        }
-
-                        // Get required file from current path
-                        let file_contents = match std::fs::read_to_string(&pat) {
-                            Ok(str) => str,
-                            Err(_) => {
-                                // Restore the current path
-                                let mut path = current_path.borrow_mut();
-                                *path = curr_path;
-                                drop(path);
-
-                                return Err(LuaError::external(format!(
-                                    "Failed to read file {}",
-                                    pat
-                                )));
-                            }
-                        };
-
-                        file_contents
-                    };
-
-                    // Execute the file
-                    let ret = lua
-                        .load(file_contents)
-                        .set_name(&pat)
-                        .eval::<LuaMultiValue>();
-
-                    // Restore the current path
-                    let mut path = current_path.borrow_mut();
-                    *path = curr_path;
-                    drop(path);
-
-                    if let Ok(ret) = ret {
-                        // Cache the result
-                        requires_cache.borrow_mut().insert(pat.clone(), ret.clone());
-
-                        return Ok(ret);
-                    }
-
-                    ret
+                    let require_builtins = *require_builtins.borrow();
+                    lua_api::require(lua, &current_path, pat, require_builtins, &requires_cache)
                 })?,
             )
             .expect("Failed to set require global");
@@ -290,32 +154,4 @@ fn main() {
 
         println!("{}", output);
     }
-}
-
-// From Cargo
-pub fn normalize_path(path: &Path) -> PathBuf {
-    let mut components = path.components().peekable();
-    let mut ret = if let Some(c @ Component::Prefix(..)) = components.peek().cloned() {
-        components.next();
-        PathBuf::from(c.as_os_str())
-    } else {
-        PathBuf::new()
-    };
-
-    for component in components {
-        match component {
-            Component::Prefix(..) => unreachable!(),
-            Component::RootDir => {
-                ret.push(component.as_os_str());
-            }
-            Component::CurDir => {}
-            Component::ParentDir => {
-                ret.pop();
-            }
-            Component::Normal(c) => {
-                ret.push(c);
-            }
-        }
-    }
-    ret
 }

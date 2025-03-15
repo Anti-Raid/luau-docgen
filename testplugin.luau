@@ -1,4 +1,4 @@
-print("Running reqtest self-test for requires")
+print("Running reqtest self-test for requires in plugin")
 local a = require"src/builtins/reqtest/a.luau"
 assert(a.a == 1) -- Ensure stable requires
 print("Passed reqtest self-test for requires")
