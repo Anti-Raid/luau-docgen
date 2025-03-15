@@ -32,14 +32,14 @@ local istate: istatemod.IState = {
 -- Load the plugin if it exists
 if md.plugin then
     istate.globals.require_builtins = false
-    local ok, plugin: istatemod.Plugin? = pcall(require, md.plugin)
+    local ok, plugin: istatemod.Plugin? = pcall(require, istate.md.plugin)
     
     if not ok then
-        error("Failed to load plugin: " .. md.plugin .. " - " .. tostring(plugin) .. " - " .. tostring(ok))
+        error("Failed to load plugin: " .. istate.md.plugin .. " - " .. tostring(plugin) .. " - " .. tostring(ok))
     end
     
     if not plugin then
-        error("Requested plugin " .. md.plugin .. " returned no result")
+        error("Requested plugin " .. istate.md.plugin .. " returned no result")
     end
 
     assert(plugin.plugin_header == istatemod.PLUGIN_HEADER, "Invalid plugin load request. Plugin header mismatch: " .. plugin.plugin_header .. " != " .. istatemod.PLUGIN_HEADER)
