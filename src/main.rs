@@ -23,6 +23,10 @@ struct CliArgs {
     /// The path to the documentor script
     documentor: Option<PathBuf>,
 
+    /// The paths to the root directories to search for builtins when loading plugins
+    #[arg(long = "root-paths")]
+    root_paths: Vec<String>,
+
     #[arg(trailing_var_arg = true, allow_hyphen_values = true, hide = true)]
     args: Vec<String>,
 }
@@ -31,6 +35,14 @@ fn main() {
     env_logger::init();
 
     let args = <CliArgs as clap::Parser>::parse();
+
+    let root_paths = if !args.root_paths.is_empty() {
+        args.root_paths
+    } else if let Ok(root_path) = std::env::var("ROOT_PATHS") {
+        root_path.split(',').map(|s| s.to_string()).collect()
+    } else {
+        vec!["builtins".to_string(), "src/builtins".to_string()]
+    };
 
     let documentor = if let Some(documentor_path) = args.documentor {
         std::fs::read_to_string(documentor_path).unwrap_or_else(|_| {
@@ -110,7 +122,26 @@ fn main() {
             .set(
                 "require",
                 lua.create_function(move |lua, pat: String| {
-                    if *require_builtins.borrow() {
+                    let mut req_builtins = *require_builtins.borrow();
+
+                    for path in root_paths.iter() {
+                        if pat.starts_with(path) {
+                            req_builtins = true;
+                            break;
+                        }
+                    }
+
+                    let mut pat = pat;
+
+                    if req_builtins {
+                        let pat = {
+                            for path in root_paths.iter() {
+                                if pat.starts_with(path) {
+                                    pat.replace_range(..path.len(), "");
+                                }
+                            }
+                            pat
+                        };
                         let curr_path = {
                             let p = current_path.borrow();
                             p.clone()
