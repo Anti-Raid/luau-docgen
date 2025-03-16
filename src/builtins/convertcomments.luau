@@ -1,7 +1,7 @@
 --!strict
-local types = require("types.luau")
-local convertcommentimpl = require("convertcommentimpl.luau")
-local markdown = require("markdownir/markdown.luau")
+local types = require("./types")
+local convertcommentimpl = require("./convertcommentimpl")
+local markdown = require("./markdownir/markdown")
 
 export type ConvertCommentResponse = {
     output: {markdown.MarkdownNode},

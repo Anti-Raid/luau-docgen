@@ -1,5 +1,6 @@
 --!strict
 
+local pp = require("../pp")
 local markdown = require("../markdownir/markdown")
 local fmt = require("../markdownir/markdownformatter")
 local istate = require("../istate")
@@ -49,7 +50,7 @@ local function finalize(istate: istate.IState, typedefsBlock: {{markdown.Markdow
         } :: markdown.MarkdownNode
 
         if istate.md.debugmode then
-            print(istate.globals.prettyprint(block))
+            print(pp(block))
         end
         return fmt.MarkdownNode_String(istate.globals, block, true, 0, "Root") -- Convert to markdown
     else
@@ -89,7 +90,7 @@ local function finalize(istate: istate.IState, typedefsBlock: {{markdown.Markdow
         } :: markdown.MarkdownNode
 
         if istate.md.debugmode then
-            print(istate.globals.prettyprint(block))
+            print(pp(block))
         end
         return fmt.MarkdownNode_String(istate.globals, block, true, 0, "Root") -- Convert to markdown
     end

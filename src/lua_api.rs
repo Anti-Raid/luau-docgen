@@ -43,6 +43,14 @@ pub fn require(
     req_builtins: bool,
     requires_cache: &RefCell<std::collections::HashMap<String, LuaMultiValue>>,
 ) -> LuaResult<LuaMultiValue> {
+    // require path must start with a valid prefix: ./, ../ or @ for rbs
+    if !pat.starts_with("./") && !pat.starts_with("../") && !pat.starts_with("@") {
+        return Err(LuaError::external(format!(
+            "Invalid require path: {}. Must start with ./, ../ or @ to comply with luau require-by-string semantics",
+            pat
+        )));
+    }
+
     let curr_path = {
         let p = current_path.borrow();
         p.clone()
@@ -81,9 +89,14 @@ pub fn require(
         pat
     );
 
-    if !pat.ends_with(".luau") {
-        pat = format!("{}.luau", pat);
+    if pat.ends_with(".luau") {
+        return Err(LuaError::external(format!(
+            "Failed to require file {}. .luau extension must be removed to comply with luau require-by-string semantics",
+            pat
+        )));
     }
+
+    pat = format!("{}.luau", pat);
 
     pat = pat
         .trim_start_matches("/")

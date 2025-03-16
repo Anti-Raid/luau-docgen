@@ -1,9 +1,9 @@
 --!strict
-local types = require("../types.luau")
-local markdown = require("../markdownir/markdown.luau")
-local finalizer = require("../finalizer/defaultfinalizer.luau")
-local typeDocumentor = require("../documentors/type.luau")
-local istatemod = require("../istate.luau")
+local types = require("../types")
+local markdown = require("../markdownir/markdown")
+local finalizer = require("../finalizer/defaultfinalizer")
+local typeDocumentor = require("../documentors/type")
+local istatemod = require("../istate")
 
 local function documentTypeSet(istate: istatemod.IState, ast: types.TypeSet)
     istate.plugin.setTypeSet(ast)

@@ -4,7 +4,7 @@ local types = require("../types")
 local markdown = require("../markdownir/markdown")
 local convertComments = require("../convertcomments")
 local tableext = require("../table")
-local arg = require("./arg.luau") 
+local arg = require("./arg") 
 local istate = require("../istate")
 
 --- Helper method to process a function
@@ -981,7 +981,7 @@ end
 
 --- Parses a TypeField (foo: number or foo: () -> number etc.)
 function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boolean?): {markdown.MarkdownNode}    
-    --print(globals.prettyprint(convertComments(globals, typ.comments)))
+    --print(pp(convertComments(globals, typ.comments)))
     local convertedComments = convertComments.convertComments(istate.globals, typ.comments, istate.md.ignorenondoc);
 
     local blockNodes: {markdown.MarkdownNode} = {}

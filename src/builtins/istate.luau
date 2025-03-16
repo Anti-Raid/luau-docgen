@@ -1,7 +1,7 @@
 --!strict
 
-local types = require("./types.luau")
-local argparser = require("./argparser.luau")
+local types = require("./types")
+local argparser = require("./argparser")
 
 -- Common internal state
 export type IState = {

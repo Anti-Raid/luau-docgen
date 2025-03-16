@@ -1,6 +1,6 @@
 --!strict
-local types = require("types.luau")
-local argparserimpl = require("argparserimpl.luau")
+local types = require("./types")
+local argparserimpl = require("./argparserimpl")
 
 export type ParsedArgumentResult = {
     --- Name of module being documented

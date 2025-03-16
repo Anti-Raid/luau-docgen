@@ -2,8 +2,8 @@
 
 --- Pure luau version of typefieldtypes transformRepr
 
-local tableext = require("table.luau")
-local types = require("types.luau")
+local tableext = require("./table")
+local types = require("./types")
 
 --- Returns the string representation of a type field type
 --- @public_api

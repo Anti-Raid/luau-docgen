@@ -1,8 +1,9 @@
 --!strict
 
-local types = require("../types.luau")
-local tableext = require("../table.luau")
-local markdown = require("markdown.luau")
+local types = require("../types")
+local tableext = require("../table")
+local markdown = require("./markdown")
+local pp = require("../pp")
 
 local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
     if n.style == "Italics" then 
@@ -44,7 +45,7 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
 end
 
 function MarkdownText_String(globals: types.Globals, t: markdown.MarkdownText): string 
-    assert(t.nodes, "Invalid IR: MarkdownText must have nodes: [" .. globals.prettyprint(t) .. "]")
+    assert(t.nodes, "Invalid IR: MarkdownText must have nodes: [" .. pp(t) .. "]")
     return table.concat(
         tableext.arraymap(
             t.nodes, 
@@ -61,8 +62,8 @@ end
 --- For other markdown variants, it may be desirable to make a custom markdown formatter
 local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownNode, strictValidation: boolean?, depth: number?, label: string?, inline: boolean?): string
     local nodeDepth = depth or 0
-    --print(n.type) --globals.prettyprint(n))
-    --print("Processing " .. n.type .. " with depth " .. tostring(nodeDepth) .. " and label " .. tostring(label) .. " and fragment " .. globals.prettyprint(n))
+    --print(n.type) --pp(n))
+    --print("Processing " .. n.type .. " with depth " .. tostring(nodeDepth) .. " and label " .. tostring(label) .. " and fragment " .. pp(n))
     if n.type == "Heading" then 
         local depthToUse = n.level or nodeDepth
         if strictValidation and depthToUse and depthToUse < nodeDepth then
@@ -113,7 +114,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             tableext.arraymap(
                 nodes, 
                 function(node: markdown.MarkdownNode): string
-                    --print("Processing block node " .. globals.prettyprint(node) .. " with label " .. tostring(label))
+                    --print("Processing block node " .. pp(node) .. " with label " .. tostring(label))
                     return MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Block@" .. tostring(nodeDepth), inline)
                 end,
                 sep
@@ -132,7 +133,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             tableext.arraymap(
                 nodes, 
                 function(node: markdown.MarkdownNode): string
-                    --print("Processing inline block node " .. globals.prettyprint(node) .. " with label " .. tostring(label))
+                    --print("Processing inline block node " .. pp(node) .. " with label " .. tostring(label))
                     return MarkdownNode_String(globals, node, strictValidation, nodeDepth, tostring(label) .. "/InlineBlock", n.inline)
                 end,
                 sep
@@ -230,7 +231,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
     
         return output    
     else 
-        print("Invalid IR: MarkdownNode must have a valid type: " .. globals.prettyprint(n.type) .. " with type " .. globals.prettyprint(n) .. " and label " .. tostring(label) .. "!") 
+        print("Invalid IR: MarkdownNode must have a valid type: " .. pp(n.type) .. " with type " .. pp(n) .. " and label " .. tostring(label) .. "!") 
         error("Invalid IR: MarkdownNode must have a valid type. See above for more details")
     end
 end

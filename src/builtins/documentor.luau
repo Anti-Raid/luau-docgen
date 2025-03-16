@@ -1,10 +1,10 @@
 --!strict
 
-local types = require("types.luau")
-local argparser = require("argparser.luau")
-local tableext = require("table.luau")
-local istatemod = require("istate.luau")
-local typesetDocumentor = require("documentors/typeset.luau")
+local types = require("./types")
+local argparser = require("./argparser")
+local tableext = require("./table")
+local istatemod = require("./istate")
+local typesetDocumentor = require("./documentors/typeset")
 
 local globals: types.Globals = ... -- Passed as arguments
 assert(globals, "No globals passed to documentor")
@@ -15,6 +15,13 @@ assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over
 
 -- Parse arguments at top-level
 local md = argparser.parseArguments(globals)
+
+
+if #md.files == 0 then
+    print("No files to document. Please provide at least one file.")
+    md.help = true
+end
+
 
 if md.help then 
     print("Usage:")
@@ -44,16 +51,11 @@ end
 
 -- Before doing anything else, make sure we can safely require stuff
 print("Running reqtest self-test for requires")
-local a = require"reqtest/a.luau"
+local a = require"reqtest/a"
 assert(a.a == 1) -- Ensure stable requires
 print("Passed reqtest self-test for requires")
 
 -- Read files, document and save
-
-if #md.files == 0 then
-    error("No files to document")
-end
-
 istate.plugin.onInitialize(istate)
 
 for _, fileIn in md.files do
