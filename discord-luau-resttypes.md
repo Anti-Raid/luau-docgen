@@ -1,4 +1,8 @@
+<div id="Types"></div>
+
 # Types
+
+<div id="Response"></div>
 
 ## Response
 
@@ -14,6 +18,10 @@ type Response<DATA> = DATA
 
 </details>
 
+[DATA](#DATA)
+
+<div id="Request"></div>
+
 ## Request
 
 <details>
@@ -24,6 +32,10 @@ type Request<DATA> = DATA
 ```
 
 </details>
+
+[DATA](#DATA)
+
+<div id="CreateMessageAttachment"></div>
 
 ## CreateMessageAttachment
 
@@ -48,29 +60,35 @@ type CreateMessageAttachment = {
 
 </details>
 
+<div id="filename"></div>
+
 ### filename
 
 The filename of the attachment
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description"></div>
 
 ### description
 
 The description (if any) of the attachment
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string?](#string)?
+
+<div id="content"></div>
 
 ### content
 
 The content of the attachment
 
-[Documentor] Unsupported type: Module
+*This field is an array type*
+
+[Primitives](#module.Primitives).[#byte](#byte)
+
+<div id="CreateInteractionRequest"></div>
 
 ## CreateInteractionRequest
 
@@ -89,6 +107,10 @@ type CreateInteractionRequest = Request<objects.InteractionResponseObject>
 
 </details>
 
+[#Request](#Request)<[objects](#module.objects).[#InteractionResponseObject](#InteractionResponseObject)
+
+><div id="EditOriginalInteractionRequest"></div>
+
 ## EditOriginalInteractionRequest
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response
@@ -102,6 +124,12 @@ type EditOriginalInteractionRequest = Request<objects.Partial<objects.MessageObj
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+>
+
+><div id="CreateFollowupMessageRequest"></div>
 
 ## CreateFollowupMessageRequest
 
@@ -117,6 +145,12 @@ type CreateFollowupMessageRequest = Request<objects.Partial<objects.MessageObjec
 
 </details>
 
+[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+>
+
+><div id="EditFollowupMessageRequest"></div>
+
 ## EditFollowupMessageRequest
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message
@@ -130,6 +164,12 @@ type EditFollowupMessageRequest = Request<objects.Partial<objects.MessageObject>
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+>
+
+><div id="CreateAutoModerationRuleRequest"></div>
 
 ## CreateAutoModerationRuleRequest
 
@@ -161,6 +201,10 @@ type CreateAutoModerationRuleRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, [objects](#module.objects).[#AutomoderationRuleEventType](#AutomoderationRuleEventType)
+
+, , , , , , ><div id="ModifyAutoModerationRuleRequest"></div>
+
 ## ModifyAutoModerationRuleRequest
 
 https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule
@@ -188,6 +232,10 @@ type ModifyAutoModerationRuleRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<, [objects](#module.objects).[#AutomoderationRuleEventType](#AutomoderationRuleEventType)
+
+, , , , , ><div id="EditCurrentApplicationRequest"></div>
 
 ## EditCurrentApplicationRequest
 
@@ -224,6 +272,14 @@ type EditCurrentApplicationRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), [string](#string), [string](#string), [objects](#module.objects).[#InstallParamsObject](#InstallParamsObject)
+
+, [unknown](#unknown), [number](#number), , , [string](#string), *This field is an array type*
+
+[{string}](#string)
+
+><div id="ModifyChannelRequest"></div>
 
 ## ModifyChannelRequest
 
@@ -290,6 +346,16 @@ type ModifyChannelRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, [objects](#module.objects).[#ChannelType](#ChannelType)
+
+, , , , , , , , , , , [objects](#module.objects).[#VideoQualityMode](#VideoQualityMode)
+
+, , , , , , , , , , , , *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="CreateMessageRequest"></div>
+
 ## CreateMessageRequest
 
 https://discord.com/developers/docs/resources/channel#create-message
@@ -330,6 +396,8 @@ type CreateMessageRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , , , , , , , , , , ><div id="EditMessageRequest"></div>
+
 ## EditMessageRequest
 
 https://discord.com/developers/docs/resources/channel#edit-message
@@ -357,6 +425,8 @@ type EditMessageRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<, , , , , ><div id="CreateChannelInviteRequest"></div>
 
 ## CreateChannelInviteRequest
 
@@ -386,6 +456,8 @@ type CreateChannelInviteRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , , , , , ><div id="BulkDeleteMessagesRequest"></div>
+
 ## BulkDeleteMessagesRequest
 
 https://discord.com/developers/docs/resources/channel#bulk-delete-messages
@@ -402,6 +474,12 @@ type BulkDeleteMessagesRequest = Request<{
 
 </details>
 
+[#Request](#Request)<*This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="FollowAnnouncementChannelRequest"></div>
+
 ## FollowAnnouncementChannelRequest
 
 https://discord.com/developers/docs/resources/channel#follow-announcement-channel
@@ -417,6 +495,10 @@ type FollowAnnouncementChannelRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="GroupDMAddRecipientRequest"></div>
 
 ## GroupDMAddRecipientRequest
 
@@ -435,6 +517,8 @@ type GroupDMAddRecipientRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), [string](#string)><div id="StartThreadFromMessageRequest"></div>
 
 ## StartThreadFromMessageRequest
 
@@ -455,6 +539,8 @@ type StartThreadFromMessageRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), , ><div id="StartThreadWithoutMessageRequest"></div>
 
 ## StartThreadWithoutMessageRequest
 
@@ -479,6 +565,8 @@ type StartThreadWithoutMessageRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), , , , ><div id="StartThreadInForumOrMediaChannelRequest"></div>
 
 ## StartThreadInForumOrMediaChannelRequest
 
@@ -506,6 +594,12 @@ type StartThreadInForumOrMediaChannelRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), , , *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, ><div id="CreateGuildEmojiRequest"></div>
+
 ## CreateGuildEmojiRequest
 
 https://discord.com/developers/docs/resources/emoji#create-guild-emoji
@@ -526,6 +620,12 @@ type CreateGuildEmojiRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), [string](#string), *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="ModifyGuildEmojiRequest"></div>
+
 ## ModifyGuildEmojiRequest
 
 https://discord.com/developers/docs/resources/emoji#modify-guild-emoji
@@ -543,6 +643,12 @@ type ModifyGuildEmojiRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="CreateGuildRequest"></div>
 
 ## CreateGuildRequest
 
@@ -581,6 +687,10 @@ type CreateGuildRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), , , , , , , , [objects](#module.objects).[#Snowflake](#Snowflake)
+
+, [number](#number), , ><div id="ModifyGuildRequest"></div>
 
 ## ModifyGuildRequest
 
@@ -636,6 +746,12 @@ type ModifyGuildRequest = Request<objects.Partial<{
 
 </details>
 
+[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[string](#string), , , , , , , [objects](#module.objects).[#Snowflake](#Snowflake)
+
+, , , , , , , , , , , , >
+
+><div id="CreateGuildChannelRequest"></div>
+
 ## CreateGuildChannelRequest
 
 https://discord.com/developers/docs/resources/guild#create-guild-channel
@@ -686,6 +802,16 @@ type CreateGuildChannelRequest = Request<objects.Partial<{
 
 </details>
 
+[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[string](#string), [objects](#module.objects).[#ChannelType](#ChannelType)
+
+, , , , , [number](#number), *This field is an array type*
+
+[objects](#module.objects).[#OverwriteObject](#OverwriteObject)
+
+, , , , , , , , , , >
+
+><div id="ModifyGuildChannelPositionsRequest"></div>
+
 ## ModifyGuildChannelPositionsRequest
 
 https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions
@@ -707,6 +833,10 @@ type ModifyGuildChannelPositionsRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, , , ><div id="AddGuildMemberRequest"></div>
 
 ## AddGuildMemberRequest
 
@@ -731,6 +861,8 @@ type AddGuildMemberRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), , , , ><div id="ModifyGuildMemberRequest"></div>
 
 ## ModifyGuildMemberRequest
 
@@ -760,6 +892,8 @@ type ModifyGuildMemberRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , , , , , ><div id="ModifyCurrentMemberRequest"></div>
+
 ## ModifyCurrentMemberRequest
 
 https://discord.com/developers/docs/resources/guild#modify-current-member
@@ -775,6 +909,8 @@ type ModifyCurrentMemberRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string)><div id="CreateGuildBanRequest"></div>
 
 ## CreateGuildBanRequest
 
@@ -794,6 +930,8 @@ type CreateGuildBanRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, ><div id="BulkGuildBanRequest"></div>
+
 ## BulkGuildBanRequest
 
 https://discord.com/developers/docs/resources/guild#bulk-guild-ban
@@ -811,6 +949,12 @@ type BulkGuildBanRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<*This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, ><div id="CreateGuildRoleRequest"></div>
 
 ## CreateGuildRoleRequest
 
@@ -840,6 +984,8 @@ type CreateGuildRoleRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , , , , , ><div id="ModifyGuildRolePositionsRequest"></div>
+
 ## ModifyGuildRolePositionsRequest
 
 https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
@@ -857,6 +1003,10 @@ type ModifyGuildRolePositionsRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, [number](#number)><div id="ModifyGuildRoleRequest"></div>
 
 ## ModifyGuildRoleRequest
 
@@ -886,6 +1036,8 @@ type ModifyGuildRoleRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , , , , , ><div id="ModifyGuildMFALevelRequest"></div>
+
 ## ModifyGuildMFALevelRequest
 
 https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
@@ -901,6 +1053,10 @@ type ModifyGuildMFALevelRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#MFALevel](#MFALevel)
+
+><div id="BeginGuildPruneRequest"></div>
 
 ## BeginGuildPruneRequest
 
@@ -924,6 +1080,12 @@ type BeginGuildPruneRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[number](#number), [boolean](#boolean), *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, ><div id="ModifyGuildWelcomeScreenRequest"></div>
+
 ## ModifyGuildWelcomeScreenRequest
 
 https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
@@ -943,6 +1105,12 @@ type ModifyGuildWelcomeScreenRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<, *This field is an array type*
+
+[objects](#module.objects).[#WelcomeScreenChannelObject](#WelcomeScreenChannelObject)
+
+, ><div id="ModifyGuildOnboardingRequest"></div>
 
 ## ModifyGuildOnboardingRequest
 
@@ -966,6 +1134,8 @@ type ModifyGuildOnboardingRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , , ><div id="ModifyCurrentUserVoiceStateRequest"></div>
+
 ## ModifyCurrentUserVoiceStateRequest
 
 https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state
@@ -986,6 +1156,8 @@ type ModifyCurrentUserVoiceStateRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , ><div id="ModifyUserVoiceStateRequest"></div>
+
 ## ModifyUserVoiceStateRequest
 
 https://discord.com/developers/docs/resources/guild#modify-user-voice-state
@@ -1003,6 +1175,8 @@ type ModifyUserVoiceStateRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<, ><div id="CreateGuildScheduledEventRequest"></div>
 
 ## CreateGuildScheduledEventRequest
 
@@ -1035,6 +1209,14 @@ type CreateGuildScheduledEventRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<, [objects](#module.objects).[#GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)
+
+, [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)
+
+, [string](#string), , , [objects](#module.objects).[#GuildScheduledEventEntityType](#GuildScheduledEventEntityType)
+
+, ><div id="ModifyGuildScheduledEventRequest"></div>
 
 ## ModifyGuildScheduledEventRequest
 
@@ -1070,6 +1252,14 @@ type ModifyGuildScheduledEventRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, [objects](#module.objects).[#GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)
+
+, [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)
+
+, [string](#string), , , [objects](#module.objects).[#GuildScheduledEventEntityType](#GuildScheduledEventEntityType)
+
+, , ><div id="CreateGuildFromGuildTemplateRequest"></div>
+
 ## CreateGuildFromGuildTemplateRequest
 
 https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template
@@ -1087,6 +1277,8 @@ type CreateGuildFromGuildTemplateRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), ><div id="CreateGuildTemplateRequest"></div>
 
 ## CreateGuildTemplateRequest
 
@@ -1106,6 +1298,8 @@ type CreateGuildTemplateRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), ><div id="ModifyGuildTemplateRequest"></div>
+
 ## ModifyGuildTemplateRequest
 
 https://discord.com/developers/docs/resources/guild-template#modify-guild-template
@@ -1123,6 +1317,8 @@ type ModifyGuildTemplateRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<, ><div id="CreateStageInstanceRequest"></div>
 
 ## CreateStageInstanceRequest
 
@@ -1148,6 +1344,10 @@ type CreateStageInstanceRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, [string](#string), , , ><div id="ModifyStageInstanceRequest"></div>
+
 ## ModifyStageInstanceRequest
 
 https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance
@@ -1165,6 +1365,10 @@ type ModifyStageInstanceRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)
+
+><div id="CreateGuildStickerRequest"></div>
 
 ## CreateGuildStickerRequest
 
@@ -1188,6 +1392,12 @@ type CreateGuildStickerRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), [string](#string), *This field is an array type*
+
+[{string}](#string)
+
+, [string](#string)><div id="ModifyGuildStickerRequest"></div>
+
 ## ModifyGuildStickerRequest
 
 https://discord.com/developers/docs/resources/sticker#modify-guild-sticker
@@ -1207,6 +1417,8 @@ type ModifyGuildStickerRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), , [string](#string)><div id="ModifyCurrentUserRequest"></div>
 
 ## ModifyCurrentUserRequest
 
@@ -1228,6 +1440,8 @@ type ModifyCurrentUserRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), , ><div id="CreateDMRequest"></div>
+
 ## CreateDMRequest
 
 https://discord.com/developers/docs/resources/user#create-dm
@@ -1243,6 +1457,10 @@ type CreateDMRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="CreateGroupDMRequest"></div>
 
 ## CreateGroupDMRequest
 
@@ -1264,6 +1482,12 @@ type CreateGroupDMRequest = Request<{
 
 </details>
 
+[#Request](#Request)<*This field is an array type*
+
+[{string}](#string)
+
+, [string](#string)><div id="UpdateCurrentUserApplicationRoleConnectionRequest"></div>
+
 ## UpdateCurrentUserApplicationRoleConnectionRequest
 
 https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection
@@ -1284,6 +1508,8 @@ type UpdateCurrentUserApplicationRoleConnectionRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , ><div id="CreateWebhookRequest"></div>
+
 ## CreateWebhookRequest
 
 https://discord.com/developers/docs/resources/webhook#create-webhook
@@ -1301,6 +1527,8 @@ type CreateWebhookRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), ><div id="ModifyWebhookRequest"></div>
 
 ## ModifyWebhookRequest
 
@@ -1321,6 +1549,10 @@ type ModifyWebhookRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), [string](#string), [objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="ExecuteWebhookRequest"></div>
 
 ## ExecuteWebhookRequest
 
@@ -1362,6 +1594,28 @@ type ExecuteWebhookRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), [string](#string), [string](#string), [boolean](#boolean), *This field is an array type*
+
+[objects](#module.objects).[#EmbedObject](#EmbedObject)
+
+, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#ComponentObjects](#ComponentObjects)
+
+, *This field is an array type*
+
+[{CreateMessageAttachment}](#CreateMessageAttachment)
+
+, [number](#number), [string](#string), *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, [objects](#module.objects).[#PollObject](#PollObject)
+
+><div id="ExecuteSlackCompatibleWebhookRequest"></div>
+
 ## ExecuteSlackCompatibleWebhookRequest
 
 https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook
@@ -1376,6 +1630,8 @@ type ExecuteSlackCompatibleWebhookRequest = Request<{}>
 
 </details>
 
+[#Request](#Request)<><div id="ExecuteGithubCompatibleWebhookRequest"></div>
+
 ## ExecuteGithubCompatibleWebhookRequest
 
 https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook
@@ -1389,6 +1645,8 @@ type ExecuteGithubCompatibleWebhookRequest = Request<{}>
 ```
 
 </details>
+
+[#Request](#Request)<><div id="EditWebhookMessageRequest"></div>
 
 ## EditWebhookMessageRequest
 
@@ -1418,6 +1676,22 @@ type EditWebhookMessageRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), *This field is an array type*
+
+[objects](#module.objects).[#EmbedObject](#EmbedObject)
+
+, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#ComponentObjects](#ComponentObjects)
+
+, *This field is an array type*
+
+[{CreateMessageAttachment}](#CreateMessageAttachment)
+
+, ><div id="EditChannelPermissionsRequest"></div>
+
 ## EditChannelPermissionsRequest
 
 https://discord.com/developers/docs/resources/channel#edit-channel-permissions
@@ -1438,6 +1712,8 @@ type EditChannelPermissionsRequest = Request<{
 
 </details>
 
+[#Request](#Request)<, , [number](#number)><div id="ModifyGuildWidgetRequest"></div>
+
 ## ModifyGuildWidgetRequest
 
 https://discord.com/developers/docs/resources/guild#modify-guild-widget
@@ -1452,6 +1728,10 @@ type ModifyGuildWidgetRequest = Request<objects.GuildWidgetSettingsObject>
 
 </details>
 
+[#Request](#Request)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)
+
+><div id="CrosspostMessageRequest"></div>
+
 ## CrosspostMessageRequest
 
 https://discord.com/developers/docs/resources/channel#crosspost-message
@@ -1465,6 +1745,10 @@ type CrosspostMessageRequest = Request<objects.MessageObject>
 ```
 
 </details>
+
+[#Request](#Request)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="CreateGlobalApplicationCommandRequest"></div>
 
 ## CreateGlobalApplicationCommandRequest
 
@@ -1508,6 +1792,8 @@ type CreateGlobalApplicationCommandRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , , ><div id="EditGlobalApplicationCommandRequest"></div>
+
 ## EditGlobalApplicationCommandRequest
 
 https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command
@@ -1547,6 +1833,8 @@ type EditGlobalApplicationCommandRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , ><div id="CreateGuildApplicationCommandRequest"></div>
 
 ## CreateGuildApplicationCommandRequest
 
@@ -1593,6 +1881,8 @@ type CreateGuildApplicationCommandRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , , , ><div id="EditGuildApplicationCommandRequest"></div>
+
 ## EditGuildApplicationCommandRequest
 
 https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command
@@ -1633,6 +1923,8 @@ type EditGuildApplicationCommandRequest = Request<{
 
 </details>
 
+[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , ><div id="BulkOverwriteGlobalApplicationCommandsRequest"></div>
+
 ## BulkOverwriteGlobalApplicationCommandsRequest
 
 https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
@@ -1646,6 +1938,12 @@ type BulkOverwriteGlobalApplicationCommandsRequest = Request<{objects.Applicatio
 ```
 
 </details>
+
+[#Request](#Request)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="BulkOverwriteGuildApplicationCommandsRequest"></div>
 
 ## BulkOverwriteGuildApplicationCommandsRequest
 
@@ -1691,6 +1989,128 @@ type BulkOverwriteGuildApplicationCommandsRequest = Request<{{
 
 </details>
 
+[#Request](#Request)<*This field is an array type*
+
+*This is an inline table type with the following fields*
+
+<div id="id"></div>
+
+#### id
+
+*This field is optional and may not be specified*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+?
+
+<div id="name"></div>
+
+#### name
+
+[string](#string)
+
+<div id="name_localizations"></div>
+
+#### name_localizations
+
+*This field is optional and may not be specified*
+
+[string](#string)?
+
+<div id="description"></div>
+
+#### description
+
+*This field is optional and may not be specified*
+
+[string?](#string)?
+
+<div id="description_localizations"></div>
+
+#### description_localizations
+
+*This field is optional and may not be specified*
+
+[string](#string)?
+
+<div id="options"></div>
+
+#### options
+
+*This field is optional and may not be specified*
+
+*This field is an array type*
+
+[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)
+
+?
+
+<div id="default_member_permissions"></div>
+
+#### default_member_permissions
+
+*This field is optional and may not be specified*
+
+[string?](#string)?
+
+<div id="dm_permission"></div>
+
+#### dm_permission
+
+*This field is optional and may not be specified*
+
+[boolean?](#boolean)?
+
+<div id="default_permission"></div>
+
+#### default_permission
+
+[boolean](#boolean)
+
+<div id="integration_types"></div>
+
+#### integration_types
+
+*This field is optional and may not be specified*
+
+*This field is an array type*
+
+[objects](#module.objects).[#IntegrationType](#IntegrationType)
+
+?
+
+<div id="contexts"></div>
+
+#### contexts
+
+*This field is optional and may not be specified*
+
+*This field is an array type*
+
+[objects](#module.objects).[#InteractionContextType](#InteractionContextType)
+
+?
+
+<div id="type"></div>
+
+#### type
+
+*This field is optional and may not be specified*
+
+[objects](#module.objects).[#ApplicationCommandType](#ApplicationCommandType)
+
+?
+
+<div id="nsfw"></div>
+
+#### nsfw
+
+*This field is optional and may not be specified*
+
+[boolean?](#boolean)?
+
+><div id="EditApplicationCommandPermissionsRequest"></div>
+
 ## EditApplicationCommandPermissionsRequest
 
 https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions
@@ -1706,6 +2126,12 @@ type EditApplicationCommandPermissionsRequest = Request<{
 ```
 
 </details>
+
+[#Request](#Request)<*This field is an array type*
+
+[objects](#module.objects).[#GuildApplicationCommandPermissionObject](#GuildApplicationCommandPermissionObject)
+
+><div id="GetCurrentUserVoiceStateResponse"></div>
 
 ## GetCurrentUserVoiceStateResponse
 
@@ -1724,6 +2150,10 @@ type GetCurrentUserVoiceStateResponse = Response<objects.VoiceStateObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#VoiceStateObject](#VoiceStateObject)
+
+><div id="GetUserVoiceStateResponse"></div>
+
 ## GetUserVoiceStateResponse
 
 https://discord.com/developers/docs/resources/voice#get-user-voice-state
@@ -1737,6 +2167,10 @@ type GetUserVoiceStateResponse = Response<objects.VoiceStateObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#VoiceStateObject](#VoiceStateObject)
+
+><div id="GetGlobalApplicationCommandsResponse"></div>
 
 ## GetGlobalApplicationCommandsResponse
 
@@ -1752,6 +2186,12 @@ type GetGlobalApplicationCommandsResponse = Response<{objects.ApplicationCommand
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="CreateGlobalApplicationCommandResponse"></div>
+
 ## CreateGlobalApplicationCommandResponse
 
 https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
@@ -1765,6 +2205,10 @@ type CreateGlobalApplicationCommandResponse = Response<objects.ApplicationComman
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="GetGlobalApplicationCommandResponse"></div>
 
 ## GetGlobalApplicationCommandResponse
 
@@ -1780,6 +2224,10 @@ type GetGlobalApplicationCommandResponse = Response<objects.ApplicationCommandOb
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="EditGlobalApplicationCommandResponse"></div>
+
 ## EditGlobalApplicationCommandResponse
 
 https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command
@@ -1793,6 +2241,10 @@ type EditGlobalApplicationCommandResponse = Response<objects.ApplicationCommandO
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="DeleteGlobalApplicationCommandResponse"></div>
 
 ## DeleteGlobalApplicationCommandResponse
 
@@ -1808,6 +2260,8 @@ type DeleteGlobalApplicationCommandResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="BulkOverwriteGlobalApplicationCommandsResponse"></div>
+
 ## BulkOverwriteGlobalApplicationCommandsResponse
 
 https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
@@ -1821,6 +2275,12 @@ type BulkOverwriteGlobalApplicationCommandsResponse = Response<{objects.Applicat
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="GetGuildApplicationCommandsResponse"></div>
 
 ## GetGuildApplicationCommandsResponse
 
@@ -1836,6 +2296,12 @@ type GetGuildApplicationCommandsResponse = Response<{objects.ApplicationCommandO
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="CreateGuildApplicationCommandResponse"></div>
+
 ## CreateGuildApplicationCommandResponse
 
 https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command
@@ -1849,6 +2315,10 @@ type CreateGuildApplicationCommandResponse = Response<objects.ApplicationCommand
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="GetGuildApplicationCommandResponse"></div>
 
 ## GetGuildApplicationCommandResponse
 
@@ -1864,6 +2334,10 @@ type GetGuildApplicationCommandResponse = Response<objects.ApplicationCommandObj
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="EditGuildApplicationCommandResponse"></div>
+
 ## EditGuildApplicationCommandResponse
 
 https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command
@@ -1877,6 +2351,10 @@ type EditGuildApplicationCommandResponse = Response<objects.ApplicationCommandOb
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="DeleteGuildApplicationCommandResponse"></div>
 
 ## DeleteGuildApplicationCommandResponse
 
@@ -1892,6 +2370,8 @@ type DeleteGuildApplicationCommandResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="BulkOverwriteGuildApplicationCommandsResponse"></div>
+
 ## BulkOverwriteGuildApplicationCommandsResponse
 
 https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands
@@ -1905,6 +2385,12 @@ type BulkOverwriteGuildApplicationCommandsResponse = Response<{objects.Applicati
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
+
+><div id="GetGuildApplicationCommandPermissionsResponse"></div>
 
 ## GetGuildApplicationCommandPermissionsResponse
 
@@ -1920,6 +2406,12 @@ type GetGuildApplicationCommandPermissionsResponse = Response<{objects.GuildAppl
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)
+
+><div id="GetApplicationCommandPermissionsResponse"></div>
+
 ## GetApplicationCommandPermissionsResponse
 
 https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions
@@ -1933,6 +2425,12 @@ type GetApplicationCommandPermissionsResponse = Response<{objects.GuildApplicati
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)
+
+><div id="EditApplicationCommandPermissionsResponse"></div>
 
 ## EditApplicationCommandPermissionsResponse
 
@@ -1948,6 +2446,10 @@ type EditApplicationCommandPermissionsResponse = Response<objects.GuildApplicati
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)
+
+><div id="GetCurrentApplicationResponse"></div>
+
 ## GetCurrentApplicationResponse
 
 https://discord.com/developers/docs/resources/application#get-current-application
@@ -1961,6 +2463,12 @@ type GetCurrentApplicationResponse = Response<{objects.ApplicationObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationObject](#ApplicationObject)
+
+><div id="EditCurrentApplicationResponse"></div>
 
 ## EditCurrentApplicationResponse
 
@@ -1976,6 +2484,12 @@ type EditCurrentApplicationResponse = Response<{objects.ApplicationObject}>
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ApplicationObject](#ApplicationObject)
+
+><div id="GetApplicationRoleConnectionMetadataRecordsResponse"></div>
+
 ## GetApplicationRoleConnectionMetadataRecordsResponse
 
 https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records
@@ -1989,6 +2503,10 @@ type GetApplicationRoleConnectionMetadataRecordsResponse = Response<objects.Appl
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)
+
+><div id="UpdateApplicationRoleConnectionMetadataRecordsResponse"></div>
 
 ## UpdateApplicationRoleConnectionMetadataRecordsResponse
 
@@ -2004,6 +2522,10 @@ type UpdateApplicationRoleConnectionMetadataRecordsResponse = Response<objects.A
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)
+
+><div id="GetGuildAuditLogResponse"></div>
+
 ## GetGuildAuditLogResponse
 
 https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
@@ -2017,6 +2539,10 @@ type GetGuildAuditLogResponse = Response<objects.AuditLogObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#AuditLogObject](#AuditLogObject)
+
+><div id="ListAutoModerationRulesForGuildResponse"></div>
 
 ## ListAutoModerationRulesForGuildResponse
 
@@ -2032,6 +2558,12 @@ type ListAutoModerationRulesForGuildResponse = Response<{objects.AutomoderationR
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
+
+><div id="GetAutoModerationRuleResponse"></div>
+
 ## GetAutoModerationRuleResponse
 
 https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule
@@ -2045,6 +2577,10 @@ type GetAutoModerationRuleResponse = Response<objects.AutomoderationRuleObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
+
+><div id="CreateAutoModerationRuleResponse"></div>
 
 ## CreateAutoModerationRuleResponse
 
@@ -2060,6 +2596,10 @@ type CreateAutoModerationRuleResponse = Response<objects.AutomoderationRuleObjec
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
+
+><div id="ModifyAutoModerationRuleResponse"></div>
+
 ## ModifyAutoModerationRuleResponse
 
 https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule
@@ -2073,6 +2613,10 @@ type ModifyAutoModerationRuleResponse = Response<objects.AutomoderationRuleObjec
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
+
+><div id="DeleteAutoModerationRuleResponse"></div>
 
 ## DeleteAutoModerationRuleResponse
 
@@ -2088,6 +2632,8 @@ type DeleteAutoModerationRuleResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetChannelResponse"></div>
+
 ## GetChannelResponse
 
 https://discord.com/developers/docs/resources/channel#get-channel
@@ -2101,6 +2647,10 @@ type GetChannelResponse = Response<objects.ChannelObject & (objects.ThreadMember
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+ & ><div id="ModifyChannelResponse"></div>
 
 ## ModifyChannelResponse
 
@@ -2116,6 +2666,10 @@ type ModifyChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="DeleteCloseChannelResponse"></div>
+
 ## DeleteCloseChannelResponse
 
 https://discord.com/developers/docs/resources/channel#deleteclose-channel
@@ -2129,6 +2683,10 @@ type DeleteCloseChannelResponse = Response<objects.ChannelObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="GetChannelMessagesResponse"></div>
 
 ## GetChannelMessagesResponse
 
@@ -2144,6 +2702,12 @@ type GetChannelMessagesResponse = Response<{objects.MessageObject}>
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="GetChannelMessageResponse"></div>
+
 ## GetChannelMessageResponse
 
 https://discord.com/developers/docs/resources/channel#get-channel-message
@@ -2157,6 +2721,10 @@ type GetChannelMessageResponse = Response<objects.MessageObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="CreateMessageResponse"></div>
 
 ## CreateMessageResponse
 
@@ -2172,6 +2740,10 @@ type CreateMessageResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="CrosspostMessageResponse"></div>
+
 ## CrosspostMessageResponse
 
 https://discord.com/developers/docs/resources/channel#crosspost-message
@@ -2185,6 +2757,10 @@ type CrosspostMessageResponse = Response<objects.MessageObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="CreateReactionResponse"></div>
 
 ## CreateReactionResponse
 
@@ -2200,6 +2776,8 @@ type CreateReactionResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="DeleteOwnReactionResponse"></div>
+
 ## DeleteOwnReactionResponse
 
 https://discord.com/developers/docs/resources/channel#delete-own-reaction
@@ -2213,6 +2791,8 @@ type DeleteOwnReactionResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="DeleteUserReactionResponse"></div>
 
 ## DeleteUserReactionResponse
 
@@ -2228,6 +2808,8 @@ type DeleteUserReactionResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetReactionsResponse"></div>
+
 ## GetReactionsResponse
 
 https://discord.com/developers/docs/resources/channel#get-reactions
@@ -2241,6 +2823,12 @@ type GetReactionsResponse = Response<{objects.UserObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#UserObject](#UserObject)
+
+><div id="DeleteAllReactionsResponse"></div>
 
 ## DeleteAllReactionsResponse
 
@@ -2256,6 +2844,8 @@ type DeleteAllReactionsResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="DeleteAllReactionsForEmojiResponse"></div>
+
 ## DeleteAllReactionsForEmojiResponse
 
 https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji
@@ -2269,6 +2859,8 @@ type DeleteAllReactionsForEmojiResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="EditMessageResponse"></div>
 
 ## EditMessageResponse
 
@@ -2284,6 +2876,10 @@ type EditMessageResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="DeleteMessageResponse"></div>
+
 ## DeleteMessageResponse
 
 https://discord.com/developers/docs/resources/channel#delete-message
@@ -2297,6 +2893,8 @@ type DeleteMessageResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="BulkDeleteMessageResponse"></div>
 
 ## BulkDeleteMessageResponse
 
@@ -2312,6 +2910,8 @@ type BulkDeleteMessageResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="EditChannelPermissionsResponse"></div>
+
 ## EditChannelPermissionsResponse
 
 https://discord.com/developers/docs/resources/channel#edit-channel-permissions
@@ -2325,6 +2925,8 @@ type EditChannelPermissionsResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="GetChannelInvitesResponse"></div>
 
 ## GetChannelInvitesResponse
 
@@ -2340,6 +2942,26 @@ type GetChannelInvitesResponse = Response<{objects.InviteObject & objects.Invite
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+Intersection of:
+
+<details>
+<summary>Type 1</summary>
+
+[objects](#module.objects).[#InviteObject](#InviteObject)
+
+</details>
+
+<details>
+<summary>Type 2</summary>
+
+[objects](#module.objects).[#InviteMetadataObject](#InviteMetadataObject)
+
+</details>
+
+><div id="CreateChannelInviteResponse"></div>
+
 ## CreateChannelInviteResponse
 
 https://discord.com/developers/docs/resources/channel#create-channel-invite
@@ -2353,6 +2975,10 @@ type CreateChannelInviteResponse = Response<objects.InviteObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)
+
+><div id="DeleteChannelPermissionResponse"></div>
 
 ## DeleteChannelPermissionResponse
 
@@ -2368,6 +2994,8 @@ type DeleteChannelPermissionResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="FollowAnnouncementChannelResponse"></div>
+
 ## FollowAnnouncementChannelResponse
 
 https://discord.com/developers/docs/resources/channel#follow-announcement-channel
@@ -2381,6 +3009,10 @@ type FollowAnnouncementChannelResponse = Response<objects.FollowedChannelObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#FollowedChannelObject](#FollowedChannelObject)
+
+><div id="TriggerTypingIndicatorResponse"></div>
 
 ## TriggerTypingIndicatorResponse
 
@@ -2396,6 +3028,8 @@ type TriggerTypingIndicatorResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetPinnedMessagesResponse"></div>
+
 ## GetPinnedMessagesResponse
 
 https://discord.com/developers/docs/resources/channel#get-pinned-messages
@@ -2409,6 +3043,12 @@ type GetPinnedMessagesResponse = Response<{objects.MessageObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="PinMessageResponse"></div>
 
 ## PinMessageResponse
 
@@ -2424,6 +3064,8 @@ type PinMessageResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="UnpinMessageResponse"></div>
+
 ## UnpinMessageResponse
 
 https://discord.com/developers/docs/resources/channel#unpin-message
@@ -2437,6 +3079,8 @@ type UnpinMessageResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="GroupDMAddRecipientResponse"></div>
 
 ## GroupDMAddRecipientResponse
 
@@ -2452,6 +3096,8 @@ type GroupDMAddRecipientResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GroupDMRemoveRecipientResponse"></div>
+
 ## GroupDMRemoveRecipientResponse
 
 https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient
@@ -2465,6 +3111,8 @@ type GroupDMRemoveRecipientResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="StartThreadFromMessageResponse"></div>
 
 ## StartThreadFromMessageResponse
 
@@ -2480,6 +3128,10 @@ type StartThreadFromMessageResponse = Response<objects.ChannelObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="StartThreadWithoutMessageResponse"></div>
+
 ## StartThreadWithoutMessageResponse
 
 https://discord.com/developers/docs/resources/channel#start-thread-without-message
@@ -2493,6 +3145,10 @@ type StartThreadWithoutMessageResponse = Response<objects.ChannelObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="StartThreadInForumOrMediaChannelResponse"></div>
 
 ## StartThreadInForumOrMediaChannelResponse
 
@@ -2508,6 +3164,10 @@ type StartThreadInForumOrMediaChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="JoinThreadResponse"></div>
+
 ## JoinThreadResponse
 
 https://discord.com/developers/docs/resources/channel#join-thread
@@ -2521,6 +3181,8 @@ type JoinThreadResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="AddThreadMemberResponse"></div>
 
 ## AddThreadMemberResponse
 
@@ -2536,6 +3198,8 @@ type AddThreadMemberResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="LeaveThreadResponse"></div>
+
 ## LeaveThreadResponse
 
 https://discord.com/developers/docs/resources/channel#leave-thread
@@ -2549,6 +3213,8 @@ type LeaveThreadResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="RemoveThreadMemberResponse"></div>
 
 ## RemoveThreadMemberResponse
 
@@ -2564,6 +3230,8 @@ type RemoveThreadMemberResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetThreadMemberResponse"></div>
+
 ## GetThreadMemberResponse
 
 https://discord.com/developers/docs/resources/channel#get-thread-member
@@ -2578,6 +3246,10 @@ type GetThreadMemberResponse = Response<objects.ThreadMemberObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
+
+><div id="ListThreadMembersResponse"></div>
+
 ## ListThreadMembersResponse
 
 https://discord.com/developers/docs/resources/channel#list-thread-members
@@ -2591,6 +3263,12 @@ type ListThreadMembersResponse = Response<{objects.ThreadMemberObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
+
+><div id="ListPublicArchivedThreadsResponse"></div>
 
 ## ListPublicArchivedThreadsResponse
 
@@ -2612,6 +3290,16 @@ type ListPublicArchivedThreadsResponse = Response<{
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
+
+, [boolean](#boolean)><div id="ListPrivateArchivedThreadsResponse"></div>
+
 ## ListPrivateArchivedThreadsResponse
 
 https://discord.com/developers/docs/resources/channel#list-private-archived-threads
@@ -2631,6 +3319,16 @@ type ListPrivateArchivedThreadsResponse = Response<{
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
+
+, [boolean](#boolean)><div id="ListJoinedPrivateArchivedThreadsResponse"></div>
 
 ## ListJoinedPrivateArchivedThreadsResponse
 
@@ -2652,6 +3350,16 @@ type ListJoinedPrivateArchivedThreadsResponse = Response<{
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
+
+, [boolean](#boolean)><div id="ListGuildEmojisResponse"></div>
+
 ## ListGuildEmojisResponse
 
 https://discord.com/developers/docs/resources/emoji#list-guild-emojis
@@ -2665,6 +3373,12 @@ type ListGuildEmojisResponse = Response<{objects.EmojiObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#EmojiObject](#EmojiObject)
+
+><div id="GetGuildEmojiResponse"></div>
 
 ## GetGuildEmojiResponse
 
@@ -2680,6 +3394,10 @@ type GetGuildEmojiResponse = Response<objects.EmojiObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)
+
+><div id="CreateGuildEmojiResponse"></div>
+
 ## CreateGuildEmojiResponse
 
 https://discord.com/developers/docs/resources/emoji#create-guild-emoji
@@ -2693,6 +3411,10 @@ type CreateGuildEmojiResponse = Response<objects.EmojiObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)
+
+><div id="ModifyGuildEmojiResponse"></div>
 
 ## ModifyGuildEmojiResponse
 
@@ -2708,6 +3430,10 @@ type ModifyGuildEmojiResponse = Response<objects.EmojiObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)
+
+><div id="DeleteGuildEmojiResponse"></div>
+
 ## DeleteGuildEmojiResponse
 
 https://discord.com/developers/docs/resources/emoji#delete-guild-emoji
@@ -2721,6 +3447,8 @@ type DeleteGuildEmojiResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="CreateGuildResponse"></div>
 
 ## CreateGuildResponse
 
@@ -2736,6 +3464,10 @@ type CreateGuildResponse = Response<objects.GuildObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
+
+><div id="GetGuildResponse"></div>
+
 ## GetGuildResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild
@@ -2749,6 +3481,10 @@ type GetGuildResponse = Response<objects.GuildObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
+
+><div id="GetGuildPreviewResponse"></div>
 
 ## GetGuildPreviewResponse
 
@@ -2764,6 +3500,10 @@ type GetGuildPreviewResponse = Response<objects.GuildPreviewObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildPreviewObject](#GuildPreviewObject)
+
+><div id="ModifyGuildResponse"></div>
+
 ## ModifyGuildResponse
 
 https://discord.com/developers/docs/resources/guild#modify-guild
@@ -2777,6 +3517,10 @@ type ModifyGuildResponse = Response<objects.GuildObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
+
+><div id="DeleteGuildResponse"></div>
 
 ## DeleteGuildResponse
 
@@ -2792,6 +3536,8 @@ type DeleteGuildResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetGuildChannelsResponse"></div>
+
 ## GetGuildChannelsResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-channels
@@ -2805,6 +3551,12 @@ type GetGuildChannelsResponse = Response<{objects.ChannelObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="CreateGuildChannelResponse"></div>
 
 ## CreateGuildChannelResponse
 
@@ -2820,6 +3572,10 @@ type CreateGuildChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="ModifyGuildChannelPositionsResponse"></div>
+
 ## ModifyGuildChannelPositionsResponse
 
 https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions
@@ -2833,6 +3589,8 @@ type ModifyGuildChannelPositionsResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="ListActiveGuildThreadsResponse"></div>
 
 ## ListActiveGuildThreadsResponse
 
@@ -2852,6 +3610,16 @@ type ListActiveGuildThreadsResponse = Response<{
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
+
+><div id="GetGuildMemberResponse"></div>
+
 ## GetGuildMemberResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-member
@@ -2865,6 +3633,10 @@ type GetGuildMemberResponse = Response<objects.GuildMemberObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="ListGuildMembersResponse"></div>
 
 ## ListGuildMembersResponse
 
@@ -2880,6 +3652,12 @@ type ListGuildMembersResponse = Response<{objects.GuildMemberObject}>
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="SearchGuildMembersResponse"></div>
+
 ## SearchGuildMembersResponse
 
 https://discord.com/developers/docs/resources/guild#search-guild-members
@@ -2893,6 +3671,12 @@ type SearchGuildMembersResponse = Response<{objects.GuildMemberObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="AddGuildMemberResponse"></div>
 
 ## AddGuildMemberResponse
 
@@ -2908,6 +3692,10 @@ type AddGuildMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="ModifyGuildMemberResponse"></div>
+
 ## ModifyGuildMemberResponse
 
 https://discord.com/developers/docs/resources/guild#modify-guild-member
@@ -2921,6 +3709,10 @@ type ModifyGuildMemberResponse = Response<objects.GuildMemberObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="ModifyCurrentMemberResponse"></div>
 
 ## ModifyCurrentMemberResponse
 
@@ -2936,6 +3728,10 @@ type ModifyCurrentMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="AddGuildMemberRoleResponse"></div>
+
 ## AddGuildMemberRoleResponse
 
 https://discord.com/developers/docs/resources/guild#add-guild-member-role
@@ -2949,6 +3745,8 @@ type AddGuildMemberRoleResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="RemoveGuildMemberRoleResponse"></div>
 
 ## RemoveGuildMemberRoleResponse
 
@@ -2964,6 +3762,8 @@ type RemoveGuildMemberRoleResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="RemoveGuildMemberResponse"></div>
+
 ## RemoveGuildMemberResponse
 
 https://discord.com/developers/docs/resources/guild#remove-guild-member
@@ -2977,6 +3777,8 @@ type RemoveGuildMemberResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="GetGuildBansResponse"></div>
 
 ## GetGuildBansResponse
 
@@ -2992,6 +3794,12 @@ type GetGuildBansResponse = Response<{objects.BanObject}>
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#BanObject](#BanObject)
+
+><div id="GetGuildBanResponse"></div>
+
 ## GetGuildBanResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-ban
@@ -3005,6 +3813,10 @@ type GetGuildBanResponse = Response<objects.BanObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#BanObject](#BanObject)
+
+><div id="CreateGuildBanResponse"></div>
 
 ## CreateGuildBanResponse
 
@@ -3020,6 +3832,8 @@ type CreateGuildBanResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="RemoveGuildBanResponse"></div>
+
 ## RemoveGuildBanResponse
 
 https://discord.com/developers/docs/resources/guild#remove-guild-ban
@@ -3033,6 +3847,8 @@ type RemoveGuildBanResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="BulkGuildBanResponse"></div>
 
 ## BulkGuildBanResponse
 
@@ -3052,6 +3868,16 @@ type BulkGuildBanResponse = Response<{
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+, *This field is an array type*
+
+[objects](#module.objects).[#Snowflake](#Snowflake)
+
+><div id="GetGuildRolesResponse"></div>
+
 ## GetGuildRolesResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-roles
@@ -3065,6 +3891,12 @@ type GetGuildRolesResponse = Response<{objects.GuildRoleObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
+
+><div id="GetGuildRoleResponse"></div>
 
 ## GetGuildRoleResponse
 
@@ -3080,6 +3912,10 @@ type GetGuildRoleResponse = Response<objects.GuildRoleObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
+
+><div id="CreateGuildRoleResponse"></div>
+
 ## CreateGuildRoleResponse
 
 https://discord.com/developers/docs/resources/guild#create-guild-role
@@ -3093,6 +3929,10 @@ type CreateGuildRoleResponse = Response<objects.GuildRoleObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
+
+><div id="ModifyGuildRolePositionsResponse"></div>
 
 ## ModifyGuildRolePositionsResponse
 
@@ -3108,6 +3948,12 @@ type ModifyGuildRolePositionsResponse = Response<{objects.GuildRoleObject}>
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
+
+><div id="ModifyGuildRoleResponse"></div>
+
 ## ModifyGuildRoleResponse
 
 https://discord.com/developers/docs/resources/guild#modify-guild-role
@@ -3121,6 +3967,10 @@ type ModifyGuildRoleResponse = Response<objects.GuildRoleObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
+
+><div id="ModifyGuildMFALevelResponse"></div>
 
 ## ModifyGuildMFALevelResponse
 
@@ -3136,6 +3986,8 @@ type ModifyGuildMFALevelResponse = Response<unknown>
 
 </details>
 
+[#Response](#Response)<[unknown](#unknown)><div id="DeleteGuildRoleResponse"></div>
+
 ## DeleteGuildRoleResponse
 
 https://discord.com/developers/docs/resources/guild#delete-guild-role
@@ -3149,6 +4001,8 @@ type DeleteGuildRoleResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="GetGuildPruneCountResponse"></div>
 
 ## GetGuildPruneCountResponse
 
@@ -3166,6 +4020,8 @@ type GetGuildPruneCountResponse = Response<{
 
 </details>
 
+[#Response](#Response)<[number](#number)><div id="BeginGuildPruneResponse"></div>
+
 ## BeginGuildPruneResponse
 
 https://discord.com/developers/docs/resources/guild#begin-guild-prune
@@ -3182,6 +4038,8 @@ type BeginGuildPruneResponse = Response<{
 
 </details>
 
+[#Response](#Response)<[number](#number)><div id="GetGuildVoiceRegionsResponse"></div>
+
 ## GetGuildVoiceRegionsResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-voice-regions
@@ -3195,6 +4053,12 @@ type GetGuildVoiceRegionsResponse = Response<{objects.VoiceRegionObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#VoiceRegionObject](#VoiceRegionObject)
+
+><div id="GetGuildInvitesResponse"></div>
 
 ## GetGuildInvitesResponse
 
@@ -3210,6 +4074,26 @@ type GetGuildInvitesResponse = Response<{objects.InviteObject & objects.InviteMe
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+Intersection of:
+
+<details>
+<summary>Type 1</summary>
+
+[objects](#module.objects).[#InviteObject](#InviteObject)
+
+</details>
+
+<details>
+<summary>Type 2</summary>
+
+[objects](#module.objects).[#InviteMetadataObject](#InviteMetadataObject)
+
+</details>
+
+><div id="GetGuildIntegrationsResponse"></div>
+
 ## GetGuildIntegrationsResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-integrations
@@ -3223,6 +4107,12 @@ type GetGuildIntegrationsResponse = Response<{objects.IntegrationObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#IntegrationObject](#IntegrationObject)
+
+><div id="DeleteGuildIntegrationResponse"></div>
 
 ## DeleteGuildIntegrationResponse
 
@@ -3238,6 +4128,8 @@ type DeleteGuildIntegrationResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetGuildWidgetSettingsResponse"></div>
+
 ## GetGuildWidgetSettingsResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
@@ -3251,6 +4143,10 @@ type GetGuildWidgetSettingsResponse = Response<objects.GuildWidgetSettingsObject
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)
+
+><div id="ModifyGuildWidgetResponse"></div>
 
 ## ModifyGuildWidgetResponse
 
@@ -3266,6 +4162,10 @@ type ModifyGuildWidgetResponse = Response<objects.GuildWidgetSettingsObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)
+
+><div id="GetGuildWidgetResponse"></div>
+
 ## GetGuildWidgetResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-widget
@@ -3279,6 +4179,10 @@ type GetGuildWidgetResponse = Response<objects.GuildWidgetObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildWidgetObject](#GuildWidgetObject)
+
+><div id="GetGuildVanityUrlResponse"></div>
 
 ## GetGuildVanityUrlResponse
 
@@ -3294,6 +4198,10 @@ type GetGuildVanityUrlResponse = Response<objects.GuildVanityUrl>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildVanityUrl](#GuildVanityUrl)
+
+><div id="GetGuildWidgetImageResponse"></div>
+
 ## GetGuildWidgetImageResponse
 
 https://discord.com/developers/docs/resources/guild#get-guild-widget-image
@@ -3307,6 +4215,8 @@ type GetGuildWidgetImageResponse = Response<string>
 ```
 
 </details>
+
+[#Response](#Response)<[string](#string)><div id="GetGuildWelcomeScreenResponse"></div>
 
 ## GetGuildWelcomeScreenResponse
 
@@ -3322,6 +4232,10 @@ type GetGuildWelcomeScreenResponse = Response<objects.WelcomeScreenObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#WelcomeScreenObject](#WelcomeScreenObject)
+
+><div id="ModifyGuildWelcomeScreenResponse"></div>
+
 ## ModifyGuildWelcomeScreenResponse
 
 https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
@@ -3335,6 +4249,10 @@ type ModifyGuildWelcomeScreenResponse = Response<objects.WelcomeScreenObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#WelcomeScreenObject](#WelcomeScreenObject)
+
+><div id="GetGuildOnboardingResponse"></div>
 
 ## GetGuildOnboardingResponse
 
@@ -3350,6 +4268,10 @@ type GetGuildOnboardingResponse = Response<objects.GuildOnboardingObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildOnboardingObject](#GuildOnboardingObject)
+
+><div id="ModifyGuildOnboardingResponse"></div>
+
 ## ModifyGuildOnboardingResponse
 
 https://discord.com/developers/docs/resources/guild#modify-guild-onboarding
@@ -3363,6 +4285,10 @@ type ModifyGuildOnboardingResponse = Response<objects.GuildOnboardingObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildOnboardingObject](#GuildOnboardingObject)
+
+><div id="ModifyCurrentUserVoiceStateResponse"></div>
 
 ## ModifyCurrentUserVoiceStateResponse
 
@@ -3378,6 +4304,8 @@ type ModifyCurrentUserVoiceStateResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="ModifyUserVoiceStateResponse"></div>
+
 ## ModifyUserVoiceStateResponse
 
 https://discord.com/developers/docs/resources/guild#modify-user-voice-state
@@ -3391,6 +4319,8 @@ type ModifyUserVoiceStateResponse = Response<unknown>
 ```
 
 </details>
+
+[#Response](#Response)<[unknown](#unknown)><div id="ListScheduledEventsForGuildResponse"></div>
 
 ## ListScheduledEventsForGuildResponse
 
@@ -3406,6 +4336,12 @@ type ListScheduledEventsForGuildResponse = Response<{objects.GuildScheduledEvent
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
+
+><div id="CreateGuildScheduledEventResponse"></div>
+
 ## CreateGuildScheduledEventResponse
 
 https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event
@@ -3419,6 +4355,10 @@ type CreateGuildScheduledEventResponse = Response<objects.GuildScheduledEventObj
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
+
+><div id="GetGuildScheduledEventResponse"></div>
 
 ## GetGuildScheduledEventResponse
 
@@ -3434,6 +4374,10 @@ type GetGuildScheduledEventResponse = Response<objects.GuildScheduledEventObject
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
+
+><div id="ModifyGuildScheduledEventResponse"></div>
+
 ## ModifyGuildScheduledEventResponse
 
 https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event
@@ -3447,6 +4391,10 @@ type ModifyGuildScheduledEventResponse = Response<objects.GuildScheduledEventObj
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
+
+><div id="DeleteGuildScheduledEventResponse"></div>
 
 ## DeleteGuildScheduledEventResponse
 
@@ -3462,6 +4410,8 @@ type DeleteGuildScheduledEventResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetGuildScheduledEventUsersResponse"></div>
+
 ## GetGuildScheduledEventUsersResponse
 
 https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
@@ -3475,6 +4425,12 @@ type GetGuildScheduledEventUsersResponse = Response<{objects.GuildScheduledEvent
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildScheduledEventUserObject](#GuildScheduledEventUserObject)
+
+><div id="GetGuildTemplateResponse"></div>
 
 ## GetGuildTemplateResponse
 
@@ -3490,6 +4446,10 @@ type GetGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
+
+><div id="CreateGuildFromGuildTemplateResponse"></div>
+
 ## CreateGuildFromGuildTemplateResponse
 
 https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template
@@ -3503,6 +4463,10 @@ type CreateGuildFromGuildTemplateResponse = Response<objects.GuildObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
+
+><div id="GetGuildTemplatesResponse"></div>
 
 ## GetGuildTemplatesResponse
 
@@ -3518,6 +4482,10 @@ type GetGuildTemplatesResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
+
+><div id="CreateGuildTemplateResponse"></div>
+
 ## CreateGuildTemplateResponse
 
 https://discord.com/developers/docs/resources/guild-template#create-guild-template
@@ -3531,6 +4499,10 @@ type CreateGuildTemplateResponse = Response<objects.GuildTemplateObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
+
+><div id="SyncGuildTemplateResponse"></div>
 
 ## SyncGuildTemplateResponse
 
@@ -3546,6 +4518,10 @@ type SyncGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
+
+><div id="ModifyGuildTemplateResponse"></div>
+
 ## ModifyGuildTemplateResponse
 
 https://discord.com/developers/docs/resources/guild-template#modify-guild-template
@@ -3559,6 +4535,10 @@ type ModifyGuildTemplateResponse = Response<objects.GuildTemplateObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
+
+><div id="DeleteGuildTemplateResponse"></div>
 
 ## DeleteGuildTemplateResponse
 
@@ -3574,6 +4554,10 @@ type DeleteGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
+
+><div id="GetInviteResponse"></div>
+
 ## GetInviteResponse
 
 https://discord.com/developers/docs/resources/invite#get-invite
@@ -3587,6 +4571,10 @@ type GetInviteResponse = Response<objects.InviteObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)
+
+><div id="DeleteInviteResponse"></div>
 
 ## DeleteInviteResponse
 
@@ -3602,6 +4590,10 @@ type DeleteInviteResponse = Response<objects.InviteObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)
+
+><div id="GetAnswerVotersResponse"></div>
+
 ## GetAnswerVotersResponse
 
 https://discord.com/developers/docs/resources/poll#get-answer-voters
@@ -3615,6 +4607,12 @@ type GetAnswerVotersResponse = Response<{objects.UserObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#UserObject](#UserObject)
+
+><div id="EndPollResponse"></div>
 
 ## EndPollResponse
 
@@ -3630,6 +4628,10 @@ type EndPollResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="CreateStageInstanceResponse"></div>
+
 ## CreateStageInstanceResponse
 
 https://discord.com/developers/docs/resources/stage-instance#create-stage-instance
@@ -3643,6 +4645,10 @@ type CreateStageInstanceResponse = Response<objects.StageInstanceObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)
+
+><div id="GetStageInstanceResponse"></div>
 
 ## GetStageInstanceResponse
 
@@ -3661,6 +4667,10 @@ type GetStageInstanceResponse = Response<objects.StageInstanceObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)
+
+><div id="ModifyStageInstanceResponse"></div>
+
 ## ModifyStageInstanceResponse
 
 https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance
@@ -3674,6 +4684,10 @@ type ModifyStageInstanceResponse = Response<objects.StageInstanceObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)
+
+><div id="DeleteStageInstanceResponse"></div>
 
 ## DeleteStageInstanceResponse
 
@@ -3689,6 +4703,8 @@ type DeleteStageInstanceResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="GetStickerResponse"></div>
+
 ## GetStickerResponse
 
 https://discord.com/developers/docs/resources/sticker#get-sticker
@@ -3702,6 +4718,10 @@ type GetStickerResponse = Response<objects.StickerObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
+
+><div id="ListStickerPacksResponse"></div>
 
 ## ListStickerPacksResponse
 
@@ -3719,6 +4739,12 @@ type ListStickerPacksResponse = Response<{
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#StickerPackObject](#StickerPackObject)
+
+><div id="ListGuildStickersResponse"></div>
+
 ## ListGuildStickersResponse
 
 https://discord.com/developers/docs/resources/sticker#list-guild-stickers
@@ -3732,6 +4758,12 @@ type ListGuildStickersResponse = Response<{objects.StickerObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#StickerObject](#StickerObject)
+
+><div id="GetGuildStickerResponse"></div>
 
 ## GetGuildStickerResponse
 
@@ -3747,6 +4779,10 @@ type GetGuildStickerResponse = Response<objects.StickerObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
+
+><div id="CreateGuildStickerResponse"></div>
+
 ## CreateGuildStickerResponse
 
 https://discord.com/developers/docs/resources/sticker#create-guild-sticker
@@ -3760,6 +4796,10 @@ type CreateGuildStickerResponse = Response<objects.StickerObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
+
+><div id="ModifyGuildStickerResponse"></div>
 
 ## ModifyGuildStickerResponse
 
@@ -3775,6 +4815,10 @@ type ModifyGuildStickerResponse = Response<objects.StickerObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
+
+><div id="DeleteGuildStickerResponse"></div>
+
 ## DeleteGuildStickerResponse
 
 https://discord.com/developers/docs/resources/sticker#delete-guild-sticker
@@ -3788,6 +4832,8 @@ type DeleteGuildStickerResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="GetCurrentUserResponse"></div>
 
 ## GetCurrentUserResponse
 
@@ -3803,6 +4849,10 @@ type GetCurrentUserResponse = Response<objects.UserObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)
+
+><div id="GetUserResponse"></div>
+
 ## GetUserResponse
 
 https://discord.com/developers/docs/resources/user#get-user
@@ -3816,6 +4866,10 @@ type GetUserResponse = Response<objects.UserObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)
+
+><div id="ModifyCurrentUserResponse"></div>
 
 ## ModifyCurrentUserResponse
 
@@ -3831,6 +4885,10 @@ type ModifyCurrentUserResponse = Response<objects.UserObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)
+
+><div id="GetCurrentUserGuildsResponse"></div>
+
 ## GetCurrentUserGuildsResponse
 
 https://discord.com/developers/docs/resources/user#get-current-user-guilds
@@ -3844,6 +4902,12 @@ type GetCurrentUserGuildsResponse = Response<{objects.GuildObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#GuildObject](#GuildObject)
+
+><div id="GetCurrentUserGuildMemberResponse"></div>
 
 ## GetCurrentUserGuildMemberResponse
 
@@ -3859,6 +4923,10 @@ type GetCurrentUserGuildMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
+
+><div id="LeaveGuildResponse"></div>
+
 ## LeaveGuildResponse
 
 https://discord.com/developers/docs/resources/user#leave-guild
@@ -3872,6 +4940,8 @@ type LeaveGuildResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="CreateDMResponse"></div>
 
 ## CreateDMResponse
 
@@ -3887,6 +4957,10 @@ type CreateDMResponse = Response<objects.ChannelObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="CreateGroupDMResponse"></div>
+
 ## CreateGroupDMResponse
 
 https://discord.com/developers/docs/resources/user#create-group-dm
@@ -3900,6 +4974,10 @@ type CreateGroupDMResponse = Response<objects.ChannelObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
+
+><div id="GetCurrentUserConnectionResponse"></div>
 
 ## GetCurrentUserConnectionResponse
 
@@ -3915,6 +4993,10 @@ type GetCurrentUserConnectionResponse = Response<objects.ConnectionObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ConnectionObject](#ConnectionObject)
+
+><div id="GetCurrentUserApplicationRoleConnectionResponse"></div>
+
 ## GetCurrentUserApplicationRoleConnectionResponse
 
 https://discord.com/developers/docs/resources/user#get-current-user-application-role-connection
@@ -3928,6 +5010,10 @@ type GetCurrentUserApplicationRoleConnectionResponse = Response<objects.Applicat
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionObject](#ApplicationRoleConnectionObject)
+
+><div id="UpdateCurrentUserApplicationRoleConnectionResponse"></div>
 
 ## UpdateCurrentUserApplicationRoleConnectionResponse
 
@@ -3943,6 +5029,10 @@ type UpdateCurrentUserApplicationRoleConnectionResponse = Response<objects.Appli
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionObject](#ApplicationRoleConnectionObject)
+
+><div id="ListVoiceRegionsResponse"></div>
+
 ## ListVoiceRegionsResponse
 
 https://discord.com/developers/docs/resources/voice
@@ -3956,6 +5046,12 @@ type ListVoiceRegionsResponse = Response<{objects.VoiceRegionObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#VoiceRegionObject](#VoiceRegionObject)
+
+><div id="CreateWebhookResponse"></div>
 
 ## CreateWebhookResponse
 
@@ -3971,6 +5067,10 @@ type CreateWebhookResponse = Response<objects.WebhookObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="GetChannelWebhooksResponse"></div>
+
 ## GetChannelWebhooksResponse
 
 https://discord.com/developers/docs/resources/webhook#get-channel-webhooks
@@ -3984,6 +5084,12 @@ type GetChannelWebhooksResponse = Response<{objects.WebhookObject}>
 ```
 
 </details>
+
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="GetGuildWebhooksResponse"></div>
 
 ## GetGuildWebhooksResponse
 
@@ -3999,6 +5105,12 @@ type GetGuildWebhooksResponse = Response<{objects.WebhookObject}>
 
 </details>
 
+[#Response](#Response)<*This field is an array type*
+
+[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="GetWebhookResponse"></div>
+
 ## GetWebhookResponse
 
 https://discord.com/developers/docs/resources/webhook#get-webhook
@@ -4012,6 +5124,10 @@ type GetWebhookResponse = Response<objects.WebhookObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="GetWebhookWithTokenResponse"></div>
 
 ## GetWebhookWithTokenResponse
 
@@ -4027,6 +5143,10 @@ type GetWebhookWithTokenResponse = Response<objects.WebhookObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="ModifyWebhookResponse"></div>
+
 ## ModifyWebhookResponse
 
 https://discord.com/developers/docs/resources/webhook#modify-webhook
@@ -4040,6 +5160,10 @@ type ModifyWebhookResponse = Response<objects.WebhookObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="ModifyWebhookWithTokenResponse"></div>
 
 ## ModifyWebhookWithTokenResponse
 
@@ -4055,6 +5179,10 @@ type ModifyWebhookWithTokenResponse = Response<objects.WebhookObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
+
+><div id="DeleteWebhookResponse"></div>
+
 ## DeleteWebhookResponse
 
 https://discord.com/developers/docs/resources/webhook#delete-webhook
@@ -4068,6 +5196,8 @@ type DeleteWebhookResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="DeleteWebhookWitHTokenResponse"></div>
 
 ## DeleteWebhookWitHTokenResponse
 
@@ -4083,6 +5213,8 @@ type DeleteWebhookWitHTokenResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)><div id="ExecuteWebhookResponse"></div>
+
 ## ExecuteWebhookResponse
 
 https://discord.com/developers/docs/resources/webhook#execute-webhook
@@ -4096,6 +5228,8 @@ type ExecuteWebhookResponse = Response<objects.MessageObject?>
 ```
 
 </details>
+
+[#Response](#Response)<><div id="ExecuteSlackCompatibleWebhookResponse"></div>
 
 ## ExecuteSlackCompatibleWebhookResponse
 
@@ -4111,6 +5245,8 @@ type ExecuteSlackCompatibleWebhookResponse = Response<unknown>
 
 </details>
 
+[#Response](#Response)<[unknown](#unknown)><div id="ExecuteGitCompatibleWebhookResponse"></div>
+
 ## ExecuteGitCompatibleWebhookResponse
 
 https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook
@@ -4124,6 +5260,8 @@ type ExecuteGitCompatibleWebhookResponse = Response<unknown>
 ```
 
 </details>
+
+[#Response](#Response)<[unknown](#unknown)><div id="GetWebhookMessageResponse"></div>
 
 ## GetWebhookMessageResponse
 
@@ -4139,6 +5277,10 @@ type GetWebhookMessageResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="EditWebhookMessageResponse"></div>
+
 ## EditWebhookMessageResponse
 
 https://discord.com/developers/docs/resources/webhook#edit-webhook-message
@@ -4153,6 +5295,10 @@ type EditWebhookMessageResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="DeleteWebhookMessageResponse"></div>
+
 ## DeleteWebhookMessageResponse
 
 https://discord.com/developers/docs/resources/webhook#delete-webhook-message
@@ -4166,6 +5312,8 @@ type DeleteWebhookMessageResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="GetGatewayResponse"></div>
 
 ## GetGatewayResponse
 
@@ -4182,6 +5330,8 @@ type GetGatewayResponse = Response<{
 ```
 
 </details>
+
+[#Response](#Response)<[string](#string)><div id="GetGatewayBotResponse"></div>
 
 ## GetGatewayBotResponse
 
@@ -4203,6 +5353,10 @@ type GetGatewayBotResponse = Response<{
 
 </details>
 
+[#Response](#Response)<[string](#string), [number](#number), [objects](#module.objects).[#SessionStartLimitObject](#SessionStartLimitObject)
+
+><div id="CreateInteractionResponse"></div>
+
 ## CreateInteractionResponse
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response
@@ -4221,6 +5375,8 @@ type CreateInteractionResponse = Response<{
 
 </details>
 
+[#Response](#Response)<><div id="GetOriginalInteractionResponse"></div>
+
 ## GetOriginalInteractionResponse
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response
@@ -4234,6 +5390,10 @@ type GetOriginalInteractionResponse = Response<objects.MessageObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="EditOriginalInteractionResponse"></div>
 
 ## EditOriginalInteractionResponse
 
@@ -4249,6 +5409,10 @@ type EditOriginalInteractionResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="DeleteOriginalInteractionResponse"></div>
+
 ## DeleteOriginalInteractionResponse
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response
@@ -4262,6 +5426,8 @@ type DeleteOriginalInteractionResponse = Response<nil>
 ```
 
 </details>
+
+[#Response](#Response)<[nil](#nil)><div id="CreateFollowupMessageResponse"></div>
 
 ## CreateFollowupMessageResponse
 
@@ -4277,6 +5443,10 @@ type CreateFollowupMessageResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="GetFollowupMessageResponse"></div>
+
 ## GetFollowupMessageResponse
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message
@@ -4290,6 +5460,10 @@ type GetFollowupMessageResponse = Response<objects.MessageObject>
 ```
 
 </details>
+
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="EditFollowupMessageResponse"></div>
 
 ## EditFollowupMessageResponse
 
@@ -4305,6 +5479,10 @@ type EditFollowupMessageResponse = Response<objects.MessageObject>
 
 </details>
 
+[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
+
+><div id="DeleteFollowupMessageResponse"></div>
+
 ## DeleteFollowupMessageResponse
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message
@@ -4319,3 +5497,4 @@ type DeleteFollowupMessageResponse = Response<nil>
 
 </details>
 
+[#Response](#Response)<[nil](#nil)>

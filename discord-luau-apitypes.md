@@ -1,4 +1,8 @@
+<div id="Types"></div>
+
 # Types
+
+<div id="Partial"></div>
 
 ## Partial
 
@@ -11,6 +15,8 @@ type Partial<T> = MakePartial<T>
 
 </details>
 
+[MakePartial](#MakePartial)<[T](#T)><div id="Snowflake"></div>
+
 ## Snowflake
 
 <details>
@@ -21,6 +27,10 @@ type Snowflake = string
 ```
 
 </details>
+
+[string](#string)
+
+<div id="PremiumTypes"></div>
 
 ## PremiumTypes
 
@@ -36,6 +46,10 @@ type PremiumTypes = number
 
 </details>
 
+[number](#number)
+
+<div id="LanguageLocales"></div>
+
 ## LanguageLocales
 
 https://discord.com/developers/docs/reference#locales
@@ -49,6 +63,271 @@ type LanguageLocales = "id" | "da" | "de" | "en-GB" | "en-US" | "es-ES" | "fr" |
 ```
 
 </details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"id"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"da"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"de"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"en-GB"
+```
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+```luau
+"en-US"
+```
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+```luau
+"es-ES"
+```
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+```luau
+"fr"
+```
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+```luau
+"hr"
+```
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+```luau
+"it"
+```
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+```luau
+"lt"
+```
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+```luau
+"nl"
+```
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+```luau
+"no"
+```
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+```luau
+"pl"
+```
+
+</details>
+
+<details>
+<summary>Variant 14</summary>
+
+```luau
+"pt-BR"
+```
+
+</details>
+
+<details>
+<summary>Variant 15</summary>
+
+```luau
+"ro"
+```
+
+</details>
+
+<details>
+<summary>Variant 16</summary>
+
+```luau
+"fi"
+```
+
+</details>
+
+<details>
+<summary>Variant 17</summary>
+
+```luau
+"sv-SE"
+```
+
+</details>
+
+<details>
+<summary>Variant 18</summary>
+
+```luau
+"vi"
+```
+
+</details>
+
+<details>
+<summary>Variant 19</summary>
+
+```luau
+"tr"
+```
+
+</details>
+
+<details>
+<summary>Variant 20</summary>
+
+```luau
+"cs"
+```
+
+</details>
+
+<details>
+<summary>Variant 21</summary>
+
+```luau
+"el"
+```
+
+</details>
+
+<details>
+<summary>Variant 22</summary>
+
+```luau
+"bg"
+```
+
+</details>
+
+<details>
+<summary>Variant 23</summary>
+
+```luau
+"ru"
+```
+
+</details>
+
+<details>
+<summary>Variant 24</summary>
+
+```luau
+"uk"
+```
+
+</details>
+
+<details>
+<summary>Variant 25</summary>
+
+```luau
+"hi"
+```
+
+</details>
+
+<details>
+<summary>Variant 26</summary>
+
+```luau
+"th"
+```
+
+</details>
+
+<details>
+<summary>Variant 27</summary>
+
+```luau
+"zn-CH"
+```
+
+</details>
+
+<details>
+<summary>Variant 28</summary>
+
+```luau
+"ja"
+```
+
+</details>
+
+<details>
+<summary>Variant 29</summary>
+
+```luau
+"ko"
+```
+
+</details>
+
+<div id="MembershipState"></div>
 
 ## MembershipState
 
@@ -64,6 +343,10 @@ type MembershipState = number
 
 </details>
 
+[number](#number)
+
+<div id="TeamMemberRole"></div>
+
 ## TeamMemberRole
 
 https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum
@@ -77,6 +360,46 @@ type TeamMemberRole = "Owner" | "Admin" | "Developer" | "Read-only"
 ```
 
 </details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"Owner"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"Admin"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"Developer"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"Read-only"
+```
+
+</details>
+
+<div id="VerificationLevel"></div>
 
 ## VerificationLevel
 
@@ -92,6 +415,10 @@ type VerificationLevel = number
 
 </details>
 
+[number](#number)
+
+<div id="DefaultMessageNotification"></div>
+
 ## DefaultMessageNotification
 
 https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level
@@ -105,6 +432,10 @@ type DefaultMessageNotification = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ExplicitContentFilterLevel"></div>
 
 ## ExplicitContentFilterLevel
 
@@ -120,6 +451,10 @@ type ExplicitContentFilterLevel = number
 
 </details>
 
+[number](#number)
+
+<div id="MFALevel"></div>
+
 ## MFALevel
 
 https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level
@@ -133,6 +468,10 @@ type MFALevel = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="GuildNSFWLevel"></div>
 
 ## GuildNSFWLevel
 
@@ -148,6 +487,10 @@ type GuildNSFWLevel = number
 
 </details>
 
+[number](#number)
+
+<div id="PremiumTier"></div>
+
 ## PremiumTier
 
 https://discord.com/developers/docs/resources/guild#guild-object-premium-tier
@@ -161,6 +504,10 @@ type PremiumTier = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="SystemChannelFlags"></div>
 
 ## SystemChannelFlags
 
@@ -176,6 +523,10 @@ type SystemChannelFlags = number
 
 </details>
 
+[number](#number)
+
+<div id="GuildFeature"></div>
+
 ## GuildFeature
 
 https://discord.com/developers/docs/resources/guild#guild-object-guild-features
@@ -189,6 +540,253 @@ type GuildFeature = "ANIMATED_BANNER" | "ANIMATED_ICON" | "APPLICATION_COMMAND_P
 ```
 
 </details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"ANIMATED_BANNER"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"ANIMATED_ICON"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"APPLICATION_COMMAND_PERMISSIONS_V2"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"AUTO_MODERATION"
+```
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+```luau
+"BANNER"
+```
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+```luau
+"COMMUNITY"
+```
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+```luau
+"CREATOR_MONETIZABLE_PROVISIONAL"
+```
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+```luau
+"CREATOR_STORE_PAGE"
+```
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+```luau
+"DEVELOPER_SUPPORT_SERVER"
+```
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+```luau
+"DISCOVERABLE"
+```
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+```luau
+"FEATURABLE"
+```
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+```luau
+"INVITES_DISABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+```luau
+"INVITE_SPLASH"
+```
+
+</details>
+
+<details>
+<summary>Variant 14</summary>
+
+```luau
+"MEMBER_VERIFICATION_GATE_ENABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 15</summary>
+
+```luau
+"MORE_STICKERS"
+```
+
+</details>
+
+<details>
+<summary>Variant 16</summary>
+
+```luau
+"NEWS"
+```
+
+</details>
+
+<details>
+<summary>Variant 17</summary>
+
+```luau
+"PARTNERED"
+```
+
+</details>
+
+<details>
+<summary>Variant 18</summary>
+
+```luau
+"PREVIEW_ENABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 19</summary>
+
+```luau
+"RAID_ALERTS_DISABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 20</summary>
+
+```luau
+"ROLE_ICONS"
+```
+
+</details>
+
+<details>
+<summary>Variant 21</summary>
+
+```luau
+"ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE"
+```
+
+</details>
+
+<details>
+<summary>Variant 22</summary>
+
+```luau
+"ROLE_SUBSCRIPTIONS_ENABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 23</summary>
+
+```luau
+"TICKETED_EVENTS_ENABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 24</summary>
+
+```luau
+"VANITY_URL"
+```
+
+</details>
+
+<details>
+<summary>Variant 25</summary>
+
+```luau
+"VERIFIED"
+```
+
+</details>
+
+<details>
+<summary>Variant 26</summary>
+
+```luau
+"VIP_REGIONS"
+```
+
+</details>
+
+<details>
+<summary>Variant 27</summary>
+
+```luau
+"WELCOME_SCREEN_ENABLED"
+```
+
+</details>
+
+<div id="MutableGuildFeatures"></div>
 
 ## MutableGuildFeatures
 
@@ -204,6 +802,46 @@ type MutableGuildFeatures = "COMMUNITY" | "DISCOVERABLE" | "INVITES_DISABLED" | 
 
 </details>
 
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"COMMUNITY"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"DISCOVERABLE"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"INVITES_DISABLED"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"RAID_ALERTS_DISABLED"
+```
+
+</details>
+
+<div id="StickerType"></div>
+
 ## StickerType
 
 https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types
@@ -217,6 +855,10 @@ type StickerType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="StickerFormatType"></div>
 
 ## StickerFormatType
 
@@ -232,6 +874,10 @@ type StickerFormatType = number
 
 </details>
 
+[number](#number)
+
+<div id="OAuth2Scopes"></div>
+
 ## OAuth2Scopes
 
 https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
@@ -245,6 +891,262 @@ type OAuth2Scopes = "activities.read" | "activities.write" | "applications.build
 ```
 
 </details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"activities.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"activities.write"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"applications.builds.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"applications.builds.upload"
+```
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+```luau
+"applications.commands"
+```
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+```luau
+"applications.commands.update"
+```
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+```luau
+"applications.commands.permissions.update"
+```
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+```luau
+"applications.entitlements"
+```
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+```luau
+"applications.store.update"
+```
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+```luau
+"bot"
+```
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+```luau
+"connections"
+```
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+```luau
+"dm_channels.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+```luau
+"email"
+```
+
+</details>
+
+<details>
+<summary>Variant 14</summary>
+
+```luau
+"gdm.join"
+```
+
+</details>
+
+<details>
+<summary>Variant 15</summary>
+
+```luau
+"guilds"
+```
+
+</details>
+
+<details>
+<summary>Variant 16</summary>
+
+```luau
+"guilds.join"
+```
+
+</details>
+
+<details>
+<summary>Variant 17</summary>
+
+```luau
+"guilds.members.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 18</summary>
+
+```luau
+"identify"
+```
+
+</details>
+
+<details>
+<summary>Variant 19</summary>
+
+```luau
+"messages.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 20</summary>
+
+```luau
+"relationships.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 21</summary>
+
+```luau
+"role_connections.write"
+```
+
+</details>
+
+<details>
+<summary>Variant 22</summary>
+
+```luau
+"rpc"
+```
+
+</details>
+
+<details>
+<summary>Variant 23</summary>
+
+```luau
+"rpc.activities.write"
+```
+
+</details>
+
+<details>
+<summary>Variant 24</summary>
+
+```luau
+"rpc.notifications.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 25</summary>
+
+```luau
+"rpc.voice.read"
+```
+
+</details>
+
+<details>
+<summary>Variant 26</summary>
+
+```luau
+"rpc.voice.write"
+```
+
+</details>
+
+<details>
+<summary>Variant 27</summary>
+
+```luau
+"voice"
+```
+
+</details>
+
+<details>
+<summary>Variant 28</summary>
+
+```luau
+"webhook.incoming"
+```
+
+</details>
+
+<div id="IntegrationType"></div>
 
 ## IntegrationType
 
@@ -263,6 +1165,10 @@ type IntegrationType = number
 
 </details>
 
+[number](#number)
+
+<div id="ApplicationIntegrationType"></div>
+
 ## ApplicationIntegrationType
 
 https://discord.com/developers/docs/resources/application#application-object-application-integration-types
@@ -276,6 +1182,10 @@ type ApplicationIntegrationType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ApplicationCommandPermissionType"></div>
 
 ## ApplicationCommandPermissionType
 
@@ -291,6 +1201,10 @@ type ApplicationCommandPermissionType = number
 
 </details>
 
+[number](#number)
+
+<div id="AutomoderationRuleEventType"></div>
+
 ## AutomoderationRuleEventType
 
 https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types
@@ -304,6 +1218,10 @@ type AutomoderationRuleEventType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="AutomoderationRuleTriggerType"></div>
 
 ## AutomoderationRuleTriggerType
 
@@ -319,6 +1237,10 @@ type AutomoderationRuleTriggerType = number
 
 </details>
 
+[number](#number)
+
+<div id="AutomoderationRuleKeywordPresetType"></div>
+
 ## AutomoderationRuleKeywordPresetType
 
 https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types
@@ -332,6 +1254,10 @@ type AutomoderationRuleKeywordPresetType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="AutomoderationActionType"></div>
 
 ## AutomoderationActionType
 
@@ -347,6 +1273,10 @@ type AutomoderationActionType = number
 
 </details>
 
+[number](#number)
+
+<div id="ChannelType"></div>
+
 ## ChannelType
 
 https://discord.com/developers/docs/resources/channel#channel-object-channel-types
@@ -360,6 +1290,10 @@ type ChannelType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="VideoQualityMode"></div>
 
 ## VideoQualityMode
 
@@ -375,6 +1309,10 @@ type VideoQualityMode = number
 
 </details>
 
+[number](#number)
+
+<div id="ChannelFlags"></div>
+
 ## ChannelFlags
 
 https://discord.com/developers/docs/resources/channel#channel-object-channel-flags
@@ -388,6 +1326,10 @@ type ChannelFlags = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="SortOrderType"></div>
 
 ## SortOrderType
 
@@ -403,6 +1345,10 @@ type SortOrderType = number
 
 </details>
 
+[number](#number)
+
+<div id="ForumLayoutType"></div>
+
 ## ForumLayoutType
 
 https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types
@@ -416,6 +1362,10 @@ type ForumLayoutType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="OverwriteObjectType"></div>
 
 ## OverwriteObjectType
 
@@ -431,6 +1381,10 @@ type OverwriteObjectType = number
 
 </details>
 
+[number](#number)
+
+<div id="EntitlementType"></div>
+
 ## EntitlementType
 
 https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types
@@ -444,6 +1398,10 @@ type EntitlementType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ActivityType"></div>
 
 ## ActivityType
 
@@ -459,6 +1417,10 @@ type ActivityType = number
 
 </details>
 
+[number](#number)
+
+<div id="PrivacyLevel"></div>
+
 ## PrivacyLevel
 
 https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level
@@ -472,6 +1434,10 @@ type PrivacyLevel = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="GuildScheduledEventStatus"></div>
 
 ## GuildScheduledEventStatus
 
@@ -487,6 +1453,10 @@ type GuildScheduledEventStatus = number
 
 </details>
 
+[number](#number)
+
+<div id="GuildScheduledEventEntityType"></div>
+
 ## GuildScheduledEventEntityType
 
 https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types
@@ -500,6 +1470,10 @@ type GuildScheduledEventEntityType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="IntegrationExpireBehaviours"></div>
 
 ## IntegrationExpireBehaviours
 
@@ -515,6 +1489,10 @@ type IntegrationExpireBehaviours = number
 
 </details>
 
+[number](#number)
+
+<div id="InteractionType"></div>
+
 ## InteractionType
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type
@@ -528,6 +1506,10 @@ type InteractionType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="EmbedType"></div>
 
 ## EmbedType
 
@@ -543,6 +1525,73 @@ type EmbedType = "Rich" | "Image" | "Video" | "GIFV" | "Article" | "Link" | "Pol
 
 </details>
 
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"Rich"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"Image"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"Video"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"GIFV"
+```
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+```luau
+"Article"
+```
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+```luau
+"Link"
+```
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+```luau
+"PollResult"
+```
+
+</details>
+
+<div id="MessageType"></div>
+
 ## MessageType
 
 https://discord.com/developers/docs/resources/channel#message-object-message-types
@@ -556,6 +1605,10 @@ type MessageType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="MessageActivityType"></div>
 
 ## MessageActivityType
 
@@ -571,6 +1624,10 @@ type MessageActivityType = number
 
 </details>
 
+[number](#number)
+
+<div id="ButtonStyle"></div>
+
 ## ButtonStyle
 
 https://discord.com/developers/docs/interactions/message-components#button-object-button-styles
@@ -584,6 +1641,10 @@ type ButtonStyle = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="TextInputStyles"></div>
 
 ## TextInputStyles
 
@@ -599,6 +1660,10 @@ type TextInputStyles = number
 
 </details>
 
+[number](#number)
+
+<div id="PollLayoutType"></div>
+
 ## PollLayoutType
 
 https://discord.com/developers/docs/resources/poll#layout-type
@@ -612,6 +1677,10 @@ type PollLayoutType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ApplicationCommandOptionType"></div>
 
 ## ApplicationCommandOptionType
 
@@ -627,6 +1696,10 @@ type ApplicationCommandOptionType = number
 
 </details>
 
+[number](#number)
+
+<div id="InteractionContextType"></div>
+
 ## InteractionContextType
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types
@@ -640,6 +1713,10 @@ type InteractionContextType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="InviteTypes"></div>
 
 ## InviteTypes
 
@@ -655,6 +1732,10 @@ type InviteTypes = number
 
 </details>
 
+[number](#number)
+
+<div id="InviteTargetTypes"></div>
+
 ## InviteTargetTypes
 
 https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types
@@ -668,6 +1749,10 @@ type InviteTargetTypes = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ReactionType"></div>
 
 ## ReactionType
 
@@ -683,6 +1768,10 @@ type ReactionType = number
 
 </details>
 
+[number](#number)
+
+<div id="ApplicationRoleConnectionMetadataType"></div>
+
 ## ApplicationRoleConnectionMetadataType
 
 https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type
@@ -696,6 +1785,10 @@ type ApplicationRoleConnectionMetadataType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ApplicationCommandType"></div>
 
 ## ApplicationCommandType
 
@@ -711,6 +1804,10 @@ type ApplicationCommandType = number
 
 </details>
 
+[number](#number)
+
+<div id="AuditLogEventType"></div>
+
 ## AuditLogEventType
 
 https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events
@@ -724,6 +1821,10 @@ type AuditLogEventType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="WebhookType"></div>
 
 ## WebhookType
 
@@ -739,6 +1840,10 @@ type WebhookType = number
 
 </details>
 
+[number](#number)
+
+<div id="OnboardingMode"></div>
+
 ## OnboardingMode
 
 https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode
@@ -752,6 +1857,10 @@ type OnboardingMode = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="PromptTypes"></div>
 
 ## PromptTypes
 
@@ -767,6 +1876,10 @@ type PromptTypes = number
 
 </details>
 
+[number](#number)
+
+<div id="ConnectionObjectServices"></div>
+
 ## ConnectionObjectServices
 
 https://discord.com/developers/docs/resources/user#connection-object-services
@@ -780,6 +1893,199 @@ type ConnectionObjectServices = "battlenet" | "bungie" | "domain" | "ebay" | "ep
 ```
 
 </details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"battlenet"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"bungie"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"domain"
+```
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+```luau
+"ebay"
+```
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+```luau
+"epicgames"
+```
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+```luau
+"facebook"
+```
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+```luau
+"github"
+```
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+```luau
+"instagram"
+```
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+```luau
+"leagueoflegends"
+```
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+```luau
+"paypal"
+```
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+```luau
+"playstation"
+```
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+```luau
+"reddit"
+```
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+```luau
+"riotgames"
+```
+
+</details>
+
+<details>
+<summary>Variant 14</summary>
+
+```luau
+"spotify"
+```
+
+</details>
+
+<details>
+<summary>Variant 15</summary>
+
+```luau
+"skype"
+```
+
+</details>
+
+<details>
+<summary>Variant 16</summary>
+
+```luau
+"stream"
+```
+
+</details>
+
+<details>
+<summary>Variant 17</summary>
+
+```luau
+"tiktok"
+```
+
+</details>
+
+<details>
+<summary>Variant 18</summary>
+
+```luau
+"twitch"
+```
+
+</details>
+
+<details>
+<summary>Variant 19</summary>
+
+```luau
+"twitter"
+```
+
+</details>
+
+<details>
+<summary>Variant 20</summary>
+
+```luau
+"xbox"
+```
+
+</details>
+
+<details>
+<summary>Variant 21</summary>
+
+```luau
+"youtube"
+```
+
+</details>
+
+<div id="AllowedMentionTypes"></div>
 
 ## AllowedMentionTypes
 
@@ -795,6 +2101,37 @@ type AllowedMentionTypes = "roles" | "users" | "everyone"
 
 </details>
 
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+"roles"
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+"users"
+```
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+```luau
+"everyone"
+```
+
+</details>
+
+<div id="ConnectionVisibilityTypes"></div>
+
 ## ConnectionVisibilityTypes
 
 https://discord.com/developers/docs/resources/user#connection-object-visibility-types
@@ -808,6 +2145,10 @@ type ConnectionVisibilityTypes = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="MessageReferenceType"></div>
 
 ## MessageReferenceType
 
@@ -823,6 +2164,10 @@ type MessageReferenceType = number
 
 </details>
 
+[number](#number)
+
+<div id="GuildMemberFlags"></div>
+
 ## GuildMemberFlags
 
 https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags
@@ -837,6 +2182,10 @@ type GuildMemberFlags = number
 
 </details>
 
+[number](#number)
+
+<div id="InteractionCallbackType"></div>
+
 ## InteractionCallbackType
 
 https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type
@@ -850,6 +2199,10 @@ type InteractionCallbackType = number
 ```
 
 </details>
+
+[number](#number)
+
+<div id="ActivityTimestampObject"></div>
 
 ## ActivityTimestampObject
 
@@ -869,19 +2222,19 @@ type ActivityTimestampObject = {
 
 </details>
 
+<div id="start"></div>
+
 ### start
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="["end"]"></div>
 
 ### ["end"]
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="ActivityEmojiObject"></div>
 
 ## ActivityEmojiObject
 
@@ -903,26 +2256,25 @@ type ActivityEmojiObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="id"></div>
 
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="animated"></div>
 
 ### animated
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="ActivityPartyObject"></div>
 
 ## ActivityPartyObject
 
@@ -942,19 +2294,19 @@ type ActivityPartyObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="size"></div>
 
 ### size
 
-Field with the following constraints:
+{[number](#number)}
 
-- Type: number
-- Constraints: None
+<div id="ActivityAssetsObject"></div>
 
 ## ActivityAssetsObject
 
@@ -978,33 +2330,31 @@ type ActivityAssetsObject = {
 
 </details>
 
+<div id="large_image"></div>
+
 ### large_image
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="large_text"></div>
 
 ### large_text
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="small_image"></div>
 
 ### small_image
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="small_text"></div>
 
 ### small_text
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="ActivitySecretsObject"></div>
 
 ## ActivitySecretsObject
 
@@ -1026,26 +2376,25 @@ type ActivitySecretsObject = {
 
 </details>
 
+<div id="join"></div>
+
 ### join
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="spectate"></div>
 
 ### spectate
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="match"></div>
 
 ### match
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="ActivityButtonsObject"></div>
 
 ## ActivityButtonsObject
 
@@ -1065,19 +2414,19 @@ type ActivityButtonsObject = {
 
 </details>
 
+<div id="label"></div>
+
 ### label
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="url"></div>
 
 ### url
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="ActivityObject"></div>
 
 ## ActivityObject
 
@@ -1123,110 +2472,97 @@ type ActivityObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="url"></div>
 
 ### url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="created_at"></div>
 
 ### created_at
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="timestamps"></div>
 
 ### timestamps
 
-Field with the following constraints:
+[ActivityTimestampObject](#ActivityTimestampObject)
 
-- Type: ActivityTimestampObject
-- Constraints: None
+<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="details"></div>
 
 ### details
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="state"></div>
 
 ### state
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji"></div>
 
 ### emoji
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ActivityEmojiObject
-- Constraints: None
+[ActivityEmojiObject](#ActivityEmojiObject)?<div id="party"></div>
 
 ### party
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ActivityPartyObject
-- Constraints: None
+[ActivityPartyObject](#ActivityPartyObject)?<div id="assets"></div>
 
 ### assets
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ActivityAssetsObject
-- Constraints: None
+[ActivityAssetsObject](#ActivityAssetsObject)?<div id="secrets"></div>
 
 ### secrets
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ActivitySecretsObject
-- Constraints: None
+[ActivitySecretsObject](#ActivitySecretsObject)?<div id="instance"></div>
 
 ### instance
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="buttons"></div>
 
 ### buttons
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ActivityButtonsObject
-- Constraints: None
+{[ActivityButtonsObject](#ActivityButtonsObject)}?<div id="PresenceObject"></div>
 
 ## PresenceObject
 
@@ -1250,33 +2586,31 @@ type PresenceObject = {
 
 </details>
 
+<div id="since"></div>
+
 ### since
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="activities"></div>
 
 ### activities
 
-Field with the following constraints:
+{[ActivityObject](#ActivityObject)}
 
-- Type: ActivityObject
-- Constraints: None
+<div id="status"></div>
 
 ### status
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="afk"></div>
 
 ### afk
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="IdentifyPropertiesObject"></div>
 
 ## IdentifyPropertiesObject
 
@@ -1298,26 +2632,25 @@ type IdentifyPropertiesObject = {
 
 </details>
 
+<div id="os"></div>
+
 ### os
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="browser"></div>
 
 ### browser
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="device"></div>
 
 ### device
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="AvatarDecorationDataObject"></div>
 
 ## AvatarDecorationDataObject
 
@@ -1337,19 +2670,19 @@ type AvatarDecorationDataObject = {
 
 </details>
 
+<div id="asset"></div>
+
 ### asset
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="sku_id"></div>
 
 ### sku_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="UserObject"></div>
 
 ## UserObject
 
@@ -1399,124 +2732,109 @@ type UserObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="username"></div>
 
 ### username
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="discriminator"></div>
 
 ### discriminator
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="global_name"></div>
 
 ### global_name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="avatar"></div>
 
 ### avatar
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="bot"></div>
 
 ### bot
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="system"></div>
 
 ### system
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="mfa_enabled"></div>
 
 ### mfa_enabled
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="banner"></div>
 
 ### banner
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="accent_color"></div>
 
 ### accent_color
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="locale"></div>
 
 ### locale
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: LanguageLocales
-- Constraints: None
+[LanguageLocales](#LanguageLocales)?<div id="verified"></div>
 
 ### verified
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="email"></div>
 
 ### email
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="premium_type"></div>
 
 ### premium_type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: PremiumTypes
-- Constraints: None
+[PremiumTypes](#PremiumTypes)?<div id="public_flags"></div>
 
 ### public_flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="avatar_decoration_data"></div>
 
 ### avatar_decoration_data
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AvatarDecorationDataObject
-- Constraints: None
+[AvatarDecorationDataObject](#AvatarDecorationDataObject)?<div id="UnavailableGuildObject"></div>
 
 ## UnavailableGuildObject
 
@@ -1536,19 +2854,19 @@ type UnavailableGuildObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="unavailable"></div>
 
 ### unavailable
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="TeamMemberObject"></div>
 
 ## TeamMemberObject
 
@@ -1572,33 +2890,31 @@ type TeamMemberObject = {
 
 </details>
 
+<div id="membership_state"></div>
+
 ### membership_state
 
-Field with the following constraints:
+[MembershipState](#MembershipState)
 
-- Type: MembershipState
-- Constraints: None
+<div id="team_id"></div>
 
 ### team_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="role"></div>
 
 ### role
 
-Field with the following constraints:
+[TeamMemberRole](#TeamMemberRole)
 
-- Type: TeamMemberRole
-- Constraints: None
+<div id="TeamObject"></div>
 
 ## TeamObject
 
@@ -1624,40 +2940,37 @@ type TeamObject = {
 
 </details>
 
+<div id="icon"></div>
+
 ### icon
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="id"></div>
 
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="members"></div>
 
 ### members
 
-Field with the following constraints:
+{[TeamMemberObject](#TeamMemberObject)}
 
-- Type: TeamMemberObject
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="owner_user_id"></div>
 
 ### owner_user_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="GuildRoleTagObject"></div>
 
 ## GuildRoleTagObject
 
@@ -1685,47 +2998,43 @@ type GuildRoleTagObject = {
 
 </details>
 
+<div id="bot_id"></div>
+
 ### bot_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="integration_id"></div>
 
 ### integration_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="premium_subscriber"></div>
 
 ### premium_subscriber
 
-Field with the following constraints:
+[nil](#nil)
 
-- Type: nil
-- Constraints: None
+<div id="subscription_listing_id"></div>
 
 ### subscription_listing_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="available_for_purchase"></div>
 
 ### available_for_purchase
 
-Field with the following constraints:
+[nil](#nil)
 
-- Type: nil
-- Constraints: None
+<div id="guild_connections"></div>
 
 ### guild_connections
 
-Field with the following constraints:
+[nil](#nil)
 
-- Type: nil
-- Constraints: None
+<div id="GuildRoleObject"></div>
 
 ## GuildRoleObject
 
@@ -1765,89 +3074,79 @@ type GuildRoleObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="color"></div>
 
 ### color
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="hoist"></div>
 
 ### hoist
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="icon"></div>
 
 ### icon
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="unicode_emoji"></div>
 
 ### unicode_emoji
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="position"></div>
 
 ### position
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="permissions"></div>
 
 ### permissions
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="managed"></div>
 
 ### managed
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="mentionable"></div>
 
 ### mentionable
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="tags"></div>
 
 ### tags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildRoleTagObject
-- Constraints: None
+[GuildRoleTagObject](#GuildRoleTagObject)?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="EmojiObject"></div>
 
 ## EmojiObject
 
@@ -1879,61 +3178,55 @@ type EmojiObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="roles"></div>
 
 ### roles
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+{[Snowflake](#Snowflake)}?<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="require_colons"></div>
 
 ### require_colons
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="managed"></div>
 
 ### managed
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="animated"></div>
 
 ### animated
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="available"></div>
 
 ### available
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="WelcomeScreenChannelObject"></div>
 
 ## WelcomeScreenChannelObject
 
@@ -1957,33 +3250,31 @@ type WelcomeScreenChannelObject = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji_id"></div>
 
 ### emoji_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="emoji_name"></div>
 
 ### emoji_name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="WelcomeScreenObject"></div>
 
 ## WelcomeScreenObject
 
@@ -2003,19 +3294,19 @@ type WelcomeScreenObject = {
 
 </details>
 
+<div id="description"></div>
+
 ### description
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="welcome_channels"></div>
 
 ### welcome_channels
 
-Field with the following constraints:
+{[WelcomeScreenChannelObject](#WelcomeScreenChannelObject)}
 
-- Type: WelcomeScreenChannelObject
-- Constraints: None
+<div id="StickerObject"></div>
 
 ## StickerObject
 
@@ -2055,89 +3346,79 @@ type StickerObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="pack_id"></div>
 
 ### pack_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="tags"></div>
 
 ### tags
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="asset"></div>
 
 ### asset
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[StickerType](#StickerType)
 
-- Type: StickerType
-- Constraints: None
+<div id="format_type"></div>
 
 ### format_type
 
-Field with the following constraints:
+[StickerFormatType](#StickerFormatType)
 
-- Type: StickerFormatType
-- Constraints: None
+<div id="available"></div>
 
 ### available
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="sort_value"></div>
 
 ### sort_value
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="GuildObject"></div>
 
 ## GuildObject
 
@@ -2239,306 +3520,265 @@ type GuildObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="icon"></div>
 
 ### icon
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="icon_hash"></div>
 
 ### icon_hash
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="splash"></div>
 
 ### splash
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="discovery_splash"></div>
 
 ### discovery_splash
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="owner"></div>
 
 ### owner
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="owner_id"></div>
 
 ### owner_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="permissions"></div>
 
 ### permissions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="region"></div>
 
 ### region
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="afk_channel_id"></div>
 
 ### afk_channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="afk_timeout"></div>
 
 ### afk_timeout
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="widget_enabled"></div>
 
 ### widget_enabled
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="widget_channel_id"></div>
 
 ### widget_channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="verification_level"></div>
 
 ### verification_level
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: VerificationLevel
-- Constraints: None
+[VerificationLevel](#VerificationLevel)?<div id="default_message_notifications"></div>
 
 ### default_message_notifications
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: DefaultMessageNotification
-- Constraints: None
+[DefaultMessageNotification](#DefaultMessageNotification)?<div id="explicit_content_filter"></div>
 
 ### explicit_content_filter
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ExplicitContentFilterLevel
-- Constraints: None
+[ExplicitContentFilterLevel](#ExplicitContentFilterLevel)?<div id="roles"></div>
 
 ### roles
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildRoleObject
-- Constraints: None
+{[GuildRoleObject](#GuildRoleObject)}?<div id="emojis"></div>
 
 ### emojis
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmojiObject
-- Constraints: None
+{[EmojiObject](#EmojiObject)}?<div id="features"></div>
 
 ### features
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildFeature
-- Constraints: None
+{[GuildFeature](#GuildFeature)}?<div id="mfa_level"></div>
 
 ### mfa_level
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MFALevel
-- Constraints: None
+[MFALevel](#MFALevel)?<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="system_channel_id"></div>
 
 ### system_channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="system_channel_flags"></div>
 
 ### system_channel_flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: SystemChannelFlags
-- Constraints: None
+[SystemChannelFlags](#SystemChannelFlags)?<div id="rules_channel_id"></div>
 
 ### rules_channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="max_presences"></div>
 
 ### max_presences
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="max_members"></div>
 
 ### max_members
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="vanity_url_code"></div>
 
 ### vanity_url_code
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="banner"></div>
 
 ### banner
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="premium_tier"></div>
 
 ### premium_tier
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: PremiumTier
-- Constraints: None
+[PremiumTier](#PremiumTier)?<div id="premium_subscription_count"></div>
 
 ### premium_subscription_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="preferred_locale"></div>
 
 ### preferred_locale
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: LanguageLocales
-- Constraints: None
+[LanguageLocales](#LanguageLocales)?<div id="public_updates_channel_id"></div>
 
 ### public_updates_channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="max_video_channel_users"></div>
 
 ### max_video_channel_users
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="max_stage_video_channel_users"></div>
 
 ### max_stage_video_channel_users
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="approximate_member_count"></div>
 
 ### approximate_member_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="approximate_presence_count"></div>
 
 ### approximate_presence_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="welcome_screen"></div>
 
 ### welcome_screen
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: WelcomeScreenObject
-- Constraints: None
+[WelcomeScreenObject](#WelcomeScreenObject)?<div id="nsfw_level"></div>
 
 ### nsfw_level
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildNSFWLevel
-- Constraints: None
+[GuildNSFWLevel](#GuildNSFWLevel)?<div id="stickers"></div>
 
 ### stickers
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: StickerObject
-- Constraints: None
+{[StickerObject](#StickerObject)}?<div id="premium_progress_bar_enabled"></div>
 
 ### premium_progress_bar_enabled
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="safety_alerts_channel_id"></div>
 
 ### safety_alerts_channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="InstallParamsObject"></div>
 
 ## InstallParamsObject
 
@@ -2558,19 +3798,19 @@ type InstallParamsObject = {
 
 </details>
 
+<div id="scopes"></div>
+
 ### scopes
 
-Field with the following constraints:
+{[OAuth2Scopes](#OAuth2Scopes)}
 
-- Type: OAuth2Scopes
-- Constraints: None
+<div id="permissions"></div>
 
 ### permissions
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="ApplicationObject"></div>
 
 ## ApplicationObject
 
@@ -2644,205 +3884,175 @@ type ApplicationObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="icon"></div>
 
 ### icon
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="rpc_origins"></div>
 
 ### rpc_origins
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+{[string](#string)}?<div id="bot_public"></div>
 
 ### bot_public
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="bot_require_code_grant"></div>
 
 ### bot_require_code_grant
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="bot"></div>
 
 ### bot
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="terms_of_service_url"></div>
 
 ### terms_of_service_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="privacy_policy_url"></div>
 
 ### privacy_policy_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="owner"></div>
 
 ### owner
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="summary"></div>
 
 ### summary
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="verify_key"></div>
 
 ### verify_key
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="team"></div>
 
 ### team
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: TeamObject
-- Constraints: None
+[TeamObject](#TeamObject)?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="guild"></div>
 
 ### guild
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildObject
-- Constraints: None
+[GuildObject](#GuildObject)?<div id="primary_sku_id"></div>
 
 ### primary_sku_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="slug"></div>
 
 ### slug
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="cover_image"></div>
 
 ### cover_image
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="approximate_guild_count"></div>
 
 ### approximate_guild_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="redirect_uris"></div>
 
 ### redirect_uris
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+{[string](#string)}?<div id="interactions_endpoint_url"></div>
 
 ### interactions_endpoint_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="role_connections_verification_url"></div>
 
 ### role_connections_verification_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="tags"></div>
 
 ### tags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+{[string](#string)}?<div id="install_params"></div>
 
 ### install_params
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: InstallParamsObject
-- Constraints: None
+[InstallParamsObject](#InstallParamsObject)?<div id="integration_types_config"></div>
 
 ### integration_types_config
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [ApplicationIntegrationType]
-
-Field with the following constraints:
-
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="custom_install_url"></div>
 
 ### custom_install_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="GuildApplicationCommandPermissionObject"></div>
 
 ## GuildApplicationCommandPermissionObject
 
@@ -2864,26 +4074,25 @@ type GuildApplicationCommandPermissionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[ApplicationCommandPermissionType](#ApplicationCommandPermissionType)
 
-- Type: ApplicationCommandPermissionType
-- Constraints: None
+<div id="permission"></div>
 
 ### permission
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="GuildApplicationCommandPermissionsObject"></div>
 
 ## GuildApplicationCommandPermissionsObject
 
@@ -2907,33 +4116,31 @@ type GuildApplicationCommandPermissionsObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="permissions"></div>
 
 ### permissions
 
-Field with the following constraints:
+{[GuildApplicationCommandPermissionObject](#GuildApplicationCommandPermissionObject)}
 
-- Type: GuildApplicationCommandPermissionObject
-- Constraints: None
+<div id="AutomoderationRuleTriggerMetadataObject"></div>
 
 ## AutomoderationRuleTriggerMetadataObject
 
@@ -2961,47 +4168,43 @@ type AutomoderationRuleTriggerMetadataObject = {
 
 </details>
 
+<div id="keyword_filter"></div>
+
 ### keyword_filter
 
-Field with the following constraints:
+{[string](#string)}
 
-- Type: string
-- Constraints: None
+<div id="regex_patterns"></div>
 
 ### regex_patterns
 
-Field with the following constraints:
+{[string](#string)}
 
-- Type: string
-- Constraints: None
+<div id="presets"></div>
 
 ### presets
 
-Field with the following constraints:
+{[AutomoderationRuleKeywordPresetType](#AutomoderationRuleKeywordPresetType)}
 
-- Type: AutomoderationRuleKeywordPresetType
-- Constraints: None
+<div id="allow_list"></div>
 
 ### allow_list
 
-Field with the following constraints:
+{[string](#string)}
 
-- Type: string
-- Constraints: None
+<div id="mention_total_limit"></div>
 
 ### mention_total_limit
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="mention_raid_protection_enabled"></div>
 
 ### mention_raid_protection_enabled
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="AutmoderationActionMetadataObject"></div>
 
 ## AutmoderationActionMetadataObject
 
@@ -3023,26 +4226,25 @@ type AutmoderationActionMetadataObject = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="duration_seconds"></div>
 
 ### duration_seconds
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="custom_message"></div>
 
 ### custom_message
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="AutomoderationActionObject"></div>
 
 ## AutomoderationActionObject
 
@@ -3062,19 +4264,19 @@ type AutomoderationActionObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[AutomoderationActionType](#AutomoderationActionType)
 
-- Type: AutomoderationActionType
-- Constraints: None
+<div id="metadata"></div>
 
 ### metadata
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AutmoderationActionMetadataObject
-- Constraints: None
+[AutmoderationActionMetadataObject](#AutmoderationActionMetadataObject)?<div id="AutomoderationRuleObject"></div>
 
 ## AutomoderationRuleObject
 
@@ -3112,82 +4314,73 @@ type AutomoderationRuleObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="creator_id"></div>
 
 ### creator_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="event_type"></div>
 
 ### event_type
 
-Field with the following constraints:
+[AutomoderationRuleEventType](#AutomoderationRuleEventType)
 
-- Type: AutomoderationRuleEventType
-- Constraints: None
+<div id="trigger_type"></div>
 
 ### trigger_type
 
-Field with the following constraints:
+[AutomoderationRuleTriggerType](#AutomoderationRuleTriggerType)
 
-- Type: AutomoderationRuleTriggerType
-- Constraints: None
+<div id="trigger_metadata"></div>
 
 ### trigger_metadata
 
-Field with the following constraints:
+[AutomoderationRuleTriggerMetadataObject](#AutomoderationRuleTriggerMetadataObject)
 
-- Type: AutomoderationRuleTriggerMetadataObject
-- Constraints: None
+<div id="actions"></div>
 
 ### actions
 
-Field with the following constraints:
+{[AutomoderationActionObject](#AutomoderationActionObject)}
 
-- Type: AutomoderationActionObject
-- Constraints: None
+<div id="enabled"></div>
 
 ### enabled
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="exempt_roles"></div>
 
 ### exempt_roles
 
-Field with the following constraints:
+{[Snowflake](#Snowflake)}
 
-- Type: Snowflake
-- Constraints: None
+<div id="exempt_channels"></div>
 
 ### exempt_channels
 
-Field with the following constraints:
+{[Snowflake](#Snowflake)}
 
-- Type: Snowflake
-- Constraints: None
+<div id="OverwriteObject"></div>
 
 ## OverwriteObject
 
@@ -3211,33 +4404,31 @@ type OverwriteObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[OverwriteObjectType](#OverwriteObjectType)
 
-- Type: OverwriteObjectType
-- Constraints: None
+<div id="allow"></div>
 
 ### allow
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="deny"></div>
 
 ### deny
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="ThreadMetadataObject"></div>
 
 ## ThreadMetadataObject
 
@@ -3265,47 +4456,43 @@ type ThreadMetadataObject = {
 
 </details>
 
+<div id="archived"></div>
+
 ### archived
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="auto_archive_duration"></div>
 
 ### auto_archive_duration
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="archive_timestamp"></div>
 
 ### archive_timestamp
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="locked"></div>
 
 ### locked
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="invitable"></div>
 
 ### invitable
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="create_timestamp"></div>
 
 ### create_timestamp
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="GuildMemberObject"></div>
 
 ## GuildMemberObject
 
@@ -3347,96 +4534,85 @@ type GuildMemberObject = {
 
 </details>
 
+<div id="user"></div>
+
 ### user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="nick"></div>
 
 ### nick
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="avatar"></div>
 
 ### avatar
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="roles"></div>
 
 ### roles
 
-Field with the following constraints:
+{[Snowflake](#Snowflake)}
 
-- Type: Snowflake
-- Constraints: None
+<div id="joined_at"></div>
 
 ### joined_at
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="premium_since"></div>
 
 ### premium_since
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="deaf"></div>
 
 ### deaf
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="mute"></div>
 
 ### mute
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="pending"></div>
 
 ### pending
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="permissions"></div>
 
 ### permissions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="communication_disabled_until"></div>
 
 ### communication_disabled_until
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="avatar_decoration_data"></div>
 
 ### avatar_decoration_data
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AvatarDecorationDataObject
-- Constraints: None
+[AvatarDecorationDataObject](#AvatarDecorationDataObject)?<div id="ThreadMemberObject"></div>
 
 ## ThreadMemberObject
 
@@ -3462,40 +4638,37 @@ type ThreadMemberObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="user_id"></div>
 
 ### user_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="join_timestamp"></div>
 
 ### join_timestamp
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="member"></div>
 
 ### member
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildMemberObject
-- Constraints: None
+[GuildMemberObject](#GuildMemberObject)?<div id="ForumTagObject"></div>
 
 ## ForumTagObject
 
@@ -3521,40 +4694,37 @@ type ForumTagObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="moderated"></div>
 
 ### moderated
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="emoji_id"></div>
 
 ### emoji_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji_name"></div>
 
 ### emoji_name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="DefaultReactionObject"></div>
 
 ## DefaultReactionObject
 
@@ -3574,19 +4744,19 @@ type DefaultReactionObject = {
 
 </details>
 
+<div id="emoji_id"></div>
+
 ### emoji_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji_name"></div>
 
 ### emoji_name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="ChannelObject"></div>
 
 ## ChannelObject
 
@@ -3672,250 +4842,217 @@ type ChannelObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[ChannelType](#ChannelType)
 
-- Type: ChannelType
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="position"></div>
 
 ### position
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="permission_overwrites"></div>
 
 ### permission_overwrites
 
-Field with the following constraints:
+{[OverwriteObject](#OverwriteObject)}
 
-- Type: OverwriteObject
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="topic"></div>
 
 ### topic
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="nsfw"></div>
 
 ### nsfw
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="last_message_id"></div>
 
 ### last_message_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="bitrate"></div>
 
 ### bitrate
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="user_limit"></div>
 
 ### user_limit
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="rate_limit_per_user"></div>
 
 ### rate_limit_per_user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="recipients"></div>
 
 ### recipients
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+{[UserObject](#UserObject)}?<div id="icon"></div>
 
 ### icon
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="owner_id"></div>
 
 ### owner_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="managed"></div>
 
 ### managed
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="parent_id"></div>
 
 ### parent_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="last_pin_timestamp"></div>
 
 ### last_pin_timestamp
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="rtc_region"></div>
 
 ### rtc_region
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="video_quality_mode"></div>
 
 ### video_quality_mode
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: VideoQualityMode
-- Constraints: None
+[VideoQualityMode](#VideoQualityMode)?<div id="message_count"></div>
 
 ### message_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="member_count"></div>
 
 ### member_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="thread_metadata"></div>
 
 ### thread_metadata
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ThreadMetadataObject
-- Constraints: None
+[ThreadMetadataObject](#ThreadMetadataObject)?<div id="member"></div>
 
 ### member
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ThreadMemberObject
-- Constraints: None
+[ThreadMemberObject](#ThreadMemberObject)?<div id="default_auto_archive_duration"></div>
 
 ### default_auto_archive_duration
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="permissions"></div>
 
 ### permissions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelFlags
-- Constraints: None
+[ChannelFlags](#ChannelFlags)?<div id="total_message_sent"></div>
 
 ### total_message_sent
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="available_tags"></div>
 
 ### available_tags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ForumTagObject
-- Constraints: None
+{[ForumTagObject](#ForumTagObject)}?<div id="applied_tags"></div>
 
 ### applied_tags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+{[Snowflake](#Snowflake)}?<div id="default_reaction_emoji"></div>
 
 ### default_reaction_emoji
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: DefaultReactionObject
-- Constraints: None
+[DefaultReactionObject](#DefaultReactionObject)?<div id="default_thread_rate_limit_per_user"></div>
 
 ### default_thread_rate_limit_per_user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="default_sort_order"></div>
 
 ### default_sort_order
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: SortOrderType
-- Constraints: None
+[SortOrderType](#SortOrderType)?<div id="default_forum_layout"></div>
 
 ### default_forum_layout
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ForumLayoutType
-- Constraints: None
+[ForumLayoutType](#ForumLayoutType)?<div id="EntitlementObject"></div>
 
 ## EntitlementObject
 
@@ -3951,75 +5088,67 @@ type EntitlementObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="sku_id"></div>
 
 ### sku_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="user_id"></div>
 
 ### user_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[EntitlementType](#EntitlementType)
 
-- Type: EntitlementType
-- Constraints: None
+<div id="deleted"></div>
 
 ### deleted
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="starts_at"></div>
 
 ### starts_at
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="ends_at"></div>
 
 ### ends_at
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="consumed"></div>
 
 ### consumed
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="VoiceStateObject"></div>
 
 ## VoiceStateObject
 
@@ -4061,96 +5190,85 @@ type VoiceStateObject = {
 
 </details>
 
+<div id="guild_id"></div>
+
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="user_id"></div>
 
 ### user_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="member"></div>
 
 ### member
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildMemberObject
-- Constraints: None
+[GuildMemberObject](#GuildMemberObject)?<div id="session_id"></div>
 
 ### session_id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="deaf"></div>
 
 ### deaf
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="mute"></div>
 
 ### mute
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="self_deaf"></div>
 
 ### self_deaf
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="self_mute"></div>
 
 ### self_mute
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="self_stream"></div>
 
 ### self_stream
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="self_video"></div>
 
 ### self_video
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="suppress"></div>
 
 ### suppress
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="request_to_speak_timestamp"></div>
 
 ### request_to_speak_timestamp
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="ClientStatusObject"></div>
 
 ## ClientStatusObject
 
@@ -4172,26 +5290,25 @@ type ClientStatusObject = {
 
 </details>
 
+<div id="desktop"></div>
+
 ### desktop
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="mobile"></div>
 
 ### mobile
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="web"></div>
 
 ### web
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="PresenceUpdateObject"></div>
 
 ## PresenceUpdateObject
 
@@ -4217,40 +5334,37 @@ type PresenceUpdateObject = {
 
 </details>
 
+<div id="user"></div>
+
 ### user
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="status"></div>
 
 ### status
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="activities"></div>
 
 ### activities
 
-Field with the following constraints:
+{[ActivityObject](#ActivityObject)}
 
-- Type: ActivityObject
-- Constraints: None
+<div id="client_status"></div>
 
 ### client_status
 
-Field with the following constraints:
+[ClientStatusObject](#ClientStatusObject)
 
-- Type: ClientStatusObject
-- Constraints: None
+<div id="StageInstanceObject"></div>
 
 ## StageInstanceObject
 
@@ -4280,54 +5394,49 @@ type StageInstanceObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="topic"></div>
 
 ### topic
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="privacy_level"></div>
 
 ### privacy_level
 
-Field with the following constraints:
+[PrivacyLevel](#PrivacyLevel)
 
-- Type: PrivacyLevel
-- Constraints: None
+<div id="discoverable_disabled"></div>
 
 ### discoverable_disabled
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="guild_scheduled_event_id"></div>
 
 ### guild_scheduled_event_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="GuildScheduledEventEntityMetadata"></div>
 
 ## GuildScheduledEventEntityMetadata
 
@@ -4345,12 +5454,13 @@ type GuildScheduledEventEntityMetadata = {
 
 </details>
 
+<div id="location"></div>
+
 ### location
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="GuildScheduledEventObject"></div>
 
 ## GuildScheduledEventObject
 
@@ -4398,117 +5508,103 @@ type GuildScheduledEventObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="creator_id"></div>
 
 ### creator_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="scheduled_start_time"></div>
 
 ### scheduled_start_time
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="scheduled_end_time"></div>
 
 ### scheduled_end_time
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="privacy_level"></div>
 
 ### privacy_level
 
-Field with the following constraints:
+[PrivacyLevel](#PrivacyLevel)
 
-- Type: PrivacyLevel
-- Constraints: None
+<div id="status"></div>
 
 ### status
 
-Field with the following constraints:
+[GuildScheduledEventStatus](#GuildScheduledEventStatus)
 
-- Type: GuildScheduledEventStatus
-- Constraints: None
+<div id="entity_type"></div>
 
 ### entity_type
 
-Field with the following constraints:
+[GuildScheduledEventEntityType](#GuildScheduledEventEntityType)
 
-- Type: GuildScheduledEventEntityType
-- Constraints: None
+<div id="entity_id"></div>
 
 ### entity_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="entity_metadata"></div>
 
 ### entity_metadata
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildScheduledEventEntityMetadata
-- Constraints: None
+[GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)?<div id="creator"></div>
 
 ### creator
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="user_count"></div>
 
 ### user_count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="image"></div>
 
 ### image
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="IntegrationAccountObject"></div>
 
 ## IntegrationAccountObject
 
@@ -4528,19 +5624,19 @@ type IntegrationAccountObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="IntegrationObject"></div>
 
 ## IntegrationObject
 
@@ -4588,117 +5684,103 @@ type IntegrationObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[IntegrationType](#IntegrationType)
 
-- Type: IntegrationType
-- Constraints: None
+<div id="enabled"></div>
 
 ### enabled
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="syncing"></div>
 
 ### syncing
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="role_id"></div>
 
 ### role_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="enable_emoticons"></div>
 
 ### enable_emoticons
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="expire_behaviour"></div>
 
 ### expire_behaviour
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: IntegrationExpireBehaviours
-- Constraints: None
+[IntegrationExpireBehaviours](#IntegrationExpireBehaviours)?<div id="expire_grace_period"></div>
 
 ### expire_grace_period
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="account"></div>
 
 ### account
 
-Field with the following constraints:
+[IntegrationAccountObject](#IntegrationAccountObject)
 
-- Type: IntegrationAccountObject
-- Constraints: None
+<div id="synced_at"></div>
 
 ### synced_at
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="subscriber_count"></div>
 
 ### subscriber_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="revoked"></div>
 
 ### revoked
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="application"></div>
 
 ### application
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: IntegrationApplicationObject
-- Constraints: None
+[IntegrationApplicationObject](#IntegrationApplicationObject)?<div id="scopes"></div>
 
 ### scopes
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: OAuth2Scopes
-- Constraints: None
+{[OAuth2Scopes](#OAuth2Scopes)}?<div id="ChannelMentionObject"></div>
 
 ## ChannelMentionObject
 
@@ -4722,33 +5804,31 @@ type ChannelMentionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[ChannelType](#ChannelType)
 
-- Type: ChannelType
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="AttachmentObject"></div>
 
 ## AttachmentObject
 
@@ -4792,6 +5872,8 @@ type AttachmentObject = Partial<{
 
 </details>
 
+[Partial](#Partial)<[Snowflake](#Snowflake), [string](#string), [string](#string)?, [string](#string)?, [string](#string)?, [number](#number), [string](#string), [string](#string), [number](#number)?, [number](#number)?, [boolean](#boolean)?, [number](#number)?, [string](#string)?, [number](#number)><div id="EmbedFooterObject"></div>
+
 ## EmbedFooterObject
 
 https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
@@ -4812,26 +5894,25 @@ type EmbedFooterObject = {
 
 </details>
 
+<div id="text"></div>
+
 ### text
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="icon_url"></div>
 
 ### icon_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="proxy_icon_url"></div>
 
 ### proxy_icon_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="EmbedImageObject"></div>
 
 ## EmbedImageObject
 
@@ -4855,33 +5936,31 @@ type EmbedImageObject = {
 
 </details>
 
+<div id="url"></div>
+
 ### url
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="proxy_url"></div>
 
 ### proxy_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="height"></div>
 
 ### height
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="width"></div>
 
 ### width
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="EmbedProviderObject"></div>
 
 ## EmbedProviderObject
 
@@ -4901,19 +5980,19 @@ type EmbedProviderObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="url"></div>
 
 ### url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="EmbedAuthorObject"></div>
 
 ## EmbedAuthorObject
 
@@ -4937,33 +6016,31 @@ type EmbedAuthorObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="url"></div>
 
 ### url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="icon_url"></div>
 
 ### icon_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="proxy_icon_url"></div>
 
 ### proxy_icon_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="EmbedFieldObject"></div>
 
 ## EmbedFieldObject
 
@@ -4985,26 +6062,25 @@ type EmbedFieldObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="value"></div>
 
 ### value
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="inline"></div>
 
 ### inline
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="EmbedThumbnailObject"></div>
 
 ## EmbedThumbnailObject
 
@@ -5028,33 +6104,31 @@ type EmbedThumbnailObject = {
 
 </details>
 
+<div id="url"></div>
+
 ### url
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="proxy_url"></div>
 
 ### proxy_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="height"></div>
 
 ### height
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="width"></div>
 
 ### width
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="EmbedVideoObject"></div>
 
 ## EmbedVideoObject
 
@@ -5078,33 +6152,31 @@ type EmbedVideoObject = {
 
 </details>
 
+<div id="url"></div>
+
 ### url
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="proxy_url"></div>
 
 ### proxy_url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="height"></div>
 
 ### height
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="width"></div>
 
 ### width
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="EmbedObject"></div>
 
 ## EmbedObject
 
@@ -5146,96 +6218,85 @@ type EmbedObject = {
 
 </details>
 
+<div id="title"></div>
+
 ### title
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedType
-- Constraints: None
+[EmbedType](#EmbedType)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="url"></div>
 
 ### url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="timestamp"></div>
 
 ### timestamp
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="color"></div>
 
 ### color
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="footer"></div>
 
 ### footer
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedFooterObject
-- Constraints: None
+[EmbedFooterObject](#EmbedFooterObject)?<div id="image"></div>
 
 ### image
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedImageObject
-- Constraints: None
+[EmbedImageObject](#EmbedImageObject)?<div id="thumbnail"></div>
 
 ### thumbnail
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedThumbnailObject
-- Constraints: None
+[EmbedThumbnailObject](#EmbedThumbnailObject)?<div id="video"></div>
 
 ### video
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedVideoObject
-- Constraints: None
+[EmbedVideoObject](#EmbedVideoObject)?<div id="provider"></div>
 
 ### provider
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedProviderObject
-- Constraints: None
+[EmbedProviderObject](#EmbedProviderObject)?<div id="author"></div>
 
 ### author
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedAuthorObject
-- Constraints: None
+[EmbedAuthorObject](#EmbedAuthorObject)?<div id="fields"></div>
 
 ### fields
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedFieldObject
-- Constraints: None
+{[EmbedFieldObject](#EmbedFieldObject)}?<div id="ReactionCountDetailsObject"></div>
 
 ## ReactionCountDetailsObject
 
@@ -5255,19 +6316,19 @@ type ReactionCountDetailsObject = {
 
 </details>
 
+<div id="burst"></div>
+
 ### burst
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="normal"></div>
 
 ### normal
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="ReactionObject"></div>
 
 ## ReactionObject
 
@@ -5295,47 +6356,43 @@ type ReactionObject = {
 
 </details>
 
+<div id="count"></div>
+
 ### count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="count_details"></div>
 
 ### count_details
 
-Field with the following constraints:
+[ReactionCountDetailsObject](#ReactionCountDetailsObject)
 
-- Type: ReactionCountDetailsObject
-- Constraints: None
+<div id="me"></div>
 
 ### me
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="me_burst"></div>
 
 ### me_burst
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="emoji"></div>
 
 ### emoji
 
-Field with the following constraints:
+[EmojiObject](#EmojiObject)
 
-- Type: EmojiObject
-- Constraints: None
+<div id="burst_colors"></div>
 
 ### burst_colors
 
-Field with the following constraints:
+{[string](#string)}
 
-- Type: string
-- Constraints: None
+<div id="MessageActivityObject"></div>
 
 ## MessageActivityObject
 
@@ -5355,19 +6412,19 @@ type MessageActivityObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[MessageActivityType](#MessageActivityType)
 
-- Type: MessageActivityType
-- Constraints: None
+<div id="party_id"></div>
 
 ### party_id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="MessageReferenceObject"></div>
 
 ## MessageReferenceObject
 
@@ -5393,40 +6450,37 @@ type MessageReferenceObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageReferenceType
-- Constraints: None
+[MessageReferenceType](#MessageReferenceType)?<div id="message_id"></div>
 
 ### message_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="fail_if_not_exists"></div>
 
 ### fail_if_not_exists
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="MessageInteractionMetadatObject"></div>
 
 ## MessageInteractionMetadatObject
 
@@ -5458,58 +6512,55 @@ type MessageInteractionMetadatObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[InteractionType](#InteractionType)
 
-- Type: InteractionType
-- Constraints: None
+<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="authorizing_integration_owners"></div>
 
 ### authorizing_integration_owners
 
 *This is an inline table type with the following fields*
 
+<div id="[ApplicationIntegrationType]"></div>
+
 ##### [ApplicationIntegrationType]
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="original_response_message_id"></div>
 
 ### original_response_message_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="interacted_message_id"></div>
 
 ### interacted_message_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="triggering_interaction_metadata"></div>
 
 ### triggering_interaction_metadata
 
-Field with the following constraints:
+[MessageInteractionMetadatObject](#MessageInteractionMetadatObject)
 
-- Type: MessageInteractionMetadatObject
-- Constraints: None
+<div id="MessageInteractionObject"></div>
 
 ## MessageInteractionObject
 
@@ -5535,40 +6586,37 @@ type MessageInteractionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[InteractionType](#InteractionType)
 
-- Type: InteractionType
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="member"></div>
 
 ### member
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildMemberObject
-- Constraints: None
+[GuildMemberObject](#GuildMemberObject)?<div id="SelectOptionObject"></div>
 
 ## SelectOptionObject
 
@@ -5594,40 +6642,37 @@ type SelectOptionObject = {
 
 </details>
 
+<div id="label"></div>
+
 ### label
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="value"></div>
 
 ### value
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji"></div>
 
 ### emoji
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmojiObject
-- Constraints: None
+[EmojiObject](#EmojiObject)?<div id="default"></div>
 
 ### default
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="SelectDefaultValueObject"></div>
 
 ## SelectDefaultValueObject
 
@@ -5647,19 +6692,19 @@ type SelectDefaultValueObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="ActionRowComponentObject"></div>
 
 ## ActionRowComponentObject
 
@@ -5679,19 +6724,19 @@ type ActionRowComponentObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="components"></div>
 
 ### components
 
-Field with the following constraints:
+{[ComponentObjects](#ComponentObjects)}
 
-- Type: ComponentObjects
-- Constraints: None
+<div id="ButtonComponentObject"></div>
 
 ## ButtonComponentObject
 
@@ -5722,6 +6767,8 @@ type ButtonComponentObject = Partial<{
 ```
 
 </details>
+
+[Partial](#Partial)<[number](#number), [ButtonStyle](#ButtonStyle), [string](#string)?, [EmojiObject](#EmojiObject)?, [string](#string)?, [string](#string)?, [string](#string)?, [boolean](#boolean)?><div id="SelectMenuComponentObject"></div>
 
 ## SelectMenuComponentObject
 
@@ -5755,68 +6802,61 @@ type SelectMenuComponentObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="custom_id"></div>
 
 ### custom_id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: SelectOptionObject
-- Constraints: None
+{[SelectOptionObject](#SelectOptionObject)}?<div id="channel_types"></div>
 
 ### channel_types
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelType
-- Constraints: None
+{[ChannelType](#ChannelType)}?<div id="placeholder"></div>
 
 ### placeholder
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="default_values"></div>
 
 ### default_values
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: SelectDefaultValueObject
-- Constraints: None
+{[SelectDefaultValueObject](#SelectDefaultValueObject)}?<div id="min_values"></div>
 
 ### min_values
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="max_values"></div>
 
 ### max_values
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="disabled"></div>
 
 ### disabled
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="TextInputComponentObject"></div>
 
 ## TextInputComponentObject
 
@@ -5850,68 +6890,61 @@ type TextInputComponentObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="custom_id"></div>
 
 ### custom_id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="style"></div>
 
 ### style
 
-Field with the following constraints:
+[TextInputStyles](#TextInputStyles)
 
-- Type: TextInputStyles
-- Constraints: None
+<div id="label"></div>
 
 ### label
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="min_length"></div>
 
 ### min_length
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="max_length"></div>
 
 ### max_length
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="required"></div>
 
 ### required
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="value"></div>
 
 ### value
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="placeholder"></div>
 
 ### placeholder
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="ComponentObjects"></div>
 
 ## ComponentObjects
 
@@ -5926,6 +6959,38 @@ type ComponentObjects = ActionRowComponentObject | ButtonComponentObject | Selec
 ```
 
 </details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[ActionRowComponentObject](#ActionRowComponentObject)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[ButtonComponentObject](#ButtonComponentObject)
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+[SelectMenuComponentObject](#SelectMenuComponentObject)
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+[TextInputComponentObject](#TextInputComponentObject)
+
+</details>
+
+<div id="SitckerItemObject"></div>
 
 ## SitckerItemObject
 
@@ -5947,26 +7012,25 @@ type SitckerItemObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="format_type"></div>
 
 ### format_type
 
-Field with the following constraints:
+[StickerFormatType](#StickerFormatType)
 
-- Type: StickerFormatType
-- Constraints: None
+<div id="RoleSubscriptionDataObject"></div>
 
 ## RoleSubscriptionDataObject
 
@@ -5990,33 +7054,31 @@ type RoleSubscriptionDataObject = {
 
 </details>
 
+<div id="role_subscription_listing_id"></div>
+
 ### role_subscription_listing_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="tier_name"></div>
 
 ### tier_name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="total_months_subscribed"></div>
 
 ### total_months_subscribed
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="is_renewal"></div>
 
 ### is_renewal
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="PollMediaObject"></div>
 
 ## PollMediaObject
 
@@ -6036,16 +7098,19 @@ type PollMediaObject = {
 
 </details>
 
+<div id="text"></div>
+
 ### text
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji"></div>
 
 ### emoji
 
-[Documentor] Unsupported type: Generic
+*This field is optional and may not be specified*
+
+[Partial](#Partial)<[EmojiObject](#EmojiObject)>?<div id="PollAnswerObject"></div>
 
 ## PollAnswerObject
 
@@ -6065,19 +7130,19 @@ type PollAnswerObject = {
 
 </details>
 
+<div id="answer_id"></div>
+
 ### answer_id
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="poll_media"></div>
 
 ### poll_media
 
-Field with the following constraints:
+[PollMediaObject](#PollMediaObject)
 
-- Type: PollMediaObject
-- Constraints: None
+<div id="PollAnswerCountObject"></div>
 
 ## PollAnswerCountObject
 
@@ -6099,26 +7164,25 @@ type PollAnswerCountObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="count"></div>
 
 ### count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="me_voted"></div>
 
 ### me_voted
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="PollResultObject"></div>
 
 ## PollResultObject
 
@@ -6138,19 +7202,19 @@ type PollResultObject = {
 
 </details>
 
+<div id="is_finalized"></div>
+
 ### is_finalized
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="answer_counts"></div>
 
 ### answer_counts
 
-Field with the following constraints:
+{[PollAnswerCountObject](#PollAnswerCountObject)}
 
-- Type: PollAnswerCountObject
-- Constraints: None
+<div id="PollObject"></div>
 
 ## PollObject
 
@@ -6179,46 +7243,63 @@ type PollObject = {
 
 </details>
 
+<div id="question"></div>
+
 ### question
 
-Field with the following constraints:
+[PollMediaObject](#PollMediaObject)
 
-- Type: PollMediaObject
-- Constraints: None
+<div id="answers"></div>
 
 ### answers
 
-Field with the following constraints:
+{[PollAnswerObject](#PollAnswerObject)}
 
-- Type: PollAnswerObject
-- Constraints: None
+<div id="expiry"></div>
 
 ### expiry
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="allow_multiselect"></div>
 
 ### allow_multiselect
 
 fixme: for some reason luau's type system doesn't like this being a `boolean`????
 
-[Documentor] Unsupported type: Union
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+```luau
+true
+```
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+```luau
+false
+```
+
+</details>
+
+<div id="layout_type"></div>
 
 ### layout_type
 
-Field with the following constraints:
+[PollLayoutType](#PollLayoutType)
 
-- Type: PollLayoutType
-- Constraints: None
+<div id="results"></div>
 
 ### results
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: PollResultObject
-- Constraints: None
+[PollResultObject](#PollResultObject)?<div id="MessageCallObject"></div>
 
 ## MessageCallObject
 
@@ -6238,19 +7319,19 @@ type MessageCallObject = {
 
 </details>
 
+<div id="participants"></div>
+
 ### participants
 
-Field with the following constraints:
+{[UserObject](#UserObject)}
 
-- Type: UserObject
-- Constraints: None
+<div id="ended_timestamp"></div>
 
 ### ended_timestamp
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="MessageObject"></div>
 
 ## MessageObject
 
@@ -6336,250 +7417,217 @@ type MessageObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="author"></div>
 
 ### author
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="content"></div>
 
 ### content
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="timestamp"></div>
 
 ### timestamp
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="edited_timestamp"></div>
 
 ### edited_timestamp
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="tts"></div>
 
 ### tts
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="mention_everyone"></div>
 
 ### mention_everyone
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="mentions"></div>
 
 ### mentions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+{[UserObject](#UserObject)}?<div id="mention_roles"></div>
 
 ### mention_roles
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildRoleObject
-- Constraints: None
+{[GuildRoleObject](#GuildRoleObject)}?<div id="mention_channels"></div>
 
 ### mention_channels
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelMentionObject
-- Constraints: None
+{[ChannelMentionObject](#ChannelMentionObject)}?<div id="attachments"></div>
 
 ### attachments
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AttachmentObject
-- Constraints: None
+{[AttachmentObject](#AttachmentObject)}?<div id="embeds"></div>
 
 ### embeds
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedObject
-- Constraints: None
+{[EmbedObject](#EmbedObject)}?<div id="reactions"></div>
 
 ### reactions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ReactionObject
-- Constraints: None
+{[ReactionObject](#ReactionObject)}?<div id="nonce"></div>
 
 ### nonce
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="pinned"></div>
 
 ### pinned
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="webhook_id"></div>
 
 ### webhook_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageType
-- Constraints: None
+[MessageType](#MessageType)?<div id="activity"></div>
 
 ### activity
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageActivityObject
-- Constraints: None
+[MessageActivityObject](#MessageActivityObject)?<div id="application"></div>
 
 ### application
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationObject
-- Constraints: None
+[ApplicationObject](#ApplicationObject)?<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="message_reference"></div>
 
 ### message_reference
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageReferenceObject
-- Constraints: None
+[MessageReferenceObject](#MessageReferenceObject)?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="referenced_message"></div>
 
 ### referenced_message
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageObject
-- Constraints: None
+[MessageObject](#MessageObject)?<div id="interaction_metadata"></div>
 
 ### interaction_metadata
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageInteractionMetadatObject
-- Constraints: None
+[MessageInteractionMetadatObject](#MessageInteractionMetadatObject)?<div id="interaction"></div>
 
 ### interaction
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageInteractionObject
-- Constraints: None
+[MessageInteractionObject](#MessageInteractionObject)?<div id="thread"></div>
 
 ### thread
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelObject
-- Constraints: None
+[ChannelObject](#ChannelObject)?<div id="components"></div>
 
 ### components
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ComponentObjects
-- Constraints: None
+{[ComponentObjects](#ComponentObjects)}?<div id="sticker_items"></div>
 
 ### sticker_items
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: SitckerItemObject
-- Constraints: None
+{[SitckerItemObject](#SitckerItemObject)}?<div id="stickers"></div>
 
 ### stickers
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: StickerObject
-- Constraints: None
+{[StickerObject](#StickerObject)}?<div id="position"></div>
 
 ### position
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="role_subscription_data"></div>
 
 ### role_subscription_data
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: RoleSubscriptionDataObject
-- Constraints: None
+[RoleSubscriptionDataObject](#RoleSubscriptionDataObject)?<div id="resolved"></div>
 
 ### resolved
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ResolvedDataStructure
-- Constraints: None
+[ResolvedDataStructure](#ResolvedDataStructure)?<div id="poll"></div>
 
 ### poll
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: PollObject
-- Constraints: None
+[PollObject](#PollObject)?<div id="call"></div>
 
 ### call
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageCallObject
-- Constraints: None
+[MessageCallObject](#MessageCallObject)?<div id="ResolvedDataStructure"></div>
 
 ## ResolvedDataStructure
 
@@ -6607,47 +7655,43 @@ type ResolvedDataStructure = {
 
 </details>
 
+<div id="users"></div>
+
 ### users
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+{[UserObject](#UserObject)}?<div id="members"></div>
 
 ### members
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildMemberObject
-- Constraints: None
+{[GuildMemberObject](#GuildMemberObject)}?<div id="roles"></div>
 
 ### roles
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildRoleObject
-- Constraints: None
+{[GuildRoleObject](#GuildRoleObject)}?<div id="channels"></div>
 
 ### channels
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelObject
-- Constraints: None
+{[ChannelObject](#ChannelObject)}?<div id="messages"></div>
 
 ### messages
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageObject
-- Constraints: None
+{[MessageObject](#MessageObject)}?<div id="attachments"></div>
 
 ### attachments
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AttachmentObject
-- Constraints: None
+{[AttachmentObject](#AttachmentObject)}?<div id="ApplicationCommandInteractionDataOptionObject"></div>
 
 ## ApplicationCommandInteractionDataOptionObject
 
@@ -6673,37 +7717,37 @@ type ApplicationCommandInteractionDataOptionObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[ApplicationCommandOptionType](#ApplicationCommandOptionType)
 
-- Type: ApplicationCommandOptionType
-- Constraints: None
+<div id="value"></div>
 
 ### value
 
-[Documentor] Unsupported type: Tuple
+*This field is optional and may not be specified*
+
+([string](#string) | [number](#number) | [boolean](#boolean))?<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+{[ApplicationCommandInteractionDataOptionObject](#ApplicationCommandInteractionDataOptionObject)}
 
-- Type: ApplicationCommandInteractionDataOptionObject
-- Constraints: None
+<div id="focused"></div>
 
 ### focused
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="InteractionDataObject"></div>
 
 ## InteractionDataObject
 
@@ -6741,82 +7785,73 @@ type InteractionDataObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="resolved"></div>
 
 ### resolved
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ResolvedDataStructure
-- Constraints: None
+[ResolvedDataStructure](#ResolvedDataStructure)?<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationCommandInteractionDataOptionObject
-- Constraints: None
+{[ApplicationCommandInteractionDataOptionObject](#ApplicationCommandInteractionDataOptionObject)}?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="target_id"></div>
 
 ### target_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="custom_id"></div>
 
 ### custom_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="component_type"></div>
 
 ### component_type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="values"></div>
 
 ### values
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: SelectOptionObject
-- Constraints: None
+{[SelectOptionObject](#SelectOptionObject)}?<div id="components"></div>
 
 ### components
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ComponentObjects
-- Constraints: None
+{[ComponentObjects](#ComponentObjects)}?<div id="InteractionObject"></div>
 
 ## InteractionObject
 
@@ -6870,138 +7905,121 @@ type InteractionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[InteractionType](#InteractionType)
 
-- Type: InteractionType
-- Constraints: None
+<div id="data"></div>
 
 ### data
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: InteractionDataObject
-- Constraints: None
+[InteractionDataObject](#InteractionDataObject)?<div id="guild"></div>
 
 ### guild
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildObject
-- Constraints: None
+[GuildObject](#GuildObject)?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="channel"></div>
 
 ### channel
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelObject
-- Constraints: None
+[ChannelObject](#ChannelObject)?<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="member"></div>
 
 ### member
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildMemberObject
-- Constraints: None
+[GuildMemberObject](#GuildMemberObject)?<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="token"></div>
 
 ### token
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="version"></div>
 
 ### version
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="message"></div>
 
 ### message
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: MessageObject
-- Constraints: None
+[MessageObject](#MessageObject)?<div id="app_permissions"></div>
 
 ### app_permissions
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="locale"></div>
 
 ### locale
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: LanguageLocales
-- Constraints: None
+[LanguageLocales](#LanguageLocales)?<div id="guild_locale"></div>
 
 ### guild_locale
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: LanguageLocales
-- Constraints: None
+[LanguageLocales](#LanguageLocales)?<div id="entitlements"></div>
 
 ### entitlements
 
-Field with the following constraints:
+{[EntitlementObject](#EntitlementObject)}
 
-- Type: EntitlementObject
-- Constraints: None
+<div id="authorizing_integration_owners"></div>
 
 ### authorizing_integration_owners
 
-Field with the following constraints:
+{[IntegrationType](#IntegrationType)}
 
-- Type: IntegrationType
-- Constraints: None
+<div id="context"></div>
 
 ### context
 
-Field with the following constraints:
+[InteractionContextType](#InteractionContextType)
 
-- Type: InteractionContextType
-- Constraints: None
+<div id="ApplicationRoleConnectionMetadataObject"></div>
 
 ## ApplicationRoleConnectionMetadataObject
 
@@ -7033,55 +8051,43 @@ type ApplicationRoleConnectionMetadataObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[ApplicationRoleConnectionMetadataType](#ApplicationRoleConnectionMetadataType)
 
-- Type: ApplicationRoleConnectionMetadataType
-- Constraints: None
+<div id="key"></div>
 
 ### key
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name_localizations"></div>
 
 ### name_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description_localizations"></div>
 
 ### description_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="ApplicationCommandOptionChoiceObject"></div>
 
 ## ApplicationCommandOptionChoiceObject
 
@@ -7105,27 +8111,39 @@ type ApplicationCommandOptionChoiceObject = {
 
 </details>
 
+<div id="name"></div>
+
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name_localizations"></div>
 
 ### name_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="value"></div>
 
 ### value
 
-[Documentor] Unsupported type: Union
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[string](#string)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[number](#number)
+
+</details>
+
+<div id="ApplicationCommandOptionObject"></div>
 
 ## ApplicationCommandOptionObject
 
@@ -7173,111 +8191,91 @@ type ApplicationCommandOptionObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[ApplicationCommandOptionType](#ApplicationCommandOptionType)
 
-- Type: ApplicationCommandOptionType
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name_localizations"></div>
 
 ### name_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description_localizations"></div>
 
 ### description_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="required"></div>
 
 ### required
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="choices"></div>
 
 ### choices
 
-Field with the following constraints:
+{[ApplicationCommandOptionChoiceObject](#ApplicationCommandOptionChoiceObject)}
 
-- Type: ApplicationCommandOptionChoiceObject
-- Constraints: None
+<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationCommandOptionObject
-- Constraints: None
+{[ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?<div id="channel_types"></div>
 
 ### channel_types
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelType
-- Constraints: None
+{[ChannelType](#ChannelType)}?<div id="min_value"></div>
 
 ### min_value
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="max_value"></div>
 
 ### max_value
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="min_length"></div>
 
 ### min_length
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="max_length"></div>
 
 ### max_length
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="autocomplete"></div>
 
 ### autocomplete
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="ApplicationCommandObject"></div>
 
 ## ApplicationCommandObject
 
@@ -7329,125 +8327,103 @@ type ApplicationCommandObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationCommandType
-- Constraints: None
+[ApplicationCommandType](#ApplicationCommandType)?<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name_localizations"></div>
 
 ### name_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description_localizations"></div>
 
 ### description_localizations
 
-*This is an inline table type with the following fields*
+*This field is optional and may not be specified*
 
-##### [LanguageLocales]
-
-Field with the following constraints:
-
-- Type: string
-- Constraints: None
+[string](#string)?<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationCommandOptionObject
-- Constraints: None
+{[ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?<div id="default_member_permissions"></div>
 
 ### default_member_permissions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="dm_permission"></div>
 
 ### dm_permission
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="default_permission"></div>
 
 ### default_permission
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="nsfw"></div>
 
 ### nsfw
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="integration_types"></div>
 
 ### integration_types
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: IntegrationType
-- Constraints: None
+{[IntegrationType](#IntegrationType)}?<div id="contexts"></div>
 
 ### contexts
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: InteractionContextType
-- Constraints: None
+{[InteractionContextType](#InteractionContextType)}?<div id="version"></div>
 
 ### version
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="AuditLogChangeObject"></div>
 
 ## AuditLogChangeObject
 
@@ -7469,26 +8445,25 @@ type AuditLogChangeObject = {
 
 </details>
 
+<div id="new_value"></div>
+
 ### new_value
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: any
-- Constraints: None
+[any](#any)?<div id="old_value"></div>
 
 ### old_value
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: any
-- Constraints: None
+[any](#any)?<div id="key"></div>
 
 ### key
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="OptionalAuditEntryInfoObject"></div>
 
 ## OptionalAuditEntryInfoObject
 
@@ -7528,89 +8503,79 @@ type OptionalAuditEntryInfoObject = {
 
 </details>
 
+<div id="application_id"></div>
+
 ### application_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="auto_moderation_rule_name"></div>
 
 ### auto_moderation_rule_name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="auto_moderation_rule_trigger_type"></div>
 
 ### auto_moderation_rule_trigger_type
 
-Field with the following constraints:
+[AutomoderationRuleTriggerType](#AutomoderationRuleTriggerType)
 
-- Type: AutomoderationRuleTriggerType
-- Constraints: None
+<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="count"></div>
 
 ### count
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="delete_member_days"></div>
 
 ### delete_member_days
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="id"></div>
 
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="members_removed"></div>
 
 ### members_removed
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="message_id"></div>
 
 ### message_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="role_name"></div>
 
 ### role_name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="integration_type"></div>
 
 ### integration_type
 
-Field with the following constraints:
+[IntegrationType](#IntegrationType)
 
-- Type: IntegrationType
-- Constraints: None
+<div id="AuditLogEntryObject"></div>
 
 ## AuditLogEntryObject
 
@@ -7640,54 +8605,49 @@ type AuditLogEntryObject = {
 
 </details>
 
+<div id="target_id"></div>
+
 ### target_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="changes"></div>
 
 ### changes
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AuditLogChangeObject
-- Constraints: None
+{[AuditLogChangeObject](#AuditLogChangeObject)}?<div id="user_id"></div>
 
 ### user_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="id"></div>
 
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="action_type"></div>
 
 ### action_type
 
-Field with the following constraints:
+[AuditLogEventType](#AuditLogEventType)
 
-- Type: AuditLogEventType
-- Constraints: None
+<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: OptionalAuditEntryInfoObject
-- Constraints: None
+{[OptionalAuditEntryInfoObject](#OptionalAuditEntryInfoObject)}?<div id="reason"></div>
 
 ### reason
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="WebhookObject"></div>
 
 ## WebhookObject
 
@@ -7727,89 +8687,79 @@ type WebhookObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[WebhookType](#WebhookType)
 
-- Type: WebhookType
-- Constraints: None
+<div id="guild_id"></div>
 
 ### guild_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="avatar"></div>
 
 ### avatar
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="token"></div>
 
 ### token
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="application_id"></div>
 
 ### application_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="source_guild"></div>
 
 ### source_guild
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildObject
-- Constraints: None
+[GuildObject](#GuildObject)?<div id="source_channel"></div>
 
 ### source_channel
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelObject
-- Constraints: None
+[ChannelObject](#ChannelObject)?<div id="url"></div>
 
 ### url
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="AuditLogObject"></div>
 
 ## AuditLogObject
 
@@ -7841,61 +8791,55 @@ type AuditLogObject = {
 
 </details>
 
+<div id="application_commands"></div>
+
 ### application_commands
 
-Field with the following constraints:
+{[ApplicationCommandObject](#ApplicationCommandObject)}
 
-- Type: ApplicationCommandObject
-- Constraints: None
+<div id="audit_log_entries"></div>
 
 ### audit_log_entries
 
-Field with the following constraints:
+{[AuditLogEntryObject](#AuditLogEntryObject)}
 
-- Type: AuditLogEntryObject
-- Constraints: None
+<div id="auto_moderation_rules"></div>
 
 ### auto_moderation_rules
 
-Field with the following constraints:
+{[AutomoderationRuleObject](#AutomoderationRuleObject)}
 
-- Type: AutomoderationRuleObject
-- Constraints: None
+<div id="guild_scheduled_events"></div>
 
 ### guild_scheduled_events
 
-Field with the following constraints:
+{[GuildScheduledEventObject](#GuildScheduledEventObject)}
 
-- Type: GuildScheduledEventObject
-- Constraints: None
+<div id="integrations"></div>
 
 ### integrations
 
-Field with the following constraints:
+{[IntegrationObject](#IntegrationObject)}
 
-- Type: IntegrationObject
-- Constraints: None
+<div id="threads"></div>
 
 ### threads
 
-Field with the following constraints:
+{[ChannelObject](#ChannelObject)}
 
-- Type: ChannelObject
-- Constraints: None
+<div id="users"></div>
 
 ### users
 
-Field with the following constraints:
+{[UserObject](#UserObject)}
 
-- Type: UserObject
-- Constraints: None
+<div id="webhooks"></div>
 
 ### webhooks
 
-Field with the following constraints:
+{[WebhookObject](#WebhookObject)}
 
-- Type: WebhookObject
-- Constraints: None
+<div id="InviteObject"></div>
 
 ## InviteObject
 
@@ -7937,96 +8881,85 @@ type InviteObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[InviteTypes](#InviteTypes)
 
-- Type: InviteTypes
-- Constraints: None
+<div id="code"></div>
 
 ### code
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="guild"></div>
 
 ### guild
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildObject
-- Constraints: None
+[GuildObject](#GuildObject)?<div id="channel"></div>
 
 ### channel
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ChannelObject
-- Constraints: None
+[ChannelObject](#ChannelObject)?<div id="inviter"></div>
 
 ### inviter
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="target_type"></div>
 
 ### target_type
 
-Field with the following constraints:
+[InviteTargetTypes](#InviteTargetTypes)
 
-- Type: InviteTargetTypes
-- Constraints: None
+<div id="target_user"></div>
 
 ### target_user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="target_application"></div>
 
 ### target_application
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationObject
-- Constraints: None
+[ApplicationObject](#ApplicationObject)?<div id="approximate_presence_count"></div>
 
 ### approximate_presence_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="approximate_member_count"></div>
 
 ### approximate_member_count
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="expires_at"></div>
 
 ### expires_at
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="stage_instance"></div>
 
 ### stage_instance
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: StageInstanceObject
-- Constraints: None
+[StageInstanceObject](#StageInstanceObject)?<div id="guild_scheduled_event"></div>
 
 ### guild_scheduled_event
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildScheduledEventObject
-- Constraints: None
+[GuildScheduledEventObject](#GuildScheduledEventObject)?<div id="GuildVanityUrl"></div>
 
 ## GuildVanityUrl
 
@@ -8046,19 +8979,19 @@ type GuildVanityUrl = {
 
 </details>
 
+<div id="code"></div>
+
 ### code
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="uses"></div>
 
 ### uses
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="InviteMetadataObject"></div>
 
 ## InviteMetadataObject
 
@@ -8084,40 +9017,37 @@ type InviteMetadataObject = {
 
 </details>
 
+<div id="uses"></div>
+
 ### uses
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="max_uses"></div>
 
 ### max_uses
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="max_age"></div>
 
 ### max_age
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="temporary"></div>
 
 ### temporary
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="created_at"></div>
 
 ### created_at
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="FollowedChannelObject"></div>
 
 ## FollowedChannelObject
 
@@ -8137,19 +9067,19 @@ type FollowedChannelObject = {
 
 </details>
 
+<div id="channel_id"></div>
+
 ### channel_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="webhook_id"></div>
 
 ### webhook_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="GuildPreviewObject"></div>
 
 ## GuildPreviewObject
 
@@ -8187,82 +9117,73 @@ type GuildPreviewObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="icon"></div>
 
 ### icon
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="splash"></div>
 
 ### splash
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="discovery_splash"></div>
 
 ### discovery_splash
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emojis"></div>
 
 ### emojis
 
-Field with the following constraints:
+{[EmojiObject](#EmojiObject)}
 
-- Type: EmojiObject
-- Constraints: None
+<div id="features"></div>
 
 ### features
 
-Field with the following constraints:
+{[GuildFeature](#GuildFeature)}
 
-- Type: GuildFeature
-- Constraints: None
+<div id="approximate_member_count"></div>
 
 ### approximate_member_count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="approximate_presence_count"></div>
 
 ### approximate_presence_count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="stickers"></div>
 
 ### stickers
 
-Field with the following constraints:
+{[StickerObject](#StickerObject)}
 
-- Type: StickerObject
-- Constraints: None
+<div id="BanObject"></div>
 
 ## BanObject
 
@@ -8282,19 +9203,19 @@ type BanObject = {
 
 </details>
 
+<div id="reason"></div>
+
 ### reason
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="VoiceRegionObject"></div>
 
 ## VoiceRegionObject
 
@@ -8320,40 +9241,37 @@ type VoiceRegionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="optimal"></div>
 
 ### optimal
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="deprecated"></div>
 
 ### deprecated
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="custom"></div>
 
 ### custom
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="GuildWidgetSettingsObject"></div>
 
 ## GuildWidgetSettingsObject
 
@@ -8373,19 +9291,19 @@ type GuildWidgetSettingsObject = {
 
 </details>
 
+<div id="enabled"></div>
+
 ### enabled
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="channel_id"></div>
 
 ### channel_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="GuildWidgetObject"></div>
 
 ## GuildWidgetObject
 
@@ -8413,47 +9331,43 @@ type GuildWidgetObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="instant_invite"></div>
 
 ### instant_invite
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="channels"></div>
 
 ### channels
 
-Field with the following constraints:
+{[ChannelObject](#ChannelObject)}
 
-- Type: ChannelObject
-- Constraints: None
+<div id="members"></div>
 
 ### members
 
-Field with the following constraints:
+{[UserObject](#UserObject)}
 
-- Type: UserObject
-- Constraints: None
+<div id="presence_count"></div>
 
 ### presence_count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="PromptOptionObject"></div>
 
 ## PromptOptionObject
 
@@ -8487,65 +9401,75 @@ type PromptOptionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="channel_ids"></div>
 
 ### channel_ids
 
-Field with the following constraints:
+{[Snowflake](#Snowflake)}
 
-- Type: Snowflake
-- Constraints: None
+<div id="role_ids"></div>
 
 ### role_ids
 
-Field with the following constraints:
+{[Snowflake](#Snowflake)}
 
-- Type: Snowflake
-- Constraints: None
+<div id="emoji"></div>
 
 ### emoji
 
-[Documentor] Unsupported type: Union
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[EmojiObject](#EmojiObject)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[nil](#nil)
+
+</details>
+
+<div id="emoji_id"></div>
 
 ### emoji_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="emoji_name"></div>
 
 ### emoji_name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="emoji_animated"></div>
 
 ### emoji_animated
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="title"></div>
 
 ### title
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="OnboardingPromptObject"></div>
 
 ## OnboardingPromptObject
 
@@ -8575,51 +9499,63 @@ type OnboardingPromptObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-[Documentor] Unsupported type: Union
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[Snowflake](#Snowflake)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[nil](#nil)
+
+</details>
+
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: PromptTypes
-- Constraints: None
+[PromptTypes](#PromptTypes)?<div id="options"></div>
 
 ### options
 
-Field with the following constraints:
+{[PromptOptionObject](#PromptOptionObject)}
 
-- Type: PromptOptionObject
-- Constraints: None
+<div id="title"></div>
 
 ### title
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="single_select"></div>
 
 ### single_select
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="required"></div>
 
 ### required
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="in_onboarding"></div>
 
 ### in_onboarding
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="GuildOnboardingObject"></div>
 
 ## GuildOnboardingObject
 
@@ -8645,40 +9581,37 @@ type GuildOnboardingObject = {
 
 </details>
 
+<div id="guild_id"></div>
+
 ### guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="prompts"></div>
 
 ### prompts
 
-Field with the following constraints:
+{[OnboardingPromptObject](#OnboardingPromptObject)}
 
-- Type: OnboardingPromptObject
-- Constraints: None
+<div id="default_channel_ids"></div>
 
 ### default_channel_ids
 
-Field with the following constraints:
+{[Snowflake](#Snowflake)}
 
-- Type: Snowflake
-- Constraints: None
+<div id="enabled"></div>
 
 ### enabled
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="mode"></div>
 
 ### mode
 
-Field with the following constraints:
+[OnboardingMode](#OnboardingMode)
 
-- Type: OnboardingMode
-- Constraints: None
+<div id="GuildScheduledEventUserObject"></div>
 
 ## GuildScheduledEventUserObject
 
@@ -8700,26 +9633,25 @@ type GuildScheduledEventUserObject = {
 
 </details>
 
+<div id="guild_scheduled_event_id"></div>
+
 ### guild_scheduled_event_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="user"></div>
 
 ### user
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="member"></div>
 
 ### member
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: GuildMemberObject
-- Constraints: None
+[GuildMemberObject](#GuildMemberObject)?<div id="GuildTemplateObject"></div>
 
 ## GuildTemplateObject
 
@@ -8757,82 +9689,73 @@ type GuildTemplateObject = {
 
 </details>
 
+<div id="code"></div>
+
 ### code
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="usage_count"></div>
 
 ### usage_count
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="creator_id"></div>
 
 ### creator_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="creator"></div>
 
 ### creator
 
-Field with the following constraints:
+[UserObject](#UserObject)
 
-- Type: UserObject
-- Constraints: None
+<div id="created_at"></div>
 
 ### created_at
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="updated_at"></div>
 
 ### updated_at
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="source_guild_id"></div>
 
 ### source_guild_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="serialized_source_guild"></div>
 
 ### serialized_source_guild
 
-Field with the following constraints:
+[GuildObject](#GuildObject)
 
-- Type: GuildObject
-- Constraints: None
+<div id="is_dirty"></div>
 
 ### is_dirty
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="StickerPackObject"></div>
 
 ## StickerPackObject
 
@@ -8862,54 +9785,49 @@ type StickerPackObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="stickers"></div>
 
 ### stickers
 
-Field with the following constraints:
+{[StickerObject](#StickerObject)}
 
-- Type: StickerObject
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="sku_id"></div>
 
 ### sku_id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="cover_sticker_id"></div>
 
 ### cover_sticker_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="banner_asset_id"></div>
 
 ### banner_asset_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+[Snowflake](#Snowflake)?<div id="IntegrationApplicationObject"></div>
 
 ## IntegrationApplicationObject
 
@@ -8935,40 +9853,37 @@ type IntegrationApplicationObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[Snowflake](#Snowflake)
 
-- Type: Snowflake
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="icon"></div>
 
 ### icon
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="description"></div>
 
 ### description
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="bot"></div>
 
 ### bot
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: UserObject
-- Constraints: None
+[UserObject](#UserObject)?<div id="ConnectionObject"></div>
 
 ## ConnectionObject
 
@@ -9004,75 +9919,67 @@ type ConnectionObject = {
 
 </details>
 
+<div id="id"></div>
+
 ### id
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="name"></div>
 
 ### name
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="type"></div>
 
 ### type
 
-Field with the following constraints:
+[ConnectionObjectServices](#ConnectionObjectServices)
 
-- Type: ConnectionObjectServices
-- Constraints: None
+<div id="revoked"></div>
 
 ### revoked
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="integrations"></div>
 
 ### integrations
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: IntegrationObject
-- Constraints: None
+{[IntegrationObject](#IntegrationObject)}?<div id="verified"></div>
 
 ### verified
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="friend_sync"></div>
 
 ### friend_sync
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="show_Activity"></div>
 
 ### show_Activity
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="two_way_link"></div>
 
 ### two_way_link
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="visibility"></div>
 
 ### visibility
 
-Field with the following constraints:
+[ConnectionVisibilityTypes](#ConnectionVisibilityTypes)
 
-- Type: ConnectionVisibilityTypes
-- Constraints: None
+<div id="ApplicationRoleConnectionObject"></div>
 
 ## ApplicationRoleConnectionObject
 
@@ -9094,26 +10001,25 @@ type ApplicationRoleConnectionObject = {
 
 </details>
 
+<div id="platform_name"></div>
+
 ### platform_name
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="platform_username"></div>
 
 ### platform_username
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="metadata"></div>
 
 ### metadata
 
-Field with the following constraints:
+[ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)
 
-- Type: ApplicationRoleConnectionMetadataObject
-- Constraints: None
+<div id="SessionStartLimitObject"></div>
 
 ## SessionStartLimitObject
 
@@ -9137,33 +10043,31 @@ type SessionStartLimitObject = {
 
 </details>
 
+<div id="total"></div>
+
 ### total
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="remaining"></div>
 
 ### remaining
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="reset_after"></div>
 
 ### reset_after
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="max_concurrency"></div>
 
 ### max_concurrency
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="AllowedMentionObject"></div>
 
 ## AllowedMentionObject
 
@@ -9187,33 +10091,31 @@ type AllowedMentionObject = {
 
 </details>
 
+<div id="parse"></div>
+
 ### parse
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AllowedMentionTypes
-- Constraints: None
+{[AllowedMentionTypes](#AllowedMentionTypes)}?<div id="users"></div>
 
 ### users
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+{[string](#string)}?<div id="roles"></div>
 
 ### roles
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+{[string](#string)}?<div id="replied_user"></div>
 
 ### replied_user
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: boolean
-- Constraints: None
+[boolean](#boolean)?<div id="ForumAndMediaThreadMessageObject"></div>
 
 ## ForumAndMediaThreadMessageObject
 
@@ -9243,54 +10145,49 @@ type ForumAndMediaThreadMessageObject = {
 
 </details>
 
+<div id="content"></div>
+
 ### content
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="embeds"></div>
 
 ### embeds
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: EmbedObject
-- Constraints: None
+{[EmbedObject](#EmbedObject)}?<div id="allowed_mentions"></div>
 
 ### allowed_mentions
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AllowedMentionObject
-- Constraints: None
+[AllowedMentionObject](#AllowedMentionObject)?<div id="components"></div>
 
 ### components
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ComponentObjects
-- Constraints: None
+{[ComponentObjects](#ComponentObjects)}?<div id="sticker_ids"></div>
 
 ### sticker_ids
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: Snowflake
-- Constraints: None
+{[Snowflake](#Snowflake)}?<div id="attachments"></div>
 
 ### attachments
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: AttachmentObject
-- Constraints: None
+{[AttachmentObject](#AttachmentObject)}?<div id="flags"></div>
 
 ### flags
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: number
-- Constraints: None
+[number](#number)?<div id="InteractionCallbackAutocompleteObject"></div>
 
 ## InteractionCallbackAutocompleteObject
 
@@ -9308,12 +10205,13 @@ type InteractionCallbackAutocompleteObject = {
 
 </details>
 
+<div id="choices"></div>
+
 ### choices
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: ApplicationCommandOptionChoiceObject
-- Constraints: None
+{[ApplicationCommandOptionChoiceObject](#ApplicationCommandOptionChoiceObject)}?<div id="InteractionCallbackModalObject"></div>
 
 ## InteractionCallbackModalObject
 
@@ -9335,26 +10233,25 @@ type InteractionCallbackModalObject = {
 
 </details>
 
+<div id="custom_id"></div>
+
 ### custom_id
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="title"></div>
 
 ### title
 
-Field with the following constraints:
+*This field is optional and may not be specified*
 
-- Type: string
-- Constraints: None
+[string](#string)?<div id="components"></div>
 
 ### components
 
-Field with the following constraints:
+{[ComponentObjects](#ComponentObjects)}
 
-- Type: ComponentObjects
-- Constraints: None
+<div id="InteractionResponseObject"></div>
 
 ## InteractionResponseObject
 
@@ -9374,14 +10271,16 @@ type InteractionResponseObject = {
 
 </details>
 
+<div id="type"></div>
+
 ### type
 
-Field with the following constraints:
+[InteractionCallbackType](#InteractionCallbackType)
 
-- Type: InteractionCallbackType
-- Constraints: None
+<div id="data"></div>
 
 ### data
 
-[Documentor] Unsupported type: Tuple
+*This field is optional and may not be specified*
 
+([Partial](#Partial)<[MessageObject](#MessageObject)> | [InteractionCallbackAutocompleteObject](#InteractionCallbackAutocompleteObject) | [InteractionCallbackModalObject](#InteractionCallbackModalObject))?
