@@ -983,6 +983,11 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
     --print(globals.prettyprint(convertComments(globals, typ.comments)))
     local convertedComments = convertComments.convertComments(istate.globals, typ.comments, istate.md.ignorenondoc);
 
+    local blockNodes: {markdown.MarkdownNode} = {}
+    if convertedComments.skip then
+        return blockNodes -- Ignore explicitly skipped type fields
+    end
+
     if inline then 
         return parseTypeFieldType(
             istate,
@@ -992,11 +997,6 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
             convertedComments,
             true
         )
-    end
-
-    local blockNodes: {markdown.MarkdownNode} = {}
-    if convertedComments.skip then
-        return blockNodes -- Ignore explicitly skipped type fields
     end
 
     -- Add header node
