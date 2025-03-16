@@ -230,19 +230,6 @@ impl LuaUserData for Globals {
             }
         });
 
-        methods.add_function(
-            "parsecomments",
-            |lua, (comments, ignore_nondoc): (Vec<String>, Option<bool>)| {
-                // Parse a comment block
-                let comment =
-                    crate::comments::parse_comments(comments, ignore_nondoc.unwrap_or(false));
-                lua.to_value_with(
-                    &comment,
-                    LuaSerializeOptions::new().serialize_none_to_null(false),
-                )
-            },
-        );
-
         methods.add_function("parsetotypeset", |lua, data: LuaValue| {
             let args: ParseToTypeSetArgs = lua.from_value(data)?;
 

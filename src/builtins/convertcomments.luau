@@ -1,5 +1,6 @@
 --!strict
 local types = require("types.luau")
+local convertcommentimpl = require("convertcommentimpl.luau")
 local markdown = require("markdownir/markdown.luau")
 
 export type ConvertCommentResponse = {
@@ -99,7 +100,7 @@ local specialcommentmap = {
 
 --- Converts comments to markdown (with other metadata attached to it)
 local function convertComments(globals: types.Globals, typecomments: {string}, ignorenondoc: boolean?): ConvertCommentResponse 
-    local comments = globals.parsecomments(typecomments, ignorenondoc)
+    local comments = convertcommentimpl.parsecomments(typecomments, ignorenondoc)
 
     local output: ConvertCommentResponse = {
         output = {},

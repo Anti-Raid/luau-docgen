@@ -507,7 +507,6 @@ function parseTypeFieldType(
             nodes[#nodes + 1] = {
                 type = "Text" :: "Text",
                 text = markdown.NewMarkdownText_FromRaw("?"),
-                inline = true
             } :: markdown.MarkdownNode
         end
 
@@ -740,10 +739,12 @@ function parseTypeFieldType(
             end
         end
 
-        irNodes[#irNodes + 1] = {
-            type = "Text" :: "Text",
-            text = markdown.NewMarkdownText_FromRaw(""),
-        } :: any
+        if not inline then
+            irNodes[#irNodes + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw(""),
+            } :: any
+        end
 
         return irNodes        
     elseif fieldtype.type == "Intersection" then

@@ -1,4 +1,3 @@
-mod comments;
 mod lua_api;
 mod token_ref_extractor;
 mod type_gen;

@@ -24,7 +24,7 @@ if md.help then
             print("  --" .. name .. " " .. opt.opts .. ": " .. opt.description)
         else
             print("  --" .. name .. ": " .. opt.description)
-        end
+        end 
     end
 
     return

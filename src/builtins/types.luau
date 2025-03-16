@@ -57,8 +57,6 @@ export type Globals = {
     require_builtins: boolean,
     --- Pretty prints a value
     prettyprint: (...any) -> string,
-    --- Parse a comment block
-    parsecomments: (comments: {string}, ignore_nondoc: boolean?) -> Comment,
     --- Parse to typeset
     parsetotypeset: (opts: ParseToTypeSetArgs) -> {
         unsupported_count: number,

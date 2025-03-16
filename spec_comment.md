@@ -93,7 +93,7 @@ type A<T> = Ok<string | number, string>
 
 </details>
 
-[Ok](#Ok)<[string](#string) | [number](#number), [string](#string)><div id="Function"></div>
+[Ok](#Ok)<([string](#string) | [number](#number)), [string](#string)><div id="Function"></div>
 
 ## Function
 
