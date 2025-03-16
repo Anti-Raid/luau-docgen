@@ -1018,7 +1018,8 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
             typ:string_repr_with_pats("\n"), 
             typ.field_type, 
             typ.field_type, 
-            convertedComments
+            convertedComments,
+            if convertedComments.inlineFields[typ.field_name] then true else false
         )
     }
 

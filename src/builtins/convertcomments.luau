@@ -6,6 +6,7 @@ export type ConvertCommentResponse = {
     output: {markdown.MarkdownNode},
     skip: boolean,
     variantDocs: {[string]: string}, -- Useful for documenting multivariant unions
+    inlineFields: {[string]: boolean}, -- Useful for making specific fields inline
     fieldDocs: {[string]: string}, -- Useful to document functions etc
     genericDocs: {[string]: string}, -- Useful to document functions etc
     returns: {[string]: string}, -- Useful to document functions etc
@@ -70,6 +71,18 @@ local specialcommentmap = {
 
         output.genericDocs[fieldName] = fieldData
     end,
+    inline = function(output: ConvertCommentResponse, data: string)
+        -- Split data by space
+        local split = data:split(" ") :: {string?}
+
+        local fieldName = split[1]
+
+        if not fieldName then
+            return
+        end
+
+        output.inlineFields[fieldName] = split[2] == nil or split[2] == "true"
+    end,
 }
 
 --- Converts comments to markdown (with other metadata attached to it)
@@ -80,6 +93,7 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
         output = {},
         skip = false,
         variantDocs = {},
+        inlineFields = {},
         fieldDocs = {},
         genericDocs = {},
         returns = {},
