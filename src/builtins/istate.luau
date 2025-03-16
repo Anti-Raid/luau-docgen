@@ -45,6 +45,9 @@ Can be used to modify the istate before the documentor runs as tables are passed
 
     --- Resolves a module to a link/url
     resolveModule: (module: string) -> string,
+
+    --- Resolves a type to a link/url
+    resolveType: (fieldtype: string, type: string) -> string,
 }
 
 local DefaultPlugin: Plugin = {
@@ -59,7 +62,12 @@ local DefaultPlugin: Plugin = {
 
     resolveModule = function(module: string): string
         -- Default implementation
-        return `module.{module}`
+        return `#module.{module}`
+    end,
+
+    resolveType = function(fieldtype: string, type: string): string
+        -- Default implementation
+        return `#{type}`
     end,
 }
 

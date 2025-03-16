@@ -369,7 +369,7 @@ function parseTypeFieldType(
 
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
-            url = `#{fieldtype.data}`,
+            url = istate.plugin.resolveType(fieldtype.type, fieldtype.data),
             text = markdown.NewMarkdownText_FromRaw(origType:string_repr()),
             inline = inline
         } :: any
@@ -658,8 +658,8 @@ function parseTypeFieldType(
 
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
-            url = `#{fieldtype.data.base}`,
-            text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+            url = istate.plugin.resolveType(fieldtype.type, fieldtype.data.base),
+            text = markdown.NewMarkdownText_FromRaw(istate.plugin.resolveType(fieldtype.type, fieldtype.data.base)),
             inline = true
         } :: any
 
@@ -776,8 +776,8 @@ function parseTypeFieldType(
         local nodes: {markdown.MarkdownNode} = {
             {
                 type = "Link" :: "Link",
-                url = `#{fieldtype.data.base}`,
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+                url = istate.plugin.resolveType(fieldtype.type, fieldtype.data.base),
+                text = markdown.NewMarkdownText_FromRaw(istate.plugin.resolveType(fieldtype.type, fieldtype.data.base)),
                 inline = true
             }
         } :: {markdown.MarkdownNode}
