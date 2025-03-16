@@ -41,8 +41,10 @@ Can be used to modify the istate before the documentor runs as tables are passed
 2 
 ``` 
     ]]
-    onInitialize: (istate: IState) -> ()
+    onInitialize: (istate: IState) -> (),
 
+    --- Resolves a module to a link/url
+    resolveModule: (module: string) -> string,
 }
 
 local DefaultPlugin: Plugin = {
@@ -53,7 +55,12 @@ local DefaultPlugin: Plugin = {
 
     onInitialize = function(istate: IState)
         -- Do nothing
-    end
+    end,
+
+    resolveModule = function(module: string): string
+        -- Default implementation
+        return `module.{module}`
+    end,
 }
 
 --- Attempts to load a plugin at path

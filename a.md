@@ -1,4 +1,8 @@
+<div id="Types"></div>
+
 # Types
+
+<div id="a"></div>
 
 ## a
 
@@ -37,30 +41,31 @@ type a = {
 
 </details>
 
+<div id="b"></div>
+
 ### b
 
 A
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="[string]"></div>
 
 ### [string]
 
-Field with the following constraints:
+[a](#a)
 
-- Type: a
-- Constraints: None
+<div id="a"></div>
 
 ### a
 
 A table
 
-Field with the following constraints:
+*This field is an array type*
 
-- Type: string
-- Constraints: None
+[{string}](#string)
+
+<div id="c"></div>
 
 ### c
 
@@ -80,13 +85,27 @@ c: (self: a, a: number) -> a
 
 </details>
 
+<div id="Arguments"></div>
+
 #### Arguments
 
-- **a** *(number)* - Number of times to call ourselves
+<div id="a"></div>
+
+##### a
+
+Number of times to call ourselves
+
+[number](#number)
+
+<div id="Returns"></div>
 
 #### Returns
 
-- **ret1** *(a)*
+<div id="ret1"></div>
+
+##### ret1
+
+[a](#a)<div id="d"></div>
 
 ### d
 
@@ -102,17 +121,43 @@ d: <T>(self: a, a: number, b: string, c: a) -> ()
 
 </details>
 
+<div id="Generics"></div>
+
 #### Generics
 
-- **T** *(any)*
+<div id="T"></div>
+
+##### T
+
+This generic is unconstrained and can be any type
+
+<div id="Arguments"></div>
 
 #### Arguments
 
-- **a** *(number)*
-- **b** *(string)*
-- **c** *(a)*
+<div id="a"></div>
+
+##### a
+
+[number](#number)
+
+<div id="b"></div>
+
+##### b
+
+[string](#string)
+
+<div id="c"></div>
+
+##### c
+
+[a](#a)
+
+<div id="Functions"></div>
 
 # Functions
+
+<div id="foo"></div>
 
 ## foo
 
@@ -128,10 +173,23 @@ function foo(a, b: number) end
 
 </details>
 
+<div id="Arguments"></div>
+
 ## Arguments
 
-- **a** *(any)*
-- **b** *(number)*
+<div id="a"></div>
+
+### a
+
+No type specified!!!
+
+<div id="b"></div>
+
+### b
+
+[number](#number)
+
+<div id="bar"></div>
 
 ## bar
 
@@ -144,10 +202,23 @@ function bar(a: string, b: number) end
 
 </details>
 
+<div id="Arguments"></div>
+
 ## Arguments
 
-- **a** *(string)*
-- **b** *(number)*
+<div id="a"></div>
+
+### a
+
+[string](#string)
+
+<div id="b"></div>
+
+### b
+
+[number](#number)
+
+<div id="baz"></div>
 
 ## baz
 
@@ -167,13 +238,45 @@ function baz(a: string, b: {number}) -> (string, number) end
 
 </details>
 
+<div id="Arguments"></div>
+
 ## Arguments
 
-- **a** *(string)* - Input string
-- **b** *({number})* - Number of times to call ourselves
+<div id="a"></div>
+
+### a
+
+Input string
+
+[string](#string)
+
+<div id="b"></div>
+
+### b
+
+Number of times to call ourselves
+
+*This field is an array type*
+
+[{number}](#number)
+
+<div id="Returns"></div>
 
 ## Returns
 
-- **sa** *(string)* - String
-- **ri** *(number)* - Numberz
+<div id="sa"></div>
+
+### sa
+
+String
+
+[string](#string)
+
+<div id="ri"></div>
+
+### ri
+
+Numberz
+
+[number](#number)
 

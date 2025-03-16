@@ -70,18 +70,96 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-*This field is a generic type with base* [Ok](#Ok)
-
-[T](#T)
-
-</details>
+[Ok](#Ok)<[T](#T)></details>
 
 <details>
 <summary>Variant 2</summary>
 
-*This field is a generic type with base* [Err](#Err)
+[Err](#Err)<[E](#E)></details>
 
-[E](#E)
+<div id="A"></div>
+
+## A
+
+Generic with unions
+
+<details>
+<summary>Raw Type</summary>
+
+```luau
+--- Generic with unions
+type A<T> = Ok<string | number, string>
+```
+
+</details>
+
+[Ok](#Ok)<[string](#string) | [number](#number), [string](#string)><div id="Function"></div>
+
+## Function
+
+<details>
+<summary>Raw Type</summary>
+
+```luau
+type Function = (<T>(a: string, b: number) -> (a: string) -> T) | string
+```
+
+</details>
+
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+<details>
+<summary>Function Signature</summary>
+
+```luau
+(<T>(a: string, b: number) -> (a: string) -> T) | string
+```
+
+</details>
+
+<div id="Generics"></div>
+
+### Generics
+
+<div id="T"></div>
+
+#### T
+
+This generic is unconstrained and can be any type
+
+<div id="Arguments"></div>
+
+### Arguments
+
+<div id="a"></div>
+
+#### a
+
+[string](#string)
+
+<div id="b"></div>
+
+#### b
+
+[number](#number)
+
+<div id="Returns"></div>
+
+### Returns
+
+<div id="ret1"></div>
+
+#### ret1
+
+(a: [string](#string)) -> [T](#T)</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[string](#string)
 
 </details>
 

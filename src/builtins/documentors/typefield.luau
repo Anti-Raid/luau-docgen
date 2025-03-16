@@ -175,7 +175,7 @@ local function parseFunction(
                     } :: markdown.MarkdownNode
                 end
 
-                tableext.extend(baseNodes, parseTypeFieldType(istate, ret:string_repr(), ret, ret, convertedComments))
+                tableext.extend(baseNodes, parseTypeFieldType(istate, ret:string_repr(), ret, ret, convertedComments, true))
 
                 blockNodes[#blockNodes + 1] = {
                     type = "Block" :: "Block",
@@ -188,24 +188,168 @@ local function parseFunction(
     return blockNodes
 end
 
+local function parseFunctionInline(
+    istate: istate.IState,
+    convertedComments: convertComments.ConvertCommentResponse,
+    generics: {types.TypedArgument},
+    args: {types.TypedArgument},
+    ret: types.TypeFieldType?
+): {markdown.MarkdownNode}
+    -- Special code for inline functions
+    local parsedFields: {markdown.MarkdownNode} = {}
+
+    -- Add in the generics
+    if #generics > 0 then 
+        parsedFields[#parsedFields + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw("<"),
+            inline = true
+        } :: any
+        for i, generic in generics do 
+            local genericNodes: {markdown.MarkdownNode} = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw(generic.name or "generic1"),
+                inline = true    
+            }
+
+            if generic.typ then 
+                local typNodes = parseTypeFieldType(istate, generic:string_repr(), generic.typ, generic.typ, convertedComments, true)
+
+                if #typNodes > 0 then 
+                    genericNodes[#genericNodes + 1] = {
+                        type = "Text" :: "Text",
+                        text = markdown.NewMarkdownText_FromRaw(" = "),
+                        inline = true
+                    } :: markdown.MarkdownNode
+                end
+
+                tableext.extend(genericNodes, typNodes)
+            end
+
+            if i < #generics then
+                parsedFields[#parsedFields + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(", "),
+                    inline = true
+                } :: markdown.MarkdownNode
+            end
+        end
+
+        parsedFields[#parsedFields + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw(">"),
+            inline = true
+        } :: any
+    end
+
+    -- Add in the arguments
+    parsedFields[#parsedFields + 1] = {
+        type = "Text" :: "Text",
+        text = markdown.NewMarkdownText_FromRaw("("),
+        inline = true
+    } :: any
+
+    for i, argument in args do 
+        if argument.name == "self" then
+            -- Handle self in inline functions
+            parsedFields[#parsedFields + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw("self"),
+                inline = true
+            } :: markdown.MarkdownNode
+
+            if i < #args then
+                parsedFields[#parsedFields + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(", "),
+                    inline = true
+                } :: markdown.MarkdownNode
+            end
+
+            continue
+        end
+
+        if argument.name then
+            parsedFields[#parsedFields + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw(argument.name),
+                inline = true    
+            } :: markdown.MarkdownNode
+
+            if argument.typ then
+                parsedFields[#parsedFields + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(": "),
+                    inline = true    
+                } :: any
+            end
+        end
+
+        if argument.typ then 
+            local typNodes = parseTypeFieldType(istate, argument.typ:string_repr(), argument.typ, argument.typ, convertedComments, true)
+
+            tableext.extend(parsedFields, typNodes)
+        end
+
+        if i < #args then
+            parsedFields[#parsedFields + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw(", "),
+                inline = true
+            } :: markdown.MarkdownNode
+        end
+    end
+
+    parsedFields[#parsedFields + 1] = {
+        type = "Text" :: "Text",
+        text = markdown.NewMarkdownText_FromRaw(")"),
+        inline = true
+    } :: any
+
+    if ret then
+        parsedFields[#parsedFields + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw(" -> "),
+            inline = true
+        } :: any
+
+        local retNodes = parseTypeFieldType(istate, ret:string_repr(), ret, ret, convertedComments, true)
+        tableext.extend(parsedFields, retNodes)
+    end
+
+    return parsedFields
+end
+
 --- Parses a TypeFieldType (number or () -> number etc.) in a table
 function parseTypeFieldType(
     istate: istate.IState,
     originRepr: string?,
     origType: types.TypeFieldType,
     typ: types.TypeFieldType, 
-    convertedComments: convertComments.ConvertCommentResponse
+    convertedComments: convertComments.ConvertCommentResponse,
+    inline: boolean?
 ): {markdown.MarkdownNode} 
-    local blockNodes: {markdown.MarkdownNode} = {} 
+    --print("Parsing type field type: " .. typ:string_repr())
 
     local fieldtype = typ:extract()
     if fieldtype.type == "Function" then
+        if inline then 
+            -- Special code for inline functions
+            return parseFunctionInline(
+                istate,
+                convertedComments,
+                fieldtype.data.generics,
+                fieldtype.data.args,
+                fieldtype.data.ret
+            )
+        end
+
         return parseFunction(
             istate,
             originRepr,
             convertedComments,
             fieldtype.data.generics,
-          fieldtype.data.args,
+            fieldtype.data.args,
             fieldtype.data.ret
         )
     elseif fieldtype.type == "String" or fieldtype.type == "Boolean" then                                
@@ -226,11 +370,37 @@ function parseTypeFieldType(
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = `#{fieldtype.data}`,
-            text = markdown.NewMarkdownText_FromRaw(origType:string_repr())
+            text = markdown.NewMarkdownText_FromRaw(origType:string_repr()),
+            inline = inline
         } :: any
         
         return irNodes        
     elseif fieldtype.type == "Table" then
+        if inline then 
+            -- Special code for inline tables
+            local parsedFields: {markdown.MarkdownNode} = {}
+
+            for i, field in fieldtype.data do 
+                tableext.extend(parsedFields, parseTypeField(istate, field, inline))
+                if i < #fieldtype.data then
+                    parsedFields[#parsedFields + 1] = {
+                        type = "Text" :: "Text",
+                        text = markdown.NewMarkdownText_FromRaw(", "),
+                        inline = true
+                    } :: markdown.MarkdownNode
+                end
+            end
+
+            local blockNodes: {markdown.MarkdownNode} = {}
+            if #parsedFields > 0 then
+                blockNodes[#blockNodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = parsedFields,
+                    inline = true
+                }
+            end
+            return blockNodes    
+        end
         local parsedFields: {markdown.MarkdownNode} = {
             {
                 type = "Text" :: "Text",
@@ -244,6 +414,8 @@ function parseTypeFieldType(
         for _, field in fieldtype.data do 
             tableext.extend(parsedFields, parseTypeField(istate, field))
         end
+
+        local blockNodes: {markdown.MarkdownNode} = {}
         if #parsedFields > 0 then
             blockNodes[#blockNodes + 1] = {
                 type = "Block" :: "Block",
@@ -268,6 +440,23 @@ function parseTypeFieldType(
 
         return nodes
     elseif fieldtype.type == "Optional" then 
+        if inline then 
+            -- Special code for inline optional types
+            local parsedFields: {markdown.MarkdownNode} = {}
+
+            tableext.extend(parsedFields, parseTypeFieldType(istate, originRepr, origType, fieldtype.data, convertedComments, true))
+
+            local blockNodes: {markdown.MarkdownNode} = {}
+            if #parsedFields > 0 then
+                parsedFields[#parsedFields + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw("?"),
+                    inline = true
+                } :: markdown.MarkdownNode
+            end
+
+            return blockNodes    
+        end
         local nodes: {markdown.MarkdownNode} = tableext.extend(
             {
                 {
@@ -279,11 +468,129 @@ function parseTypeFieldType(
                     )
                 },
             },
-            parseTypeFieldType(istate, originRepr, origType, fieldtype.data, convertedComments)
+            parseTypeFieldType(istate, originRepr, origType, fieldtype.data, convertedComments, true)
         ) :: {markdown.MarkdownNode}
 
+        if #nodes > 0 then
+            nodes[#nodes + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw("?")
+            } :: markdown.MarkdownNode
+        end
+
         return nodes  
+    elseif fieldtype.type == "Tuple" then
+        if #fieldtype.data == 0 then
+            return {}
+        elseif #fieldtype.data == 1 then 
+            -- Special case for single element tuples
+            return parseTypeFieldType(istate, originRepr, fieldtype.data[1], fieldtype.data[1], convertedComments, inline)
+        end
+
+        if inline then 
+            -- Special code for inline unions separated by |
+            local parsedFields: {markdown.MarkdownNode} = {}
+
+            for i, field in fieldtype.data do 
+                tableext.extend(parsedFields, parseTypeFieldType(istate, originRepr, field, field, convertedComments, true))
+                if i < #fieldtype.data then
+                    parsedFields[#parsedFields + 1] = {
+                        type = "Text" :: "Text",
+                        text = markdown.NewMarkdownText_FromRaw(", "),
+                        inline = true
+                    } :: markdown.MarkdownNode
+                end
+            end
+
+            local blockNodes: {markdown.MarkdownNode} = {}
+            if #parsedFields > 0 then
+                blockNodes[#blockNodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = parsedFields,
+                    inline = true
+                }
+            end
+
+            return blockNodes
+        end
+
+        local pnodes = tableext.arraymap(
+            fieldtype.data,
+            function(typ: types.TypeFieldType): {markdown.MarkdownNode}
+                return parseTypeFieldType(istate, originRepr, typ, typ, convertedComments)
+            end
+        )
+
+        local nodes: {markdown.MarkdownNode} = {
+            {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromNodes(
+                    markdown.NewMarkdownTextNode_Unstyled("Tuple with values:")
+                )    
+            }
+        } :: {markdown.MarkdownNode}
+
+        for i, pnode in pnodes do 
+            if #pnode > 0 then
+                local variantName, variantComment = arg.parseAnonymousArgData(`Value {i}`, convertedComments.variantDocs, i)
+                
+                if variantComment ~= "" then 
+                    pnode = {
+                        type = "InlineBlock" :: "InlineBlock",
+                        nodes = tableext.extend(
+                            {
+                                {
+                                    type = "Text" :: "Text",
+                                    text = markdown.NewMarkdownTextNode_Raw(variantComment)
+                                }
+                            },
+                            pnode
+                        ),
+                    }
+                else 
+                    pnode = {
+                        type = "InlineBlock" :: "InlineBlock",
+                        nodes = pnode,
+                    }
+                end
+                
+                nodes[#nodes + 1] = {
+                    type = "Snippet",
+                    detailsText = variantName,-- fieldtype.data[i]:string_repr(),
+                    node = pnode :: markdown.MarkdownNode,
+                }
+            end
+        end
+
+        return nodes :: {markdown.MarkdownNode}
     elseif fieldtype.type == "Union" then
+        if inline then 
+            -- Special code for inline unions separated by |
+            local parsedFields: {markdown.MarkdownNode} = {}
+
+            for i, field in fieldtype.data do 
+                tableext.extend(parsedFields, parseTypeFieldType(istate, originRepr, field, field, convertedComments, true))
+                if i < #fieldtype.data then
+                    parsedFields[#parsedFields + 1] = {
+                        type = "Text" :: "Text",
+                        text = markdown.NewMarkdownText_FromRaw(" | "),
+                        inline = true
+                    } :: markdown.MarkdownNode
+                end
+            end
+
+            local blockNodes: {markdown.MarkdownNode} = {}
+            if #parsedFields > 0 then
+                blockNodes[#blockNodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = parsedFields,
+                    inline = true
+                }
+            end
+
+            return blockNodes
+        end
+
         local pnodes = tableext.arraymap(
             fieldtype.data,
             function(typ: types.TypeFieldType): {markdown.MarkdownNode}
@@ -333,44 +640,89 @@ function parseTypeFieldType(
         end
 
         return nodes :: {markdown.MarkdownNode}
-    elseif fieldtype.type == "Generic" then 
-        local nodes: {markdown.MarkdownNode} = {
-            {
-                type = "Text" :: "Text",
-                inline = true,
-                text = markdown.NewMarkdownText_FromNodes(
-                    markdown.NewMarkdownTextNode_Italics(
-                        markdown.NewMarkdownTextNode_Unstyled("This field is a generic type with base")
-                    )
-                ),
-            },
-            {
-                type = "Text" :: "Text",
-                inline = true,
-                text = markdown.NewMarkdownText_FromNodes(
-                    markdown.NewMarkdownTextNode_Unstyled(" ")
-                ),
-            },
-            {
-                type = "Link" :: "Link",
-                url = `#{fieldtype.data.base}`,
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
-            }
-        } :: {markdown.MarkdownNode}
+    elseif fieldtype.type == "Module" then
+        local irNodes: {markdown.MarkdownNode} = {} 
 
-        for i, generic in fieldtype.data.generics do 
-            local genericNodes = parseTypeFieldType(istate, generic:string_repr(), generic, generic, convertedComments)
+        irNodes[#irNodes + 1] = {
+            type = "Link" :: "Link",
+            url = istate.plugin.resolveModule(fieldtype.data.module),
+            text = markdown.NewMarkdownText_FromRaw(fieldtype.data.module),
+            inline = true
+        } :: any
 
-            if #genericNodes > 0 then
-                nodes[#nodes + 1] = {
-                    type = "Block" :: "Block",
-                    nodes = genericNodes
-                } :: markdown.MarkdownNode
+        irNodes[#irNodes + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw("."),
+            inline = true
+        } :: any
+
+        irNodes[#irNodes + 1] = {
+            type = "Link" :: "Link",
+            url = `#{fieldtype.data.base}`,
+            text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+            inline = true
+        } :: any
+
+        if fieldtype.data.generics then
+            local hasAddedBracket = false
+            for _, generic in fieldtype.data.generics do 
+                local genericNodes = parseTypeFieldType(istate, generic:string_repr(), generic, generic, convertedComments, true)
+
+                if #genericNodes > 0 then
+                    if not hasAddedBracket then
+                        irNodes[#irNodes + 1] = {
+                            type = "Text" :: "Text",
+                            text = markdown.NewMarkdownText_FromRaw("<"),
+                            inline = true
+                        } :: any
+                    end
+                    tableext.extend(irNodes, genericNodes)
+                    if not hasAddedBracket then
+                        irNodes[#irNodes + 1] = {
+                            type = "Text" :: "Text",
+                            text = markdown.NewMarkdownText_FromRaw(">"),
+                            inline = true
+                        } :: any
+                        hasAddedBracket = true
+                    end
+                end
             end
         end
 
-        return nodes
+        irNodes[#irNodes + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw(""),
+        } :: any
+
+        return irNodes        
     elseif fieldtype.type == "Intersection" then
+        if inline then 
+            -- Special code for inline unions separated by |
+            local parsedFields: {markdown.MarkdownNode} = {}
+
+            for i, field in fieldtype.data do 
+                tableext.extend(parsedFields, parseTypeFieldType(istate, originRepr, field, field, convertedComments, true))
+                if i < #fieldtype.data then
+                    parsedFields[#parsedFields + 1] = {
+                        type = "Text" :: "Text",
+                        text = markdown.NewMarkdownText_FromRaw(" & "),
+                        inline = true
+                    } :: markdown.MarkdownNode
+                end
+            end
+
+            local blockNodes: {markdown.MarkdownNode} = {}
+            if #parsedFields > 0 then
+                blockNodes[#blockNodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = parsedFields,
+                    inline = true
+                }
+            end
+
+            return blockNodes
+        end
+
         local pnodes = tableext.arraymap(
             fieldtype.data,
             function(typ: types.TypeFieldType): {markdown.MarkdownNode}
@@ -420,21 +772,80 @@ function parseTypeFieldType(
         end
 
         return nodes :: {markdown.MarkdownNode}
+    elseif fieldtype.type == "Generic" then 
+        local nodes: {markdown.MarkdownNode} = {
+            {
+                type = "Link" :: "Link",
+                url = `#{fieldtype.data.base}`,
+                text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+                inline = true
+            }
+        } :: {markdown.MarkdownNode}
+
+        if #fieldtype.data.generics > 0 then
+            nodes[#nodes + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw("<"),
+                inline = true
+            } :: any
+        end
+
+        for i, generic in fieldtype.data.generics do 
+            local genericNodes = parseTypeFieldType(istate, generic:string_repr(), generic, generic, convertedComments, true)
+
+            if #genericNodes > 0 then
+                nodes[#nodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = genericNodes,
+                    inline = true
+                } :: markdown.MarkdownNode
+            end
+
+            if i < #fieldtype.data.generics then
+                nodes[#nodes + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(", "),
+                    inline = true
+                } :: markdown.MarkdownNode
+            end
+        end
+
+        if #fieldtype.data.generics > 0 then
+            nodes[#nodes + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw(">"),
+                inline = true
+            } :: any
+        end
+
+        return nodes
     else
         -- Fallback
+        local blockNodes: {markdown.MarkdownNode} = {}
         blockNodes[#blockNodes + 1] = {
             type = "Text" :: "Text",
             text = markdown.NewMarkdownText_FromRaw("[Documentor] Unsupported type: " .. fieldtype.type)
         } :: markdown.MarkdownNode
     end
 
-    return blockNodes
+    error("unsupported type [this error should not be reachable]: " .. fieldtype.type)
 end
 
 --- Parses a TypeField (foo: number or foo: () -> number etc.)
-function parseTypeField(istate: istate.IState, typ: types.TypeField): {markdown.MarkdownNode}
+function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boolean?): {markdown.MarkdownNode}    
     --print(globals.prettyprint(convertComments(globals, typ.comments)))
     local convertedComments = convertComments.convertComments(istate.globals, typ.comments, istate.md.ignorenondoc);
+
+    if inline then 
+        return parseTypeFieldType(
+            istate,
+            typ:string_repr_with_pats("\n"), 
+            typ.field_type, 
+            typ.field_type, 
+            convertedComments,
+            true
+        )
+    end
 
     local blockNodes: {markdown.MarkdownNode} = {}
     if convertedComments.skip then
