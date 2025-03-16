@@ -1,4 +1,3 @@
-mod args;
 mod comments;
 mod lua_api;
 mod token_ref_extractor;
@@ -12,34 +11,20 @@ use std::{cell::RefCell, path::PathBuf, rc::Rc, time::Duration};
 
 pub static BUILTINS: Dir = include_dir!("$CARGO_MANIFEST_DIR/src/builtins");
 
-#[derive(Debug, clap::Parser)]
-struct CliArgs {
-    #[arg(long = "documentor")]
-    /// The path to the documentor script
-    documentor: Option<PathBuf>,
-
-    #[arg(trailing_var_arg = true, allow_hyphen_values = true, hide = true)]
-    args: Vec<String>,
-}
-
 fn main() {
     env_logger::init();
 
-    let args = <CliArgs as clap::Parser>::parse();
+    // Parse command line arguments skipping the first one
+    // which is the program name
+    let args = std::env::args().skip(1).collect::<Vec<_>>();
 
-    let documentor = if let Some(documentor_path) = args.documentor {
-        std::fs::read_to_string(documentor_path).unwrap_or_else(|_| {
-            eprintln!("Error: Failed to read documentor file");
-            std::process::exit(1);
-        })
-    } else {
-        BUILTINS
-            .get_file("documentor.luau")
-            .expect("Failed to get documentor.luau")
-            .contents_utf8()
-            .expect("Failed to get documentor.luau contents as UTF-8")
-            .to_string()
-    };
+    // We always have to use the builtin documentor initially (which can then shell out and load other documentors if desired)
+    let documentor = BUILTINS
+        .get_file("documentor.luau")
+        .expect("Failed to get documentor.luau")
+        .contents_utf8()
+        .expect("Failed to get documentor.luau contents as UTF-8")
+        .to_string();
 
     // Create tokio runtime and use spawn_local
     let rt = tokio::runtime::Builder::new_current_thread()
@@ -55,7 +40,9 @@ fn main() {
         let lua = Lua::new_with(LuaStdLib::ALL_SAFE, LuaOptions::default())
             .expect("Failed to create Lua");
 
-        let compiler = mlua::Compiler::new().set_optimization_level(2);
+        let compiler = mlua::Compiler::new()
+            .set_mutable_globals(vec!["_G".to_string()])
+            .set_optimization_level(2);
 
         lua.set_compiler(compiler);
 
@@ -117,7 +104,7 @@ fn main() {
         let th = lua.create_thread(f)?;
 
         let args = (Globals {
-            documentor_args: args.args,
+            documentor_args: args,
             require_builtins: lua_api_require_builtins,
         })
         .into_lua_multi(&lua)

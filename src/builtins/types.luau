@@ -59,8 +59,6 @@ export type Globals = {
     prettyprint: (...any) -> string,
     --- Parse a comment block
     parsecomments: (comments: {string}, ignore_nondoc: boolean?) -> Comment,
-    --- Parse documentor args
-    parsedocumentorargs: (args: {string}) -> ParsedArgs,
     --- Parse to typeset
     parsetotypeset: (opts: ParseToTypeSetArgs) -> {
         unsupported_count: number,

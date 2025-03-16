@@ -1,5 +1,6 @@
 --!strict
 local types = require("types.luau")
+local argparserimpl = require("argparserimpl.luau")
 
 export type ParsedArgumentResult = {
     --- Name of module being documented
@@ -21,36 +22,80 @@ export type ParsedArgumentResult = {
     -- Options set by the user
     -- This is a table of the parsed arguments
     optionsSet: types.ParsedArgs,
+    -- Whether or not to show help
+    help: boolean,
 }
 
--- Modify this function to change how special comments are converted to markdown
-local argmap = {
-    modname = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.modname = table.concat(values, "|")
-    end,
-    ignorenondoc = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.ignorenondoc = (values[1] == "true")
-    end,
-    debugmode = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.debugmode = (values[1] == "true")
-    end,
-    ignore_nonexported_types = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.ignorenonexportedtypes = (values[1] == "true")
-    end,
-    error_on_unsupported = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.erroronunsupported = values[1] ~= "false"
-    end,
-    output = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.output = values[1] or "stdout"
-    end,
-    plugin = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-        output.plugin = values[1]
-    end,
+type ArgMap = {
+    [string]: {
+        fn: (output: ParsedArgumentResult, values: {string}, argtype: string) -> (),
+        description: string,
+        opts: string
+    }
+}
+
+local argmap: ArgMap = {
+    modname = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.modname = table.concat(values, "|")
+        end,
+        opts = "<module name>",
+        description = "Sets the name of the module being documented",
+    },
+    ignorenondoc = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.ignorenondoc = (values[1] == "true")
+        end,
+        opts = "<true|false>",
+        description = "Ignore non doc comments",
+    },
+    debugmode = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.debugmode = (values[1] == "true")
+        end,
+        opts = "<true|false>",
+        description = "Enable debug mode",
+    },
+    ignore_nonexported_types = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.ignorenonexportedtypes = (values[1] == "true")
+        end,
+        opts = "<true|false>",
+        description = "Ignore non exported types",
+    },
+    error_on_unsupported = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.erroronunsupported = values[1] ~= "false"
+        end,
+        opts = "<true|false>",
+        description = "Error on unsupported types",
+    },
+    output = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.output = values[1] or "stdout"
+        end,
+        opts = "<output file | stdout>",
+        description = "Target file to write to",
+    },
+    plugin = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.plugin = values[1]
+        end,
+        opts = "<plugin file>",
+        description = "Plugin file to load",
+    },
+    help = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.help = true
+        end,
+        opts = "",
+        description = "Show help",
+    },
 }
 
 -- Parses arguments from globals.documentor_args into a set of parsed arguments 
 local function parseArguments(globals: types.Globals): ParsedArgumentResult
-    local parsedArgs = globals.parsedocumentorargs(globals.documentor_args)
+    local parsedArgs = argparserimpl.parsedocumentorargs(globals.documentor_args)
 
     local output: ParsedArgumentResult = {
         modname = "",
@@ -61,7 +106,8 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
         erroronunsupported = false,
         ignorenonexportedtypes = false,
         output = "stdout",
-        optionsSet = parsedArgs
+        optionsSet = parsedArgs,
+        help = false,
     }
 
     for _, arg in parsedArgs.args do
@@ -69,7 +115,7 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
         if arg.arg_type == "Value" then
             output.files[#output.files + 1] = arg.name
         elseif argmap[arg.name] then
-            argmap[arg.name](output, arg.values, arg.arg_type)
+            argmap[arg.name].fn(output, arg.values, arg.arg_type)
         end
     end
 

@@ -243,18 +243,6 @@ impl LuaUserData for Globals {
             },
         );
 
-        methods.add_function(
-            "parsedocumentorargs",
-            |lua, documentor_args: Vec<String>| {
-                // Parse a comment block
-                let pargs = crate::args::parse_args(documentor_args);
-                lua.to_value_with(
-                    &pargs,
-                    LuaSerializeOptions::new().serialize_none_to_null(false),
-                )
-            },
-        );
-
         methods.add_function("parsetotypeset", |lua, data: LuaValue| {
             let args: ParseToTypeSetArgs = lua.from_value(data)?;
 

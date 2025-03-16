@@ -61,9 +61,7 @@ A
 
 A table
 
-*This field is an array type*
-
-[{string}](#string)
+{[string](#string)}
 
 <div id="c"></div>
 
@@ -256,9 +254,7 @@ Input string
 
 Number of times to call ourselves
 
-*This field is an array type*
-
-[{number}](#number)
+{[number](#number)}
 
 <div id="Returns"></div>
 

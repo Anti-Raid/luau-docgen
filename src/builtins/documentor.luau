@@ -16,6 +16,20 @@ assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over
 -- Parse arguments at top-level
 local md = argparser.parseArguments(globals)
 
+if md.help then 
+    print("Usage:")
+
+    for name, opt in argparser.argmap do
+        if opt.opts ~= "" then
+            print("  --" .. name .. " " .. opt.opts .. ": " .. opt.description)
+        else
+            print("  --" .. name .. ": " .. opt.description)
+        end
+    end
+
+    return
+end
+
 -- Create istate
 local istate: istatemod.IState = {
     globals = globals,

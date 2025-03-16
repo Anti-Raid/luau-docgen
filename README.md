@@ -1,17 +1,15 @@
 # luau-docgen
 
-**WIP**
-
 ``luau-docgen`` generates embeddable markdown documentation for Luau code that can be custom tailed to different markdown providers (such as mkdocs/mdbook) without taking over your existing documentation. Unlike ``moonwave`` and friends, ``luau-docgen`` is Luau specific, does not produce a full documentation site like Moonwave does, and works solely based on standard Luau typing syntax (type definitions etc) and can be easily customized by modifying the (in Luau) documentor to your needs.
 
-See ``a.md`` as an example of the current output. The output is currently not pretty and is a heavy work in progress.
+See ``a.md`` as an example of the current output. While the project is a work-in-progress, it is generally usable.
 
 ## Usage
 
-To document a ``~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau``:
+To document a file called ``~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau`` to a file called ``discord-luau-apitypes.md``:
 
 ```bash
-target/debug/luau-docgen ~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau  > a
+luau-docgen ~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau --output discord-luau-apitypes.md
 ```
 
 ## Differences from moonwave

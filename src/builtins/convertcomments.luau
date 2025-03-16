@@ -23,6 +23,18 @@ local specialcommentmap = {
     skip = function(output: ConvertCommentResponse, data: string)
         output.skip = true
     end,
+    param = function(output: ConvertCommentResponse, data: string) -- Alias for field
+        -- Split data by space
+        local split = data:split(" ")
+        if #split < 2 then
+            return
+        end
+
+        local fieldName = split[1]
+        local fieldData = table.concat(split, " ", 2)
+
+        output.fieldDocs[fieldName] = fieldData
+    end,
     field = function(output: ConvertCommentResponse, data: string)
         -- Split data by space
         local split = data:split(" ")

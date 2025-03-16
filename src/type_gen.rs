@@ -14,19 +14,11 @@ use full_moon::{
     tokenizer::TokenReference,
     visitors::Visitor,
 };
-use std::path::PathBuf;
 use std::{fmt::Write, rc::Rc};
 
 pub fn extract_name_from_tokenref(token_ref: &TokenReference) -> String {
     // SAFETY: We can discard all the trivia and just get the name
     token_ref.token().to_string()
-}
-
-#[derive(Debug, clap::Parser)]
-struct CliArgs {
-    #[arg(name = "path")]
-    /// The path to the script to run
-    script: PathBuf,
 }
 
 /// A typed argument with an optional name and typ
