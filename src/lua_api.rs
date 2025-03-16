@@ -228,21 +228,6 @@ impl LuaUserData for Globals {
     }
 
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_function("prettyprint", |_lua, values: LuaMultiValue| {
-            if !values.is_empty() {
-                Ok(values
-                    .iter()
-                    .map(|value| match value {
-                        LuaValue::String(s) => s.to_string_lossy(),
-                        _ => format!("{:#?}", value),
-                    })
-                    .collect::<Vec<_>>()
-                    .join("\t"))
-            } else {
-                Ok("nil".to_string())
-            }
-        });
-
         methods.add_function("parsetotypeset", |lua, data: LuaValue| {
             let args: ParseToTypeSetArgs = lua.from_value(data)?;
 

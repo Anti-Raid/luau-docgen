@@ -51,7 +51,7 @@ end
 
 -- Before doing anything else, make sure we can safely require stuff
 print("Running reqtest self-test for requires")
-local a = require"reqtest/a"
+local a = require"./reqtest/a"
 assert(a.a == 1) -- Ensure stable requires
 print("Passed reqtest self-test for requires")
 
