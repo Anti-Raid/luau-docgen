@@ -36,7 +36,8 @@ export type a = typeof(setmetatable({} :: {
     ) -> a
 }))
 
-local function test(a: a, b: number) --[[Comment here]] end
+--Comment here
+local function test(a: a, b: number) end
 
 -- Hello normal function
 function a<T>() 
