@@ -1,7 +1,6 @@
 //#![feature(non_exhaustive_omitted_patterns_lint)]
 //#![deny(non_exhaustive_omitted_patterns)]
 
-use crate::token_ref_extractor::TokenReferenceExtractor;
 use full_moon::{
     ast::{
         Call, Expression, FunctionArgs, FunctionBody, LocalFunction, Parameter, Prefix, Suffix,
@@ -12,7 +11,7 @@ use full_moon::{
         },
         punctuated::Pair,
     },
-    tokenizer::TokenReference,
+    tokenizer::{TokenReference, TokenType},
     visitors::Visitor,
 };
 use std::rc::Rc;
@@ -20,6 +19,28 @@ use std::rc::Rc;
 pub fn extract_name_from_tokenref(token_ref: &TokenReference) -> String {
     // SAFETY: We can discard all the trivia and just get the name
     token_ref.token().to_string()
+}
+
+pub fn get_comments_from_token_ref(token_ref: &TokenReference) -> Vec<String> {
+    let mut comments = Vec::new();
+
+    for token in token_ref
+        .leading_trivia()
+        .chain(token_ref.trailing_trivia())
+    {
+        //#[allow(non_exhaustive_omitted_patterns)]
+        match token.token_type() {
+            TokenType::MultiLineComment { comment, .. } => {
+                comments.push(comment.to_string());
+            }
+            TokenType::SingleLineComment { comment } => {
+                comments.push(comment.to_string());
+            }
+            _ => {}
+        }
+    }
+
+    comments
 }
 
 /// A typed argument with an optional name and typ
@@ -411,6 +432,8 @@ pub enum TypeFieldKey {
 }
 
 /// Originates from a LuauTypeField: A type field used within table types. The foo: number in { foo: number }.
+///
+/// TODO: Support read-only/write-only properties here
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeField {
     /// The comments associated with the type field
@@ -442,7 +465,25 @@ impl TypeField {
         .into();
         let value = typ_field.value();
 
-        let comments = tbv.get_surrounding_trivia_for_node(typ_field);
+        let mut comments = Vec::new();
+
+        // Check access modifier for comments
+        if let Some(access_modifier) = typ_field.access() {
+            comments.extend(get_comments_from_token_ref(access_modifier));
+        }
+
+        // Check key for comments
+        match typ_field.key() {
+            LuauTypeFieldKey::Name(name) => {
+                comments.extend(get_comments_from_token_ref(name));
+            }
+            LuauTypeFieldKey::IndexSignature { brackets, inner: _ } => {
+                let (start_bracket, end_bracket) = brackets.tokens();
+                comments.extend(get_comments_from_token_ref(start_bracket));
+                comments.extend(get_comments_from_token_ref(end_bracket));
+            }
+            _ => {}
+        }
 
         let type_info = TypeFieldType::from_luau_typeinfo(tbv, value);
 
@@ -594,16 +635,13 @@ impl TypeBlockVisitor {
         generics
     }
 
-    pub fn create_type_from_function<T: TokenReferenceExtractor>(
+    pub fn create_type_from_function(
         &mut self,
-        node: &T,
+        comments: Vec<String>,
         name: String,
         body: &FunctionBody,
         function_type: FunctionType,
     ) -> Type {
-        // Extract comments
-        let comments = self.get_surrounding_trivia_for_node(node);
-
         // Get the generics
         let generics = if let Some(generic) = body.generics() {
             self.create_typed_arguments_from_generic_declaration(generic)
@@ -855,39 +893,28 @@ impl TypeBlockVisitor {
             .into(),
         })
     }
-
-    // Gets surrounding trivia for nodes using two different implementations
-    pub fn get_surrounding_trivia_for_node<T: TokenReferenceExtractor>(
-        &self,
-        node: &T,
-    ) -> Vec<String> {
-        let instant_now = std::time::Instant::now();
-        let comments = TokenReferenceExtractor::get_surrounding_trivia(node);
-        let elapsed_n = instant_now.elapsed();
-
-        log::trace!("Elapsed: {:?}", elapsed_n.as_micros());
-
-        comments
-    }
 }
 
 impl Visitor for TypeBlockVisitor {
     fn visit_function_declaration(&mut self, node: &full_moon::ast::FunctionDeclaration) {
+        let comments = get_comments_from_token_ref(node.function_token());
         let node_names = node.name().to_string();
         let typ =
-            self.create_type_from_function(node, node_names, node.body(), FunctionType::Normal);
+            self.create_type_from_function(comments, node_names, node.body(), FunctionType::Normal);
         self.found_types.push(typ);
     }
 
     fn visit_local_function(&mut self, node: &LocalFunction) {
+        let comments = get_comments_from_token_ref(node.local_token());
         let node_name = extract_name_from_tokenref(node.name());
-        let typ = self.create_type_from_function(node, node_name, node.body(), FunctionType::Local);
+        let typ =
+            self.create_type_from_function(comments, node_name, node.body(), FunctionType::Local);
         self.found_types.push(typ);
     }
 
     fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
         let Some(typ) = self.create_type_from_type_decl(
-            self.get_surrounding_trivia_for_node(node),
+            get_comments_from_token_ref(node.export_token()),
             node.type_declaration(),
         ) else {
             return;
@@ -910,8 +937,8 @@ impl Visitor for TypeBlockVisitor {
             }
 
             self.last_typedef = Some(type_name);
-            let Some(typ) =
-                self.create_type_from_type_decl(self.get_surrounding_trivia_for_node(node), node)
+            let Some(typ) = self
+                .create_type_from_type_decl(get_comments_from_token_ref(node.type_token()), node)
             else {
                 return;
             };

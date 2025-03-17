@@ -1152,14 +1152,11 @@ Union with variants:
 
 https://discord.com/developers/docs/resources/guild#integration-object
 
-"twitch" | "youtube" | "discord" | "guild_subscriptions"
-
 <details>
 <summary>Raw Type</summary>
 
 ```luau
 -- https://discord.com/developers/docs/resources/guild#integration-object
--- "twitch" | "youtube" | "discord" | "guild_subscriptions"
 type IntegrationType = number
 ```
 

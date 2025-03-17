@@ -76,7 +76,7 @@ The description (if any) of the attachment
 
 *This field is optional and may not be specified*
 
-[string?](#string)?
+[string](#string)?
 
 <div id="content"></div>
 
@@ -84,9 +84,7 @@ The description (if any) of the attachment
 
 The content of the attachment
 
-*This field is an array type*
-
-[Primitives](#module.Primitives).[#byte](#byte)
+{[Primitives](#module.Primitives).[#byte](#byte)}
 
 <div id="CreateInteractionRequest"></div>
 
@@ -107,9 +105,7 @@ type CreateInteractionRequest = Request<objects.InteractionResponseObject>
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#InteractionResponseObject](#InteractionResponseObject)
-
-><div id="EditOriginalInteractionRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#InteractionResponseObject](#InteractionResponseObject)><div id="EditOriginalInteractionRequest"></div>
 
 ## EditOriginalInteractionRequest
 
@@ -125,11 +121,7 @@ type EditOriginalInteractionRequest = Request<objects.Partial<objects.MessageObj
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
->
-
-><div id="CreateFollowupMessageRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)>><div id="CreateFollowupMessageRequest"></div>
 
 ## CreateFollowupMessageRequest
 
@@ -145,11 +137,7 @@ type CreateFollowupMessageRequest = Request<objects.Partial<objects.MessageObjec
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
->
-
-><div id="EditFollowupMessageRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)>><div id="EditFollowupMessageRequest"></div>
 
 ## EditFollowupMessageRequest
 
@@ -165,11 +153,7 @@ type EditFollowupMessageRequest = Request<objects.Partial<objects.MessageObject>
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
->
-
-><div id="CreateAutoModerationRuleRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[objects](#module.objects).[#MessageObject](#MessageObject)>><div id="CreateAutoModerationRuleRequest"></div>
 
 ## CreateAutoModerationRuleRequest
 
@@ -201,9 +185,7 @@ type CreateAutoModerationRuleRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, [objects](#module.objects).[#AutomoderationRuleEventType](#AutomoderationRuleEventType)
-
-, , , , , , ><div id="ModifyAutoModerationRuleRequest"></div>
+[Request](#Request)<[string](#string)?, [objects](#module.objects).[#AutomoderationRuleEventType](#AutomoderationRuleEventType), [objects](#module.objects).[#AutomoderationRuleTriggerType](#AutomoderationRuleTriggerType)?, [objects](#module.objects).[#AutomoderationRuleTriggerMetadataObject](#AutomoderationRuleTriggerMetadataObject)?, {[objects](#module.objects).[#AutomoderationActionObject](#AutomoderationActionObject)}?, [boolean](#boolean)?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?><div id="ModifyAutoModerationRuleRequest"></div>
 
 ## ModifyAutoModerationRuleRequest
 
@@ -233,9 +215,7 @@ type ModifyAutoModerationRuleRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, [objects](#module.objects).[#AutomoderationRuleEventType](#AutomoderationRuleEventType)
-
-, , , , , ><div id="EditCurrentApplicationRequest"></div>
+[Request](#Request)<[string](#string)?, [objects](#module.objects).[#AutomoderationRuleEventType](#AutomoderationRuleEventType), [objects](#module.objects).[#AutomoderationRuleTriggerMetadataObject](#AutomoderationRuleTriggerMetadataObject)?, {[objects](#module.objects).[#AutomoderationActionObject](#AutomoderationActionObject)}?, [boolean](#boolean)?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?><div id="EditCurrentApplicationRequest"></div>
 
 ## EditCurrentApplicationRequest
 
@@ -273,13 +253,7 @@ type EditCurrentApplicationRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [string](#string), [string](#string), [objects](#module.objects).[#InstallParamsObject](#InstallParamsObject)
-
-, [unknown](#unknown), [number](#number), , , [string](#string), *This field is an array type*
-
-[{string}](#string)
-
-><div id="ModifyChannelRequest"></div>
+[Request](#Request)<[string](#string), [string](#string), [string](#string), [objects](#module.objects).[#InstallParamsObject](#InstallParamsObject), [unknown](#unknown), [number](#number), [string](#string)?, [string](#string)?, [string](#string), {[string](#string)}><div id="ModifyChannelRequest"></div>
 
 ## ModifyChannelRequest
 
@@ -339,22 +313,13 @@ type ModifyChannelRequest = Request<{
 
 	invitable: boolean?,
 
-	--- the IDs of the set of tags that have been applied to a thread in a GUILD_FORUM or a GUILD_MEDIA channel; limited to 5
 	applied_tags: {objects.Snowflake}
 }>
 ```
 
 </details>
 
-[#Request](#Request)<, [objects](#module.objects).[#ChannelType](#ChannelType)
-
-, , , , , , , , , , , [objects](#module.objects).[#VideoQualityMode](#VideoQualityMode)
-
-, , , , , , , , , , , , *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="CreateMessageRequest"></div>
+[Request](#Request)<[string](#string)?, [objects](#module.objects).[#ChannelType](#ChannelType), [string](#string)?, [number](#number)?, [string](#string)?, [boolean](#boolean)?, [number](#number)?, [number](#number)?, [number](#number)?, {[objects](#module.objects).[#OverwriteObject](#OverwriteObject)}?, [objects](#module.objects).[#Snowflake](#Snowflake)?, [string](#string)?, [objects](#module.objects).[#VideoQualityMode](#VideoQualityMode), [number](#number)?, [number](#number)?, {[objects](#module.objects).[#ForumTagObject](#ForumTagObject)}?, [objects](#module.objects).[#DefaultReactionObject](#DefaultReactionObject)?, [number](#number)?, [objects](#module.objects).[#SortOrderType](#SortOrderType)?, [objects](#module.objects).[#ForumLayoutType](#ForumLayoutType)?, [boolean](#boolean)?, [number](#number)?, [boolean](#boolean)?, [boolean](#boolean)?, {[objects](#module.objects).[#Snowflake](#Snowflake)}><div id="CreateMessageRequest"></div>
 
 ## CreateMessageRequest
 
@@ -396,7 +361,7 @@ type CreateMessageRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , , , , , , , , , ><div id="EditMessageRequest"></div>
+[Request](#Request)<[string](#string)?, ([string](#string) | [number](#number))?, [boolean](#boolean)?, {[objects](#module.objects).[#EmbedObject](#EmbedObject)}?, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject)?, [objects](#module.objects).[#MessageReferenceObject](#MessageReferenceObject)?, {[objects](#module.objects).[#ComponentObjects](#ComponentObjects)}?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?, {[CreateMessageAttachment](#CreateMessageAttachment)}?, [number](#number)?, [boolean](#boolean)?, [objects](#module.objects).[#PollObject](#PollObject)?><div id="EditMessageRequest"></div>
 
 ## EditMessageRequest
 
@@ -426,7 +391,7 @@ type EditMessageRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , , , ><div id="CreateChannelInviteRequest"></div>
+[Request](#Request)<[string](#string)?, {[objects](#module.objects).[#EmbedObject](#EmbedObject)}?, {[objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject)}?, {[objects](#module.objects).[#ComponentObjects](#ComponentObjects)}?, {[CreateMessageAttachment](#CreateMessageAttachment)}?, [number](#number)?><div id="CreateChannelInviteRequest"></div>
 
 ## CreateChannelInviteRequest
 
@@ -456,7 +421,7 @@ type CreateChannelInviteRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , , , , ><div id="BulkDeleteMessagesRequest"></div>
+[Request](#Request)<[number](#number)?, [number](#number)?, [boolean](#boolean)?, [boolean](#boolean)?, [objects](#module.objects).[#InviteTargetTypes](#InviteTargetTypes)?, [objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#Snowflake](#Snowflake)?><div id="BulkDeleteMessagesRequest"></div>
 
 ## BulkDeleteMessagesRequest
 
@@ -474,11 +439,7 @@ type BulkDeleteMessagesRequest = Request<{
 
 </details>
 
-[#Request](#Request)<*This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="FollowAnnouncementChannelRequest"></div>
+[Request](#Request)<{[objects](#module.objects).[#Snowflake](#Snowflake)}><div id="FollowAnnouncementChannelRequest"></div>
 
 ## FollowAnnouncementChannelRequest
 
@@ -496,9 +457,7 @@ type FollowAnnouncementChannelRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="GroupDMAddRecipientRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)><div id="GroupDMAddRecipientRequest"></div>
 
 ## GroupDMAddRecipientRequest
 
@@ -518,7 +477,7 @@ type GroupDMAddRecipientRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [string](#string)><div id="StartThreadFromMessageRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)><div id="StartThreadFromMessageRequest"></div>
 
 ## StartThreadFromMessageRequest
 
@@ -540,7 +499,7 @@ type StartThreadFromMessageRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , ><div id="StartThreadWithoutMessageRequest"></div>
+[Request](#Request)<[string](#string), [number](#number)?, [number](#number)?><div id="StartThreadWithoutMessageRequest"></div>
 
 ## StartThreadWithoutMessageRequest
 
@@ -566,7 +525,7 @@ type StartThreadWithoutMessageRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , ><div id="StartThreadInForumOrMediaChannelRequest"></div>
+[Request](#Request)<[string](#string), [number](#number)?, [objects](#module.objects).[#ChannelType](#ChannelType)?, [boolean](#boolean)?, [number](#number)?><div id="StartThreadInForumOrMediaChannelRequest"></div>
 
 ## StartThreadInForumOrMediaChannelRequest
 
@@ -594,11 +553,7 @@ type StartThreadInForumOrMediaChannelRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, ><div id="CreateGuildEmojiRequest"></div>
+[Request](#Request)<[string](#string), [number](#number)?, [number](#number)?, {[objects](#module.objects).[#Snowflake](#Snowflake)}, [objects](#module.objects).[#ForumAndMediaThreadMessageObject](#ForumAndMediaThreadMessageObject)?><div id="CreateGuildEmojiRequest"></div>
 
 ## CreateGuildEmojiRequest
 
@@ -620,11 +575,7 @@ type CreateGuildEmojiRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [string](#string), *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="ModifyGuildEmojiRequest"></div>
+[Request](#Request)<[string](#string), [string](#string), {[objects](#module.objects).[#Snowflake](#Snowflake)}><div id="ModifyGuildEmojiRequest"></div>
 
 ## ModifyGuildEmojiRequest
 
@@ -644,11 +595,7 @@ type ModifyGuildEmojiRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="CreateGuildRequest"></div>
+[Request](#Request)<[string](#string), {[objects](#module.objects).[#Snowflake](#Snowflake)}><div id="CreateGuildRequest"></div>
 
 ## CreateGuildRequest
 
@@ -688,9 +635,7 @@ type CreateGuildRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , , , , , [objects](#module.objects).[#Snowflake](#Snowflake)
-
-, [number](#number), , ><div id="ModifyGuildRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)?, [objects](#module.objects).[#VerificationLevel](#VerificationLevel)?, [objects](#module.objects).[#DefaultMessageNotification](#DefaultMessageNotification)?, [objects](#module.objects).[#ExplicitContentFilterLevel](#ExplicitContentFilterLevel)?, {[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)}?, {[objects](#module.objects).[#ChannelObject](#ChannelObject)}?, [objects](#module.objects).[#Snowflake](#Snowflake), [number](#number), [objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#SystemChannelFlags](#SystemChannelFlags)?><div id="ModifyGuildRequest"></div>
 
 ## ModifyGuildRequest
 
@@ -746,11 +691,7 @@ type ModifyGuildRequest = Request<objects.Partial<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[string](#string), , , , , , , [objects](#module.objects).[#Snowflake](#Snowflake)
-
-, , , , , , , , , , , , >
-
-><div id="CreateGuildChannelRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[string](#string), [objects](#module.objects).[#VerificationLevel](#VerificationLevel)?, [objects](#module.objects).[#DefaultMessageNotification](#DefaultMessageNotification)?, [objects](#module.objects).[#ExplicitContentFilterLevel](#ExplicitContentFilterLevel)?, [objects](#module.objects).[#Snowflake](#Snowflake)?, [number](#number)?, [string](#string)?, [objects](#module.objects).[#Snowflake](#Snowflake), [string](#string)?, [string](#string)?, [string](#string)?, [objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#SystemChannelFlags](#SystemChannelFlags)?, [objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#LanguageLocales](#LanguageLocales)?, {[objects](#module.objects).[#GuildFeature](#GuildFeature)}?, [string](#string)?, [boolean](#boolean)?, [objects](#module.objects).[#Snowflake](#Snowflake)?>><div id="CreateGuildChannelRequest"></div>
 
 ## CreateGuildChannelRequest
 
@@ -802,15 +743,7 @@ type CreateGuildChannelRequest = Request<objects.Partial<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[string](#string), [objects](#module.objects).[#ChannelType](#ChannelType)
-
-, , , , , [number](#number), *This field is an array type*
-
-[objects](#module.objects).[#OverwriteObject](#OverwriteObject)
-
-, , , , , , , , , , >
-
-><div id="ModifyGuildChannelPositionsRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Partial](#Partial)<[string](#string), [objects](#module.objects).[#ChannelType](#ChannelType), [string](#string)?, [number](#number)?, [number](#number)?, [number](#number)?, [number](#number), {[objects](#module.objects).[#OverwriteObject](#OverwriteObject)}, [objects](#module.objects).[#Snowflake](#Snowflake)?, [boolean](#boolean)?, [string](#string)?, [objects](#module.objects).[#VideoQualityMode](#VideoQualityMode)?, [number](#number)?, [objects](#module.objects).[#EmojiObject](#EmojiObject)?, {[objects](#module.objects).[#ForumTagObject](#ForumTagObject)}?, [objects](#module.objects).[#SortOrderType](#SortOrderType)?, [objects](#module.objects).[#ForumLayoutType](#ForumLayoutType)?, [number](#number)?>><div id="ModifyGuildChannelPositionsRequest"></div>
 
 ## ModifyGuildChannelPositionsRequest
 
@@ -834,9 +767,7 @@ type ModifyGuildChannelPositionsRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, , , ><div id="AddGuildMemberRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake), [number](#number)?, [boolean](#boolean)?, [objects](#module.objects).[#Snowflake](#Snowflake)?><div id="AddGuildMemberRequest"></div>
 
 ## AddGuildMemberRequest
 
@@ -862,7 +793,7 @@ type AddGuildMemberRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , ><div id="ModifyGuildMemberRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?, [boolean](#boolean)?, [boolean](#boolean)?><div id="ModifyGuildMemberRequest"></div>
 
 ## ModifyGuildMemberRequest
 
@@ -892,7 +823,7 @@ type ModifyGuildMemberRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , , , , ><div id="ModifyCurrentMemberRequest"></div>
+[Request](#Request)<[string](#string)?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?, [boolean](#boolean)?, [boolean](#boolean)?, ([objects](#module.objects).[#Snowflake](#Snowflake) | [boolean](#boolean))?, [string](#string)?, [objects](#module.objects).[#GuildMemberFlags](#GuildMemberFlags)?><div id="ModifyCurrentMemberRequest"></div>
 
 ## ModifyCurrentMemberRequest
 
@@ -910,7 +841,7 @@ type ModifyCurrentMemberRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string)><div id="CreateGuildBanRequest"></div>
+[Request](#Request)<[string](#string)><div id="CreateGuildBanRequest"></div>
 
 ## CreateGuildBanRequest
 
@@ -930,7 +861,7 @@ type CreateGuildBanRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, ><div id="BulkGuildBanRequest"></div>
+[Request](#Request)<[number](#number)?, [number](#number)?><div id="BulkGuildBanRequest"></div>
 
 ## BulkGuildBanRequest
 
@@ -950,11 +881,7 @@ type BulkGuildBanRequest = Request<{
 
 </details>
 
-[#Request](#Request)<*This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, ><div id="CreateGuildRoleRequest"></div>
+[Request](#Request)<{[objects](#module.objects).[#Snowflake](#Snowflake)}, [number](#number)?><div id="CreateGuildRoleRequest"></div>
 
 ## CreateGuildRoleRequest
 
@@ -984,7 +911,7 @@ type CreateGuildRoleRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , , , , ><div id="ModifyGuildRolePositionsRequest"></div>
+[Request](#Request)<[string](#string)?, [string](#string)?, [number](#number)?, [boolean](#boolean)?, [string](#string)?, [string](#string)?, [boolean](#boolean)?><div id="ModifyGuildRolePositionsRequest"></div>
 
 ## ModifyGuildRolePositionsRequest
 
@@ -1004,9 +931,7 @@ type ModifyGuildRolePositionsRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, [number](#number)><div id="ModifyGuildRoleRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake), [number](#number)><div id="ModifyGuildRoleRequest"></div>
 
 ## ModifyGuildRoleRequest
 
@@ -1036,7 +961,7 @@ type ModifyGuildRoleRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , , , , ><div id="ModifyGuildMFALevelRequest"></div>
+[Request](#Request)<[string](#string)?, [string](#string)?, [number](#number)?, [boolean](#boolean)?, [string](#string)?, [string](#string)?, [boolean](#boolean)?><div id="ModifyGuildMFALevelRequest"></div>
 
 ## ModifyGuildMFALevelRequest
 
@@ -1054,9 +979,7 @@ type ModifyGuildMFALevelRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#MFALevel](#MFALevel)
-
-><div id="BeginGuildPruneRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#MFALevel](#MFALevel)><div id="BeginGuildPruneRequest"></div>
 
 ## BeginGuildPruneRequest
 
@@ -1080,11 +1003,7 @@ type BeginGuildPruneRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[number](#number), [boolean](#boolean), *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, ><div id="ModifyGuildWelcomeScreenRequest"></div>
+[Request](#Request)<[number](#number), [boolean](#boolean), {[objects](#module.objects).[#Snowflake](#Snowflake)}, [string](#string)?><div id="ModifyGuildWelcomeScreenRequest"></div>
 
 ## ModifyGuildWelcomeScreenRequest
 
@@ -1106,11 +1025,7 @@ type ModifyGuildWelcomeScreenRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, *This field is an array type*
-
-[objects](#module.objects).[#WelcomeScreenChannelObject](#WelcomeScreenChannelObject)
-
-, ><div id="ModifyGuildOnboardingRequest"></div>
+[Request](#Request)<[boolean](#boolean)?, {[objects](#module.objects).[#WelcomeScreenChannelObject](#WelcomeScreenChannelObject)}, [string](#string)?><div id="ModifyGuildOnboardingRequest"></div>
 
 ## ModifyGuildOnboardingRequest
 
@@ -1134,7 +1049,7 @@ type ModifyGuildOnboardingRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , , ><div id="ModifyCurrentUserVoiceStateRequest"></div>
+[Request](#Request)<{[objects](#module.objects).[#OnboardingPromptObject](#OnboardingPromptObject)}?, {[objects](#module.objects).[#Snowflake](#Snowflake)}?, [boolean](#boolean)?, [objects](#module.objects).[#OnboardingMode](#OnboardingMode)?><div id="ModifyCurrentUserVoiceStateRequest"></div>
 
 ## ModifyCurrentUserVoiceStateRequest
 
@@ -1156,7 +1071,7 @@ type ModifyCurrentUserVoiceStateRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , ><div id="ModifyUserVoiceStateRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)?, [boolean](#boolean)?, [string](#string)?><div id="ModifyUserVoiceStateRequest"></div>
 
 ## ModifyUserVoiceStateRequest
 
@@ -1176,7 +1091,7 @@ type ModifyUserVoiceStateRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, ><div id="CreateGuildScheduledEventRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)?, [boolean](#boolean)?><div id="CreateGuildScheduledEventRequest"></div>
 
 ## CreateGuildScheduledEventRequest
 
@@ -1210,13 +1125,7 @@ type CreateGuildScheduledEventRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, [objects](#module.objects).[#GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)
-
-, [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)
-
-, [string](#string), , , [objects](#module.objects).[#GuildScheduledEventEntityType](#GuildScheduledEventEntityType)
-
-, ><div id="ModifyGuildScheduledEventRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata), [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel), [string](#string), [string](#string)?, [string](#string)?, [objects](#module.objects).[#GuildScheduledEventEntityType](#GuildScheduledEventEntityType), [string](#string)?><div id="ModifyGuildScheduledEventRequest"></div>
 
 ## ModifyGuildScheduledEventRequest
 
@@ -1252,13 +1161,7 @@ type ModifyGuildScheduledEventRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, [objects](#module.objects).[#GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)
-
-, [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)
-
-, [string](#string), , , [objects](#module.objects).[#GuildScheduledEventEntityType](#GuildScheduledEventEntityType)
-
-, , ><div id="CreateGuildFromGuildTemplateRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)?, [objects](#module.objects).[#GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata), [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel), [string](#string), [string](#string)?, [string](#string)?, [objects](#module.objects).[#GuildScheduledEventEntityType](#GuildScheduledEventEntityType), [objects](#module.objects).[#GuildScheduledEventStatus](#GuildScheduledEventStatus)?, [string](#string)?><div id="CreateGuildFromGuildTemplateRequest"></div>
 
 ## CreateGuildFromGuildTemplateRequest
 
@@ -1278,7 +1181,7 @@ type CreateGuildFromGuildTemplateRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), ><div id="CreateGuildTemplateRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?><div id="CreateGuildTemplateRequest"></div>
 
 ## CreateGuildTemplateRequest
 
@@ -1298,7 +1201,7 @@ type CreateGuildTemplateRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), ><div id="ModifyGuildTemplateRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?><div id="ModifyGuildTemplateRequest"></div>
 
 ## ModifyGuildTemplateRequest
 
@@ -1318,7 +1221,7 @@ type ModifyGuildTemplateRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, ><div id="CreateStageInstanceRequest"></div>
+[Request](#Request)<[string](#string)?, [string](#string)?><div id="CreateStageInstanceRequest"></div>
 
 ## CreateStageInstanceRequest
 
@@ -1344,9 +1247,7 @@ type CreateStageInstanceRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, [string](#string), , , ><div id="ModifyStageInstanceRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake), [string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)?, [boolean](#boolean)?, [objects](#module.objects).[#Snowflake](#Snowflake)?><div id="ModifyStageInstanceRequest"></div>
 
 ## ModifyStageInstanceRequest
 
@@ -1366,9 +1267,7 @@ type ModifyStageInstanceRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)
-
-><div id="CreateGuildStickerRequest"></div>
+[Request](#Request)<[string](#string), [objects](#module.objects).[#PrivacyLevel](#PrivacyLevel)><div id="CreateGuildStickerRequest"></div>
 
 ## CreateGuildStickerRequest
 
@@ -1392,11 +1291,7 @@ type CreateGuildStickerRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [string](#string), *This field is an array type*
-
-[{string}](#string)
-
-, [string](#string)><div id="ModifyGuildStickerRequest"></div>
+[Request](#Request)<[string](#string), [string](#string), {[string](#string)}, [string](#string)><div id="ModifyGuildStickerRequest"></div>
 
 ## ModifyGuildStickerRequest
 
@@ -1418,7 +1313,7 @@ type ModifyGuildStickerRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , [string](#string)><div id="ModifyCurrentUserRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)><div id="ModifyCurrentUserRequest"></div>
 
 ## ModifyCurrentUserRequest
 
@@ -1440,7 +1335,7 @@ type ModifyCurrentUserRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , ><div id="CreateDMRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)?><div id="CreateDMRequest"></div>
 
 ## CreateDMRequest
 
@@ -1458,9 +1353,7 @@ type CreateDMRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="CreateGroupDMRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#Snowflake](#Snowflake)><div id="CreateGroupDMRequest"></div>
 
 ## CreateGroupDMRequest
 
@@ -1482,11 +1375,7 @@ type CreateGroupDMRequest = Request<{
 
 </details>
 
-[#Request](#Request)<*This field is an array type*
-
-[{string}](#string)
-
-, [string](#string)><div id="UpdateCurrentUserApplicationRoleConnectionRequest"></div>
+[Request](#Request)<{[string](#string)}, [string](#string)><div id="UpdateCurrentUserApplicationRoleConnectionRequest"></div>
 
 ## UpdateCurrentUserApplicationRoleConnectionRequest
 
@@ -1508,7 +1397,7 @@ type UpdateCurrentUserApplicationRoleConnectionRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , ><div id="CreateWebhookRequest"></div>
+[Request](#Request)<[string](#string)?, [string](#string)?, [objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)?><div id="CreateWebhookRequest"></div>
 
 ## CreateWebhookRequest
 
@@ -1528,7 +1417,7 @@ type CreateWebhookRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), ><div id="ModifyWebhookRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?><div id="ModifyWebhookRequest"></div>
 
 ## ModifyWebhookRequest
 
@@ -1550,9 +1439,7 @@ type ModifyWebhookRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [string](#string), [objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="ExecuteWebhookRequest"></div>
+[Request](#Request)<[string](#string), [string](#string), [objects](#module.objects).[#Snowflake](#Snowflake)><div id="ExecuteWebhookRequest"></div>
 
 ## ExecuteWebhookRequest
 
@@ -1594,27 +1481,7 @@ type ExecuteWebhookRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), [string](#string), [string](#string), [boolean](#boolean), *This field is an array type*
-
-[objects](#module.objects).[#EmbedObject](#EmbedObject)
-
-, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#ComponentObjects](#ComponentObjects)
-
-, *This field is an array type*
-
-[{CreateMessageAttachment}](#CreateMessageAttachment)
-
-, [number](#number), [string](#string), *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, [objects](#module.objects).[#PollObject](#PollObject)
-
-><div id="ExecuteSlackCompatibleWebhookRequest"></div>
+[Request](#Request)<[string](#string), [string](#string), [string](#string), [boolean](#boolean), {[objects](#module.objects).[#EmbedObject](#EmbedObject)}, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject), {[objects](#module.objects).[#ComponentObjects](#ComponentObjects)}, {[CreateMessageAttachment](#CreateMessageAttachment)}, [number](#number), [string](#string), {[objects](#module.objects).[#Snowflake](#Snowflake)}, [objects](#module.objects).[#PollObject](#PollObject)><div id="ExecuteSlackCompatibleWebhookRequest"></div>
 
 ## ExecuteSlackCompatibleWebhookRequest
 
@@ -1630,7 +1497,7 @@ type ExecuteSlackCompatibleWebhookRequest = Request<{}>
 
 </details>
 
-[#Request](#Request)<><div id="ExecuteGithubCompatibleWebhookRequest"></div>
+[Request](#Request)<><div id="ExecuteGithubCompatibleWebhookRequest"></div>
 
 ## ExecuteGithubCompatibleWebhookRequest
 
@@ -1646,7 +1513,7 @@ type ExecuteGithubCompatibleWebhookRequest = Request<{}>
 
 </details>
 
-[#Request](#Request)<><div id="EditWebhookMessageRequest"></div>
+[Request](#Request)<><div id="EditWebhookMessageRequest"></div>
 
 ## EditWebhookMessageRequest
 
@@ -1676,21 +1543,7 @@ type EditWebhookMessageRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), *This field is an array type*
-
-[objects](#module.objects).[#EmbedObject](#EmbedObject)
-
-, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#ComponentObjects](#ComponentObjects)
-
-, *This field is an array type*
-
-[{CreateMessageAttachment}](#CreateMessageAttachment)
-
-, ><div id="EditChannelPermissionsRequest"></div>
+[Request](#Request)<[string](#string), {[objects](#module.objects).[#EmbedObject](#EmbedObject)}, [objects](#module.objects).[#AllowedMentionObject](#AllowedMentionObject), {[objects](#module.objects).[#ComponentObjects](#ComponentObjects)}, {[CreateMessageAttachment](#CreateMessageAttachment)}, [objects](#module.objects).[#PollObject](#PollObject)?><div id="EditChannelPermissionsRequest"></div>
 
 ## EditChannelPermissionsRequest
 
@@ -1712,7 +1565,7 @@ type EditChannelPermissionsRequest = Request<{
 
 </details>
 
-[#Request](#Request)<, , [number](#number)><div id="ModifyGuildWidgetRequest"></div>
+[Request](#Request)<[string](#string)?, [string](#string)?, [number](#number)><div id="ModifyGuildWidgetRequest"></div>
 
 ## ModifyGuildWidgetRequest
 
@@ -1728,9 +1581,7 @@ type ModifyGuildWidgetRequest = Request<objects.GuildWidgetSettingsObject>
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)
-
-><div id="CrosspostMessageRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)><div id="CrosspostMessageRequest"></div>
 
 ## CrosspostMessageRequest
 
@@ -1746,9 +1597,7 @@ type CrosspostMessageRequest = Request<objects.MessageObject>
 
 </details>
 
-[#Request](#Request)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="CreateGlobalApplicationCommandRequest"></div>
+[Request](#Request)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="CreateGlobalApplicationCommandRequest"></div>
 
 ## CreateGlobalApplicationCommandRequest
 
@@ -1792,7 +1641,7 @@ type CreateGlobalApplicationCommandRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , , ><div id="EditGlobalApplicationCommandRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)?, [string](#string)?, {[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?, [string](#string)?, [boolean](#boolean)?, [boolean](#boolean), {[objects](#module.objects).[#IntegrationType](#IntegrationType)}?, {[objects](#module.objects).[#InteractionContextType](#InteractionContextType)}?, [objects](#module.objects).[#ApplicationCommandType](#ApplicationCommandType)?, [boolean](#boolean)?><div id="EditGlobalApplicationCommandRequest"></div>
 
 ## EditGlobalApplicationCommandRequest
 
@@ -1834,7 +1683,7 @@ type EditGlobalApplicationCommandRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , ><div id="CreateGuildApplicationCommandRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)?, [string](#string)?, {[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?, [string](#string)?, [boolean](#boolean)?, [boolean](#boolean), {[objects](#module.objects).[#IntegrationType](#IntegrationType)}?, {[objects](#module.objects).[#InteractionContextType](#InteractionContextType)}?, [boolean](#boolean)?><div id="CreateGuildApplicationCommandRequest"></div>
 
 ## CreateGuildApplicationCommandRequest
 
@@ -1874,14 +1723,13 @@ type CreateGuildApplicationCommandRequest = Request<{
 
 	nsfw: boolean?,
 
-	-- 1 = AppHandler, 2 = DiscordLaunchActivity
 	handler: number?
 }>
 ```
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , , , ><div id="EditGuildApplicationCommandRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)?, [string](#string)?, {[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?, [string](#string)?, [boolean](#boolean)?, [boolean](#boolean), {[objects](#module.objects).[#IntegrationType](#IntegrationType)}?, {[objects](#module.objects).[#InteractionContextType](#InteractionContextType)}?, [objects](#module.objects).[#ApplicationCommandType](#ApplicationCommandType)?, [boolean](#boolean)?, [number](#number)?><div id="EditGuildApplicationCommandRequest"></div>
 
 ## EditGuildApplicationCommandRequest
 
@@ -1923,7 +1771,7 @@ type EditGuildApplicationCommandRequest = Request<{
 
 </details>
 
-[#Request](#Request)<[string](#string), , , , , , , [boolean](#boolean), , , ><div id="BulkOverwriteGlobalApplicationCommandsRequest"></div>
+[Request](#Request)<[string](#string), [string](#string)?, [string](#string)?, [string](#string)?, {[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?, [string](#string)?, [boolean](#boolean)?, [boolean](#boolean), {[objects](#module.objects).[#IntegrationType](#IntegrationType)}?, {[objects](#module.objects).[#InteractionContextType](#InteractionContextType)}?, [boolean](#boolean)?><div id="BulkOverwriteGlobalApplicationCommandsRequest"></div>
 
 ## BulkOverwriteGlobalApplicationCommandsRequest
 
@@ -1939,11 +1787,7 @@ type BulkOverwriteGlobalApplicationCommandsRequest = Request<{objects.Applicatio
 
 </details>
 
-[#Request](#Request)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="BulkOverwriteGuildApplicationCommandsRequest"></div>
+[Request](#Request)<{[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)}><div id="BulkOverwriteGuildApplicationCommandsRequest"></div>
 
 ## BulkOverwriteGuildApplicationCommandsRequest
 
@@ -1989,127 +1833,7 @@ type BulkOverwriteGuildApplicationCommandsRequest = Request<{{
 
 </details>
 
-[#Request](#Request)<*This field is an array type*
-
-*This is an inline table type with the following fields*
-
-<div id="id"></div>
-
-#### id
-
-*This field is optional and may not be specified*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-?
-
-<div id="name"></div>
-
-#### name
-
-[string](#string)
-
-<div id="name_localizations"></div>
-
-#### name_localizations
-
-*This field is optional and may not be specified*
-
-[string](#string)?
-
-<div id="description"></div>
-
-#### description
-
-*This field is optional and may not be specified*
-
-[string?](#string)?
-
-<div id="description_localizations"></div>
-
-#### description_localizations
-
-*This field is optional and may not be specified*
-
-[string](#string)?
-
-<div id="options"></div>
-
-#### options
-
-*This field is optional and may not be specified*
-
-*This field is an array type*
-
-[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)
-
-?
-
-<div id="default_member_permissions"></div>
-
-#### default_member_permissions
-
-*This field is optional and may not be specified*
-
-[string?](#string)?
-
-<div id="dm_permission"></div>
-
-#### dm_permission
-
-*This field is optional and may not be specified*
-
-[boolean?](#boolean)?
-
-<div id="default_permission"></div>
-
-#### default_permission
-
-[boolean](#boolean)
-
-<div id="integration_types"></div>
-
-#### integration_types
-
-*This field is optional and may not be specified*
-
-*This field is an array type*
-
-[objects](#module.objects).[#IntegrationType](#IntegrationType)
-
-?
-
-<div id="contexts"></div>
-
-#### contexts
-
-*This field is optional and may not be specified*
-
-*This field is an array type*
-
-[objects](#module.objects).[#InteractionContextType](#InteractionContextType)
-
-?
-
-<div id="type"></div>
-
-#### type
-
-*This field is optional and may not be specified*
-
-[objects](#module.objects).[#ApplicationCommandType](#ApplicationCommandType)
-
-?
-
-<div id="nsfw"></div>
-
-#### nsfw
-
-*This field is optional and may not be specified*
-
-[boolean?](#boolean)?
-
-><div id="EditApplicationCommandPermissionsRequest"></div>
+[Request](#Request)<{[objects](#module.objects).[#Snowflake](#Snowflake)?, [string](#string), [string](#string)?, [string](#string)?, [string](#string)?, {[objects](#module.objects).[#ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?, [string](#string)?, [boolean](#boolean)?, [boolean](#boolean), {[objects](#module.objects).[#IntegrationType](#IntegrationType)}?, {[objects](#module.objects).[#InteractionContextType](#InteractionContextType)}?, [objects](#module.objects).[#ApplicationCommandType](#ApplicationCommandType)?, [boolean](#boolean)?}><div id="EditApplicationCommandPermissionsRequest"></div>
 
 ## EditApplicationCommandPermissionsRequest
 
@@ -2127,11 +1851,7 @@ type EditApplicationCommandPermissionsRequest = Request<{
 
 </details>
 
-[#Request](#Request)<*This field is an array type*
-
-[objects](#module.objects).[#GuildApplicationCommandPermissionObject](#GuildApplicationCommandPermissionObject)
-
-><div id="GetCurrentUserVoiceStateResponse"></div>
+[Request](#Request)<{[objects](#module.objects).[#GuildApplicationCommandPermissionObject](#GuildApplicationCommandPermissionObject)}><div id="GetCurrentUserVoiceStateResponse"></div>
 
 ## GetCurrentUserVoiceStateResponse
 
@@ -2150,9 +1870,7 @@ type GetCurrentUserVoiceStateResponse = Response<objects.VoiceStateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#VoiceStateObject](#VoiceStateObject)
-
-><div id="GetUserVoiceStateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#VoiceStateObject](#VoiceStateObject)><div id="GetUserVoiceStateResponse"></div>
 
 ## GetUserVoiceStateResponse
 
@@ -2168,9 +1886,7 @@ type GetUserVoiceStateResponse = Response<objects.VoiceStateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#VoiceStateObject](#VoiceStateObject)
-
-><div id="GetGlobalApplicationCommandsResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#VoiceStateObject](#VoiceStateObject)><div id="GetGlobalApplicationCommandsResponse"></div>
 
 ## GetGlobalApplicationCommandsResponse
 
@@ -2186,11 +1902,7 @@ type GetGlobalApplicationCommandsResponse = Response<{objects.ApplicationCommand
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="CreateGlobalApplicationCommandResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)}><div id="CreateGlobalApplicationCommandResponse"></div>
 
 ## CreateGlobalApplicationCommandResponse
 
@@ -2206,9 +1918,7 @@ type CreateGlobalApplicationCommandResponse = Response<objects.ApplicationComman
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="GetGlobalApplicationCommandResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)><div id="GetGlobalApplicationCommandResponse"></div>
 
 ## GetGlobalApplicationCommandResponse
 
@@ -2224,9 +1934,7 @@ type GetGlobalApplicationCommandResponse = Response<objects.ApplicationCommandOb
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="EditGlobalApplicationCommandResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)><div id="EditGlobalApplicationCommandResponse"></div>
 
 ## EditGlobalApplicationCommandResponse
 
@@ -2242,9 +1950,7 @@ type EditGlobalApplicationCommandResponse = Response<objects.ApplicationCommandO
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="DeleteGlobalApplicationCommandResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)><div id="DeleteGlobalApplicationCommandResponse"></div>
 
 ## DeleteGlobalApplicationCommandResponse
 
@@ -2260,7 +1966,7 @@ type DeleteGlobalApplicationCommandResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="BulkOverwriteGlobalApplicationCommandsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="BulkOverwriteGlobalApplicationCommandsResponse"></div>
 
 ## BulkOverwriteGlobalApplicationCommandsResponse
 
@@ -2276,11 +1982,7 @@ type BulkOverwriteGlobalApplicationCommandsResponse = Response<{objects.Applicat
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="GetGuildApplicationCommandsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)}><div id="GetGuildApplicationCommandsResponse"></div>
 
 ## GetGuildApplicationCommandsResponse
 
@@ -2296,11 +1998,7 @@ type GetGuildApplicationCommandsResponse = Response<{objects.ApplicationCommandO
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="CreateGuildApplicationCommandResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)}><div id="CreateGuildApplicationCommandResponse"></div>
 
 ## CreateGuildApplicationCommandResponse
 
@@ -2316,9 +2014,7 @@ type CreateGuildApplicationCommandResponse = Response<objects.ApplicationCommand
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="GetGuildApplicationCommandResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)><div id="GetGuildApplicationCommandResponse"></div>
 
 ## GetGuildApplicationCommandResponse
 
@@ -2334,9 +2030,7 @@ type GetGuildApplicationCommandResponse = Response<objects.ApplicationCommandObj
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="EditGuildApplicationCommandResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)><div id="EditGuildApplicationCommandResponse"></div>
 
 ## EditGuildApplicationCommandResponse
 
@@ -2352,9 +2046,7 @@ type EditGuildApplicationCommandResponse = Response<objects.ApplicationCommandOb
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="DeleteGuildApplicationCommandResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)><div id="DeleteGuildApplicationCommandResponse"></div>
 
 ## DeleteGuildApplicationCommandResponse
 
@@ -2370,7 +2062,7 @@ type DeleteGuildApplicationCommandResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="BulkOverwriteGuildApplicationCommandsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="BulkOverwriteGuildApplicationCommandsResponse"></div>
 
 ## BulkOverwriteGuildApplicationCommandsResponse
 
@@ -2386,11 +2078,7 @@ type BulkOverwriteGuildApplicationCommandsResponse = Response<{objects.Applicati
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)
-
-><div id="GetGuildApplicationCommandPermissionsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ApplicationCommandObject](#ApplicationCommandObject)}><div id="GetGuildApplicationCommandPermissionsResponse"></div>
 
 ## GetGuildApplicationCommandPermissionsResponse
 
@@ -2406,11 +2094,7 @@ type GetGuildApplicationCommandPermissionsResponse = Response<{objects.GuildAppl
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)
-
-><div id="GetApplicationCommandPermissionsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)}><div id="GetApplicationCommandPermissionsResponse"></div>
 
 ## GetApplicationCommandPermissionsResponse
 
@@ -2426,11 +2110,7 @@ type GetApplicationCommandPermissionsResponse = Response<{objects.GuildApplicati
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)
-
-><div id="EditApplicationCommandPermissionsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)}><div id="EditApplicationCommandPermissionsResponse"></div>
 
 ## EditApplicationCommandPermissionsResponse
 
@@ -2446,9 +2126,7 @@ type EditApplicationCommandPermissionsResponse = Response<objects.GuildApplicati
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)
-
-><div id="GetCurrentApplicationResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildApplicationCommandPermissionsObject](#GuildApplicationCommandPermissionsObject)><div id="GetCurrentApplicationResponse"></div>
 
 ## GetCurrentApplicationResponse
 
@@ -2464,11 +2142,7 @@ type GetCurrentApplicationResponse = Response<{objects.ApplicationObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationObject](#ApplicationObject)
-
-><div id="EditCurrentApplicationResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ApplicationObject](#ApplicationObject)}><div id="EditCurrentApplicationResponse"></div>
 
 ## EditCurrentApplicationResponse
 
@@ -2484,11 +2158,7 @@ type EditCurrentApplicationResponse = Response<{objects.ApplicationObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ApplicationObject](#ApplicationObject)
-
-><div id="GetApplicationRoleConnectionMetadataRecordsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ApplicationObject](#ApplicationObject)}><div id="GetApplicationRoleConnectionMetadataRecordsResponse"></div>
 
 ## GetApplicationRoleConnectionMetadataRecordsResponse
 
@@ -2504,9 +2174,7 @@ type GetApplicationRoleConnectionMetadataRecordsResponse = Response<objects.Appl
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)
-
-><div id="UpdateApplicationRoleConnectionMetadataRecordsResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)><div id="UpdateApplicationRoleConnectionMetadataRecordsResponse"></div>
 
 ## UpdateApplicationRoleConnectionMetadataRecordsResponse
 
@@ -2522,9 +2190,7 @@ type UpdateApplicationRoleConnectionMetadataRecordsResponse = Response<objects.A
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)
-
-><div id="GetGuildAuditLogResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionMetadataObject](#ApplicationRoleConnectionMetadataObject)><div id="GetGuildAuditLogResponse"></div>
 
 ## GetGuildAuditLogResponse
 
@@ -2540,9 +2206,7 @@ type GetGuildAuditLogResponse = Response<objects.AuditLogObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#AuditLogObject](#AuditLogObject)
-
-><div id="ListAutoModerationRulesForGuildResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#AuditLogObject](#AuditLogObject)><div id="ListAutoModerationRulesForGuildResponse"></div>
 
 ## ListAutoModerationRulesForGuildResponse
 
@@ -2558,11 +2222,7 @@ type ListAutoModerationRulesForGuildResponse = Response<{objects.AutomoderationR
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
-
-><div id="GetAutoModerationRuleResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)}><div id="GetAutoModerationRuleResponse"></div>
 
 ## GetAutoModerationRuleResponse
 
@@ -2578,9 +2238,7 @@ type GetAutoModerationRuleResponse = Response<objects.AutomoderationRuleObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
-
-><div id="CreateAutoModerationRuleResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)><div id="CreateAutoModerationRuleResponse"></div>
 
 ## CreateAutoModerationRuleResponse
 
@@ -2596,9 +2254,7 @@ type CreateAutoModerationRuleResponse = Response<objects.AutomoderationRuleObjec
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
-
-><div id="ModifyAutoModerationRuleResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)><div id="ModifyAutoModerationRuleResponse"></div>
 
 ## ModifyAutoModerationRuleResponse
 
@@ -2614,9 +2270,7 @@ type ModifyAutoModerationRuleResponse = Response<objects.AutomoderationRuleObjec
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)
-
-><div id="DeleteAutoModerationRuleResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#AutomoderationRuleObject](#AutomoderationRuleObject)><div id="DeleteAutoModerationRuleResponse"></div>
 
 ## DeleteAutoModerationRuleResponse
 
@@ -2632,7 +2286,7 @@ type DeleteAutoModerationRuleResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetChannelResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetChannelResponse"></div>
 
 ## GetChannelResponse
 
@@ -2648,9 +2302,7 @@ type GetChannelResponse = Response<objects.ChannelObject & (objects.ThreadMember
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
- & ><div id="ModifyChannelResponse"></div>
+[Response](#Response)<([objects](#module.objects).[#ChannelObject](#ChannelObject) & [objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)?)><div id="ModifyChannelResponse"></div>
 
 ## ModifyChannelResponse
 
@@ -2666,9 +2318,7 @@ type ModifyChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="DeleteCloseChannelResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="DeleteCloseChannelResponse"></div>
 
 ## DeleteCloseChannelResponse
 
@@ -2684,9 +2334,7 @@ type DeleteCloseChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="GetChannelMessagesResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="GetChannelMessagesResponse"></div>
 
 ## GetChannelMessagesResponse
 
@@ -2702,11 +2350,7 @@ type GetChannelMessagesResponse = Response<{objects.MessageObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="GetChannelMessageResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#MessageObject](#MessageObject)}><div id="GetChannelMessageResponse"></div>
 
 ## GetChannelMessageResponse
 
@@ -2722,9 +2366,7 @@ type GetChannelMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="CreateMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="CreateMessageResponse"></div>
 
 ## CreateMessageResponse
 
@@ -2740,9 +2382,7 @@ type CreateMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="CrosspostMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="CrosspostMessageResponse"></div>
 
 ## CrosspostMessageResponse
 
@@ -2758,9 +2398,7 @@ type CrosspostMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="CreateReactionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="CreateReactionResponse"></div>
 
 ## CreateReactionResponse
 
@@ -2776,7 +2414,7 @@ type CreateReactionResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="DeleteOwnReactionResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="DeleteOwnReactionResponse"></div>
 
 ## DeleteOwnReactionResponse
 
@@ -2792,7 +2430,7 @@ type DeleteOwnReactionResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="DeleteUserReactionResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="DeleteUserReactionResponse"></div>
 
 ## DeleteUserReactionResponse
 
@@ -2808,7 +2446,7 @@ type DeleteUserReactionResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetReactionsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetReactionsResponse"></div>
 
 ## GetReactionsResponse
 
@@ -2824,11 +2462,7 @@ type GetReactionsResponse = Response<{objects.UserObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#UserObject](#UserObject)
-
-><div id="DeleteAllReactionsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#UserObject](#UserObject)}><div id="DeleteAllReactionsResponse"></div>
 
 ## DeleteAllReactionsResponse
 
@@ -2844,7 +2478,7 @@ type DeleteAllReactionsResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="DeleteAllReactionsForEmojiResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="DeleteAllReactionsForEmojiResponse"></div>
 
 ## DeleteAllReactionsForEmojiResponse
 
@@ -2860,7 +2494,7 @@ type DeleteAllReactionsForEmojiResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="EditMessageResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="EditMessageResponse"></div>
 
 ## EditMessageResponse
 
@@ -2876,9 +2510,7 @@ type EditMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="DeleteMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="DeleteMessageResponse"></div>
 
 ## DeleteMessageResponse
 
@@ -2894,7 +2526,7 @@ type DeleteMessageResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="BulkDeleteMessageResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="BulkDeleteMessageResponse"></div>
 
 ## BulkDeleteMessageResponse
 
@@ -2910,7 +2542,7 @@ type BulkDeleteMessageResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="EditChannelPermissionsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="EditChannelPermissionsResponse"></div>
 
 ## EditChannelPermissionsResponse
 
@@ -2926,7 +2558,7 @@ type EditChannelPermissionsResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetChannelInvitesResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetChannelInvitesResponse"></div>
 
 ## GetChannelInvitesResponse
 
@@ -2942,25 +2574,7 @@ type GetChannelInvitesResponse = Response<{objects.InviteObject & objects.Invite
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-Intersection of:
-
-<details>
-<summary>Type 1</summary>
-
-[objects](#module.objects).[#InviteObject](#InviteObject)
-
-</details>
-
-<details>
-<summary>Type 2</summary>
-
-[objects](#module.objects).[#InviteMetadataObject](#InviteMetadataObject)
-
-</details>
-
-><div id="CreateChannelInviteResponse"></div>
+[Response](#Response)<{([objects](#module.objects).[#InviteObject](#InviteObject) & [objects](#module.objects).[#InviteMetadataObject](#InviteMetadataObject))}><div id="CreateChannelInviteResponse"></div>
 
 ## CreateChannelInviteResponse
 
@@ -2976,9 +2590,7 @@ type CreateChannelInviteResponse = Response<objects.InviteObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)
-
-><div id="DeleteChannelPermissionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)><div id="DeleteChannelPermissionResponse"></div>
 
 ## DeleteChannelPermissionResponse
 
@@ -2994,7 +2606,7 @@ type DeleteChannelPermissionResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="FollowAnnouncementChannelResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="FollowAnnouncementChannelResponse"></div>
 
 ## FollowAnnouncementChannelResponse
 
@@ -3010,9 +2622,7 @@ type FollowAnnouncementChannelResponse = Response<objects.FollowedChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#FollowedChannelObject](#FollowedChannelObject)
-
-><div id="TriggerTypingIndicatorResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#FollowedChannelObject](#FollowedChannelObject)><div id="TriggerTypingIndicatorResponse"></div>
 
 ## TriggerTypingIndicatorResponse
 
@@ -3028,7 +2638,7 @@ type TriggerTypingIndicatorResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetPinnedMessagesResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetPinnedMessagesResponse"></div>
 
 ## GetPinnedMessagesResponse
 
@@ -3044,11 +2654,7 @@ type GetPinnedMessagesResponse = Response<{objects.MessageObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="PinMessageResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#MessageObject](#MessageObject)}><div id="PinMessageResponse"></div>
 
 ## PinMessageResponse
 
@@ -3064,7 +2670,7 @@ type PinMessageResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="UnpinMessageResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="UnpinMessageResponse"></div>
 
 ## UnpinMessageResponse
 
@@ -3080,7 +2686,7 @@ type UnpinMessageResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GroupDMAddRecipientResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GroupDMAddRecipientResponse"></div>
 
 ## GroupDMAddRecipientResponse
 
@@ -3096,7 +2702,7 @@ type GroupDMAddRecipientResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GroupDMRemoveRecipientResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GroupDMRemoveRecipientResponse"></div>
 
 ## GroupDMRemoveRecipientResponse
 
@@ -3112,7 +2718,7 @@ type GroupDMRemoveRecipientResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="StartThreadFromMessageResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="StartThreadFromMessageResponse"></div>
 
 ## StartThreadFromMessageResponse
 
@@ -3128,9 +2734,7 @@ type StartThreadFromMessageResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="StartThreadWithoutMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="StartThreadWithoutMessageResponse"></div>
 
 ## StartThreadWithoutMessageResponse
 
@@ -3146,9 +2750,7 @@ type StartThreadWithoutMessageResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="StartThreadInForumOrMediaChannelResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="StartThreadInForumOrMediaChannelResponse"></div>
 
 ## StartThreadInForumOrMediaChannelResponse
 
@@ -3164,9 +2766,7 @@ type StartThreadInForumOrMediaChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="JoinThreadResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="JoinThreadResponse"></div>
 
 ## JoinThreadResponse
 
@@ -3182,7 +2782,7 @@ type JoinThreadResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="AddThreadMemberResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="AddThreadMemberResponse"></div>
 
 ## AddThreadMemberResponse
 
@@ -3198,7 +2798,7 @@ type AddThreadMemberResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="LeaveThreadResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="LeaveThreadResponse"></div>
 
 ## LeaveThreadResponse
 
@@ -3214,7 +2814,7 @@ type LeaveThreadResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="RemoveThreadMemberResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="RemoveThreadMemberResponse"></div>
 
 ## RemoveThreadMemberResponse
 
@@ -3230,7 +2830,7 @@ type RemoveThreadMemberResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetThreadMemberResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetThreadMemberResponse"></div>
 
 ## GetThreadMemberResponse
 
@@ -3246,9 +2846,7 @@ type GetThreadMemberResponse = Response<objects.ThreadMemberObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
-
-><div id="ListThreadMembersResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)><div id="ListThreadMembersResponse"></div>
 
 ## ListThreadMembersResponse
 
@@ -3264,11 +2862,7 @@ type ListThreadMembersResponse = Response<{objects.ThreadMemberObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
-
-><div id="ListPublicArchivedThreadsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)}><div id="ListPublicArchivedThreadsResponse"></div>
 
 ## ListPublicArchivedThreadsResponse
 
@@ -3290,15 +2884,7 @@ type ListPublicArchivedThreadsResponse = Response<{
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
-
-, [boolean](#boolean)><div id="ListPrivateArchivedThreadsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ChannelObject](#ChannelObject)}, {[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)}, [boolean](#boolean)><div id="ListPrivateArchivedThreadsResponse"></div>
 
 ## ListPrivateArchivedThreadsResponse
 
@@ -3320,15 +2906,7 @@ type ListPrivateArchivedThreadsResponse = Response<{
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
-
-, [boolean](#boolean)><div id="ListJoinedPrivateArchivedThreadsResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ChannelObject](#ChannelObject)}, {[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)}, [boolean](#boolean)><div id="ListJoinedPrivateArchivedThreadsResponse"></div>
 
 ## ListJoinedPrivateArchivedThreadsResponse
 
@@ -3350,15 +2928,7 @@ type ListJoinedPrivateArchivedThreadsResponse = Response<{
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
-
-, [boolean](#boolean)><div id="ListGuildEmojisResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ChannelObject](#ChannelObject)}, {[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)}, [boolean](#boolean)><div id="ListGuildEmojisResponse"></div>
 
 ## ListGuildEmojisResponse
 
@@ -3374,11 +2944,7 @@ type ListGuildEmojisResponse = Response<{objects.EmojiObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#EmojiObject](#EmojiObject)
-
-><div id="GetGuildEmojiResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#EmojiObject](#EmojiObject)}><div id="GetGuildEmojiResponse"></div>
 
 ## GetGuildEmojiResponse
 
@@ -3394,9 +2960,7 @@ type GetGuildEmojiResponse = Response<objects.EmojiObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)
-
-><div id="CreateGuildEmojiResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)><div id="CreateGuildEmojiResponse"></div>
 
 ## CreateGuildEmojiResponse
 
@@ -3412,9 +2976,7 @@ type CreateGuildEmojiResponse = Response<objects.EmojiObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)
-
-><div id="ModifyGuildEmojiResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)><div id="ModifyGuildEmojiResponse"></div>
 
 ## ModifyGuildEmojiResponse
 
@@ -3430,9 +2992,7 @@ type ModifyGuildEmojiResponse = Response<objects.EmojiObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)
-
-><div id="DeleteGuildEmojiResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#EmojiObject](#EmojiObject)><div id="DeleteGuildEmojiResponse"></div>
 
 ## DeleteGuildEmojiResponse
 
@@ -3448,7 +3008,7 @@ type DeleteGuildEmojiResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="CreateGuildResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="CreateGuildResponse"></div>
 
 ## CreateGuildResponse
 
@@ -3464,9 +3024,7 @@ type CreateGuildResponse = Response<objects.GuildObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
-
-><div id="GetGuildResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)><div id="GetGuildResponse"></div>
 
 ## GetGuildResponse
 
@@ -3482,9 +3040,7 @@ type GetGuildResponse = Response<objects.GuildObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
-
-><div id="GetGuildPreviewResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)><div id="GetGuildPreviewResponse"></div>
 
 ## GetGuildPreviewResponse
 
@@ -3500,9 +3056,7 @@ type GetGuildPreviewResponse = Response<objects.GuildPreviewObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildPreviewObject](#GuildPreviewObject)
-
-><div id="ModifyGuildResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildPreviewObject](#GuildPreviewObject)><div id="ModifyGuildResponse"></div>
 
 ## ModifyGuildResponse
 
@@ -3518,9 +3072,7 @@ type ModifyGuildResponse = Response<objects.GuildObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
-
-><div id="DeleteGuildResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)><div id="DeleteGuildResponse"></div>
 
 ## DeleteGuildResponse
 
@@ -3536,7 +3088,7 @@ type DeleteGuildResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetGuildChannelsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetGuildChannelsResponse"></div>
 
 ## GetGuildChannelsResponse
 
@@ -3552,11 +3104,7 @@ type GetGuildChannelsResponse = Response<{objects.ChannelObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="CreateGuildChannelResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ChannelObject](#ChannelObject)}><div id="CreateGuildChannelResponse"></div>
 
 ## CreateGuildChannelResponse
 
@@ -3572,9 +3120,7 @@ type CreateGuildChannelResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="ModifyGuildChannelPositionsResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="ModifyGuildChannelPositionsResponse"></div>
 
 ## ModifyGuildChannelPositionsResponse
 
@@ -3590,7 +3136,7 @@ type ModifyGuildChannelPositionsResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="ListActiveGuildThreadsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="ListActiveGuildThreadsResponse"></div>
 
 ## ListActiveGuildThreadsResponse
 
@@ -3610,15 +3156,7 @@ type ListActiveGuildThreadsResponse = Response<{
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)
-
-><div id="GetGuildMemberResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#ChannelObject](#ChannelObject)}, {[objects](#module.objects).[#ThreadMemberObject](#ThreadMemberObject)}><div id="GetGuildMemberResponse"></div>
 
 ## GetGuildMemberResponse
 
@@ -3634,9 +3172,7 @@ type GetGuildMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="ListGuildMembersResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)><div id="ListGuildMembersResponse"></div>
 
 ## ListGuildMembersResponse
 
@@ -3652,11 +3188,7 @@ type ListGuildMembersResponse = Response<{objects.GuildMemberObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="SearchGuildMembersResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)}><div id="SearchGuildMembersResponse"></div>
 
 ## SearchGuildMembersResponse
 
@@ -3672,11 +3204,7 @@ type SearchGuildMembersResponse = Response<{objects.GuildMemberObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="AddGuildMemberResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)}><div id="AddGuildMemberResponse"></div>
 
 ## AddGuildMemberResponse
 
@@ -3692,9 +3220,7 @@ type AddGuildMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="ModifyGuildMemberResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)><div id="ModifyGuildMemberResponse"></div>
 
 ## ModifyGuildMemberResponse
 
@@ -3710,9 +3236,7 @@ type ModifyGuildMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="ModifyCurrentMemberResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)><div id="ModifyCurrentMemberResponse"></div>
 
 ## ModifyCurrentMemberResponse
 
@@ -3728,9 +3252,7 @@ type ModifyCurrentMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="AddGuildMemberRoleResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)><div id="AddGuildMemberRoleResponse"></div>
 
 ## AddGuildMemberRoleResponse
 
@@ -3746,7 +3268,7 @@ type AddGuildMemberRoleResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="RemoveGuildMemberRoleResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="RemoveGuildMemberRoleResponse"></div>
 
 ## RemoveGuildMemberRoleResponse
 
@@ -3762,7 +3284,7 @@ type RemoveGuildMemberRoleResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="RemoveGuildMemberResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="RemoveGuildMemberResponse"></div>
 
 ## RemoveGuildMemberResponse
 
@@ -3778,7 +3300,7 @@ type RemoveGuildMemberResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetGuildBansResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetGuildBansResponse"></div>
 
 ## GetGuildBansResponse
 
@@ -3794,11 +3316,7 @@ type GetGuildBansResponse = Response<{objects.BanObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#BanObject](#BanObject)
-
-><div id="GetGuildBanResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#BanObject](#BanObject)}><div id="GetGuildBanResponse"></div>
 
 ## GetGuildBanResponse
 
@@ -3814,9 +3332,7 @@ type GetGuildBanResponse = Response<objects.BanObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#BanObject](#BanObject)
-
-><div id="CreateGuildBanResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#BanObject](#BanObject)><div id="CreateGuildBanResponse"></div>
 
 ## CreateGuildBanResponse
 
@@ -3832,7 +3348,7 @@ type CreateGuildBanResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="RemoveGuildBanResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="RemoveGuildBanResponse"></div>
 
 ## RemoveGuildBanResponse
 
@@ -3848,7 +3364,7 @@ type RemoveGuildBanResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="BulkGuildBanResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="BulkGuildBanResponse"></div>
 
 ## BulkGuildBanResponse
 
@@ -3868,15 +3384,7 @@ type BulkGuildBanResponse = Response<{
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-, *This field is an array type*
-
-[objects](#module.objects).[#Snowflake](#Snowflake)
-
-><div id="GetGuildRolesResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#Snowflake](#Snowflake)}, {[objects](#module.objects).[#Snowflake](#Snowflake)}><div id="GetGuildRolesResponse"></div>
 
 ## GetGuildRolesResponse
 
@@ -3892,11 +3400,7 @@ type GetGuildRolesResponse = Response<{objects.GuildRoleObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
-
-><div id="GetGuildRoleResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)}><div id="GetGuildRoleResponse"></div>
 
 ## GetGuildRoleResponse
 
@@ -3912,9 +3416,7 @@ type GetGuildRoleResponse = Response<objects.GuildRoleObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
-
-><div id="CreateGuildRoleResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)><div id="CreateGuildRoleResponse"></div>
 
 ## CreateGuildRoleResponse
 
@@ -3930,9 +3432,7 @@ type CreateGuildRoleResponse = Response<objects.GuildRoleObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
-
-><div id="ModifyGuildRolePositionsResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)><div id="ModifyGuildRolePositionsResponse"></div>
 
 ## ModifyGuildRolePositionsResponse
 
@@ -3948,11 +3448,7 @@ type ModifyGuildRolePositionsResponse = Response<{objects.GuildRoleObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
-
-><div id="ModifyGuildRoleResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)}><div id="ModifyGuildRoleResponse"></div>
 
 ## ModifyGuildRoleResponse
 
@@ -3968,9 +3464,7 @@ type ModifyGuildRoleResponse = Response<objects.GuildRoleObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)
-
-><div id="ModifyGuildMFALevelResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildRoleObject](#GuildRoleObject)><div id="ModifyGuildMFALevelResponse"></div>
 
 ## ModifyGuildMFALevelResponse
 
@@ -3986,7 +3480,7 @@ type ModifyGuildMFALevelResponse = Response<unknown>
 
 </details>
 
-[#Response](#Response)<[unknown](#unknown)><div id="DeleteGuildRoleResponse"></div>
+[Response](#Response)<[unknown](#unknown)><div id="DeleteGuildRoleResponse"></div>
 
 ## DeleteGuildRoleResponse
 
@@ -4002,7 +3496,7 @@ type DeleteGuildRoleResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetGuildPruneCountResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetGuildPruneCountResponse"></div>
 
 ## GetGuildPruneCountResponse
 
@@ -4020,7 +3514,7 @@ type GetGuildPruneCountResponse = Response<{
 
 </details>
 
-[#Response](#Response)<[number](#number)><div id="BeginGuildPruneResponse"></div>
+[Response](#Response)<[number](#number)><div id="BeginGuildPruneResponse"></div>
 
 ## BeginGuildPruneResponse
 
@@ -4038,7 +3532,7 @@ type BeginGuildPruneResponse = Response<{
 
 </details>
 
-[#Response](#Response)<[number](#number)><div id="GetGuildVoiceRegionsResponse"></div>
+[Response](#Response)<[number](#number)><div id="GetGuildVoiceRegionsResponse"></div>
 
 ## GetGuildVoiceRegionsResponse
 
@@ -4054,11 +3548,7 @@ type GetGuildVoiceRegionsResponse = Response<{objects.VoiceRegionObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#VoiceRegionObject](#VoiceRegionObject)
-
-><div id="GetGuildInvitesResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#VoiceRegionObject](#VoiceRegionObject)}><div id="GetGuildInvitesResponse"></div>
 
 ## GetGuildInvitesResponse
 
@@ -4074,25 +3564,7 @@ type GetGuildInvitesResponse = Response<{objects.InviteObject & objects.InviteMe
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-Intersection of:
-
-<details>
-<summary>Type 1</summary>
-
-[objects](#module.objects).[#InviteObject](#InviteObject)
-
-</details>
-
-<details>
-<summary>Type 2</summary>
-
-[objects](#module.objects).[#InviteMetadataObject](#InviteMetadataObject)
-
-</details>
-
-><div id="GetGuildIntegrationsResponse"></div>
+[Response](#Response)<{([objects](#module.objects).[#InviteObject](#InviteObject) & [objects](#module.objects).[#InviteMetadataObject](#InviteMetadataObject))}><div id="GetGuildIntegrationsResponse"></div>
 
 ## GetGuildIntegrationsResponse
 
@@ -4108,11 +3580,7 @@ type GetGuildIntegrationsResponse = Response<{objects.IntegrationObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#IntegrationObject](#IntegrationObject)
-
-><div id="DeleteGuildIntegrationResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#IntegrationObject](#IntegrationObject)}><div id="DeleteGuildIntegrationResponse"></div>
 
 ## DeleteGuildIntegrationResponse
 
@@ -4128,7 +3596,7 @@ type DeleteGuildIntegrationResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetGuildWidgetSettingsResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetGuildWidgetSettingsResponse"></div>
 
 ## GetGuildWidgetSettingsResponse
 
@@ -4144,9 +3612,7 @@ type GetGuildWidgetSettingsResponse = Response<objects.GuildWidgetSettingsObject
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)
-
-><div id="ModifyGuildWidgetResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)><div id="ModifyGuildWidgetResponse"></div>
 
 ## ModifyGuildWidgetResponse
 
@@ -4162,9 +3628,7 @@ type ModifyGuildWidgetResponse = Response<objects.GuildWidgetSettingsObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)
-
-><div id="GetGuildWidgetResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildWidgetSettingsObject](#GuildWidgetSettingsObject)><div id="GetGuildWidgetResponse"></div>
 
 ## GetGuildWidgetResponse
 
@@ -4180,9 +3644,7 @@ type GetGuildWidgetResponse = Response<objects.GuildWidgetObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildWidgetObject](#GuildWidgetObject)
-
-><div id="GetGuildVanityUrlResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildWidgetObject](#GuildWidgetObject)><div id="GetGuildVanityUrlResponse"></div>
 
 ## GetGuildVanityUrlResponse
 
@@ -4198,9 +3660,7 @@ type GetGuildVanityUrlResponse = Response<objects.GuildVanityUrl>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildVanityUrl](#GuildVanityUrl)
-
-><div id="GetGuildWidgetImageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildVanityUrl](#GuildVanityUrl)><div id="GetGuildWidgetImageResponse"></div>
 
 ## GetGuildWidgetImageResponse
 
@@ -4216,7 +3676,7 @@ type GetGuildWidgetImageResponse = Response<string>
 
 </details>
 
-[#Response](#Response)<[string](#string)><div id="GetGuildWelcomeScreenResponse"></div>
+[Response](#Response)<[string](#string)><div id="GetGuildWelcomeScreenResponse"></div>
 
 ## GetGuildWelcomeScreenResponse
 
@@ -4232,9 +3692,7 @@ type GetGuildWelcomeScreenResponse = Response<objects.WelcomeScreenObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WelcomeScreenObject](#WelcomeScreenObject)
-
-><div id="ModifyGuildWelcomeScreenResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WelcomeScreenObject](#WelcomeScreenObject)><div id="ModifyGuildWelcomeScreenResponse"></div>
 
 ## ModifyGuildWelcomeScreenResponse
 
@@ -4250,9 +3708,7 @@ type ModifyGuildWelcomeScreenResponse = Response<objects.WelcomeScreenObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WelcomeScreenObject](#WelcomeScreenObject)
-
-><div id="GetGuildOnboardingResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WelcomeScreenObject](#WelcomeScreenObject)><div id="GetGuildOnboardingResponse"></div>
 
 ## GetGuildOnboardingResponse
 
@@ -4268,9 +3724,7 @@ type GetGuildOnboardingResponse = Response<objects.GuildOnboardingObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildOnboardingObject](#GuildOnboardingObject)
-
-><div id="ModifyGuildOnboardingResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildOnboardingObject](#GuildOnboardingObject)><div id="ModifyGuildOnboardingResponse"></div>
 
 ## ModifyGuildOnboardingResponse
 
@@ -4286,9 +3740,7 @@ type ModifyGuildOnboardingResponse = Response<objects.GuildOnboardingObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildOnboardingObject](#GuildOnboardingObject)
-
-><div id="ModifyCurrentUserVoiceStateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildOnboardingObject](#GuildOnboardingObject)><div id="ModifyCurrentUserVoiceStateResponse"></div>
 
 ## ModifyCurrentUserVoiceStateResponse
 
@@ -4304,7 +3756,7 @@ type ModifyCurrentUserVoiceStateResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="ModifyUserVoiceStateResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="ModifyUserVoiceStateResponse"></div>
 
 ## ModifyUserVoiceStateResponse
 
@@ -4320,7 +3772,7 @@ type ModifyUserVoiceStateResponse = Response<unknown>
 
 </details>
 
-[#Response](#Response)<[unknown](#unknown)><div id="ListScheduledEventsForGuildResponse"></div>
+[Response](#Response)<[unknown](#unknown)><div id="ListScheduledEventsForGuildResponse"></div>
 
 ## ListScheduledEventsForGuildResponse
 
@@ -4336,11 +3788,7 @@ type ListScheduledEventsForGuildResponse = Response<{objects.GuildScheduledEvent
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
-
-><div id="CreateGuildScheduledEventResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)}><div id="CreateGuildScheduledEventResponse"></div>
 
 ## CreateGuildScheduledEventResponse
 
@@ -4356,9 +3804,7 @@ type CreateGuildScheduledEventResponse = Response<objects.GuildScheduledEventObj
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
-
-><div id="GetGuildScheduledEventResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)><div id="GetGuildScheduledEventResponse"></div>
 
 ## GetGuildScheduledEventResponse
 
@@ -4374,9 +3820,7 @@ type GetGuildScheduledEventResponse = Response<objects.GuildScheduledEventObject
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
-
-><div id="ModifyGuildScheduledEventResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)><div id="ModifyGuildScheduledEventResponse"></div>
 
 ## ModifyGuildScheduledEventResponse
 
@@ -4392,9 +3836,7 @@ type ModifyGuildScheduledEventResponse = Response<objects.GuildScheduledEventObj
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)
-
-><div id="DeleteGuildScheduledEventResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildScheduledEventObject](#GuildScheduledEventObject)><div id="DeleteGuildScheduledEventResponse"></div>
 
 ## DeleteGuildScheduledEventResponse
 
@@ -4410,7 +3852,7 @@ type DeleteGuildScheduledEventResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetGuildScheduledEventUsersResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetGuildScheduledEventUsersResponse"></div>
 
 ## GetGuildScheduledEventUsersResponse
 
@@ -4426,11 +3868,7 @@ type GetGuildScheduledEventUsersResponse = Response<{objects.GuildScheduledEvent
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildScheduledEventUserObject](#GuildScheduledEventUserObject)
-
-><div id="GetGuildTemplateResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildScheduledEventUserObject](#GuildScheduledEventUserObject)}><div id="GetGuildTemplateResponse"></div>
 
 ## GetGuildTemplateResponse
 
@@ -4446,9 +3884,7 @@ type GetGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
-
-><div id="CreateGuildFromGuildTemplateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)><div id="CreateGuildFromGuildTemplateResponse"></div>
 
 ## CreateGuildFromGuildTemplateResponse
 
@@ -4464,9 +3900,7 @@ type CreateGuildFromGuildTemplateResponse = Response<objects.GuildObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)
-
-><div id="GetGuildTemplatesResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildObject](#GuildObject)><div id="GetGuildTemplatesResponse"></div>
 
 ## GetGuildTemplatesResponse
 
@@ -4482,9 +3916,7 @@ type GetGuildTemplatesResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
-
-><div id="CreateGuildTemplateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)><div id="CreateGuildTemplateResponse"></div>
 
 ## CreateGuildTemplateResponse
 
@@ -4500,9 +3932,7 @@ type CreateGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
-
-><div id="SyncGuildTemplateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)><div id="SyncGuildTemplateResponse"></div>
 
 ## SyncGuildTemplateResponse
 
@@ -4518,9 +3948,7 @@ type SyncGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
-
-><div id="ModifyGuildTemplateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)><div id="ModifyGuildTemplateResponse"></div>
 
 ## ModifyGuildTemplateResponse
 
@@ -4536,9 +3964,7 @@ type ModifyGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
-
-><div id="DeleteGuildTemplateResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)><div id="DeleteGuildTemplateResponse"></div>
 
 ## DeleteGuildTemplateResponse
 
@@ -4554,9 +3980,7 @@ type DeleteGuildTemplateResponse = Response<objects.GuildTemplateObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)
-
-><div id="GetInviteResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildTemplateObject](#GuildTemplateObject)><div id="GetInviteResponse"></div>
 
 ## GetInviteResponse
 
@@ -4572,9 +3996,7 @@ type GetInviteResponse = Response<objects.InviteObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)
-
-><div id="DeleteInviteResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)><div id="DeleteInviteResponse"></div>
 
 ## DeleteInviteResponse
 
@@ -4590,9 +4012,7 @@ type DeleteInviteResponse = Response<objects.InviteObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)
-
-><div id="GetAnswerVotersResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#InviteObject](#InviteObject)><div id="GetAnswerVotersResponse"></div>
 
 ## GetAnswerVotersResponse
 
@@ -4608,11 +4028,7 @@ type GetAnswerVotersResponse = Response<{objects.UserObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#UserObject](#UserObject)
-
-><div id="EndPollResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#UserObject](#UserObject)}><div id="EndPollResponse"></div>
 
 ## EndPollResponse
 
@@ -4628,9 +4044,7 @@ type EndPollResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="CreateStageInstanceResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="CreateStageInstanceResponse"></div>
 
 ## CreateStageInstanceResponse
 
@@ -4646,9 +4060,7 @@ type CreateStageInstanceResponse = Response<objects.StageInstanceObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)
-
-><div id="GetStageInstanceResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)><div id="GetStageInstanceResponse"></div>
 
 ## GetStageInstanceResponse
 
@@ -4667,9 +4079,7 @@ type GetStageInstanceResponse = Response<objects.StageInstanceObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)
-
-><div id="ModifyStageInstanceResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)><div id="ModifyStageInstanceResponse"></div>
 
 ## ModifyStageInstanceResponse
 
@@ -4685,9 +4095,7 @@ type ModifyStageInstanceResponse = Response<objects.StageInstanceObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)
-
-><div id="DeleteStageInstanceResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StageInstanceObject](#StageInstanceObject)><div id="DeleteStageInstanceResponse"></div>
 
 ## DeleteStageInstanceResponse
 
@@ -4703,7 +4111,7 @@ type DeleteStageInstanceResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetStickerResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetStickerResponse"></div>
 
 ## GetStickerResponse
 
@@ -4719,9 +4127,7 @@ type GetStickerResponse = Response<objects.StickerObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
-
-><div id="ListStickerPacksResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)><div id="ListStickerPacksResponse"></div>
 
 ## ListStickerPacksResponse
 
@@ -4739,11 +4145,7 @@ type ListStickerPacksResponse = Response<{
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#StickerPackObject](#StickerPackObject)
-
-><div id="ListGuildStickersResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#StickerPackObject](#StickerPackObject)}><div id="ListGuildStickersResponse"></div>
 
 ## ListGuildStickersResponse
 
@@ -4759,11 +4161,7 @@ type ListGuildStickersResponse = Response<{objects.StickerObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#StickerObject](#StickerObject)
-
-><div id="GetGuildStickerResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#StickerObject](#StickerObject)}><div id="GetGuildStickerResponse"></div>
 
 ## GetGuildStickerResponse
 
@@ -4779,9 +4177,7 @@ type GetGuildStickerResponse = Response<objects.StickerObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
-
-><div id="CreateGuildStickerResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)><div id="CreateGuildStickerResponse"></div>
 
 ## CreateGuildStickerResponse
 
@@ -4797,9 +4193,7 @@ type CreateGuildStickerResponse = Response<objects.StickerObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
-
-><div id="ModifyGuildStickerResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)><div id="ModifyGuildStickerResponse"></div>
 
 ## ModifyGuildStickerResponse
 
@@ -4815,9 +4209,7 @@ type ModifyGuildStickerResponse = Response<objects.StickerObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)
-
-><div id="DeleteGuildStickerResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#StickerObject](#StickerObject)><div id="DeleteGuildStickerResponse"></div>
 
 ## DeleteGuildStickerResponse
 
@@ -4833,7 +4225,7 @@ type DeleteGuildStickerResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetCurrentUserResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetCurrentUserResponse"></div>
 
 ## GetCurrentUserResponse
 
@@ -4849,9 +4241,7 @@ type GetCurrentUserResponse = Response<objects.UserObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)
-
-><div id="GetUserResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)><div id="GetUserResponse"></div>
 
 ## GetUserResponse
 
@@ -4867,9 +4257,7 @@ type GetUserResponse = Response<objects.UserObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)
-
-><div id="ModifyCurrentUserResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)><div id="ModifyCurrentUserResponse"></div>
 
 ## ModifyCurrentUserResponse
 
@@ -4885,9 +4273,7 @@ type ModifyCurrentUserResponse = Response<objects.UserObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)
-
-><div id="GetCurrentUserGuildsResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#UserObject](#UserObject)><div id="GetCurrentUserGuildsResponse"></div>
 
 ## GetCurrentUserGuildsResponse
 
@@ -4903,11 +4289,7 @@ type GetCurrentUserGuildsResponse = Response<{objects.GuildObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#GuildObject](#GuildObject)
-
-><div id="GetCurrentUserGuildMemberResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#GuildObject](#GuildObject)}><div id="GetCurrentUserGuildMemberResponse"></div>
 
 ## GetCurrentUserGuildMemberResponse
 
@@ -4923,9 +4305,7 @@ type GetCurrentUserGuildMemberResponse = Response<objects.GuildMemberObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)
-
-><div id="LeaveGuildResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#GuildMemberObject](#GuildMemberObject)><div id="LeaveGuildResponse"></div>
 
 ## LeaveGuildResponse
 
@@ -4941,7 +4321,7 @@ type LeaveGuildResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="CreateDMResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="CreateDMResponse"></div>
 
 ## CreateDMResponse
 
@@ -4957,9 +4337,7 @@ type CreateDMResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="CreateGroupDMResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="CreateGroupDMResponse"></div>
 
 ## CreateGroupDMResponse
 
@@ -4975,9 +4353,7 @@ type CreateGroupDMResponse = Response<objects.ChannelObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)
-
-><div id="GetCurrentUserConnectionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ChannelObject](#ChannelObject)><div id="GetCurrentUserConnectionResponse"></div>
 
 ## GetCurrentUserConnectionResponse
 
@@ -4993,9 +4369,7 @@ type GetCurrentUserConnectionResponse = Response<objects.ConnectionObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ConnectionObject](#ConnectionObject)
-
-><div id="GetCurrentUserApplicationRoleConnectionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ConnectionObject](#ConnectionObject)><div id="GetCurrentUserApplicationRoleConnectionResponse"></div>
 
 ## GetCurrentUserApplicationRoleConnectionResponse
 
@@ -5011,9 +4385,7 @@ type GetCurrentUserApplicationRoleConnectionResponse = Response<objects.Applicat
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionObject](#ApplicationRoleConnectionObject)
-
-><div id="UpdateCurrentUserApplicationRoleConnectionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionObject](#ApplicationRoleConnectionObject)><div id="UpdateCurrentUserApplicationRoleConnectionResponse"></div>
 
 ## UpdateCurrentUserApplicationRoleConnectionResponse
 
@@ -5029,9 +4401,7 @@ type UpdateCurrentUserApplicationRoleConnectionResponse = Response<objects.Appli
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionObject](#ApplicationRoleConnectionObject)
-
-><div id="ListVoiceRegionsResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#ApplicationRoleConnectionObject](#ApplicationRoleConnectionObject)><div id="ListVoiceRegionsResponse"></div>
 
 ## ListVoiceRegionsResponse
 
@@ -5047,11 +4417,7 @@ type ListVoiceRegionsResponse = Response<{objects.VoiceRegionObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#VoiceRegionObject](#VoiceRegionObject)
-
-><div id="CreateWebhookResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#VoiceRegionObject](#VoiceRegionObject)}><div id="CreateWebhookResponse"></div>
 
 ## CreateWebhookResponse
 
@@ -5067,9 +4433,7 @@ type CreateWebhookResponse = Response<objects.WebhookObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="GetChannelWebhooksResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)><div id="GetChannelWebhooksResponse"></div>
 
 ## GetChannelWebhooksResponse
 
@@ -5085,11 +4449,7 @@ type GetChannelWebhooksResponse = Response<{objects.WebhookObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="GetGuildWebhooksResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#WebhookObject](#WebhookObject)}><div id="GetGuildWebhooksResponse"></div>
 
 ## GetGuildWebhooksResponse
 
@@ -5105,11 +4465,7 @@ type GetGuildWebhooksResponse = Response<{objects.WebhookObject}>
 
 </details>
 
-[#Response](#Response)<*This field is an array type*
-
-[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="GetWebhookResponse"></div>
+[Response](#Response)<{[objects](#module.objects).[#WebhookObject](#WebhookObject)}><div id="GetWebhookResponse"></div>
 
 ## GetWebhookResponse
 
@@ -5125,9 +4481,7 @@ type GetWebhookResponse = Response<objects.WebhookObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="GetWebhookWithTokenResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)><div id="GetWebhookWithTokenResponse"></div>
 
 ## GetWebhookWithTokenResponse
 
@@ -5143,9 +4497,7 @@ type GetWebhookWithTokenResponse = Response<objects.WebhookObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="ModifyWebhookResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)><div id="ModifyWebhookResponse"></div>
 
 ## ModifyWebhookResponse
 
@@ -5161,9 +4513,7 @@ type ModifyWebhookResponse = Response<objects.WebhookObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="ModifyWebhookWithTokenResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)><div id="ModifyWebhookWithTokenResponse"></div>
 
 ## ModifyWebhookWithTokenResponse
 
@@ -5179,9 +4529,7 @@ type ModifyWebhookWithTokenResponse = Response<objects.WebhookObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)
-
-><div id="DeleteWebhookResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#WebhookObject](#WebhookObject)><div id="DeleteWebhookResponse"></div>
 
 ## DeleteWebhookResponse
 
@@ -5197,7 +4545,7 @@ type DeleteWebhookResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="DeleteWebhookWitHTokenResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="DeleteWebhookWitHTokenResponse"></div>
 
 ## DeleteWebhookWitHTokenResponse
 
@@ -5213,7 +4561,7 @@ type DeleteWebhookWitHTokenResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="ExecuteWebhookResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="ExecuteWebhookResponse"></div>
 
 ## ExecuteWebhookResponse
 
@@ -5229,7 +4577,7 @@ type ExecuteWebhookResponse = Response<objects.MessageObject?>
 
 </details>
 
-[#Response](#Response)<><div id="ExecuteSlackCompatibleWebhookResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)?><div id="ExecuteSlackCompatibleWebhookResponse"></div>
 
 ## ExecuteSlackCompatibleWebhookResponse
 
@@ -5245,7 +4593,7 @@ type ExecuteSlackCompatibleWebhookResponse = Response<unknown>
 
 </details>
 
-[#Response](#Response)<[unknown](#unknown)><div id="ExecuteGitCompatibleWebhookResponse"></div>
+[Response](#Response)<[unknown](#unknown)><div id="ExecuteGitCompatibleWebhookResponse"></div>
 
 ## ExecuteGitCompatibleWebhookResponse
 
@@ -5261,7 +4609,7 @@ type ExecuteGitCompatibleWebhookResponse = Response<unknown>
 
 </details>
 
-[#Response](#Response)<[unknown](#unknown)><div id="GetWebhookMessageResponse"></div>
+[Response](#Response)<[unknown](#unknown)><div id="GetWebhookMessageResponse"></div>
 
 ## GetWebhookMessageResponse
 
@@ -5277,9 +4625,7 @@ type GetWebhookMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="EditWebhookMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="EditWebhookMessageResponse"></div>
 
 ## EditWebhookMessageResponse
 
@@ -5295,9 +4641,7 @@ type EditWebhookMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="DeleteWebhookMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="DeleteWebhookMessageResponse"></div>
 
 ## DeleteWebhookMessageResponse
 
@@ -5313,7 +4657,7 @@ type DeleteWebhookMessageResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="GetGatewayResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="GetGatewayResponse"></div>
 
 ## GetGatewayResponse
 
@@ -5331,7 +4675,7 @@ type GetGatewayResponse = Response<{
 
 </details>
 
-[#Response](#Response)<[string](#string)><div id="GetGatewayBotResponse"></div>
+[Response](#Response)<[string](#string)><div id="GetGatewayBotResponse"></div>
 
 ## GetGatewayBotResponse
 
@@ -5353,9 +4697,7 @@ type GetGatewayBotResponse = Response<{
 
 </details>
 
-[#Response](#Response)<[string](#string), [number](#number), [objects](#module.objects).[#SessionStartLimitObject](#SessionStartLimitObject)
-
-><div id="CreateInteractionResponse"></div>
+[Response](#Response)<[string](#string), [number](#number), [objects](#module.objects).[#SessionStartLimitObject](#SessionStartLimitObject)><div id="CreateInteractionResponse"></div>
 
 ## CreateInteractionResponse
 
@@ -5375,7 +4717,7 @@ type CreateInteractionResponse = Response<{
 
 </details>
 
-[#Response](#Response)<><div id="GetOriginalInteractionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)?><div id="GetOriginalInteractionResponse"></div>
 
 ## GetOriginalInteractionResponse
 
@@ -5391,9 +4733,7 @@ type GetOriginalInteractionResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="EditOriginalInteractionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="EditOriginalInteractionResponse"></div>
 
 ## EditOriginalInteractionResponse
 
@@ -5409,9 +4749,7 @@ type EditOriginalInteractionResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="DeleteOriginalInteractionResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="DeleteOriginalInteractionResponse"></div>
 
 ## DeleteOriginalInteractionResponse
 
@@ -5427,7 +4765,7 @@ type DeleteOriginalInteractionResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)><div id="CreateFollowupMessageResponse"></div>
+[Response](#Response)<[nil](#nil)><div id="CreateFollowupMessageResponse"></div>
 
 ## CreateFollowupMessageResponse
 
@@ -5443,9 +4781,7 @@ type CreateFollowupMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="GetFollowupMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="GetFollowupMessageResponse"></div>
 
 ## GetFollowupMessageResponse
 
@@ -5461,9 +4797,7 @@ type GetFollowupMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="EditFollowupMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="EditFollowupMessageResponse"></div>
 
 ## EditFollowupMessageResponse
 
@@ -5479,9 +4813,7 @@ type EditFollowupMessageResponse = Response<objects.MessageObject>
 
 </details>
 
-[#Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)
-
-><div id="DeleteFollowupMessageResponse"></div>
+[Response](#Response)<[objects](#module.objects).[#MessageObject](#MessageObject)><div id="DeleteFollowupMessageResponse"></div>
 
 ## DeleteFollowupMessageResponse
 
@@ -5497,4 +4829,4 @@ type DeleteFollowupMessageResponse = Response<nil>
 
 </details>
 
-[#Response](#Response)<[nil](#nil)>
+[Response](#Response)<[nil](#nil)>
