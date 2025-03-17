@@ -2274,7 +2274,9 @@ type ActivityEmojiObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="ActivityPartyObject"></div>
+[boolean](#boolean)?
+
+<div id="ActivityPartyObject"></div>
 
 ## ActivityPartyObject
 
@@ -2382,19 +2384,25 @@ type ActivitySecretsObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="spectate"></div>
+[string](#string)?
+
+<div id="spectate"></div>
 
 ### spectate
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="match"></div>
+[string](#string)?
+
+<div id="match"></div>
 
 ### match
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="ActivityButtonsObject"></div>
+[string](#string)?
+
+<div id="ActivityButtonsObject"></div>
 
 ## ActivityButtonsObject
 
@@ -2490,7 +2498,9 @@ type ActivityObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="created_at"></div>
+[string](#string)?
+
+<div id="created_at"></div>
 
 ### created_at
 
@@ -2514,55 +2524,73 @@ type ActivityObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="state"></div>
+[string](#string)?
+
+<div id="state"></div>
 
 ### state
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji"></div>
+[string](#string)?
+
+<div id="emoji"></div>
 
 ### emoji
 
 *This field is optional and may not be specified*
 
-[ActivityEmojiObject](#ActivityEmojiObject)?<div id="party"></div>
+[ActivityEmojiObject](#ActivityEmojiObject)?
+
+<div id="party"></div>
 
 ### party
 
 *This field is optional and may not be specified*
 
-[ActivityPartyObject](#ActivityPartyObject)?<div id="assets"></div>
+[ActivityPartyObject](#ActivityPartyObject)?
+
+<div id="assets"></div>
 
 ### assets
 
 *This field is optional and may not be specified*
 
-[ActivityAssetsObject](#ActivityAssetsObject)?<div id="secrets"></div>
+[ActivityAssetsObject](#ActivityAssetsObject)?
+
+<div id="secrets"></div>
 
 ### secrets
 
 *This field is optional and may not be specified*
 
-[ActivitySecretsObject](#ActivitySecretsObject)?<div id="instance"></div>
+[ActivitySecretsObject](#ActivitySecretsObject)?
+
+<div id="instance"></div>
 
 ### instance
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="flags"></div>
+[boolean](#boolean)?
+
+<div id="flags"></div>
 
 ### flags
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="buttons"></div>
+[number](#number)?
+
+<div id="buttons"></div>
 
 ### buttons
 
 *This field is optional and may not be specified*
 
-{[ActivityButtonsObject](#ActivityButtonsObject)}?<div id="PresenceObject"></div>
+{[ActivityButtonsObject](#ActivityButtonsObject)}?
+
+<div id="PresenceObject"></div>
 
 ## PresenceObject
 
@@ -2768,73 +2796,97 @@ type UserObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="system"></div>
+[boolean](#boolean)?
+
+<div id="system"></div>
 
 ### system
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="mfa_enabled"></div>
+[boolean](#boolean)?
+
+<div id="mfa_enabled"></div>
 
 ### mfa_enabled
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="banner"></div>
+[boolean](#boolean)?
+
+<div id="banner"></div>
 
 ### banner
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="accent_color"></div>
+[string](#string)?
+
+<div id="accent_color"></div>
 
 ### accent_color
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="locale"></div>
+[number](#number)?
+
+<div id="locale"></div>
 
 ### locale
 
 *This field is optional and may not be specified*
 
-[LanguageLocales](#LanguageLocales)?<div id="verified"></div>
+[LanguageLocales](#LanguageLocales)?
+
+<div id="verified"></div>
 
 ### verified
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="email"></div>
+[boolean](#boolean)?
+
+<div id="email"></div>
 
 ### email
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="flags"></div>
+[string](#string)?
+
+<div id="flags"></div>
 
 ### flags
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="premium_type"></div>
+[number](#number)?
+
+<div id="premium_type"></div>
 
 ### premium_type
 
 *This field is optional and may not be specified*
 
-[PremiumTypes](#PremiumTypes)?<div id="public_flags"></div>
+[PremiumTypes](#PremiumTypes)?
+
+<div id="public_flags"></div>
 
 ### public_flags
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="avatar_decoration_data"></div>
+[number](#number)?
+
+<div id="avatar_decoration_data"></div>
 
 ### avatar_decoration_data
 
 *This field is optional and may not be specified*
 
-[AvatarDecorationDataObject](#AvatarDecorationDataObject)?<div id="UnavailableGuildObject"></div>
+[AvatarDecorationDataObject](#AvatarDecorationDataObject)?
+
+<div id="UnavailableGuildObject"></div>
 
 ## UnavailableGuildObject
 
@@ -3004,13 +3056,17 @@ type GuildRoleTagObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="integration_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="integration_id"></div>
 
 ### integration_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="premium_subscriber"></div>
+[Snowflake](#Snowflake)?
+
+<div id="premium_subscriber"></div>
 
 ### premium_subscriber
 
@@ -3080,7 +3136,9 @@ type GuildRoleObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="name"></div>
 
 ### name
 
@@ -3104,13 +3162,17 @@ type GuildRoleObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="unicode_emoji"></div>
+[string](#string)?
+
+<div id="unicode_emoji"></div>
 
 ### unicode_emoji
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="position"></div>
+[string](#string)?
+
+<div id="position"></div>
 
 ### position
 
@@ -3140,7 +3202,9 @@ type GuildRoleObject = {
 
 *This field is optional and may not be specified*
 
-[GuildRoleTagObject](#GuildRoleTagObject)?<div id="flags"></div>
+[GuildRoleTagObject](#GuildRoleTagObject)?
+
+<div id="flags"></div>
 
 ### flags
 
@@ -3184,7 +3248,9 @@ type EmojiObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="name"></div>
 
 ### name
 
@@ -3196,37 +3262,49 @@ type EmojiObject = {
 
 *This field is optional and may not be specified*
 
-{[Snowflake](#Snowflake)}?<div id="user"></div>
+{[Snowflake](#Snowflake)}?
+
+<div id="user"></div>
 
 ### user
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="require_colons"></div>
+[UserObject](#UserObject)?
+
+<div id="require_colons"></div>
 
 ### require_colons
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="managed"></div>
+[boolean](#boolean)?
+
+<div id="managed"></div>
 
 ### managed
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="animated"></div>
+[boolean](#boolean)?
+
+<div id="animated"></div>
 
 ### animated
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="available"></div>
+[boolean](#boolean)?
+
+<div id="available"></div>
 
 ### available
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="WelcomeScreenChannelObject"></div>
+[boolean](#boolean)?
+
+<div id="WelcomeScreenChannelObject"></div>
 
 ## WelcomeScreenChannelObject
 
@@ -3256,25 +3334,33 @@ type WelcomeScreenChannelObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="description"></div>
+[Snowflake](#Snowflake)?
+
+<div id="description"></div>
 
 ### description
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji_id"></div>
+[string](#string)?
+
+<div id="emoji_id"></div>
 
 ### emoji_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="emoji_name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="emoji_name"></div>
 
 ### emoji_name
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="WelcomeScreenObject"></div>
+[string](#string)?
+
+<div id="WelcomeScreenObject"></div>
 
 ## WelcomeScreenObject
 
@@ -3370,7 +3456,9 @@ type StickerObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="tags"></div>
+[string](#string)?
+
+<div id="tags"></div>
 
 ### tags
 
@@ -3382,7 +3470,9 @@ type StickerObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="type"></div>
+[string](#string)?
+
+<div id="type"></div>
 
 ### type
 
@@ -3400,25 +3490,33 @@ type StickerObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="guild_id"></div>
+[boolean](#boolean)?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="user"></div>
+[Snowflake](#Snowflake)?
+
+<div id="user"></div>
 
 ### user
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="sort_value"></div>
+[UserObject](#UserObject)?
+
+<div id="sort_value"></div>
 
 ### sort_value
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="GuildObject"></div>
+[number](#number)?
+
+<div id="GuildObject"></div>
 
 ## GuildObject
 
@@ -3526,259 +3624,345 @@ type GuildObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="name"></div>
 
 ### name
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="icon"></div>
+[string](#string)?
+
+<div id="icon"></div>
 
 ### icon
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="icon_hash"></div>
+[string](#string)?
+
+<div id="icon_hash"></div>
 
 ### icon_hash
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="splash"></div>
+[string](#string)?
+
+<div id="splash"></div>
 
 ### splash
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="discovery_splash"></div>
+[string](#string)?
+
+<div id="discovery_splash"></div>
 
 ### discovery_splash
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="owner"></div>
+[string](#string)?
+
+<div id="owner"></div>
 
 ### owner
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="owner_id"></div>
+[boolean](#boolean)?
+
+<div id="owner_id"></div>
 
 ### owner_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="permissions"></div>
+[Snowflake](#Snowflake)?
+
+<div id="permissions"></div>
 
 ### permissions
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="region"></div>
+[string](#string)?
+
+<div id="region"></div>
 
 ### region
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="afk_channel_id"></div>
+[string](#string)?
+
+<div id="afk_channel_id"></div>
 
 ### afk_channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="afk_timeout"></div>
+[Snowflake](#Snowflake)?
+
+<div id="afk_timeout"></div>
 
 ### afk_timeout
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="widget_enabled"></div>
+[number](#number)?
+
+<div id="widget_enabled"></div>
 
 ### widget_enabled
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="widget_channel_id"></div>
+[boolean](#boolean)?
+
+<div id="widget_channel_id"></div>
 
 ### widget_channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="verification_level"></div>
+[Snowflake](#Snowflake)?
+
+<div id="verification_level"></div>
 
 ### verification_level
 
 *This field is optional and may not be specified*
 
-[VerificationLevel](#VerificationLevel)?<div id="default_message_notifications"></div>
+[VerificationLevel](#VerificationLevel)?
+
+<div id="default_message_notifications"></div>
 
 ### default_message_notifications
 
 *This field is optional and may not be specified*
 
-[DefaultMessageNotification](#DefaultMessageNotification)?<div id="explicit_content_filter"></div>
+[DefaultMessageNotification](#DefaultMessageNotification)?
+
+<div id="explicit_content_filter"></div>
 
 ### explicit_content_filter
 
 *This field is optional and may not be specified*
 
-[ExplicitContentFilterLevel](#ExplicitContentFilterLevel)?<div id="roles"></div>
+[ExplicitContentFilterLevel](#ExplicitContentFilterLevel)?
+
+<div id="roles"></div>
 
 ### roles
 
 *This field is optional and may not be specified*
 
-{[GuildRoleObject](#GuildRoleObject)}?<div id="emojis"></div>
+{[GuildRoleObject](#GuildRoleObject)}?
+
+<div id="emojis"></div>
 
 ### emojis
 
 *This field is optional and may not be specified*
 
-{[EmojiObject](#EmojiObject)}?<div id="features"></div>
+{[EmojiObject](#EmojiObject)}?
+
+<div id="features"></div>
 
 ### features
 
 *This field is optional and may not be specified*
 
-{[GuildFeature](#GuildFeature)}?<div id="mfa_level"></div>
+{[GuildFeature](#GuildFeature)}?
+
+<div id="mfa_level"></div>
 
 ### mfa_level
 
 *This field is optional and may not be specified*
 
-[MFALevel](#MFALevel)?<div id="application_id"></div>
+[MFALevel](#MFALevel)?
+
+<div id="application_id"></div>
 
 ### application_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="system_channel_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="system_channel_id"></div>
 
 ### system_channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="system_channel_flags"></div>
+[Snowflake](#Snowflake)?
+
+<div id="system_channel_flags"></div>
 
 ### system_channel_flags
 
 *This field is optional and may not be specified*
 
-[SystemChannelFlags](#SystemChannelFlags)?<div id="rules_channel_id"></div>
+[SystemChannelFlags](#SystemChannelFlags)?
+
+<div id="rules_channel_id"></div>
 
 ### rules_channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="max_presences"></div>
+[Snowflake](#Snowflake)?
+
+<div id="max_presences"></div>
 
 ### max_presences
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="max_members"></div>
+[number](#number)?
+
+<div id="max_members"></div>
 
 ### max_members
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="vanity_url_code"></div>
+[number](#number)?
+
+<div id="vanity_url_code"></div>
 
 ### vanity_url_code
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="banner"></div>
+[string](#string)?
+
+<div id="banner"></div>
 
 ### banner
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="premium_tier"></div>
+[string](#string)?
+
+<div id="premium_tier"></div>
 
 ### premium_tier
 
 *This field is optional and may not be specified*
 
-[PremiumTier](#PremiumTier)?<div id="premium_subscription_count"></div>
+[PremiumTier](#PremiumTier)?
+
+<div id="premium_subscription_count"></div>
 
 ### premium_subscription_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="preferred_locale"></div>
+[number](#number)?
+
+<div id="preferred_locale"></div>
 
 ### preferred_locale
 
 *This field is optional and may not be specified*
 
-[LanguageLocales](#LanguageLocales)?<div id="public_updates_channel_id"></div>
+[LanguageLocales](#LanguageLocales)?
+
+<div id="public_updates_channel_id"></div>
 
 ### public_updates_channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="max_video_channel_users"></div>
+[Snowflake](#Snowflake)?
+
+<div id="max_video_channel_users"></div>
 
 ### max_video_channel_users
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="max_stage_video_channel_users"></div>
+[number](#number)?
+
+<div id="max_stage_video_channel_users"></div>
 
 ### max_stage_video_channel_users
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="approximate_member_count"></div>
+[number](#number)?
+
+<div id="approximate_member_count"></div>
 
 ### approximate_member_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="approximate_presence_count"></div>
+[number](#number)?
+
+<div id="approximate_presence_count"></div>
 
 ### approximate_presence_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="welcome_screen"></div>
+[number](#number)?
+
+<div id="welcome_screen"></div>
 
 ### welcome_screen
 
 *This field is optional and may not be specified*
 
-[WelcomeScreenObject](#WelcomeScreenObject)?<div id="nsfw_level"></div>
+[WelcomeScreenObject](#WelcomeScreenObject)?
+
+<div id="nsfw_level"></div>
 
 ### nsfw_level
 
 *This field is optional and may not be specified*
 
-[GuildNSFWLevel](#GuildNSFWLevel)?<div id="stickers"></div>
+[GuildNSFWLevel](#GuildNSFWLevel)?
+
+<div id="stickers"></div>
 
 ### stickers
 
 *This field is optional and may not be specified*
 
-{[StickerObject](#StickerObject)}?<div id="premium_progress_bar_enabled"></div>
+{[StickerObject](#StickerObject)}?
+
+<div id="premium_progress_bar_enabled"></div>
 
 ### premium_progress_bar_enabled
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="safety_alerts_channel_id"></div>
+[boolean](#boolean)?
+
+<div id="safety_alerts_channel_id"></div>
 
 ### safety_alerts_channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="InstallParamsObject"></div>
+[Snowflake](#Snowflake)?
+
+<div id="InstallParamsObject"></div>
 
 ## InstallParamsObject
 
@@ -3902,7 +4086,9 @@ type ApplicationObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
@@ -3914,7 +4100,9 @@ type ApplicationObject = {
 
 *This field is optional and may not be specified*
 
-{[string](#string)}?<div id="bot_public"></div>
+{[string](#string)}?
+
+<div id="bot_public"></div>
 
 ### bot_public
 
@@ -3932,25 +4120,33 @@ type ApplicationObject = {
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="terms_of_service_url"></div>
+[UserObject](#UserObject)?
+
+<div id="terms_of_service_url"></div>
 
 ### terms_of_service_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="privacy_policy_url"></div>
+[string](#string)?
+
+<div id="privacy_policy_url"></div>
 
 ### privacy_policy_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="owner"></div>
+[string](#string)?
+
+<div id="owner"></div>
 
 ### owner
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="summary"></div>
+[UserObject](#UserObject)?
+
+<div id="summary"></div>
 
 ### summary
 
@@ -3968,91 +4164,121 @@ type ApplicationObject = {
 
 *This field is optional and may not be specified*
 
-[TeamObject](#TeamObject)?<div id="guild_id"></div>
+[TeamObject](#TeamObject)?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="guild"></div>
+[Snowflake](#Snowflake)?
+
+<div id="guild"></div>
 
 ### guild
 
 *This field is optional and may not be specified*
 
-[GuildObject](#GuildObject)?<div id="primary_sku_id"></div>
+[GuildObject](#GuildObject)?
+
+<div id="primary_sku_id"></div>
 
 ### primary_sku_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="slug"></div>
+[Snowflake](#Snowflake)?
+
+<div id="slug"></div>
 
 ### slug
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="cover_image"></div>
+[string](#string)?
+
+<div id="cover_image"></div>
 
 ### cover_image
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="flags"></div>
+[string](#string)?
+
+<div id="flags"></div>
 
 ### flags
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="approximate_guild_count"></div>
+[number](#number)?
+
+<div id="approximate_guild_count"></div>
 
 ### approximate_guild_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="redirect_uris"></div>
+[number](#number)?
+
+<div id="redirect_uris"></div>
 
 ### redirect_uris
 
 *This field is optional and may not be specified*
 
-{[string](#string)}?<div id="interactions_endpoint_url"></div>
+{[string](#string)}?
+
+<div id="interactions_endpoint_url"></div>
 
 ### interactions_endpoint_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="role_connections_verification_url"></div>
+[string](#string)?
+
+<div id="role_connections_verification_url"></div>
 
 ### role_connections_verification_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="tags"></div>
+[string](#string)?
+
+<div id="tags"></div>
 
 ### tags
 
 *This field is optional and may not be specified*
 
-{[string](#string)}?<div id="install_params"></div>
+{[string](#string)}?
+
+<div id="install_params"></div>
 
 ### install_params
 
 *This field is optional and may not be specified*
 
-[InstallParamsObject](#InstallParamsObject)?<div id="integration_types_config"></div>
+[InstallParamsObject](#InstallParamsObject)?
+
+<div id="integration_types_config"></div>
 
 ### integration_types_config
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="custom_install_url"></div>
+[boolean](#boolean)?
+
+<div id="custom_install_url"></div>
 
 ### custom_install_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="GuildApplicationCommandPermissionObject"></div>
+[string](#string)?
+
+<div id="GuildApplicationCommandPermissionObject"></div>
 
 ## GuildApplicationCommandPermissionObject
 
@@ -4244,7 +4470,9 @@ type AutmoderationActionMetadataObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="AutomoderationActionObject"></div>
+[string](#string)?
+
+<div id="AutomoderationActionObject"></div>
 
 ## AutomoderationActionObject
 
@@ -4276,7 +4504,9 @@ type AutomoderationActionObject = {
 
 *This field is optional and may not be specified*
 
-[AutmoderationActionMetadataObject](#AutmoderationActionMetadataObject)?<div id="AutomoderationRuleObject"></div>
+[AutmoderationActionMetadataObject](#AutmoderationActionMetadataObject)?
+
+<div id="AutomoderationRuleObject"></div>
 
 ## AutomoderationRuleObject
 
@@ -4486,7 +4716,9 @@ type ThreadMetadataObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="create_timestamp"></div>
+[boolean](#boolean)?
+
+<div id="create_timestamp"></div>
 
 ### create_timestamp
 
@@ -4540,19 +4772,25 @@ type GuildMemberObject = {
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="nick"></div>
+[UserObject](#UserObject)?
+
+<div id="nick"></div>
 
 ### nick
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="avatar"></div>
+[string](#string)?
+
+<div id="avatar"></div>
 
 ### avatar
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="roles"></div>
+[string](#string)?
+
+<div id="roles"></div>
 
 ### roles
 
@@ -4570,7 +4808,9 @@ type GuildMemberObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="deaf"></div>
+[string](#string)?
+
+<div id="deaf"></div>
 
 ### deaf
 
@@ -4594,25 +4834,33 @@ type GuildMemberObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="permissions"></div>
+[boolean](#boolean)?
+
+<div id="permissions"></div>
 
 ### permissions
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="communication_disabled_until"></div>
+[string](#string)?
+
+<div id="communication_disabled_until"></div>
 
 ### communication_disabled_until
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="avatar_decoration_data"></div>
+[string](#string)?
+
+<div id="avatar_decoration_data"></div>
 
 ### avatar_decoration_data
 
 *This field is optional and may not be specified*
 
-[AvatarDecorationDataObject](#AvatarDecorationDataObject)?<div id="ThreadMemberObject"></div>
+[AvatarDecorationDataObject](#AvatarDecorationDataObject)?
+
+<div id="ThreadMemberObject"></div>
 
 ## ThreadMemberObject
 
@@ -4644,13 +4892,17 @@ type ThreadMemberObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="user_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="user_id"></div>
 
 ### user_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="join_timestamp"></div>
+[Snowflake](#Snowflake)?
+
+<div id="join_timestamp"></div>
 
 ### join_timestamp
 
@@ -4668,7 +4920,9 @@ type ThreadMemberObject = {
 
 *This field is optional and may not be specified*
 
-[GuildMemberObject](#GuildMemberObject)?<div id="ForumTagObject"></div>
+[GuildMemberObject](#GuildMemberObject)?
+
+<div id="ForumTagObject"></div>
 
 ## ForumTagObject
 
@@ -4718,13 +4972,17 @@ type ForumTagObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji_name"></div>
+[string](#string)?
+
+<div id="emoji_name"></div>
 
 ### emoji_name
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="DefaultReactionObject"></div>
+[string](#string)?
+
+<div id="DefaultReactionObject"></div>
 
 ## DefaultReactionObject
 
@@ -4750,13 +5008,17 @@ type DefaultReactionObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji_name"></div>
+[string](#string)?
+
+<div id="emoji_name"></div>
 
 ### emoji_name
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="ChannelObject"></div>
+[string](#string)?
+
+<div id="ChannelObject"></div>
 
 ## ChannelObject
 
@@ -4848,7 +5110,9 @@ type ChannelObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="type"></div>
+[Snowflake](#Snowflake)?
+
+<div id="type"></div>
 
 ### type
 
@@ -4860,7 +5124,9 @@ type ChannelObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="position"></div>
+[Snowflake](#Snowflake)?
+
+<div id="position"></div>
 
 ### position
 
@@ -4884,175 +5150,233 @@ type ChannelObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="nsfw"></div>
+[string](#string)?
+
+<div id="nsfw"></div>
 
 ### nsfw
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="last_message_id"></div>
+[boolean](#boolean)?
+
+<div id="last_message_id"></div>
 
 ### last_message_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="bitrate"></div>
+[Snowflake](#Snowflake)?
+
+<div id="bitrate"></div>
 
 ### bitrate
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="user_limit"></div>
+[number](#number)?
+
+<div id="user_limit"></div>
 
 ### user_limit
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="rate_limit_per_user"></div>
+[number](#number)?
+
+<div id="rate_limit_per_user"></div>
 
 ### rate_limit_per_user
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="recipients"></div>
+[number](#number)?
+
+<div id="recipients"></div>
 
 ### recipients
 
 *This field is optional and may not be specified*
 
-{[UserObject](#UserObject)}?<div id="icon"></div>
+{[UserObject](#UserObject)}?
+
+<div id="icon"></div>
 
 ### icon
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="owner_id"></div>
+[string](#string)?
+
+<div id="owner_id"></div>
 
 ### owner_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="application_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="application_id"></div>
 
 ### application_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="managed"></div>
+[Snowflake](#Snowflake)?
+
+<div id="managed"></div>
 
 ### managed
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="parent_id"></div>
+[boolean](#boolean)?
+
+<div id="parent_id"></div>
 
 ### parent_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="last_pin_timestamp"></div>
+[Snowflake](#Snowflake)?
+
+<div id="last_pin_timestamp"></div>
 
 ### last_pin_timestamp
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="rtc_region"></div>
+[string](#string)?
+
+<div id="rtc_region"></div>
 
 ### rtc_region
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="video_quality_mode"></div>
+[string](#string)?
+
+<div id="video_quality_mode"></div>
 
 ### video_quality_mode
 
 *This field is optional and may not be specified*
 
-[VideoQualityMode](#VideoQualityMode)?<div id="message_count"></div>
+[VideoQualityMode](#VideoQualityMode)?
+
+<div id="message_count"></div>
 
 ### message_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="member_count"></div>
+[number](#number)?
+
+<div id="member_count"></div>
 
 ### member_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="thread_metadata"></div>
+[number](#number)?
+
+<div id="thread_metadata"></div>
 
 ### thread_metadata
 
 *This field is optional and may not be specified*
 
-[ThreadMetadataObject](#ThreadMetadataObject)?<div id="member"></div>
+[ThreadMetadataObject](#ThreadMetadataObject)?
+
+<div id="member"></div>
 
 ### member
 
 *This field is optional and may not be specified*
 
-[ThreadMemberObject](#ThreadMemberObject)?<div id="default_auto_archive_duration"></div>
+[ThreadMemberObject](#ThreadMemberObject)?
+
+<div id="default_auto_archive_duration"></div>
 
 ### default_auto_archive_duration
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="permissions"></div>
+[number](#number)?
+
+<div id="permissions"></div>
 
 ### permissions
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="flags"></div>
+[string](#string)?
+
+<div id="flags"></div>
 
 ### flags
 
 *This field is optional and may not be specified*
 
-[ChannelFlags](#ChannelFlags)?<div id="total_message_sent"></div>
+[ChannelFlags](#ChannelFlags)?
+
+<div id="total_message_sent"></div>
 
 ### total_message_sent
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="available_tags"></div>
+[number](#number)?
+
+<div id="available_tags"></div>
 
 ### available_tags
 
 *This field is optional and may not be specified*
 
-{[ForumTagObject](#ForumTagObject)}?<div id="applied_tags"></div>
+{[ForumTagObject](#ForumTagObject)}?
+
+<div id="applied_tags"></div>
 
 ### applied_tags
 
 *This field is optional and may not be specified*
 
-{[Snowflake](#Snowflake)}?<div id="default_reaction_emoji"></div>
+{[Snowflake](#Snowflake)}?
+
+<div id="default_reaction_emoji"></div>
 
 ### default_reaction_emoji
 
 *This field is optional and may not be specified*
 
-[DefaultReactionObject](#DefaultReactionObject)?<div id="default_thread_rate_limit_per_user"></div>
+[DefaultReactionObject](#DefaultReactionObject)?
+
+<div id="default_thread_rate_limit_per_user"></div>
 
 ### default_thread_rate_limit_per_user
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="default_sort_order"></div>
+[number](#number)?
+
+<div id="default_sort_order"></div>
 
 ### default_sort_order
 
 *This field is optional and may not be specified*
 
-[SortOrderType](#SortOrderType)?<div id="default_forum_layout"></div>
+[SortOrderType](#SortOrderType)?
+
+<div id="default_forum_layout"></div>
 
 ### default_forum_layout
 
 *This field is optional and may not be specified*
 
-[ForumLayoutType](#ForumLayoutType)?<div id="EntitlementObject"></div>
+[ForumLayoutType](#ForumLayoutType)?
+
+<div id="EntitlementObject"></div>
 
 ## EntitlementObject
 
@@ -5112,7 +5436,9 @@ type EntitlementObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="type"></div>
+[Snowflake](#Snowflake)?
+
+<div id="type"></div>
 
 ### type
 
@@ -5130,25 +5456,33 @@ type EntitlementObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="ends_at"></div>
+[string](#string)?
+
+<div id="ends_at"></div>
 
 ### ends_at
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="guild_id"></div>
+[string](#string)?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="consumed"></div>
+[Snowflake](#Snowflake)?
+
+<div id="consumed"></div>
 
 ### consumed
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="VoiceStateObject"></div>
+[boolean](#boolean)?
+
+<div id="VoiceStateObject"></div>
 
 ## VoiceStateObject
 
@@ -5196,13 +5530,17 @@ type VoiceStateObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="channel_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="channel_id"></div>
 
 ### channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="user_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="user_id"></div>
 
 ### user_id
 
@@ -5214,7 +5552,9 @@ type VoiceStateObject = {
 
 *This field is optional and may not be specified*
 
-[GuildMemberObject](#GuildMemberObject)?<div id="session_id"></div>
+[GuildMemberObject](#GuildMemberObject)?
+
+<div id="session_id"></div>
 
 ### session_id
 
@@ -5250,7 +5590,9 @@ type VoiceStateObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="self_video"></div>
+[boolean](#boolean)?
+
+<div id="self_video"></div>
 
 ### self_video
 
@@ -5268,7 +5610,9 @@ type VoiceStateObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="ClientStatusObject"></div>
+[string](#string)?
+
+<div id="ClientStatusObject"></div>
 
 ## ClientStatusObject
 
@@ -5296,19 +5640,25 @@ type ClientStatusObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="mobile"></div>
+[string](#string)?
+
+<div id="mobile"></div>
 
 ### mobile
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="web"></div>
+[string](#string)?
+
+<div id="web"></div>
 
 ### web
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="PresenceUpdateObject"></div>
+[string](#string)?
+
+<div id="PresenceUpdateObject"></div>
 
 ## PresenceUpdateObject
 
@@ -5436,7 +5786,9 @@ type StageInstanceObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="GuildScheduledEventEntityMetadata"></div>
+[Snowflake](#Snowflake)?
+
+<div id="GuildScheduledEventEntityMetadata"></div>
 
 ## GuildScheduledEventEntityMetadata
 
@@ -5526,13 +5878,17 @@ type GuildScheduledEventObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="creator_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="creator_id"></div>
 
 ### creator_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="name"></div>
 
 ### name
 
@@ -5544,7 +5900,9 @@ type GuildScheduledEventObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="scheduled_start_time"></div>
+[string](#string)?
+
+<div id="scheduled_start_time"></div>
 
 ### scheduled_start_time
 
@@ -5556,7 +5914,9 @@ type GuildScheduledEventObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="privacy_level"></div>
+[string](#string)?
+
+<div id="privacy_level"></div>
 
 ### privacy_level
 
@@ -5580,19 +5940,25 @@ type GuildScheduledEventObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="entity_metadata"></div>
+[Snowflake](#Snowflake)?
+
+<div id="entity_metadata"></div>
 
 ### entity_metadata
 
 *This field is optional and may not be specified*
 
-[GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)?<div id="creator"></div>
+[GuildScheduledEventEntityMetadata](#GuildScheduledEventEntityMetadata)?
+
+<div id="creator"></div>
 
 ### creator
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="user_count"></div>
+[UserObject](#UserObject)?
+
+<div id="user_count"></div>
 
 ### user_count
 
@@ -5604,7 +5970,9 @@ type GuildScheduledEventObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="IntegrationAccountObject"></div>
+[string](#string)?
+
+<div id="IntegrationAccountObject"></div>
 
 ## IntegrationAccountObject
 
@@ -5714,37 +6082,49 @@ type IntegrationObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="role_id"></div>
+[boolean](#boolean)?
+
+<div id="role_id"></div>
 
 ### role_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="enable_emoticons"></div>
+[Snowflake](#Snowflake)?
+
+<div id="enable_emoticons"></div>
 
 ### enable_emoticons
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="expire_behaviour"></div>
+[boolean](#boolean)?
+
+<div id="expire_behaviour"></div>
 
 ### expire_behaviour
 
 *This field is optional and may not be specified*
 
-[IntegrationExpireBehaviours](#IntegrationExpireBehaviours)?<div id="expire_grace_period"></div>
+[IntegrationExpireBehaviours](#IntegrationExpireBehaviours)?
+
+<div id="expire_grace_period"></div>
 
 ### expire_grace_period
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="user"></div>
+[number](#number)?
+
+<div id="user"></div>
 
 ### user
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="account"></div>
+[UserObject](#UserObject)?
+
+<div id="account"></div>
 
 ### account
 
@@ -5756,31 +6136,41 @@ type IntegrationObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="subscriber_count"></div>
+[string](#string)?
+
+<div id="subscriber_count"></div>
 
 ### subscriber_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="revoked"></div>
+[number](#number)?
+
+<div id="revoked"></div>
 
 ### revoked
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="application"></div>
+[boolean](#boolean)?
+
+<div id="application"></div>
 
 ### application
 
 *This field is optional and may not be specified*
 
-[IntegrationApplicationObject](#IntegrationApplicationObject)?<div id="scopes"></div>
+[IntegrationApplicationObject](#IntegrationApplicationObject)?
+
+<div id="scopes"></div>
 
 ### scopes
 
 *This field is optional and may not be specified*
 
-{[OAuth2Scopes](#OAuth2Scopes)}?<div id="ChannelMentionObject"></div>
+{[OAuth2Scopes](#OAuth2Scopes)}?
+
+<div id="ChannelMentionObject"></div>
 
 ## ChannelMentionObject
 
@@ -5906,13 +6296,17 @@ type EmbedFooterObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="proxy_icon_url"></div>
+[string](#string)?
+
+<div id="proxy_icon_url"></div>
 
 ### proxy_icon_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="EmbedImageObject"></div>
+[string](#string)?
+
+<div id="EmbedImageObject"></div>
 
 ## EmbedImageObject
 
@@ -5948,19 +6342,25 @@ type EmbedImageObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="height"></div>
+[string](#string)?
+
+<div id="height"></div>
 
 ### height
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="width"></div>
+[number](#number)?
+
+<div id="width"></div>
 
 ### width
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="EmbedProviderObject"></div>
+[number](#number)?
+
+<div id="EmbedProviderObject"></div>
 
 ## EmbedProviderObject
 
@@ -5986,13 +6386,17 @@ type EmbedProviderObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="url"></div>
+[string](#string)?
+
+<div id="url"></div>
 
 ### url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="EmbedAuthorObject"></div>
+[string](#string)?
+
+<div id="EmbedAuthorObject"></div>
 
 ## EmbedAuthorObject
 
@@ -6028,19 +6432,25 @@ type EmbedAuthorObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="icon_url"></div>
+[string](#string)?
+
+<div id="icon_url"></div>
 
 ### icon_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="proxy_icon_url"></div>
+[string](#string)?
+
+<div id="proxy_icon_url"></div>
 
 ### proxy_icon_url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="EmbedFieldObject"></div>
+[string](#string)?
+
+<div id="EmbedFieldObject"></div>
 
 ## EmbedFieldObject
 
@@ -6080,7 +6490,9 @@ type EmbedFieldObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="EmbedThumbnailObject"></div>
+[boolean](#boolean)?
+
+<div id="EmbedThumbnailObject"></div>
 
 ## EmbedThumbnailObject
 
@@ -6116,19 +6528,25 @@ type EmbedThumbnailObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="height"></div>
+[string](#string)?
+
+<div id="height"></div>
 
 ### height
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="width"></div>
+[number](#number)?
+
+<div id="width"></div>
 
 ### width
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="EmbedVideoObject"></div>
+[number](#number)?
+
+<div id="EmbedVideoObject"></div>
 
 ## EmbedVideoObject
 
@@ -6164,19 +6582,25 @@ type EmbedVideoObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="height"></div>
+[string](#string)?
+
+<div id="height"></div>
 
 ### height
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="width"></div>
+[number](#number)?
+
+<div id="width"></div>
 
 ### width
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="EmbedObject"></div>
+[number](#number)?
+
+<div id="EmbedObject"></div>
 
 ## EmbedObject
 
@@ -6224,79 +6648,105 @@ type EmbedObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="type"></div>
+[string](#string)?
+
+<div id="type"></div>
 
 ### type
 
 *This field is optional and may not be specified*
 
-[EmbedType](#EmbedType)?<div id="description"></div>
+[EmbedType](#EmbedType)?
+
+<div id="description"></div>
 
 ### description
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="url"></div>
+[string](#string)?
+
+<div id="url"></div>
 
 ### url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="timestamp"></div>
+[string](#string)?
+
+<div id="timestamp"></div>
 
 ### timestamp
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="color"></div>
+[string](#string)?
+
+<div id="color"></div>
 
 ### color
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="footer"></div>
+[number](#number)?
+
+<div id="footer"></div>
 
 ### footer
 
 *This field is optional and may not be specified*
 
-[EmbedFooterObject](#EmbedFooterObject)?<div id="image"></div>
+[EmbedFooterObject](#EmbedFooterObject)?
+
+<div id="image"></div>
 
 ### image
 
 *This field is optional and may not be specified*
 
-[EmbedImageObject](#EmbedImageObject)?<div id="thumbnail"></div>
+[EmbedImageObject](#EmbedImageObject)?
+
+<div id="thumbnail"></div>
 
 ### thumbnail
 
 *This field is optional and may not be specified*
 
-[EmbedThumbnailObject](#EmbedThumbnailObject)?<div id="video"></div>
+[EmbedThumbnailObject](#EmbedThumbnailObject)?
+
+<div id="video"></div>
 
 ### video
 
 *This field is optional and may not be specified*
 
-[EmbedVideoObject](#EmbedVideoObject)?<div id="provider"></div>
+[EmbedVideoObject](#EmbedVideoObject)?
+
+<div id="provider"></div>
 
 ### provider
 
 *This field is optional and may not be specified*
 
-[EmbedProviderObject](#EmbedProviderObject)?<div id="author"></div>
+[EmbedProviderObject](#EmbedProviderObject)?
+
+<div id="author"></div>
 
 ### author
 
 *This field is optional and may not be specified*
 
-[EmbedAuthorObject](#EmbedAuthorObject)?<div id="fields"></div>
+[EmbedAuthorObject](#EmbedAuthorObject)?
+
+<div id="fields"></div>
 
 ### fields
 
 *This field is optional and may not be specified*
 
-{[EmbedFieldObject](#EmbedFieldObject)}?<div id="ReactionCountDetailsObject"></div>
+{[EmbedFieldObject](#EmbedFieldObject)}?
+
+<div id="ReactionCountDetailsObject"></div>
 
 ## ReactionCountDetailsObject
 
@@ -6456,31 +6906,41 @@ type MessageReferenceObject = {
 
 *This field is optional and may not be specified*
 
-[MessageReferenceType](#MessageReferenceType)?<div id="message_id"></div>
+[MessageReferenceType](#MessageReferenceType)?
+
+<div id="message_id"></div>
 
 ### message_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="channel_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="channel_id"></div>
 
 ### channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="guild_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="fail_if_not_exists"></div>
+[Snowflake](#Snowflake)?
+
+<div id="fail_if_not_exists"></div>
 
 ### fail_if_not_exists
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="MessageInteractionMetadatObject"></div>
+[boolean](#boolean)?
+
+<div id="MessageInteractionMetadatObject"></div>
 
 ## MessageInteractionMetadatObject
 
@@ -6548,13 +7008,17 @@ type MessageInteractionMetadatObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="interacted_message_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="interacted_message_id"></div>
 
 ### interacted_message_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="triggering_interaction_metadata"></div>
+[Snowflake](#Snowflake)?
+
+<div id="triggering_interaction_metadata"></div>
 
 ### triggering_interaction_metadata
 
@@ -6616,7 +7080,9 @@ type MessageInteractionObject = {
 
 *This field is optional and may not be specified*
 
-[GuildMemberObject](#GuildMemberObject)?<div id="SelectOptionObject"></div>
+[GuildMemberObject](#GuildMemberObject)?
+
+<div id="SelectOptionObject"></div>
 
 ## SelectOptionObject
 
@@ -6660,13 +7126,17 @@ type SelectOptionObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji"></div>
+[string](#string)?
+
+<div id="emoji"></div>
 
 ### emoji
 
 *This field is optional and may not be specified*
 
-[EmojiObject](#EmojiObject)?<div id="default"></div>
+[EmojiObject](#EmojiObject)?
+
+<div id="default"></div>
 
 ### default
 
@@ -6820,43 +7290,57 @@ type SelectMenuComponentObject = {
 
 *This field is optional and may not be specified*
 
-{[SelectOptionObject](#SelectOptionObject)}?<div id="channel_types"></div>
+{[SelectOptionObject](#SelectOptionObject)}?
+
+<div id="channel_types"></div>
 
 ### channel_types
 
 *This field is optional and may not be specified*
 
-{[ChannelType](#ChannelType)}?<div id="placeholder"></div>
+{[ChannelType](#ChannelType)}?
+
+<div id="placeholder"></div>
 
 ### placeholder
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="default_values"></div>
+[string](#string)?
+
+<div id="default_values"></div>
 
 ### default_values
 
 *This field is optional and may not be specified*
 
-{[SelectDefaultValueObject](#SelectDefaultValueObject)}?<div id="min_values"></div>
+{[SelectDefaultValueObject](#SelectDefaultValueObject)}?
+
+<div id="min_values"></div>
 
 ### min_values
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="max_values"></div>
+[number](#number)?
+
+<div id="max_values"></div>
 
 ### max_values
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="disabled"></div>
+[number](#number)?
+
+<div id="disabled"></div>
 
 ### disabled
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="TextInputComponentObject"></div>
+[boolean](#boolean)?
+
+<div id="TextInputComponentObject"></div>
 
 ## TextInputComponentObject
 
@@ -6920,31 +7404,41 @@ type TextInputComponentObject = {
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="max_length"></div>
+[number](#number)?
+
+<div id="max_length"></div>
 
 ### max_length
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="required"></div>
+[number](#number)?
+
+<div id="required"></div>
 
 ### required
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="value"></div>
+[boolean](#boolean)?
+
+<div id="value"></div>
 
 ### value
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="placeholder"></div>
+[string](#string)?
+
+<div id="placeholder"></div>
 
 ### placeholder
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="ComponentObjects"></div>
+[string](#string)?
+
+<div id="ComponentObjects"></div>
 
 ## ComponentObjects
 
@@ -7104,13 +7598,17 @@ type PollMediaObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji"></div>
+[string](#string)?
+
+<div id="emoji"></div>
 
 ### emoji
 
 *This field is optional and may not be specified*
 
-[Partial](#Partial)<[EmojiObject](#EmojiObject)>?<div id="PollAnswerObject"></div>
+[Partial](#Partial)<[EmojiObject](#EmojiObject)>?
+
+<div id="PollAnswerObject"></div>
 
 ## PollAnswerObject
 
@@ -7261,7 +7759,9 @@ type PollObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="allow_multiselect"></div>
+[string](#string)?
+
+<div id="allow_multiselect"></div>
 
 ### allow_multiselect
 
@@ -7299,7 +7799,9 @@ false
 
 *This field is optional and may not be specified*
 
-[PollResultObject](#PollResultObject)?<div id="MessageCallObject"></div>
+[PollResultObject](#PollResultObject)?
+
+<div id="MessageCallObject"></div>
 
 ## MessageCallObject
 
@@ -7423,211 +7925,281 @@ type MessageObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="channel_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="channel_id"></div>
 
 ### channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="author"></div>
+[Snowflake](#Snowflake)?
+
+<div id="author"></div>
 
 ### author
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="content"></div>
+[UserObject](#UserObject)?
+
+<div id="content"></div>
 
 ### content
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="timestamp"></div>
+[string](#string)?
+
+<div id="timestamp"></div>
 
 ### timestamp
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="edited_timestamp"></div>
+[string](#string)?
+
+<div id="edited_timestamp"></div>
 
 ### edited_timestamp
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="tts"></div>
+[string](#string)?
+
+<div id="tts"></div>
 
 ### tts
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="mention_everyone"></div>
+[boolean](#boolean)?
+
+<div id="mention_everyone"></div>
 
 ### mention_everyone
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="mentions"></div>
+[boolean](#boolean)?
+
+<div id="mentions"></div>
 
 ### mentions
 
 *This field is optional and may not be specified*
 
-{[UserObject](#UserObject)}?<div id="mention_roles"></div>
+{[UserObject](#UserObject)}?
+
+<div id="mention_roles"></div>
 
 ### mention_roles
 
 *This field is optional and may not be specified*
 
-{[GuildRoleObject](#GuildRoleObject)}?<div id="mention_channels"></div>
+{[GuildRoleObject](#GuildRoleObject)}?
+
+<div id="mention_channels"></div>
 
 ### mention_channels
 
 *This field is optional and may not be specified*
 
-{[ChannelMentionObject](#ChannelMentionObject)}?<div id="attachments"></div>
+{[ChannelMentionObject](#ChannelMentionObject)}?
+
+<div id="attachments"></div>
 
 ### attachments
 
 *This field is optional and may not be specified*
 
-{[AttachmentObject](#AttachmentObject)}?<div id="embeds"></div>
+{[AttachmentObject](#AttachmentObject)}?
+
+<div id="embeds"></div>
 
 ### embeds
 
 *This field is optional and may not be specified*
 
-{[EmbedObject](#EmbedObject)}?<div id="reactions"></div>
+{[EmbedObject](#EmbedObject)}?
+
+<div id="reactions"></div>
 
 ### reactions
 
 *This field is optional and may not be specified*
 
-{[ReactionObject](#ReactionObject)}?<div id="nonce"></div>
+{[ReactionObject](#ReactionObject)}?
+
+<div id="nonce"></div>
 
 ### nonce
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="pinned"></div>
+[string](#string)?
+
+<div id="pinned"></div>
 
 ### pinned
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="webhook_id"></div>
+[boolean](#boolean)?
+
+<div id="webhook_id"></div>
 
 ### webhook_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="type"></div>
+[Snowflake](#Snowflake)?
+
+<div id="type"></div>
 
 ### type
 
 *This field is optional and may not be specified*
 
-[MessageType](#MessageType)?<div id="activity"></div>
+[MessageType](#MessageType)?
+
+<div id="activity"></div>
 
 ### activity
 
 *This field is optional and may not be specified*
 
-[MessageActivityObject](#MessageActivityObject)?<div id="application"></div>
+[MessageActivityObject](#MessageActivityObject)?
+
+<div id="application"></div>
 
 ### application
 
 *This field is optional and may not be specified*
 
-[ApplicationObject](#ApplicationObject)?<div id="application_id"></div>
+[ApplicationObject](#ApplicationObject)?
+
+<div id="application_id"></div>
 
 ### application_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="message_reference"></div>
+[Snowflake](#Snowflake)?
+
+<div id="message_reference"></div>
 
 ### message_reference
 
 *This field is optional and may not be specified*
 
-[MessageReferenceObject](#MessageReferenceObject)?<div id="flags"></div>
+[MessageReferenceObject](#MessageReferenceObject)?
+
+<div id="flags"></div>
 
 ### flags
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="referenced_message"></div>
+[number](#number)?
+
+<div id="referenced_message"></div>
 
 ### referenced_message
 
 *This field is optional and may not be specified*
 
-[MessageObject](#MessageObject)?<div id="interaction_metadata"></div>
+[MessageObject](#MessageObject)?
+
+<div id="interaction_metadata"></div>
 
 ### interaction_metadata
 
 *This field is optional and may not be specified*
 
-[MessageInteractionMetadatObject](#MessageInteractionMetadatObject)?<div id="interaction"></div>
+[MessageInteractionMetadatObject](#MessageInteractionMetadatObject)?
+
+<div id="interaction"></div>
 
 ### interaction
 
 *This field is optional and may not be specified*
 
-[MessageInteractionObject](#MessageInteractionObject)?<div id="thread"></div>
+[MessageInteractionObject](#MessageInteractionObject)?
+
+<div id="thread"></div>
 
 ### thread
 
 *This field is optional and may not be specified*
 
-[ChannelObject](#ChannelObject)?<div id="components"></div>
+[ChannelObject](#ChannelObject)?
+
+<div id="components"></div>
 
 ### components
 
 *This field is optional and may not be specified*
 
-{[ComponentObjects](#ComponentObjects)}?<div id="sticker_items"></div>
+{[ComponentObjects](#ComponentObjects)}?
+
+<div id="sticker_items"></div>
 
 ### sticker_items
 
 *This field is optional and may not be specified*
 
-{[SitckerItemObject](#SitckerItemObject)}?<div id="stickers"></div>
+{[SitckerItemObject](#SitckerItemObject)}?
+
+<div id="stickers"></div>
 
 ### stickers
 
 *This field is optional and may not be specified*
 
-{[StickerObject](#StickerObject)}?<div id="position"></div>
+{[StickerObject](#StickerObject)}?
+
+<div id="position"></div>
 
 ### position
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="role_subscription_data"></div>
+[number](#number)?
+
+<div id="role_subscription_data"></div>
 
 ### role_subscription_data
 
 *This field is optional and may not be specified*
 
-[RoleSubscriptionDataObject](#RoleSubscriptionDataObject)?<div id="resolved"></div>
+[RoleSubscriptionDataObject](#RoleSubscriptionDataObject)?
+
+<div id="resolved"></div>
 
 ### resolved
 
 *This field is optional and may not be specified*
 
-[ResolvedDataStructure](#ResolvedDataStructure)?<div id="poll"></div>
+[ResolvedDataStructure](#ResolvedDataStructure)?
+
+<div id="poll"></div>
 
 ### poll
 
 *This field is optional and may not be specified*
 
-[PollObject](#PollObject)?<div id="call"></div>
+[PollObject](#PollObject)?
+
+<div id="call"></div>
 
 ### call
 
 *This field is optional and may not be specified*
 
-[MessageCallObject](#MessageCallObject)?<div id="ResolvedDataStructure"></div>
+[MessageCallObject](#MessageCallObject)?
+
+<div id="ResolvedDataStructure"></div>
 
 ## ResolvedDataStructure
 
@@ -7661,37 +8233,49 @@ type ResolvedDataStructure = {
 
 *This field is optional and may not be specified*
 
-{[UserObject](#UserObject)}?<div id="members"></div>
+{[UserObject](#UserObject)}?
+
+<div id="members"></div>
 
 ### members
 
 *This field is optional and may not be specified*
 
-{[GuildMemberObject](#GuildMemberObject)}?<div id="roles"></div>
+{[GuildMemberObject](#GuildMemberObject)}?
+
+<div id="roles"></div>
 
 ### roles
 
 *This field is optional and may not be specified*
 
-{[GuildRoleObject](#GuildRoleObject)}?<div id="channels"></div>
+{[GuildRoleObject](#GuildRoleObject)}?
+
+<div id="channels"></div>
 
 ### channels
 
 *This field is optional and may not be specified*
 
-{[ChannelObject](#ChannelObject)}?<div id="messages"></div>
+{[ChannelObject](#ChannelObject)}?
+
+<div id="messages"></div>
 
 ### messages
 
 *This field is optional and may not be specified*
 
-{[MessageObject](#MessageObject)}?<div id="attachments"></div>
+{[MessageObject](#MessageObject)}?
+
+<div id="attachments"></div>
 
 ### attachments
 
 *This field is optional and may not be specified*
 
-{[AttachmentObject](#AttachmentObject)}?<div id="ApplicationCommandInteractionDataOptionObject"></div>
+{[AttachmentObject](#AttachmentObject)}?
+
+<div id="ApplicationCommandInteractionDataOptionObject"></div>
 
 ## ApplicationCommandInteractionDataOptionObject
 
@@ -7735,7 +8319,9 @@ type ApplicationCommandInteractionDataOptionObject = {
 
 *This field is optional and may not be specified*
 
-([string](#string) | [number](#number) | [boolean](#boolean))?<div id="options"></div>
+([string](#string) | [number](#number) | [boolean](#boolean))?
+
+<div id="options"></div>
 
 ### options
 
@@ -7809,49 +8395,65 @@ type InteractionDataObject = {
 
 *This field is optional and may not be specified*
 
-[ResolvedDataStructure](#ResolvedDataStructure)?<div id="options"></div>
+[ResolvedDataStructure](#ResolvedDataStructure)?
+
+<div id="options"></div>
 
 ### options
 
 *This field is optional and may not be specified*
 
-{[ApplicationCommandInteractionDataOptionObject](#ApplicationCommandInteractionDataOptionObject)}?<div id="guild_id"></div>
+{[ApplicationCommandInteractionDataOptionObject](#ApplicationCommandInteractionDataOptionObject)}?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="target_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="target_id"></div>
 
 ### target_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="custom_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="custom_id"></div>
 
 ### custom_id
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="component_type"></div>
+[string](#string)?
+
+<div id="component_type"></div>
 
 ### component_type
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="values"></div>
+[number](#number)?
+
+<div id="values"></div>
 
 ### values
 
 *This field is optional and may not be specified*
 
-{[SelectOptionObject](#SelectOptionObject)}?<div id="components"></div>
+{[SelectOptionObject](#SelectOptionObject)}?
+
+<div id="components"></div>
 
 ### components
 
 *This field is optional and may not be specified*
 
-{[ComponentObjects](#ComponentObjects)}?<div id="InteractionObject"></div>
+{[ComponentObjects](#ComponentObjects)}?
+
+<div id="InteractionObject"></div>
 
 ## InteractionObject
 
@@ -7929,43 +8531,57 @@ type InteractionObject = {
 
 *This field is optional and may not be specified*
 
-[InteractionDataObject](#InteractionDataObject)?<div id="guild"></div>
+[InteractionDataObject](#InteractionDataObject)?
+
+<div id="guild"></div>
 
 ### guild
 
 *This field is optional and may not be specified*
 
-[GuildObject](#GuildObject)?<div id="guild_id"></div>
+[GuildObject](#GuildObject)?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="channel"></div>
+[Snowflake](#Snowflake)?
+
+<div id="channel"></div>
 
 ### channel
 
 *This field is optional and may not be specified*
 
-[ChannelObject](#ChannelObject)?<div id="channel_id"></div>
+[ChannelObject](#ChannelObject)?
+
+<div id="channel_id"></div>
 
 ### channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="member"></div>
+[Snowflake](#Snowflake)?
+
+<div id="member"></div>
 
 ### member
 
 *This field is optional and may not be specified*
 
-[GuildMemberObject](#GuildMemberObject)?<div id="user"></div>
+[GuildMemberObject](#GuildMemberObject)?
+
+<div id="user"></div>
 
 ### user
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="token"></div>
+[UserObject](#UserObject)?
+
+<div id="token"></div>
 
 ### token
 
@@ -7983,7 +8599,9 @@ type InteractionObject = {
 
 *This field is optional and may not be specified*
 
-[MessageObject](#MessageObject)?<div id="app_permissions"></div>
+[MessageObject](#MessageObject)?
+
+<div id="app_permissions"></div>
 
 ### app_permissions
 
@@ -7995,13 +8613,17 @@ type InteractionObject = {
 
 *This field is optional and may not be specified*
 
-[LanguageLocales](#LanguageLocales)?<div id="guild_locale"></div>
+[LanguageLocales](#LanguageLocales)?
+
+<div id="guild_locale"></div>
 
 ### guild_locale
 
 *This field is optional and may not be specified*
 
-[LanguageLocales](#LanguageLocales)?<div id="entitlements"></div>
+[LanguageLocales](#LanguageLocales)?
+
+<div id="entitlements"></div>
 
 ### entitlements
 
@@ -8075,7 +8697,9 @@ type ApplicationRoleConnectionMetadataObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
@@ -8087,7 +8711,9 @@ type ApplicationRoleConnectionMetadataObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="ApplicationCommandOptionChoiceObject"></div>
+[string](#string)?
+
+<div id="ApplicationCommandOptionChoiceObject"></div>
 
 ## ApplicationCommandOptionChoiceObject
 
@@ -8123,7 +8749,9 @@ type ApplicationCommandOptionChoiceObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="value"></div>
+[string](#string)?
+
+<div id="value"></div>
 
 ### value
 
@@ -8209,25 +8837,33 @@ type ApplicationCommandOptionObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description_localizations"></div>
+[string](#string)?
+
+<div id="description_localizations"></div>
 
 ### description_localizations
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="required"></div>
+[string](#string)?
+
+<div id="required"></div>
 
 ### required
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="choices"></div>
+[boolean](#boolean)?
+
+<div id="choices"></div>
 
 ### choices
 
@@ -8239,43 +8875,57 @@ type ApplicationCommandOptionObject = {
 
 *This field is optional and may not be specified*
 
-{[ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?<div id="channel_types"></div>
+{[ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?
+
+<div id="channel_types"></div>
 
 ### channel_types
 
 *This field is optional and may not be specified*
 
-{[ChannelType](#ChannelType)}?<div id="min_value"></div>
+{[ChannelType](#ChannelType)}?
+
+<div id="min_value"></div>
 
 ### min_value
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="max_value"></div>
+[number](#number)?
+
+<div id="max_value"></div>
 
 ### max_value
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="min_length"></div>
+[number](#number)?
+
+<div id="min_length"></div>
 
 ### min_length
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="max_length"></div>
+[number](#number)?
+
+<div id="max_length"></div>
 
 ### max_length
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="autocomplete"></div>
+[number](#number)?
+
+<div id="autocomplete"></div>
 
 ### autocomplete
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="ApplicationCommandObject"></div>
+[boolean](#boolean)?
+
+<div id="ApplicationCommandObject"></div>
 
 ## ApplicationCommandObject
 
@@ -8333,25 +8983,33 @@ type ApplicationCommandObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="type"></div>
+[Snowflake](#Snowflake)?
+
+<div id="type"></div>
 
 ### type
 
 *This field is optional and may not be specified*
 
-[ApplicationCommandType](#ApplicationCommandType)?<div id="application_id"></div>
+[ApplicationCommandType](#ApplicationCommandType)?
+
+<div id="application_id"></div>
 
 ### application_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="guild_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="guild_id"></div>
 
 ### guild_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="name"></div>
 
 ### name
 
@@ -8363,7 +9021,9 @@ type ApplicationCommandObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
@@ -8375,55 +9035,73 @@ type ApplicationCommandObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="options"></div>
+[string](#string)?
+
+<div id="options"></div>
 
 ### options
 
 *This field is optional and may not be specified*
 
-{[ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?<div id="default_member_permissions"></div>
+{[ApplicationCommandOptionObject](#ApplicationCommandOptionObject)}?
+
+<div id="default_member_permissions"></div>
 
 ### default_member_permissions
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="dm_permission"></div>
+[string](#string)?
+
+<div id="dm_permission"></div>
 
 ### dm_permission
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="default_permission"></div>
+[string](#string)?
+
+<div id="default_permission"></div>
 
 ### default_permission
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="nsfw"></div>
+[boolean](#boolean)?
+
+<div id="nsfw"></div>
 
 ### nsfw
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="integration_types"></div>
+[boolean](#boolean)?
+
+<div id="integration_types"></div>
 
 ### integration_types
 
 *This field is optional and may not be specified*
 
-{[IntegrationType](#IntegrationType)}?<div id="contexts"></div>
+{[IntegrationType](#IntegrationType)}?
+
+<div id="contexts"></div>
 
 ### contexts
 
 *This field is optional and may not be specified*
 
-{[InteractionContextType](#InteractionContextType)}?<div id="version"></div>
+{[InteractionContextType](#InteractionContextType)}?
+
+<div id="version"></div>
 
 ### version
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="AuditLogChangeObject"></div>
+[Snowflake](#Snowflake)?
+
+<div id="AuditLogChangeObject"></div>
 
 ## AuditLogChangeObject
 
@@ -8451,13 +9129,17 @@ type AuditLogChangeObject = {
 
 *This field is optional and may not be specified*
 
-[any](#any)?<div id="old_value"></div>
+[any](#any)?
+
+<div id="old_value"></div>
 
 ### old_value
 
 *This field is optional and may not be specified*
 
-[any](#any)?<div id="key"></div>
+[any](#any)?
+
+<div id="key"></div>
 
 ### key
 
@@ -8611,19 +9293,25 @@ type AuditLogEntryObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="changes"></div>
+[string](#string)?
+
+<div id="changes"></div>
 
 ### changes
 
 *This field is optional and may not be specified*
 
-{[AuditLogChangeObject](#AuditLogChangeObject)}?<div id="user_id"></div>
+{[AuditLogChangeObject](#AuditLogChangeObject)}?
+
+<div id="user_id"></div>
 
 ### user_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="id"></div>
 
 ### id
 
@@ -8641,13 +9329,17 @@ type AuditLogEntryObject = {
 
 *This field is optional and may not be specified*
 
-{[OptionalAuditEntryInfoObject](#OptionalAuditEntryInfoObject)}?<div id="reason"></div>
+{[OptionalAuditEntryInfoObject](#OptionalAuditEntryInfoObject)}?
+
+<div id="reason"></div>
 
 ### reason
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="WebhookObject"></div>
+[string](#string)?
+
+<div id="WebhookObject"></div>
 
 ## WebhookObject
 
@@ -8705,61 +9397,81 @@ type WebhookObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="channel_id"></div>
+[Snowflake](#Snowflake)?
+
+<div id="channel_id"></div>
 
 ### channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="user"></div>
+[Snowflake](#Snowflake)?
+
+<div id="user"></div>
 
 ### user
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="name"></div>
+[UserObject](#UserObject)?
+
+<div id="name"></div>
 
 ### name
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="avatar"></div>
+[string](#string)?
+
+<div id="avatar"></div>
 
 ### avatar
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="token"></div>
+[string](#string)?
+
+<div id="token"></div>
 
 ### token
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="application_id"></div>
+[string](#string)?
+
+<div id="application_id"></div>
 
 ### application_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="source_guild"></div>
+[Snowflake](#Snowflake)?
+
+<div id="source_guild"></div>
 
 ### source_guild
 
 *This field is optional and may not be specified*
 
-[GuildObject](#GuildObject)?<div id="source_channel"></div>
+[GuildObject](#GuildObject)?
+
+<div id="source_channel"></div>
 
 ### source_channel
 
 *This field is optional and may not be specified*
 
-[ChannelObject](#ChannelObject)?<div id="url"></div>
+[ChannelObject](#ChannelObject)?
+
+<div id="url"></div>
 
 ### url
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="AuditLogObject"></div>
+[string](#string)?
+
+<div id="AuditLogObject"></div>
 
 ## AuditLogObject
 
@@ -8899,19 +9611,25 @@ type InviteObject = {
 
 *This field is optional and may not be specified*
 
-[GuildObject](#GuildObject)?<div id="channel"></div>
+[GuildObject](#GuildObject)?
+
+<div id="channel"></div>
 
 ### channel
 
 *This field is optional and may not be specified*
 
-[ChannelObject](#ChannelObject)?<div id="inviter"></div>
+[ChannelObject](#ChannelObject)?
+
+<div id="inviter"></div>
 
 ### inviter
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="target_type"></div>
+[UserObject](#UserObject)?
+
+<div id="target_type"></div>
 
 ### target_type
 
@@ -8923,43 +9641,57 @@ type InviteObject = {
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="target_application"></div>
+[UserObject](#UserObject)?
+
+<div id="target_application"></div>
 
 ### target_application
 
 *This field is optional and may not be specified*
 
-[ApplicationObject](#ApplicationObject)?<div id="approximate_presence_count"></div>
+[ApplicationObject](#ApplicationObject)?
+
+<div id="approximate_presence_count"></div>
 
 ### approximate_presence_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="approximate_member_count"></div>
+[number](#number)?
+
+<div id="approximate_member_count"></div>
 
 ### approximate_member_count
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="expires_at"></div>
+[number](#number)?
+
+<div id="expires_at"></div>
 
 ### expires_at
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="stage_instance"></div>
+[string](#string)?
+
+<div id="stage_instance"></div>
 
 ### stage_instance
 
 *This field is optional and may not be specified*
 
-[StageInstanceObject](#StageInstanceObject)?<div id="guild_scheduled_event"></div>
+[StageInstanceObject](#StageInstanceObject)?
+
+<div id="guild_scheduled_event"></div>
 
 ### guild_scheduled_event
 
 *This field is optional and may not be specified*
 
-[GuildScheduledEventObject](#GuildScheduledEventObject)?<div id="GuildVanityUrl"></div>
+[GuildScheduledEventObject](#GuildScheduledEventObject)?
+
+<div id="GuildVanityUrl"></div>
 
 ## GuildVanityUrl
 
@@ -9135,19 +9867,25 @@ type GuildPreviewObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="splash"></div>
+[string](#string)?
+
+<div id="splash"></div>
 
 ### splash
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="discovery_splash"></div>
+[string](#string)?
+
+<div id="discovery_splash"></div>
 
 ### discovery_splash
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emojis"></div>
+[string](#string)?
+
+<div id="emojis"></div>
 
 ### emojis
 
@@ -9177,7 +9915,9 @@ type GuildPreviewObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="stickers"></div>
+[string](#string)?
+
+<div id="stickers"></div>
 
 ### stickers
 
@@ -9209,7 +9949,9 @@ type BanObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="user"></div>
+[string](#string)?
+
+<div id="user"></div>
 
 ### user
 
@@ -9297,13 +10039,17 @@ type GuildWidgetSettingsObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="channel_id"></div>
+[boolean](#boolean)?
+
+<div id="channel_id"></div>
 
 ### channel_id
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="GuildWidgetObject"></div>
+[Snowflake](#Snowflake)?
+
+<div id="GuildWidgetObject"></div>
 
 ## GuildWidgetObject
 
@@ -9349,7 +10095,9 @@ type GuildWidgetObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="channels"></div>
+[string](#string)?
+
+<div id="channels"></div>
 
 ### channels
 
@@ -9407,7 +10155,9 @@ type PromptOptionObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="channel_ids"></div>
+[Snowflake](#Snowflake)?
+
+<div id="channel_ids"></div>
 
 ### channel_ids
 
@@ -9445,31 +10195,41 @@ Union with variants:
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="emoji_name"></div>
+[Snowflake](#Snowflake)?
+
+<div id="emoji_name"></div>
 
 ### emoji_name
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="emoji_animated"></div>
+[string](#string)?
+
+<div id="emoji_animated"></div>
 
 ### emoji_animated
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="title"></div>
+[boolean](#boolean)?
+
+<div id="title"></div>
 
 ### title
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="OnboardingPromptObject"></div>
+[string](#string)?
+
+<div id="OnboardingPromptObject"></div>
 
 ## OnboardingPromptObject
 
@@ -9525,7 +10285,9 @@ Union with variants:
 
 *This field is optional and may not be specified*
 
-[PromptTypes](#PromptTypes)?<div id="options"></div>
+[PromptTypes](#PromptTypes)?
+
+<div id="options"></div>
 
 ### options
 
@@ -9537,25 +10299,33 @@ Union with variants:
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="single_select"></div>
+[string](#string)?
+
+<div id="single_select"></div>
 
 ### single_select
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="required"></div>
+[boolean](#boolean)?
+
+<div id="required"></div>
 
 ### required
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="in_onboarding"></div>
+[boolean](#boolean)?
+
+<div id="in_onboarding"></div>
 
 ### in_onboarding
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="GuildOnboardingObject"></div>
+[boolean](#boolean)?
+
+<div id="GuildOnboardingObject"></div>
 
 ## GuildOnboardingObject
 
@@ -9651,7 +10421,9 @@ type GuildScheduledEventUserObject = {
 
 *This field is optional and may not be specified*
 
-[GuildMemberObject](#GuildMemberObject)?<div id="GuildTemplateObject"></div>
+[GuildMemberObject](#GuildMemberObject)?
+
+<div id="GuildTemplateObject"></div>
 
 ## GuildTemplateObject
 
@@ -9707,7 +10479,9 @@ type GuildTemplateObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="usage_count"></div>
+[string](#string)?
+
+<div id="usage_count"></div>
 
 ### usage_count
 
@@ -9755,7 +10529,9 @@ type GuildTemplateObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="StickerPackObject"></div>
+[boolean](#boolean)?
+
+<div id="StickerPackObject"></div>
 
 ## StickerPackObject
 
@@ -9815,7 +10591,9 @@ type StickerPackObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="description"></div>
+[Snowflake](#Snowflake)?
+
+<div id="description"></div>
 
 ### description
 
@@ -9827,7 +10605,9 @@ type StickerPackObject = {
 
 *This field is optional and may not be specified*
 
-[Snowflake](#Snowflake)?<div id="IntegrationApplicationObject"></div>
+[Snowflake](#Snowflake)?
+
+<div id="IntegrationApplicationObject"></div>
 
 ## IntegrationApplicationObject
 
@@ -9871,7 +10651,9 @@ type IntegrationApplicationObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="description"></div>
+[string](#string)?
+
+<div id="description"></div>
 
 ### description
 
@@ -9883,7 +10665,9 @@ type IntegrationApplicationObject = {
 
 *This field is optional and may not be specified*
 
-[UserObject](#UserObject)?<div id="ConnectionObject"></div>
+[UserObject](#UserObject)?
+
+<div id="ConnectionObject"></div>
 
 ## ConnectionObject
 
@@ -9943,13 +10727,17 @@ type ConnectionObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="integrations"></div>
+[boolean](#boolean)?
+
+<div id="integrations"></div>
 
 ### integrations
 
 *This field is optional and may not be specified*
 
-{[IntegrationObject](#IntegrationObject)}?<div id="verified"></div>
+{[IntegrationObject](#IntegrationObject)}?
+
+<div id="verified"></div>
 
 ### verified
 
@@ -10007,13 +10795,17 @@ type ApplicationRoleConnectionObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="platform_username"></div>
+[string](#string)?
+
+<div id="platform_username"></div>
 
 ### platform_username
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="metadata"></div>
+[string](#string)?
+
+<div id="metadata"></div>
 
 ### metadata
 
@@ -10097,25 +10889,33 @@ type AllowedMentionObject = {
 
 *This field is optional and may not be specified*
 
-{[AllowedMentionTypes](#AllowedMentionTypes)}?<div id="users"></div>
+{[AllowedMentionTypes](#AllowedMentionTypes)}?
+
+<div id="users"></div>
 
 ### users
 
 *This field is optional and may not be specified*
 
-{[string](#string)}?<div id="roles"></div>
+{[string](#string)}?
+
+<div id="roles"></div>
 
 ### roles
 
 *This field is optional and may not be specified*
 
-{[string](#string)}?<div id="replied_user"></div>
+{[string](#string)}?
+
+<div id="replied_user"></div>
 
 ### replied_user
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?<div id="ForumAndMediaThreadMessageObject"></div>
+[boolean](#boolean)?
+
+<div id="ForumAndMediaThreadMessageObject"></div>
 
 ## ForumAndMediaThreadMessageObject
 
@@ -10151,43 +10951,57 @@ type ForumAndMediaThreadMessageObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="embeds"></div>
+[string](#string)?
+
+<div id="embeds"></div>
 
 ### embeds
 
 *This field is optional and may not be specified*
 
-{[EmbedObject](#EmbedObject)}?<div id="allowed_mentions"></div>
+{[EmbedObject](#EmbedObject)}?
+
+<div id="allowed_mentions"></div>
 
 ### allowed_mentions
 
 *This field is optional and may not be specified*
 
-[AllowedMentionObject](#AllowedMentionObject)?<div id="components"></div>
+[AllowedMentionObject](#AllowedMentionObject)?
+
+<div id="components"></div>
 
 ### components
 
 *This field is optional and may not be specified*
 
-{[ComponentObjects](#ComponentObjects)}?<div id="sticker_ids"></div>
+{[ComponentObjects](#ComponentObjects)}?
+
+<div id="sticker_ids"></div>
 
 ### sticker_ids
 
 *This field is optional and may not be specified*
 
-{[Snowflake](#Snowflake)}?<div id="attachments"></div>
+{[Snowflake](#Snowflake)}?
+
+<div id="attachments"></div>
 
 ### attachments
 
 *This field is optional and may not be specified*
 
-{[AttachmentObject](#AttachmentObject)}?<div id="flags"></div>
+{[AttachmentObject](#AttachmentObject)}?
+
+<div id="flags"></div>
 
 ### flags
 
 *This field is optional and may not be specified*
 
-[number](#number)?<div id="InteractionCallbackAutocompleteObject"></div>
+[number](#number)?
+
+<div id="InteractionCallbackAutocompleteObject"></div>
 
 ## InteractionCallbackAutocompleteObject
 
@@ -10211,7 +11025,9 @@ type InteractionCallbackAutocompleteObject = {
 
 *This field is optional and may not be specified*
 
-{[ApplicationCommandOptionChoiceObject](#ApplicationCommandOptionChoiceObject)}?<div id="InteractionCallbackModalObject"></div>
+{[ApplicationCommandOptionChoiceObject](#ApplicationCommandOptionChoiceObject)}?
+
+<div id="InteractionCallbackModalObject"></div>
 
 ## InteractionCallbackModalObject
 
@@ -10239,13 +11055,17 @@ type InteractionCallbackModalObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="title"></div>
+[string](#string)?
+
+<div id="title"></div>
 
 ### title
 
 *This field is optional and may not be specified*
 
-[string](#string)?<div id="components"></div>
+[string](#string)?
+
+<div id="components"></div>
 
 ### components
 
@@ -10284,3 +11104,4 @@ type InteractionResponseObject = {
 *This field is optional and may not be specified*
 
 ([Partial](#Partial)<[MessageObject](#MessageObject)> | [InteractionCallbackAutocompleteObject](#InteractionCallbackAutocompleteObject) | [InteractionCallbackModalObject](#InteractionCallbackModalObject))?
+

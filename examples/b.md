@@ -1,4 +1,8 @@
+<div id="Types"></div>
+
 # Types
+
+<div id="c"></div>
 
 ## c
 
@@ -14,6 +18,8 @@ type c<U, T = string> = {}
 ```
 
 </details>
+
+<div id="a"></div>
 
 ## a
 
@@ -61,14 +67,15 @@ type a = {
 
 </details>
 
+<div id="nanos"></div>
+
 ### nanos
 
 Nanos
 
-Field with the following constraints:
+[number](#number)
 
-- Type: number
-- Constraints: None
+<div id="a"></div>
 
 ### a
 
@@ -76,37 +83,35 @@ Table
 
 *This is an inline table type with the following fields*
 
+<div id="b"></div>
+
 ##### b
 
 My favorite type
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="c"></div>
 
 ##### c
 
 Meow
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="d"></div>
 
 ##### d
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="e"></div>
 
 ##### e
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="f"></div>
 
 ##### f
 
@@ -114,34 +119,35 @@ Hello
 
 *This is an inline table type with the following fields*
 
+<div id="g"></div>
+
 ##### g
 
 World
 
-Field with the following constraints:
+[boolean](#boolean)
 
-- Type: boolean
-- Constraints: None
+<div id="h"></div>
 
 ##### h
 
 G
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="__meow"></div>
 
 ### __meow
 
 Catnip
 
-Field with the following constraints:
+[string](#string)
 
-- Type: string
-- Constraints: None
+<div id="MetatableFields"></div>
 
 ### Metatable Fields
+
+<div id="__add"></div>
 
 #### __add
 
@@ -154,14 +160,31 @@ __add: (a: a, b: a) -> a
 
 </details>
 
+<div id="Arguments"></div>
+
 ##### Arguments
 
-- **a** *(a)*
-- **b** *(a)*
+<div id="a"></div>
+
+##### a
+
+[a](#a)
+
+<div id="b"></div>
+
+##### b
+
+[a](#a)
+
+<div id="Returns"></div>
 
 ##### Returns
 
-- **ret1** *(a)*
+<div id="ret1"></div>
+
+##### ret1
+
+[a](#a)<div id="__sub"></div>
 
 #### __sub
 
@@ -174,16 +197,35 @@ __sub: (a: a, b: a) -> a
 
 </details>
 
+<div id="Arguments"></div>
+
 ##### Arguments
 
-- **a** *(a)*
-- **b** *(a)*
+<div id="a"></div>
+
+##### a
+
+[a](#a)
+
+<div id="b"></div>
+
+##### b
+
+[a](#a)
+
+<div id="Returns"></div>
 
 ##### Returns
 
-- **ret1** *(a)*
+<div id="ret1"></div>
+
+##### ret1
+
+[a](#a)<div id="Functions"></div>
 
 # Functions
+
+<div id="test"></div>
 
 ## test
 
@@ -199,10 +241,23 @@ function test(a: a, b: number) end
 
 </details>
 
+<div id="Arguments"></div>
+
 ## Arguments
 
-- **a** *(a)*
-- **b** *(number)*
+<div id="a"></div>
+
+### a
+
+[a](#a)
+
+<div id="b"></div>
+
+### b
+
+[number](#number)
+
+<div id="a"></div>
 
 ## a
 
@@ -218,7 +273,13 @@ function a<T>() end
 
 </details>
 
+<div id="Generics"></div>
+
 ## Generics
 
-- **T** *(any)*
+<div id="T"></div>
+
+### T
+
+This generic is unconstrained and can be any type
 

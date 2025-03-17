@@ -492,23 +492,6 @@ impl LuaUserData for Type {
             let type_comments = this.inner_typ.type_comments();
             Ok(type_comments)
         });
-
-        // Returns the *constructed* type representation which may differ from the raw input
-        methods.add_method("string_repr", |_, this, _: ()| {
-            let name = this.inner_typ.string_repr();
-            Ok(name)
-        });
-
-        methods.add_method("string_repr_with_pats", |_, this, (fields_join_pat, args_join_pat, generics_join_pat): (String, String, String)| {
-            let name = this.inner_typ.string_repr_with_pats(&fields_join_pat, &args_join_pat, &generics_join_pat);
-            Ok(name)
-        });
-
-        // Returns the string representation of the type
-        methods.add_method("raw_repr", |_, this, _: ()| {
-            let name = this.inner_typ.raw_repr();
-            Ok(name)
-        });
     }
 }
 
@@ -549,26 +532,6 @@ impl LuaUserData for TypeDef {
                 inner: this.inner.type_def_type.clone().into(),
             })
         });
-
-        fields.add_field_method_get("repr", |_lua, this| Ok(this.inner.repr.clone()));
-    }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        // Returns the *constructed* type representation which may differ from the raw input
-        methods.add_method("string_repr", |_, this, _: ()| {
-            let name = this.inner.string_repr();
-            Ok(name)
-        });
-
-        methods.add_method(
-            "string_repr_with_pats",
-            |_, this, (fields_join_pat, generics_join_pat): (String, String)| {
-                let name = this
-                    .inner
-                    .string_repr_with_pats(&fields_join_pat, &generics_join_pat);
-                Ok(name)
-            },
-        );
     }
 }
 
@@ -614,12 +577,6 @@ impl LuaUserData for TypeFunction {
                 LuaSerializeOptions::new().serialize_none_to_null(false),
             )
         });
-        fields.add_field_method_get("repr", |lua, this| {
-            lua.to_value_with(
-                &this.inner.repr,
-                LuaSerializeOptions::new().serialize_none_to_null(false),
-            )
-        });
         fields.add_field_method_get("type_comments", |lua, this| {
             lua.to_value(&this.inner.type_comments)
         });
@@ -652,24 +609,6 @@ impl LuaUserData for TypeFunction {
                 crate::type_gen::FunctionType::Local => Ok("Local"),
             }
         });
-    }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        // Returns the *constructed* type representation which may differ from the raw input
-        methods.add_method("string_repr", |_, this, _: ()| {
-            let name = this.inner.string_repr();
-            Ok(name)
-        });
-
-        methods.add_method(
-            "string_repr_with_pats",
-            |_, this, (args_join_pat, generics_join_pat): (String, String)| {
-                let name = this
-                    .inner
-                    .string_repr_with_pats(&args_join_pat, &generics_join_pat);
-                Ok(name)
-            },
-        );
     }
 }
 
@@ -748,12 +687,6 @@ pub struct TypeField {
 
 impl LuaUserData for TypeField {
     fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        fields.add_field_method_get("repr", |lua, this| {
-            lua.to_value_with(
-                &this.inner.repr,
-                LuaSerializeOptions::new().serialize_none_to_null(false),
-            )
-        });
         fields.add_field_method_get("comments", |lua, this| {
             lua.to_value_with(
                 &this.inner.comments,
@@ -771,22 +704,6 @@ impl LuaUserData for TypeField {
                 inner: this.inner.field_type.clone(),
             })
         });
-    }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("string_repr", |_, this, depth: Option<usize>| {
-            Ok(this.inner.string_repr(depth.unwrap_or_default()))
-        });
-
-        methods.add_method(
-            "string_repr_with_pats",
-            |_, this, (comment_write_pat, depth): (String, Option<usize>)| {
-                let name = this
-                    .inner
-                    .string_repr_with_pats(&comment_write_pat, depth.unwrap_or_default());
-                Ok(name)
-            },
-        );
     }
 }
 
@@ -891,10 +808,6 @@ impl LuaUserData for TypeFieldType {
 
             Ok(unwinded)
         });
-
-        methods.add_method("string_repr", |_, this, depth: Option<usize>| {
-            Ok(this.inner.string_repr(depth.unwrap_or_default()))
-        });
     }
 }
 
@@ -920,18 +833,6 @@ impl LuaUserData for TypedArgument {
         fields.add_field_method_get("punctuation", |_lua, this| {
             Ok(this.inner.punctuation.clone())
         });
-    }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method(
-            "string_repr",
-            |_, this, (with_punctuation, is_generic): (Option<bool>, Option<bool>)| {
-                Ok(this.inner.string_repr(
-                    with_punctuation.unwrap_or(false),
-                    is_generic.unwrap_or(false),
-                ))
-            },
-        );
     }
 }
 
@@ -965,12 +866,6 @@ impl LuaUserData for TypeFieldTypeFunction {
             })
         });
     }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("string_repr", |_, this, _g: ()| {
-            Ok(this.inner.string_repr())
-        });
-    }
 }
 
 pub struct TypeFieldTypeGeneric {
@@ -987,12 +882,6 @@ impl LuaUserData for TypeFieldTypeGeneric {
                 .iter()
                 .map(|tft| TypeFieldType { inner: tft.clone() })
                 .collect::<Vec<_>>())
-        });
-    }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("string_repr", |_, this, _g: ()| {
-            Ok(this.inner.string_repr())
         });
     }
 }
@@ -1016,12 +905,6 @@ impl LuaUserData for TypeFieldTypeModule {
             } else {
                 Ok(LuaValue::Nil)
             }
-        });
-    }
-
-    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
-        methods.add_method("string_repr", |_, this, _g: ()| {
-            Ok(this.inner.string_repr())
         });
     }
 }

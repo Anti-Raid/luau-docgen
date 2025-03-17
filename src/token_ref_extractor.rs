@@ -94,26 +94,6 @@ pub trait TokenReferenceExtractor {
 
         comments
     }
-
-    fn extract_till_tag(&self, tag: &str) -> Vec<&TokenReference> {
-        let token_refs = self.extract_token_refs();
-
-        let mut tagged_refs = Vec::new();
-
-        for token_ref in token_refs {
-            match token_ref {
-                TaggedTokenReference::Tag { tag: t } => {
-                    if t == tag {
-                        break;
-                    }
-                }
-                TaggedTokenReference::Ref { token_ref } => tagged_refs.push(token_ref),
-                _ => continue,
-            }
-        }
-
-        tagged_refs
-    }
 }
 
 /// All tokenreferences are token references

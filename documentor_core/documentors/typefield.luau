@@ -6,6 +6,7 @@ local convertComments = require("../convertcomments")
 local tableext = require("../table")
 local arg = require("./arg") 
 local istate = require("../istate")
+local transformRepr = require("../transformrepr")
 
 --- Helper method to process a function
 local function parseFunction(
@@ -52,7 +53,7 @@ local function parseFunction(
 
             local typ = generic.typ
             if typ then
-                tableext.extend(baseNodes, parseTypeFieldType(istate, generic:string_repr(false, true), typ, typ, convertedComments))
+                tableext.extend(baseNodes, parseTypeFieldType(istate, transformRepr.transformTypedArgumentRepr(generic, true, false), typ, typ, convertedComments))
             else
                 baseNodes[#baseNodes + 1] = {
                     type = "Text" :: "Text",
@@ -106,7 +107,7 @@ local function parseFunction(
 
             local typ = arg.typ
             if typ then
-                tableext.extend(baseNodes, parseTypeFieldType(istate, arg:string_repr(), typ, typ, convertedComments))
+                tableext.extend(baseNodes, parseTypeFieldType(istate, transformRepr.transformTypedArgumentRepr(arg), typ, typ, convertedComments))
             else
                 baseNodes[#baseNodes + 1] = {
                     type = "Text" :: "Text",
@@ -150,7 +151,7 @@ local function parseFunction(
                         } :: markdown.MarkdownNode
                     end
 
-                    tableext.extend(baseNodes, parseTypeFieldType(istate, ret:string_repr(), ret, ret, convertedComments))
+                    tableext.extend(baseNodes, parseTypeFieldType(istate, transformRepr.transformTypeFieldTypeRepr(ret), ret, ret, convertedComments))
 
                     blockNodes[#blockNodes + 1] = {
                         type = "Block" :: "Block",
@@ -175,7 +176,7 @@ local function parseFunction(
                     } :: markdown.MarkdownNode
                 end
 
-                tableext.extend(baseNodes, parseTypeFieldType(istate, ret:string_repr(), ret, ret, convertedComments, true))
+                tableext.extend(baseNodes, parseTypeFieldType(istate, transformRepr.transformTypeFieldTypeRepr(ret), ret, ret, convertedComments, true))
 
                 blockNodes[#blockNodes + 1] = {
                     type = "Block" :: "Block",
@@ -213,7 +214,7 @@ local function parseFunctionInline(
             }
 
             if generic.typ then 
-                local typNodes = parseTypeFieldType(istate, generic:string_repr(), generic.typ, generic.typ, convertedComments, true)
+                local typNodes = parseTypeFieldType(istate, transformRepr.transformTypedArgumentRepr(generic, true, false), generic.typ, generic.typ, convertedComments, true)
 
                 if #typNodes > 0 then 
                     genericNodes[#genericNodes + 1] = {
@@ -286,7 +287,7 @@ local function parseFunctionInline(
         end
 
         if argument.typ then 
-            local typNodes = parseTypeFieldType(istate, argument.typ:string_repr(), argument.typ, argument.typ, convertedComments, true)
+            local typNodes = parseTypeFieldType(istate, transformRepr.transformTypeFieldTypeRepr(argument.typ), argument.typ, argument.typ, convertedComments, true)
 
             tableext.extend(parsedFields, typNodes)
         end
@@ -313,7 +314,7 @@ local function parseFunctionInline(
             inline = true
         } :: any
 
-        local retNodes = parseTypeFieldType(istate, ret:string_repr(), ret, ret, convertedComments, true)
+        local retNodes = parseTypeFieldType(istate, transformRepr.transformTypeFieldTypeRepr(ret), ret, ret, convertedComments, true)
         tableext.extend(parsedFields, retNodes)
     end
 
@@ -329,8 +330,6 @@ function parseTypeFieldType(
     convertedComments: convertComments.ConvertCommentResponse,
     inline: boolean?
 ): {markdown.MarkdownNode} 
-    --print("Parsing type field type: " .. typ:string_repr())
-
     local fieldtype = typ:extract()
     if fieldtype.type == "Function" then
         if inline then 
@@ -359,7 +358,7 @@ function parseTypeFieldType(
         irNodes[#irNodes + 1] = {
             type = "CodeBlock" :: "CodeBlock",
             language = "luau",
-            text = origType:string_repr()
+            text = transformRepr.transformTypeFieldTypeRepr(origType)
         } :: any
         
         return irNodes
@@ -370,7 +369,7 @@ function parseTypeFieldType(
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = istate.plugin.resolveType(fieldtype.type, fieldtype.data),
-            text = markdown.NewMarkdownText_FromRaw(origType:string_repr()),
+            text = markdown.NewMarkdownText_FromRaw(transformRepr.transformTypeFieldTypeRepr(origType)),
             inline = inline
         } :: any
         
@@ -588,7 +587,7 @@ function parseTypeFieldType(
                 
                 nodes[#nodes + 1] = {
                     type = "Snippet",
-                    detailsText = variantName,-- fieldtype.data[i]:string_repr(),
+                    detailsText = variantName,
                     node = pnode :: markdown.MarkdownNode,
                 }
             end
@@ -683,7 +682,7 @@ function parseTypeFieldType(
                 
                 nodes[#nodes + 1] = {
                     type = "Snippet",
-                    detailsText = variantName,-- fieldtype.data[i]:string_repr(),
+                    detailsText = variantName,
                     node = pnode :: markdown.MarkdownNode,
                 }
             end
@@ -716,7 +715,7 @@ function parseTypeFieldType(
         if fieldtype.data.generics then
             local hasAddedBracket = false
             for _, generic in fieldtype.data.generics do 
-                local genericNodes = parseTypeFieldType(istate, generic:string_repr(), generic, generic, convertedComments, true)
+                local genericNodes = parseTypeFieldType(istate, transformRepr.transformTypeFieldTypeRepr(generic), generic, generic, convertedComments, true)
 
                 if #genericNodes > 0 then
                     if not hasAddedBracket then
@@ -835,7 +834,7 @@ function parseTypeFieldType(
                 
                 nodes[#nodes + 1] = {
                     type = "Snippet",
-                    detailsText = variantName,-- fieldtype.data[i]:string_repr(),
+                    detailsText = variantName,
                     node = pnode :: markdown.MarkdownNode,
                 }
             end
@@ -861,7 +860,7 @@ function parseTypeFieldType(
         end
 
         for i, generic in fieldtype.data.generics do 
-            local genericNodes = parseTypeFieldType(istate, generic:string_repr(), generic, generic, convertedComments, true)
+            local genericNodes = parseTypeFieldType(istate, transformRepr.transformTypeFieldTypeRepr(generic), generic, generic, convertedComments, true)
 
             if #genericNodes > 0 then
                 nodes[#nodes + 1] = {
@@ -992,7 +991,7 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
     if inline then 
         return parseTypeFieldType(
             istate,
-            typ:string_repr_with_pats("\n"), 
+            transformRepr.transformTypeFieldReprWithPat(typ, nil, "\n"),
             typ.field_type, 
             typ.field_type, 
             convertedComments,
@@ -1016,7 +1015,7 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
         type = "Block" :: "Block",
         nodes = parseTypeFieldType(
             istate,
-            typ:string_repr_with_pats("\n"), 
+            transformRepr.transformTypeFieldReprWithPat(typ, nil, "\n"),
             typ.field_type, 
             typ.field_type, 
             convertedComments,

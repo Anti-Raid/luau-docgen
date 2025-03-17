@@ -1,7 +1,7 @@
 local args = ...
 print(args)
 
-local pp = require("./pp")
+local pp = require("../../documentor_core/pp")
 local parser = require("./luaup/lossless/parse")
 local utils = require("./luaup/lossless/util")
 local res = parser(args)

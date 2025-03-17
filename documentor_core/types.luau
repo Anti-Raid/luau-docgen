@@ -109,12 +109,6 @@ export type Type = {
     name: (self: Type) -> string,
     --- the type comments attached to the type
     type_comments: (self: Type) -> {string},
-    --- the string representation of the type
-    string_repr: (self: Type) -> string,
-    --- the string representation of the type with different seperators
-    string_repr_with_pats: (self: Type, fields_join_pat: string, args_join_pat: string, generics_join_pat: string) -> string,
-    --- the raw representation of the type
-    raw_repr: (self: Type) -> string,
 }
 
 --- A type definition
@@ -128,12 +122,6 @@ export type TypeDef = {
     type_comments: {string},
     --- The type definition type of the typedef
     type_def_type: TypeDefType,
-    --- The *raw* string representation of the typedef
-    repr: string,
-    --- the string representation of the type
-    string_repr: (self: TypeDef) -> string,
-    --- the string representation of the type with different seperators
-    string_repr_with_pats: (self: TypeDef, fields_join_pat: string, generics_join_pat: string) -> string,    
 }
 
 --- A type function
@@ -142,8 +130,6 @@ export type TypeFunction = {
     dbg__inner: any,
     --- Name of the function
     name: string,
-    --- The *raw* string representation of the function
-    repr: string,
     --- type comments attached to the function
     type_comments: {string},
     --- generic arguments of the function
@@ -154,10 +140,6 @@ export type TypeFunction = {
     ret: TypeFieldType?,
     --- the function type of the function
     function_type: "Normal" | "Local",
-    --- the string representation of the type
-    string_repr: (self: TypeFunction) -> string,
-    --- the string representation of the type with different seperators
-    string_repr_with_pats: (self: TypeFunction, args_join_pat: string, generics_join_pat: string) -> string,        
 }
 
 --- specifialized type definition type information
@@ -185,18 +167,12 @@ export type TypeDefTypeTypeofSetMetatable = {
 
 --- A type field used within table types. The foo: number in { foo: number }.
 export type TypeField = {
-    --- The string representation of the type field
-    repr: string,
     --- The comments associated with the type field
     comments: {string},
     --- The name of the field
     field_name: string,
     --- The type of the field
     field_type: TypeFieldType,
-    --- The string representation of the field type
-    string_repr: (self: TypeField, depth: number?) -> string,
-    --- The string representation of the field type with different seperators
-    string_repr_with_pats: (self: TypeField, comment_write_pat: string, depth: number?) -> string,
 }
 
 --- Compact type information (Any type, such as string, boolean?, number | boolean, etc)
@@ -295,9 +271,6 @@ export type TypeFieldType = {
 
     --- Recursively find the inner set of types that compose/make up a TypeFieldType
     unwind: (self: TypeFieldType) -> {TypeFieldType},
-
-    --- The string representation of the type
-    string_repr: (self: TypeFieldType, depth: number?) -> string,
 }
 
 --- A typed argument with an optional name and typ
@@ -308,12 +281,6 @@ export type TypedArgument = {
     typ: TypeFieldType?,
     --- Any optional/extra punctuation (trivia in grammar)
     punctuation: string?,
-    --- The string representation of the argument.
-    ---
-    --- If with_punctuation is true, the punctuation will be included in the string representation (default: false)
-    ---
-    --- If is_generic is true, the argument will be treated as a generic argument (default: false)
-    string_repr: (self: TypedArgument, with_punctuation: boolean?, is_generic: boolean?) -> string,
 }
 
 --- Inner data of a Function TypeFieldType
@@ -324,8 +291,6 @@ export type TypeFieldTypeFunction = {
     args: {TypedArgument},
     --- The return type of the function
     ret: TypeFieldType,
-    --- The string representation of the function
-    string_repr: (self: TypeFieldTypeFunction) -> string,
 }
 
 --- Inner data of a Generic TypeFieldType
@@ -336,8 +301,6 @@ export type TypeFieldTypeGeneric = {
     base: string,
     --- The generic arguments of the type
     generics: {TypeFieldType},
-    --- The string representation of the generic type
-    string_repr: (self: TypeFieldTypeGeneric) -> string,
 }
 
 --- Inner data of a Module TypeFieldType
@@ -350,8 +313,6 @@ export type TypeFieldTypeModule = {
     base: string,
     --- The generic arguments of the module (if the type is generic e.g. promise.Promise<T>)
     generics: {TypeFieldType}?,
-    --- The string representation of the module type
-    string_repr: (self: TypeFieldTypeModule) -> string,
 }
 
 return {}

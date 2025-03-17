@@ -581,8 +581,6 @@ impl TypeFieldType {
 /// Originates from a LuauTypeField: A type field used within table types. The foo: number in { foo: number }.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeField {
-    /// The string representation of the type field
-    pub repr: String,
     /// The comments associated with the type field
     pub comments: Vec<String>,
     /// The name of the field
@@ -638,19 +636,11 @@ impl TypeField {
         let type_info = TypeFieldType::from_luau_typeinfo(tbv, value);
 
         Self {
-            repr: typ_field.to_string(),
             comments,
             field_name: key,
             field_type: type_info,
         }
         .into()
-    }
-
-    /// Returns the string representation of the type at a given depth with default patterns
-    ///
-    /// @public_api
-    pub fn string_repr(&self, depth: usize) -> String {
-        self.string_repr_with_pats("\n\t", depth)
     }
 
     /// @public_api
@@ -709,99 +699,12 @@ pub struct TypeDef {
     pub type_comments: Vec<String>,
     /// The type of the type
     pub type_def_type: TypeDefType,
-    /// The string representation of the type
-    pub repr: String,
-}
-
-impl TypeDef {
-    /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
-    /// with a more standardized layout and format
-    ///
-    /// @public_api
-    pub fn string_repr(&self) -> String {
-        self.string_repr_with_pats(",\n\t", ", ")
-    }
-
-    /// Returns the *constructed* string representation of the type with applied transformations
-    ///
-    /// @public_api
-    pub fn string_repr_with_pats(&self, fields_join_pat: &str, generics_join_pat: &str) -> String {
-        let mut repr = String::new();
-        for comment in self.type_comments.iter() {
-            writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-        }
-
-        write!(repr, "type {}", self.name).expect("Failed to write type name to repr");
-
-        // Add generics
-        if !self.generics.is_empty() {
-            write!(repr, "<").expect("Failed to write generics to string");
-
-            let generic_params = self
-                .generics
-                .iter()
-                .map(|arg| arg.string_repr(false, true))
-                .collect::<Vec<_>>()
-                .join(generics_join_pat);
-
-            write!(repr, "{}", generic_params).expect("Failed to write generics to string");
-            repr.push('>');
-        }
-
-        repr.push_str(" = ");
-
-        match &self.type_def_type {
-            TypeDefType::Table { fields } => {
-                if fields.is_empty() {
-                    repr.push_str("{}");
-                } else {
-                    let fields_str = fields
-                        .iter()
-                        .map(|f| f.string_repr(1))
-                        .collect::<Vec<_>>()
-                        .join(fields_join_pat);
-
-                    write!(repr, "{{\n\t{}\n}}", fields_str)
-                        .expect("Failed to write type to string");
-                }
-            }
-            TypeDefType::TypeOfSetMetatable { type_info } => {
-                let mut fields_str = type_info
-                    .fields
-                    .iter()
-                    .map(|f| f.string_repr(1))
-                    .collect::<Vec<_>>()
-                    .join(fields_join_pat);
-
-                fields_str.push_str(",\n\n\t-- Metatable\n\t");
-
-                let metatable_fields_str = type_info
-                    .metatable_fields
-                    .iter()
-                    .map(|f| f.string_repr(1))
-                    .collect::<Vec<_>>()
-                    .join(",\n\t");
-
-                fields_str.push_str(&metatable_fields_str);
-
-                write!(repr, "{{\n\t{}\n}}", fields_str).expect("Failed to write type to string");
-            }
-            TypeDefType::Uncategorized { type_info } => {
-                write!(repr, "{}", type_info.string_repr(1),)
-                    .expect("Failed to write type to string");
-            }
-        }
-
-        repr
-    }
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeFunction {
     /// The name of the function
     pub name: String,
-    /// String representation of the function declaration
-    pub repr: String,
     /// The comments associated with the type
     pub type_comments: Vec<String>,
     /// The generics of the function
@@ -812,59 +715,6 @@ pub struct TypeFunction {
     pub ret: Option<Rc<TypeFieldType>>,
     /// Type of function
     pub function_type: FunctionType,
-}
-
-impl TypeFunction {
-    /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
-    /// with a more standardized layout and format
-    ///
-    /// @public_api
-    pub fn string_repr(&self) -> String {
-        self.string_repr_with_pats(", ", ", ")
-    }
-
-    /// Returns the *constructed* string representation of the type with applied transformations
-    ///
-    /// @public_api
-    pub fn string_repr_with_pats(&self, args_join_pat: &str, generics_join_pat: &str) -> String {
-        let mut repr = String::new();
-        for comment in self.type_comments.iter() {
-            writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-        }
-
-        write!(repr, "function {}", self.name).expect("Failed to write function to string");
-
-        // Add generics
-        if !self.generics.is_empty() {
-            write!(repr, "<").expect("Failed to write generics to string");
-
-            let generic_params = self
-                .generics
-                .iter()
-                .map(|arg| arg.string_repr(false, true))
-                .collect::<Vec<_>>()
-                .join(generics_join_pat);
-
-            write!(repr, "{}", generic_params).expect("Failed to write generics to string");
-            repr.push('>');
-        }
-
-        let func_args = self
-            .args
-            .iter()
-            .map(|arg| arg.string_repr(false, false))
-            .collect::<Vec<_>>()
-            .join(args_join_pat);
-
-        write!(repr, "({})", func_args).expect("Failed to write arguments to string");
-
-        if let Some(ref ret) = self.ret {
-            write!(repr, " -> {}", ret.string_repr(1))
-                .expect("Failed to write return type to string");
-        }
-        repr.push_str(" end");
-        repr
-    }
 }
 
 /// A type container
@@ -903,41 +753,6 @@ impl Type {
                 .iter()
                 .map(|s| s.trim().to_string())
                 .collect(),
-        }
-    }
-
-    /// Returns the *constructed* string representation of the type. This usually looks better than the raw representation
-    /// with a more standardized layout and format
-    ///
-    /// @public_api
-    pub fn string_repr(&self) -> String {
-        self.string_repr_with_pats(",\n\t", ", ", ", ")
-    }
-
-    /// Returns the *constructed* string representation of the type with applied transformations
-    ///
-    /// @public_api
-    pub fn string_repr_with_pats(
-        &self,
-        fields_join_pat: &str,
-        args_join_pat: &str,
-        generics_join_pat: &str,
-    ) -> String {
-        match self {
-            Type::TypeDef { inner } => {
-                inner.string_repr_with_pats(fields_join_pat, generics_join_pat)
-            }
-            Type::Function { inner } => {
-                inner.string_repr_with_pats(args_join_pat, generics_join_pat)
-            }
-        }
-    }
-
-    /// Returns the raw (normally unmodified) string representation of the type
-    pub fn raw_repr(&self) -> String {
-        match self {
-            Type::TypeDef { inner } => inner.repr.clone(),
-            Type::Function { inner } => inner.repr.clone(),
         }
     }
 }
@@ -1048,17 +863,6 @@ impl TypeBlockVisitor {
         Type::Function {
             inner: TypeFunction {
                 name,
-                repr: {
-                    let tokens = self.extract_till_tag(node, "Block");
-
-                    let mut repr = String::new();
-                    for token in tokens {
-                        write!(repr, "{}", token).expect("Failed to write to string");
-                    }
-                    write!(repr, "{}", body.end_token().token())
-                        .expect("Failed to write end token to string");
-                    repr.trim_start_matches('\n').to_string()
-                },
                 type_comments: comments,
                 generics,
                 args,
@@ -1074,9 +878,6 @@ impl TypeBlockVisitor {
         comments: Vec<String>,
         node: &TypeDeclaration,
     ) -> Option<Type> {
-        // Get type repr
-        let type_repr = node.to_string();
-
         // Get node type name
         let name = extract_name_from_tokenref(node.type_name());
 
@@ -1112,7 +913,6 @@ impl TypeBlockVisitor {
                         name,
                         generics,
                         type_comments: comments,
-                        repr: type_repr,
                         type_def_type: TypeDefType::Table { fields },
                     }
                     .into(),
@@ -1232,7 +1032,6 @@ impl TypeBlockVisitor {
                             if let Some(typ) = typ {
                                 return Some(Type::TypeDef {
                                     inner: TypeDef {
-                                        repr: type_repr,
                                         name,
                                         generics,
                                         type_comments: comments,
@@ -1260,7 +1059,6 @@ impl TypeBlockVisitor {
                 type_def_type: TypeDefType::Uncategorized {
                     type_info: TypeFieldType::from_luau_typeinfo(self, node.type_definition()),
                 },
-                repr: type_repr,
             }
             .into(),
         })
@@ -1278,24 +1076,6 @@ impl TypeBlockVisitor {
         log::trace!("Elapsed: {:?}", elapsed_n.as_micros());
 
         comments
-    }
-
-    /// Extract till tag using two different implementations
-    pub fn extract_till_tag<'a, T: TokenReferenceExtractor>(
-        &self,
-        node: &'a T,
-        tag: &str,
-    ) -> Vec<&'a TokenReference> {
-        let instant_now = std::time::Instant::now();
-        let tokens = TokenReferenceExtractor::extract_till_tag(node, tag);
-        let elapsed_n = instant_now.elapsed();
-
-        log::trace!(
-            "Elapsed: {:?} (v1) [extract_till_tag]",
-            elapsed_n.as_micros(),
-        );
-
-        tokens
     }
 }
 

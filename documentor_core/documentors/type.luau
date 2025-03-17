@@ -3,25 +3,17 @@ local types = require("../types")
 local markdown = require("../markdownir/markdown")
 local convertComments = require("../convertcomments")
 local tableext = require("../table")
-local transformRepr = require("../transformrepr")
 local typefieldDocumentor = require("./typefield")
 local istate = require("../istate")
+local transformrepr = require("../transformrepr")
 
 local function parseTypeFieldListOfTypeDef(istate: istate.IState, typefields: {types.TypeField}): {markdown.MarkdownNode}
     local blockNodes: {markdown.MarkdownNode} = {}
-
+ 
     -- First seperate out the data as either methods or fields (which are everything outside of methods)
     local methods: {types.TypeField} = {}
     local fields: {types.TypeField} = {}
     for _, field in typefields do 
-        --print("RustReprP", field:string_repr_with_pats("\n\t", depth))
-        --print("LuauTransformReprP", transformRepr.transformTypeFieldReprWithPat(field, depth, "\n\t", function(_, typ) return typ end))
-        assert(transformRepr.transformTypeFieldReprWithPat(field, 1, "\n\t", function(_, typ): string return typ end) == field:string_repr_with_pats("\n\t", 1), "Inconsistent state: transformTypeField and string_repr_with_pats return differing results?")
-
-        --print("RustRepr", field.field_type:string_repr(1))
-        --print("LuauTransformRepr", transformRepr.transformRepr(field.field_type, 1, function(_: string, a: string) return a end))
-        assert(transformRepr.transformRepr(field.field_type, 1, function(_: string, a: string) return a end) == field.field_type:string_repr(1), "Inconsistant state: transformRepr and string_repr(1) return differing results?")
-
         if field.field_type:extract().type == "Function" then
             methods[#methods + 1] = field
         else
@@ -88,7 +80,7 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
     blockNodes[#blockNodes + 1] = markdown.MarkdownNode_CreateSnippet("Raw Type", {
         type = "CodeBlock", 
         language = "luau",
-        text = typ:string_repr_with_pats(",\n\n\t", ", ")
+        text = transformrepr.transformTypeDefRepr(typ, ",\n\n\t", ", ")
     })
 
     local extractedType = typ.type_def_type:extract()
@@ -117,7 +109,7 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
     elseif extractedType.type == "Uncategorized" then
         tableext.extend(blockNodes, typefieldDocumentor.parseTypeFieldType(
             istate, 
-            extractedType.data:string_repr(),
+            transformrepr.transformTypeFieldTypeRepr(extractedType.data),
             extractedType.data,
             extractedType.data,
             convComments
@@ -156,7 +148,7 @@ local function parseTypeFunction(istate: istate.IState, typ: types.TypeFunction)
 
     tableext.extend(blockNodes, typefieldDocumentor.parseFunction(
         istate,
-        typ:string_repr(),
+        transformrepr.transformTypeFunction(typ, ", ", ", "),
         convComments,
         typ.generics,
         typ.args,
