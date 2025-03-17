@@ -51,126 +51,6 @@ pub struct TypedArgument {
     pub punctuation: Option<String>, // Only for completeness
 }
 
-impl From<(String, Rc<TypeFieldType>)> for TypedArgument {
-    fn from(value: (String, Rc<TypeFieldType>)) -> Self {
-        TypedArgument {
-            name: Some(value.0),
-            typ: Some(value.1),
-            punctuation: None,
-        }
-    }
-}
-
-impl From<(String, Rc<TypeFieldType>, Option<String>)> for TypedArgument {
-    fn from(value: (String, Rc<TypeFieldType>, Option<String>)) -> Self {
-        TypedArgument {
-            name: Some(value.0),
-            typ: Some(value.1),
-            punctuation: value.2,
-        }
-    }
-}
-
-impl From<(String, Rc<TypeFieldType>, String)> for TypedArgument {
-    fn from(value: (String, Rc<TypeFieldType>, String)) -> Self {
-        TypedArgument {
-            name: Some(value.0),
-            typ: Some(value.1),
-            punctuation: Some(value.2),
-        }
-    }
-}
-
-impl From<(Option<String>, Rc<TypeFieldType>)> for TypedArgument {
-    fn from(value: (Option<String>, Rc<TypeFieldType>)) -> Self {
-        TypedArgument {
-            name: value.0,
-            typ: Some(value.1),
-            punctuation: None,
-        }
-    }
-}
-
-impl From<(Option<String>, Rc<TypeFieldType>, Option<String>)> for TypedArgument {
-    fn from(value: (Option<String>, Rc<TypeFieldType>, Option<String>)) -> Self {
-        TypedArgument {
-            name: value.0,
-            typ: Some(value.1),
-            punctuation: value.2,
-        }
-    }
-}
-
-impl From<(Option<String>, Rc<TypeFieldType>, String)> for TypedArgument {
-    fn from(value: (Option<String>, Rc<TypeFieldType>, String)) -> Self {
-        TypedArgument {
-            name: value.0,
-            typ: Some(value.1),
-            punctuation: Some(value.2),
-        }
-    }
-}
-
-impl From<(String, Option<Rc<TypeFieldType>>)> for TypedArgument {
-    fn from(value: (String, Option<Rc<TypeFieldType>>)) -> Self {
-        TypedArgument {
-            name: Some(value.0),
-            typ: value.1,
-            punctuation: None,
-        }
-    }
-}
-
-impl From<(String, Option<Rc<TypeFieldType>>, Option<String>)> for TypedArgument {
-    fn from(value: (String, Option<Rc<TypeFieldType>>, Option<String>)) -> Self {
-        TypedArgument {
-            name: Some(value.0),
-            typ: value.1,
-            punctuation: value.2,
-        }
-    }
-}
-
-impl From<(String, Option<Rc<TypeFieldType>>, String)> for TypedArgument {
-    fn from(value: (String, Option<Rc<TypeFieldType>>, String)) -> Self {
-        TypedArgument {
-            name: Some(value.0),
-            typ: value.1,
-            punctuation: Some(value.2),
-        }
-    }
-}
-
-impl From<(Option<String>, Option<Rc<TypeFieldType>>)> for TypedArgument {
-    fn from(value: (Option<String>, Option<Rc<TypeFieldType>>)) -> Self {
-        TypedArgument {
-            name: value.0,
-            typ: value.1,
-            punctuation: None,
-        }
-    }
-}
-
-impl From<(Option<String>, Option<Rc<TypeFieldType>>, Option<String>)> for TypedArgument {
-    fn from(value: (Option<String>, Option<Rc<TypeFieldType>>, Option<String>)) -> Self {
-        TypedArgument {
-            name: value.0,
-            typ: value.1,
-            punctuation: value.2,
-        }
-    }
-}
-
-impl From<(Option<String>, Option<Rc<TypeFieldType>>, String)> for TypedArgument {
-    fn from(value: (Option<String>, Option<Rc<TypeFieldType>>, String)) -> Self {
-        TypedArgument {
-            name: value.0,
-            typ: value.1,
-            punctuation: Some(value.2),
-        }
-    }
-}
-
 /// Inner data of a Generic TypeFieldType
 ///
 /// A type using generics, such as map<number, string>.
@@ -293,21 +173,24 @@ impl TypeFieldType {
                 let mut args = Vec::new();
 
                 for arg in arguments.iter() {
+                    let typ = TypeFieldType::from_luau_typeinfo(tbv, arg.type_info());
+
                     let Some((name, punctuation)) = arg.name() else {
-                        args.push(
-                            (
-                                None,
-                                TypeFieldType::from_luau_typeinfo(tbv, arg.type_info()),
-                                None,
-                            )
-                                .into(),
-                        );
+                        args.push(TypedArgument {
+                            name: None,
+                            typ: Some(typ),
+                            punctuation: None,
+                        });
                         continue;
                     };
 
                     let name = extract_name_from_tokenref(name);
-                    let typ = TypeFieldType::from_luau_typeinfo(tbv, arg.type_info());
-                    args.push((Some(name), typ, punctuation.to_string()).into());
+
+                    args.push(TypedArgument {
+                        name: Some(name),
+                        typ: Some(typ),
+                        punctuation: Some(punctuation.to_string()),
+                    });
                 }
 
                 let generics = if let Some(generic) = generics {
@@ -629,7 +512,11 @@ impl TypeBlockVisitor {
                 }
             };
 
-            generics.push((name, default_type).into());
+            generics.push(TypedArgument {
+                name: Some(name),
+                typ: default_type,
+                punctuation: None,
+            })
         }
 
         generics
@@ -681,7 +568,11 @@ impl TypeBlockVisitor {
 
         let mut args = Vec::with_capacity(params.len());
         for (param, typ) in params.into_iter().zip(typs) {
-            args.push((Some(param), typ).into());
+            args.push(TypedArgument {
+                name: Some(param),
+                typ,
+                punctuation: None,
+            });
         }
 
         // Get the return type
