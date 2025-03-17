@@ -7,22 +7,12 @@ edition = "2024"
 full_moon = { version = "1", features = ["roblox"] }
 env_logger = "0.11"
 log = "0.4"
-tracing = { version = "0.1", optional = true }
 durationfmt = "0.1.1"
 serde = "1"
 include_dir = "0.7.4"
 
 # Scripting
 mlua = { git = "https://github.com/Anti-Raid/mlua", branch = "dev", features = ["luau", "serialize"] }
-mlua_scheduler = { git = "https://github.com/Anti-Raid/mlua_scheduler" }
-mlua_scheduler_ext = { git = "https://github.com/Anti-Raid/mlua_scheduler" }
-
-# Tokio
-tokio = "1"
-
-[dev-dependencies]
-insta = "1.42.1"
 
 [features]
 default = []
-tracing = ["dep:tracing"]
