@@ -442,30 +442,6 @@ impl TypeField {
         .into();
         let value = typ_field.value();
 
-        pub struct TypeFieldCommentVisitor {
-            pub comments: Vec<String>,
-        }
-
-        impl Visitor for TypeFieldCommentVisitor {
-            fn visit_single_line_comment(&mut self, token: &full_moon::tokenizer::Token) {
-                println!("Single line comment: {}", token);
-                self.comments.push(token.to_string());
-            }
-
-            fn visit_multi_line_comment(&mut self, token: &full_moon::tokenizer::Token) {
-                println!("Multi line comment: {}", token);
-                self.comments.push(token.to_string());
-            }
-        }
-
-        // Get the comments from the field
-        let mut comment_visitor = TypeFieldCommentVisitor {
-            comments: Vec::new(),
-        };
-
-        // Visit the field to get the comments
-        comment_visitor.visit_type_field(typ_field);
-
         let comments = tbv.get_surrounding_trivia_for_node(typ_field);
 
         let type_info = TypeFieldType::from_luau_typeinfo(tbv, value);
