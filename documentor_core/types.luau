@@ -165,12 +165,25 @@ export type TypeDefTypeTypeofSetMetatable = {
     metatable_fields: {TypeField},
 }
 
+export type TypeFieldKey = {
+    --- Extract out the type field and variant name
+    extract: (self: TypeFieldKey) -> {
+        type: "Name",
+        name: string
+    } | {
+        type: "IndexSignature",
+        start_tok: string,
+        inner: TypeFieldType,
+        end_tok: string
+    }
+}
+
 --- A type field used within table types. The foo: number in { foo: number }.
 export type TypeField = {
     --- The comments associated with the type field
     comments: {string},
     --- The name of the field
-    field_name: string,
+    field_name: TypeFieldKey,
     --- The type of the field
     field_type: TypeFieldType,
 }

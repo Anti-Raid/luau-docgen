@@ -7,14 +7,15 @@ use full_moon::{
         Call, Expression, FunctionArgs, FunctionBody, LocalFunction, Parameter, Prefix, Suffix,
         luau::{
             ExportedTypeDeclaration, GenericDeclaration, GenericParameterInfo, IndexedTypeInfo,
-            TypeDeclaration, TypeField as LuauTypeField, TypeFieldKey, TypeInfo,
+            TypeDeclaration, TypeField as LuauTypeField, TypeFieldKey as LuauTypeFieldKey,
+            TypeInfo,
         },
         punctuated::Pair,
     },
     tokenizer::TokenReference,
     visitors::Visitor,
 };
-use std::{fmt::Write, rc::Rc};
+use std::rc::Rc;
 
 pub fn extract_name_from_tokenref(token_ref: &TokenReference) -> String {
     // SAFETY: We can discard all the trivia and just get the name
@@ -27,35 +28,6 @@ pub struct TypedArgument {
     pub name: Option<String>,
     pub typ: Option<Rc<TypeFieldType>>,
     pub punctuation: Option<String>, // Only for completeness
-}
-
-impl TypedArgument {
-    /// Returns the string representation of a typed argument
-    pub fn string_repr(&self, with_punctuation: bool, is_generic: bool) -> String {
-        let mut v = if let Some(ref name) = self.name {
-            if let Some(ref typ) = self.typ {
-                if is_generic {
-                    format!("{} = {}", name, typ.string_repr(1))
-                } else {
-                    format!("{}: {}", name, typ.string_repr(1))
-                }
-            } else {
-                name.to_string()
-            }
-        } else if let Some(ref typ) = self.typ {
-            typ.string_repr(1)
-        } else {
-            "".to_string()
-        };
-
-        if with_punctuation {
-            if let Some(ref punctuation) = self.punctuation {
-                v.push_str(punctuation)
-            }
-        }
-
-        v
-    }
 }
 
 impl From<(String, Rc<TypeFieldType>)> for TypedArgument {
@@ -187,50 +159,12 @@ pub struct TypeFieldTypeGeneric {
     pub generics: Vec<Rc<TypeFieldType>>,
 }
 
-impl TypeFieldTypeGeneric {
-    /// String representation of the generic type
-    ///
-    /// @public_api
-    pub fn string_repr(&self) -> String {
-        let generics_str = self
-            .generics
-            .iter()
-            .map(|g| g.string_repr(0))
-            .collect::<Vec<_>>()
-            .join(", ");
-        format!("{}<{}>", self.base, generics_str)
-    }
-}
-
 /// A type coming from a module, such as module.Foo
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeFieldTypeModule {
     pub module: String,
     pub base: String,
     pub generics: Option<Vec<Rc<TypeFieldType>>>,
-}
-
-impl TypeFieldTypeModule {
-    /// String representation of the module type
-    ///
-    /// @public_api
-    pub fn string_repr(&self) -> String {
-        if let Some(ref generics) = self.generics {
-            if generics.is_empty() {
-                format!("{}.{}", self.module, self.base)
-            } else {
-                let generics_str = generics
-                    .iter()
-                    .map(|g| g.string_repr(0))
-                    .collect::<Vec<_>>()
-                    .join(", ");
-                format!("{}.{}<{}>", self.module, self.base, generics_str)
-            }
-        } else {
-            // If there are no generics, we can just return the module name
-            format!("{}.{}", self.module, self.base)
-        }
-    }
 }
 
 /// Inner data of a Function TypeFieldType
@@ -242,38 +176,6 @@ pub struct TypeFieldTypeFunction {
     pub args: Vec<TypedArgument>,
     /// The return type of the function
     pub ret: Rc<TypeFieldType>,
-}
-
-impl TypeFieldTypeFunction {
-    /// String representation of the module type
-    ///
-    /// @public_api
-    pub fn string_repr(&self) -> String {
-        let args_str = self
-            .args
-            .iter()
-            .map(|arg| arg.string_repr(false, false))
-            .collect::<Vec<_>>()
-            .join(", ");
-
-        let generics_str = self
-            .generics
-            .iter()
-            .map(|arg| arg.string_repr(false, true))
-            .collect::<Vec<_>>()
-            .join(", ");
-
-        let mut repr = String::new();
-
-        if !generics_str.is_empty() {
-            write!(repr, "<{}>", generics_str).expect("Failed to write generics to string");
-        }
-
-        write!(repr, "({}) -> {}", args_str, self.ret.string_repr(1))
-            .expect("Failed to write function to string");
-
-        repr
-    }
 }
 
 /// Compact type information (Any type, such as string, boolean?, number | boolean, etc)
@@ -342,74 +244,6 @@ impl TypeFieldType {
             TypeFieldType::Intersection(types) => types.iter().flat_map(|t| t.unwind()).collect(),
             TypeFieldType::Tuple(types) => types.iter().flat_map(|t| t.unwind()).collect(),
             _ => vec![self.clone().into()],
-        }
-    }
-
-    /// Returns the string representation of a type field type
-    ///
-    /// @public_api
-    pub fn string_repr(&self, depth: usize) -> String {
-        match self {
-            TypeFieldType::Basic(name) => name.clone(),
-            TypeFieldType::String(name) => name.clone(),
-            TypeFieldType::Boolean(name) => name.to_string(),
-            TypeFieldType::Array(inner) => format!("{{{}}}", inner.string_repr(depth)),
-            TypeFieldType::Variadic(inner) => format!("...{}", inner.string_repr(depth)),
-            TypeFieldType::Generic(generic_field_type) => generic_field_type.string_repr(),
-            TypeFieldType::GenericPack(name) => name.clone(),
-            TypeFieldType::Module(tftm) => tftm.string_repr(),
-            TypeFieldType::UnknownModule(name) => name.clone(),
-            TypeFieldType::TypeOf(contents) => contents.clone(),
-            TypeFieldType::Optional(inner) => format!("{}?", inner.string_repr(depth)),
-            TypeFieldType::Function(func) => func.string_repr(),
-            TypeFieldType::Table(fields) => {
-                if fields.is_empty() {
-                    return "{}".to_string();
-                }
-
-                let fields_str = fields
-                    .iter()
-                    .map(|f| {
-                        f.string_repr_with_pats(
-                            format!("\n{}", "\t".repeat(depth + 1)).as_str(),
-                            depth + 1,
-                        )
-                    })
-                    .collect::<Vec<_>>()
-                    .join(&format!(",\n\n{}", "\t".repeat(depth + 1)));
-
-                format!(
-                    "{{\n{}{}\n{}}}",
-                    "\t".repeat(depth + 1),
-                    fields_str,
-                    "\t".repeat(depth)
-                )
-            }
-            TypeFieldType::Tuple(types) => {
-                let types_str = types
-                    .iter()
-                    .map(|t| t.string_repr(depth))
-                    .collect::<Vec<_>>()
-                    .join(", ");
-                format!("({})", types_str)
-            }
-            TypeFieldType::VariadicPack(inner) => format!("...{}", inner),
-            TypeFieldType::Union(types) => {
-                let types_str = types
-                    .iter()
-                    .map(|t| t.string_repr(depth))
-                    .collect::<Vec<_>>()
-                    .join(" | ");
-                types_str
-            }
-            TypeFieldType::Intersection(types) => {
-                let types_str = types
-                    .iter()
-                    .map(|t| t.string_repr(depth))
-                    .collect::<Vec<_>>()
-                    .join(" & ");
-                types_str
-            }
         }
     }
 
@@ -580,11 +414,24 @@ impl TypeFieldType {
 
 /// Originates from a LuauTypeField: A type field used within table types. The foo: number in { foo: number }.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub enum TypeFieldKey {
+    Name {
+        name: String,
+    },
+    IndexSignature {
+        start_tok: String,
+        inner: Rc<TypeFieldType>,
+        end_tok: String,
+    },
+}
+
+/// Originates from a LuauTypeField: A type field used within table types. The foo: number in { foo: number }.
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct TypeField {
     /// The comments associated with the type field
     pub comments: Vec<String>,
     /// The name of the field
-    pub field_name: String,
+    pub field_name: Rc<TypeFieldKey>,
     /// The type of the field
     pub field_type: Rc<TypeFieldType>,
 }
@@ -593,18 +440,21 @@ impl TypeField {
     /// Given a LuauTypeField, convert it to a TypeField
     pub fn from_luau_type_field(tbv: &mut TypeBlockVisitor, typ_field: &LuauTypeField) -> Rc<Self> {
         let key = match typ_field.key() {
-            TypeFieldKey::Name(name) => extract_name_from_tokenref(name),
-            TypeFieldKey::IndexSignature { brackets, inner } => {
+            LuauTypeFieldKey::Name(name) => TypeFieldKey::Name {
+                name: extract_name_from_tokenref(name),
+            },
+            LuauTypeFieldKey::IndexSignature { brackets, inner } => {
                 let (start_bracket, end_bracket) = brackets.tokens();
-                format!(
-                    "{}{}{}",
-                    extract_name_from_tokenref(start_bracket),
-                    TypeFieldType::from_luau_typeinfo(tbv, inner).string_repr(1),
-                    extract_name_from_tokenref(end_bracket)
-                )
+
+                TypeFieldKey::IndexSignature {
+                    start_tok: extract_name_from_tokenref(start_bracket),
+                    inner: TypeFieldType::from_luau_typeinfo(tbv, inner),
+                    end_tok: extract_name_from_tokenref(end_bracket),
+                }
             }
             _ => panic!("Unsupported feature: {:?}", typ_field.key()),
-        };
+        }
+        .into();
         let value = typ_field.value();
 
         pub struct TypeFieldCommentVisitor {
@@ -641,25 +491,6 @@ impl TypeField {
             field_type: type_info,
         }
         .into()
-    }
-
-    /// @public_api
-    pub fn string_repr_with_pats(&self, comment_write_pat: &str, depth: usize) -> String {
-        let mut repr = String::new();
-
-        for comment in &self.comments {
-            write!(repr, "--{}{}", comment, comment_write_pat)
-                .expect("Failed to write comment to string");
-        }
-
-        write!(
-            repr,
-            "{}: {}",
-            self.field_name,
-            self.field_type.string_repr(depth)
-        )
-        .unwrap();
-        repr
     }
 }
 

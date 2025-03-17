@@ -145,7 +145,7 @@ local function parseTypeFunction(istate: istate.IState, typ: types.TypeFunction)
         -- Add converted comments output as well
         tableext.extend(blockNodes, convComments.output)
     end
-
+ 
     tableext.extend(blockNodes, typefieldDocumentor.parseFunction(
         istate,
         transformrepr.transformTypeFunction(typ, ", ", ", "),

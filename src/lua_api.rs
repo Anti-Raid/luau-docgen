@@ -681,6 +681,42 @@ impl LuaUserData for TypeDefTypeTypeofSetMetatable {
     }
 }
 
+pub struct TypeFieldKey {
+    pub inner: Rc<crate::type_gen::TypeFieldKey>,
+}
+
+impl LuaUserData for TypeFieldKey {
+    fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
+        methods.add_method("extract", |lua, this, _g: ()| {
+            let tab = lua.create_table()?;
+            match *this.inner {
+                crate::type_gen::TypeFieldKey::Name { ref name } => {
+                    tab.set("type", "Name")?;
+                    tab.set("name", lua.to_value(&name)?)?;
+                }
+                crate::type_gen::TypeFieldKey::IndexSignature {
+                    ref start_tok,
+                    ref inner,
+                    ref end_tok,
+                } => {
+                    tab.set("type", "IndexSignature")?;
+                    tab.set("start_tok", lua.to_value(&start_tok)?)?;
+                    tab.set(
+                        "inner",
+                        TypeFieldType {
+                            inner: inner.clone(),
+                        }
+                        .into_lua(lua)?,
+                    )?;
+                    tab.set("end_tok", lua.to_value(&end_tok)?)?;
+                }
+            };
+
+            Ok(tab)
+        });
+    }
+}
+
 pub struct TypeField {
     inner: Rc<crate::type_gen::TypeField>,
 }
@@ -693,11 +729,10 @@ impl LuaUserData for TypeField {
                 LuaSerializeOptions::new().serialize_none_to_null(false),
             )
         });
-        fields.add_field_method_get("field_name", |lua, this| {
-            lua.to_value_with(
-                &this.inner.field_name,
-                LuaSerializeOptions::new().serialize_none_to_null(false),
-            )
+        fields.add_field_method_get("field_name", |_, this| {
+            Ok(TypeFieldKey {
+                inner: this.inner.field_name.clone(),
+            })
         });
         fields.add_field_method_get("field_type", |_lua, this| {
             Ok(TypeFieldType {

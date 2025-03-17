@@ -98,9 +98,21 @@ function transformTypeFieldReprWithPat(s: types.TypeField, optdepth: number?, co
         end
     end
 
-    repr ..= string.format("%s: %s", s.field_name, transformTypeFieldTypeRepr(s.field_type, depth, transformStr))
+    repr ..= string.format("%s: %s", transformTypeFieldKey(s.field_name, transformStr), transformTypeFieldTypeRepr(s.field_type, depth, transformStr))
 
     return repr
+end
+
+function transformTypeFieldKey(s: types.TypeFieldKey, opttransformStr: ((typ: string, string) -> string)?)
+    local transformStr = opttransformStr or function(_: string, c: string) return c end
+    local extracted = s:extract()
+    if extracted.type == "Name" then
+        return extracted.name
+    elseif extracted.type == "IndexSignature" then
+        return string.format("%s%s%s", extracted.start_tok, transformTypeFieldTypeRepr(extracted.inner, 0, transformStr), extracted.end_tok)
+    else
+        error("ICE: transformRepr failed")
+    end
 end
 
 function transformGenericRepr(s: types.TypeFieldTypeGeneric, transformStr: (typ: string, string) -> string) 
@@ -344,5 +356,6 @@ return {
     transformTypedArgumentRepr = transformTypedArgumentRepr,
     transformGenericRepr = transformGenericRepr,
     transformTypeDefRepr = transformTypeDefRepr,
-    transformTypeFunction = transformTypeFunction
+    transformTypeFunction = transformTypeFunction,
+    transformTypeFieldKey = transformTypeFieldKey
 }

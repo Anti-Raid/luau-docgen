@@ -999,11 +999,13 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
         )
     end
 
+    local fieldName = transformRepr.transformTypeFieldKey(typ.field_name)
+
     -- Add header node
     blockNodes[#blockNodes + 1] = {
         type = "Heading" :: "Heading",
         level = nil :: number?, -- Bug in luau new type solver needs this (for now)
-        headingText = markdown.NewMarkdownText_FromRaw(typ.field_name)    
+        headingText = markdown.NewMarkdownText_FromRaw(fieldName)    
     }
 
     if #convertedComments.output > 0 then
@@ -1019,7 +1021,7 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
             typ.field_type, 
             typ.field_type, 
             convertedComments,
-            if convertedComments.inlineFields[typ.field_name] then true else false
+            if convertedComments.inlineFields[fieldName] then true else false
         )
     }
 
