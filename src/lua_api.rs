@@ -831,18 +831,6 @@ impl LuaUserData for TypeFieldType {
 
             Ok(tab)
         });
-
-        // Recursively find the inner set of types that compose/make up a TypeFieldType
-        methods.add_method("unwind", |_, this, _g: ()| {
-            let unwinded = this.inner.unwind();
-
-            let unwinded = unwinded
-                .into_iter()
-                .map(|tft| TypeFieldType { inner: tft })
-                .collect::<Vec<_>>();
-
-            Ok(unwinded)
-        });
     }
 }
 

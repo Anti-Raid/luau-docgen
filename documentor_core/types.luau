@@ -281,9 +281,6 @@ export type TypeFieldType = {
         type: "TypeOf",
         data: string,
     },
-
-    --- Recursively find the inner set of types that compose/make up a TypeFieldType
-    unwind: (self: TypeFieldType) -> {TypeFieldType},
 }
 
 --- A typed argument with an optional name and typ

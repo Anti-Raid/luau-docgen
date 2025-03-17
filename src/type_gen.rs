@@ -232,21 +232,6 @@ pub enum TypeFieldType {
 }
 
 impl TypeFieldType {
-    /// Recursively find the inner set of types that compose/make up a TypeFieldType
-    ///
-    /// @public_api
-    pub fn unwind(&self) -> Vec<Rc<TypeFieldType>> {
-        match self {
-            TypeFieldType::Array(inner) => inner.unwind(),
-            TypeFieldType::Variadic(inner) => inner.unwind(),
-            TypeFieldType::Optional(inner) => inner.unwind(),
-            TypeFieldType::Union(types) => types.iter().flat_map(|t| t.unwind()).collect(),
-            TypeFieldType::Intersection(types) => types.iter().flat_map(|t| t.unwind()).collect(),
-            TypeFieldType::Tuple(types) => types.iter().flat_map(|t| t.unwind()).collect(),
-            _ => vec![self.clone().into()],
-        }
-    }
-
     /// Given a TypeInfo, convert it to a TypeField
     pub fn from_luau_typeinfo(tbv: &mut TypeBlockVisitor, typ_info: &TypeInfo) -> Rc<Self> {
         match typ_info {
