@@ -12,6 +12,14 @@ local inliner: istate.OptionalPlugin = {
         if inline then return end -- Already inlined
         local fieldtype = data.typ:extract()
         if fieldtype.type == "Union" then
+            -- If theres a table type in the union, then inlining is not a good idea design-wise
+            for _, variant in fieldtype.data do
+                local extracted = variant:extract()
+                if extracted.type == "Table" then
+                    return
+                end
+            end
+
             if #fieldtype.data > maxVariantsUntilForcedInlining then
                 data.inline = true :: boolean?
             end

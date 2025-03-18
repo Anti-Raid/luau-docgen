@@ -625,7 +625,1980 @@ type Token = {
 
 </details>
 
-({kind: "eof", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "error", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "ident", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "number", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "string", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "istring_simple", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "istring_first", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "istring_middle", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "istring_last", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "attribute", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "and", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "break", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "do", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "else", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "elseif", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "end", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "false", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "for", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "function", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "if", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "in", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "local", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "nil", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "not", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "or", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "repeat", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "return", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "then", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "true", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "until", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "while", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "+=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "-=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "\*=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "/=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "//=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "%=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "^=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "..=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "+", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "-", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "\*", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "/", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "//", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "%", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "^", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "..", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "&lt;", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "&lt;=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "&gt;", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "&gt;=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "==", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "~=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "#", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "...", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "&", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "|", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "?", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: ":", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "::", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "-&gt;", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "=", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: ",", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: ";", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: ".", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "(", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: ")", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "{", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "}", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "[", span: [Span](#Span), trivia: {[Trivia](#Trivia)}} | {kind: "]", span: [Span](#Span), trivia: {[Trivia](#Trivia)}})<div id="TokenKind"></div>
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"eof"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"error"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"ident"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"number"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"string"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"istring_simple"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"istring_first"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"istring_middle"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"istring_last"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"attribute"
+```
+
+<div id="text"></div>
+
+#### text
+
+[string](#string)
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"and"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"break"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"do"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 14</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"else"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 15</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"elseif"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 16</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"end"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 17</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"false"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 18</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"for"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 19</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"function"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 20</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"if"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 21</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"in"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 22</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"local"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 23</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"nil"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 24</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"not"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 25</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"or"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 26</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"repeat"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 27</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"return"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 28</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"then"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 29</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"true"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 30</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"until"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 31</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"while"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 32</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"+="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 33</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"-="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 34</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"*="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 35</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"/="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 36</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"//="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 37</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"%="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 38</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"^="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 39</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"..="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 40</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"+"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 41</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"-"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 42</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"*"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 43</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"/"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 44</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"//"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 45</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"%"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 46</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"^"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 47</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+".."
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 48</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"<"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 49</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"<="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 50</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+">"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 51</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+">="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 52</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"=="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 53</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"~="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 54</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"#"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 55</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"..."
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 56</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"&"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 57</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"|"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 58</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"?"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 59</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+":"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 60</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"::"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 61</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"->"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 62</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"="
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 63</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+","
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 64</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+";"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 65</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"."
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 66</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"("
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 67</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+")"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 68</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"{"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 69</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"}"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 70</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"["
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<details>
+<summary>Variant 71</summary>
+
+*This is an inline table type with the following fields*
+
+<div id="kind"></div>
+
+#### kind
+
+```luau
+"]"
+```
+
+<div id="span"></div>
+
+#### span
+
+[Span](#Span)
+
+<div id="trivia"></div>
+
+#### trivia
+
+{[Trivia](#Trivia)}
+
+</details>
+
+<div id="TokenKind"></div>
 
 ## TokenKind
 
