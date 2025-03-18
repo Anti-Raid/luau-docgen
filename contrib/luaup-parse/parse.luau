@@ -192,6 +192,15 @@ local function exprToString(node: cst.Expr)
     return util.tostring(cst):gsub("return ", "")
 end
 
+local function extractcommentsfromtrivia(comments: {string}, trivia: {cst.Trivia}): {string}
+    for _, t in trivia do
+        if t.kind == "comment" then
+            table.insert(comments, t.text:gsub("-- ", "") :: string)
+        end
+    end
+    return comments
+end
+
 --[[
 pub fn create_typed_arguments_from_generic_declaration(
     &mut self,
@@ -282,229 +291,6 @@ local function create_typed_arguments_from_generic_declaration(generic_decl: cst
     return generics
 end
 
---[[
-/// Compact type information (Any type, such as string, boolean?, number | boolean, etc)
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-pub enum TypeFieldType {
-    /// A basic primitive type (`string`, `number`, etc)
-    Basic(String),
-    /// A string singleton ("hello")
-    String(String),
-    /// A boolean singleton (`true`, `false`)
-    Boolean(bool),
-    /// An array of a type
-    Array(Rc<TypeFieldType>),
-    /// A variadic type, similar to Array
-    /// ...number
-    Variadic(Rc<TypeFieldType>),
-    /// A variadic type pack: ...T in Function<...T>    
-    VariadicPack(String),
-    /// A function type
-    Function(TypeFieldTypeFunction),
-    /// Contains the inner table fields
-    Table(Vec<Rc<TypeField>>),
-
-    ///  A type using generics, such as map<number, string>.
-    Generic(TypeFieldTypeGeneric),
-
-    /// T...
-    GenericPack(String),
-
-    /// A union type (e.g. `string | number`)
-    Union(Vec<Rc<TypeFieldType>>),
-
-    /// A type intersection (e.g. `string & number`)
-    Intersection(Vec<Rc<TypeFieldType>>),
-
-    /// A module
-    Module(TypeFieldTypeModule),
-
-    /// Unknown module
-    ///
-    /// Contains the module name, which may be an empty string
-    UnknownModule(String),
-
-    /// An optional type
-    Optional(Rc<TypeFieldType>),
-
-    /// Tuple type
-    Tuple(Vec<Rc<TypeFieldType>>),
-
-    /// A typeof statement
-    ///
-    /// Inner is the contents of the statement
-    TypeOf(String),
-}
-
-impl TypeFieldType {
-    /// Given a TypeInfo, convert it to a TypeField
-    pub fn from_luau_typeinfo(tbv: &mut TypeBlockVisitor, typ_info: &TypeInfo) -> Rc<Self> {
-        match typ_info {
-            TypeInfo::Array { type_info, .. } => {
-                TypeFieldType::Array(TypeFieldType::from_luau_typeinfo(tbv, type_info)).into()
-            }
-            TypeInfo::Basic(basic_type) => {
-                let type_name = extract_name_from_tokenref(basic_type);
-                TypeFieldType::Basic(type_name).into()
-            }
-            TypeInfo::String(singleton) => {
-                let singleton = extract_name_from_tokenref(singleton);
-                TypeFieldType::String(singleton).into()
-            }
-            TypeInfo::Boolean(boolean) => {
-                let boolean = extract_name_from_tokenref(boolean);
-                TypeFieldType::Boolean(boolean == "true").into()
-            }
-            TypeInfo::Table { fields, .. } => {
-                let mut type_fields: Vec<Rc<TypeField>> = Vec::new();
-
-                for pair in fields.pairs() {
-                    match pair {
-                        Pair::Punctuated(field, _) | Pair::End(field) => {
-                            type_fields.push(TypeField::from_luau_type_field(tbv, field));
-                        }
-                    }
-                }
-
-                TypeFieldType::Table(type_fields).into()
-            }
-            TypeInfo::Callback {
-                arguments,
-                return_type,
-                generics,
-                ..
-            } => {
-                let mut args = Vec::new();
-
-                for arg in arguments.iter() {
-                    let typ = TypeFieldType::from_luau_typeinfo(tbv, arg.type_info());
-
-                    let Some((name, punctuation)) = arg.name() else {
-                        args.push(TypedArgument {
-                            name: None,
-                            typ: Some(typ),
-                            punctuation: None,
-                        });
-                        continue;
-                    };
-
-                    let name = extract_name_from_tokenref(name);
-
-                    args.push(TypedArgument {
-                        name: Some(name),
-                        typ: Some(typ),
-                        punctuation: Some(punctuation.to_string()),
-                    });
-                }
-
-                let generics = if let Some(generic) = generics {
-                    tbv.create_typed_arguments_from_generic_declaration(generic)
-                } else {
-                    Vec::with_capacity(0)
-                };
-                TypeFieldType::Function(TypeFieldTypeFunction {
-                    args,
-                    ret: TypeFieldType::from_luau_typeinfo(tbv, return_type),
-                    generics,
-                })
-                .into()
-            }
-            TypeInfo::Generic { base, generics, .. } => {
-                let base = extract_name_from_tokenref(base);
-                let mut generics_arr = Vec::new();
-
-                for generic in generics.iter() {
-                    generics_arr.push(TypeFieldType::from_luau_typeinfo(tbv, generic));
-                }
-
-                TypeFieldType::Generic(TypeFieldTypeGeneric {
-                    base,
-                    generics: generics_arr,
-                })
-                .into()
-            }
-            TypeInfo::GenericPack { name, .. } => {
-                let name = extract_name_from_tokenref(name);
-                TypeFieldType::GenericPack(name).into()
-            }
-            TypeInfo::Union(types) => {
-                let mut union_types = Vec::new();
-
-                for typ in types.types() {
-                    union_types.push(TypeFieldType::from_luau_typeinfo(tbv, typ));
-                }
-
-                TypeFieldType::Union(union_types).into()
-            }
-            TypeInfo::Intersection(types) => {
-                let mut intersection_types = Vec::new();
-
-                for typ in types.types() {
-                    intersection_types.push(TypeFieldType::from_luau_typeinfo(tbv, typ));
-                }
-
-                TypeFieldType::Intersection(intersection_types).into()
-            }
-            TypeInfo::Module {
-                module, type_info, ..
-            } => {
-                let module = extract_name_from_tokenref(module);
-
-                match &**type_info {
-                    IndexedTypeInfo::Basic(base) => {
-                        let base = extract_name_from_tokenref(base);
-                        TypeFieldType::Module(TypeFieldTypeModule {
-                            module,
-                            base,
-                            generics: None,
-                        })
-                        .into()
-                    }
-                    IndexedTypeInfo::Generic { base, generics, .. } => {
-                        let base = extract_name_from_tokenref(base);
-                        let mut generics_arr = Vec::new();
-
-                        for generic in generics.iter() {
-                            generics_arr.push(TypeFieldType::from_luau_typeinfo(tbv, generic));
-                        }
-
-                        TypeFieldType::Module(TypeFieldTypeModule {
-                            module,
-                            base,
-                            generics: Some(generics_arr),
-                        })
-                        .into()
-                    }
-                    _ => (TypeFieldType::UnknownModule(module)).into(), // Can;t do anything with this
-                }
-            }
-            TypeInfo::Optional { base, .. } => {
-                TypeFieldType::Optional(TypeFieldType::from_luau_typeinfo(tbv, base)).into()
-            }
-            TypeInfo::Tuple { types, .. } => {
-                let mut tuple_types = Vec::new();
-
-                for typ in types {
-                    tuple_types.push(TypeFieldType::from_luau_typeinfo(tbv, typ));
-                }
-
-                TypeFieldType::Tuple(tuple_types).into()
-            }
-            TypeInfo::Variadic { type_info, .. } => {
-                TypeFieldType::Variadic(TypeFieldType::from_luau_typeinfo(tbv, type_info)).into()
-            }
-            TypeInfo::VariadicPack { name, .. } => {
-                let name = extract_name_from_tokenref(name);
-                TypeFieldType::VariadicPack(name).into()
-            }
-            TypeInfo::Typeof { inner, .. } => TypeFieldType::TypeOf(inner.to_string()).into(),
-            _ => {
-                panic!("Unsupported feature: {:?}", typ_info);
-            }
-        }
-    }
-}
-]]
 function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): types.TypeFieldType
     if typ.kind == "nil" then
         return TypeFieldTypeImpl.new({
@@ -592,27 +378,6 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         typ = typ :: cst.Type_Function
         local args = {}
         for _, arg in typ.params do
-            --[[
-                    let typ = TypeFieldType::from_luau_typeinfo(tbv, arg.type_info());
-
-                    let Some((name, punctuation)) = arg.name() else {
-                        args.push(TypedArgument {
-                            name: None,
-                            typ: Some(typ),
-                            punctuation: None,
-                        });
-                        continue;
-                    };
-
-                    let name = extract_name_from_tokenref(name);
-
-                    args.push(TypedArgument {
-                        name: Some(name),
-                        typ: Some(typ),
-                        punctuation: Some(punctuation.to_string()),
-                    });
-            ]]
-
             local n = from_luau_typeinfo_to_typefieldtype(arg.node.type)
             local name: string? = nil
             local punctuation: string? = nil
@@ -711,67 +476,29 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
 end
 
 function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeField 
-    --[[
-        let key = match typ_field.key() {
-            LuauTypeFieldKey::Name(name) => TypeFieldKey::Name {
-                name: extract_name_from_tokenref(name),
-            },
-            LuauTypeFieldKey::IndexSignature { brackets, inner } => {
-                let (start_bracket, end_bracket) = brackets.tokens();
-
-                TypeFieldKey::IndexSignature {
-                    start_tok: extract_name_from_tokenref(start_bracket),
-                    inner: TypeFieldType::from_luau_typeinfo(tbv, inner),
-                    end_tok: extract_name_from_tokenref(end_bracket),
-                }
-            }
-            _ => panic!("Unsupported feature: {:?}", typ_field.key()),
-        }
-        .into();
-        let value = typ_field.value();
-
-        let mut comments = Vec::new();
-
-        // Check access modifier for comments
-        if let Some(access_modifier) = typ_field.access() {
-            comments.extend(get_comments_from_token_ref(access_modifier));
-        }
-
-        // Check key for comments
-        match typ_field.key() {
-            LuauTypeFieldKey::Name(name) => {
-                comments.extend(get_comments_from_token_ref(name));
-            }
-            LuauTypeFieldKey::IndexSignature { brackets, inner: _ } => {
-                let (start_bracket, end_bracket) = brackets.tokens();
-                comments.extend(get_comments_from_token_ref(start_bracket));
-                comments.extend(get_comments_from_token_ref(end_bracket));
-            }
-            _ => {}
-        }
-
-        let type_info = TypeFieldType::from_luau_typeinfo(tbv, value);
-
-        Self {
-            comments,
-            field_name: key,
-            field_type: type_info,
-        }
-    ]]
-
     local key: types.TypeFieldKey
     local itype: types.TypeFieldType
+    local comments: {string} = {}
+
+    if typ.access then
+        comments = extractcommentsfromtrivia(comments, typ.access.trivia)
+    end
+
     if typ.kind == "nameprop" then
         key = TypeFieldKeyImpl.new({
             type = "Name",
             name = typ.name.text,
         })
+        comments = extractcommentsfromtrivia(comments, typ.name.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
     elseif typ.kind == "stringprop" then
         key = TypeFieldKeyImpl.new({
             type = "Name",
             name = `{typ.bracks.open.text}{typ.key.text}{typ.bracks.close.text}`,
         })
+        comments = extractcommentsfromtrivia(comments, typ.bracks.open.trivia)
+        comments = extractcommentsfromtrivia(comments, typ.key.trivia)
+        comments = extractcommentsfromtrivia(comments, typ.bracks.close.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
     elseif typ.kind == "indexer" then 
         key = TypeFieldKeyImpl.new({
@@ -780,13 +507,12 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
             inner = from_luau_typeinfo_to_typefieldtype(typ.key),
             end_tok = typ.bracks.close.text,
         })
+        comments = extractcommentsfromtrivia(comments, typ.bracks.open.trivia)
+        comments = extractcommentsfromtrivia(comments, typ.bracks.close.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
     else
         error("Unsupported feature: " .. typ.kind)
     end
-
-    -- TODO: comments
-    local comments: {string} = {}
 
     return TypeFieldImpl.new(comments, key, itype)
 end
