@@ -392,7 +392,7 @@ The target ID to edit permissions of
 
 The allow permissions
 
-[typesext](#module.typesext).[#MultiOption](#MultiOption)<[string](#string)>
+[typesext](#module.typesext).[#MultiOption](#MultiOption)&lt;[string](#string)&gt;
 
 <div id="deny"></div>
 
@@ -400,7 +400,7 @@ The allow permissions
 
 The deny permissions
 
-[typesext](#module.typesext).[#MultiOption](#MultiOption)<[string](#string)>
+[typesext](#module.typesext).[#MultiOption](#MultiOption)&lt;[string](#string)&gt;
 
 <div id="kind"></div>
 
@@ -1036,7 +1036,7 @@ get_audit_logs: (self: DiscordExecutor, data: GetAuditLogOptions) -> promise.Lua
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyAuditLogObject](#LazyAuditLogObject)><div id="list_auto_moderation_rules"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAuditLogObject](#LazyAuditLogObject)&gt;<div id="list_auto_moderation_rules"></div>
 
 ### list_auto_moderation_rules
 
@@ -1060,7 +1060,7 @@ list_auto_moderation_rules: (self: DiscordExecutor) -> promise.LuaPromise<LazyAu
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyAutomoderationRuleObjectList](#LazyAutomoderationRuleObjectList)><div id="get_auto_moderation_rule"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObjectList](#LazyAutomoderationRuleObjectList)&gt;<div id="get_auto_moderation_rule"></div>
 
 ### get_auto_moderation_rule
 
@@ -1094,7 +1094,7 @@ get_auto_moderation_rule: (self: DiscordExecutor, data: GetAutoModerationRuleOpt
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)><div id="create_auto_moderation_rule"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="create_auto_moderation_rule"></div>
 
 ### create_auto_moderation_rule
 
@@ -1128,7 +1128,7 @@ create_auto_moderation_rule: (self: DiscordExecutor, data: CreateAutoModerationR
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)><div id="edit_auto_moderation_rule"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="edit_auto_moderation_rule"></div>
 
 ### edit_auto_moderation_rule
 
@@ -1162,7 +1162,7 @@ edit_auto_moderation_rule: (self: DiscordExecutor, data: EditAutoModerationRuleO
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)><div id="delete_auto_moderation_rule"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="delete_auto_moderation_rule"></div>
 
 ### delete_auto_moderation_rule
 
@@ -1196,7 +1196,7 @@ delete_auto_moderation_rule: (self: DiscordExecutor, data: DeleteAutoModerationR
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)><div id="get_channel"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="get_channel"></div>
 
 ### get_channel
 
@@ -1230,7 +1230,7 @@ get_channel: (self: DiscordExecutor, data: GetChannelOptions) -> promise.LuaProm
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyChannelObject](#LazyChannelObject)><div id="edit_channel"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="edit_channel"></div>
 
 ### edit_channel
 
@@ -1264,7 +1264,7 @@ edit_channel: (self: DiscordExecutor, data: EditChannelOptions) -> promise.LuaPr
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyChannelObject](#LazyChannelObject)><div id="delete_channel"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="delete_channel"></div>
 
 ### delete_channel
 
@@ -1298,7 +1298,7 @@ delete_channel: (self: DiscordExecutor, data: DeleteChannelOptions) -> promise.L
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyChannelObject](#LazyChannelObject)><div id="edit_channel_permissions"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="edit_channel_permissions"></div>
 
 ### edit_channel_permissions
 
@@ -1332,7 +1332,7 @@ edit_channel_permissions: (self: DiscordExecutor, data: EditChannelPermissionsOp
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[nil](#nil)><div id="add_guild_member_role"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="add_guild_member_role"></div>
 
 ### add_guild_member_role
 
@@ -1366,7 +1366,7 @@ add_guild_member_role: (self: DiscordExecutor, data: AddGuildMemberRoleOptions) 
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[nil](#nil)><div id="remove_guild_member_role"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="remove_guild_member_role"></div>
 
 ### remove_guild_member_role
 
@@ -1400,7 +1400,7 @@ remove_guild_member_role: (self: DiscordExecutor, data: RemoveGuildMemberRoleOpt
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[nil](#nil)><div id="remove_guild_member"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="remove_guild_member"></div>
 
 ### remove_guild_member
 
@@ -1434,7 +1434,7 @@ remove_guild_member: (self: DiscordExecutor, data: RemoveGuildMemberOptions) -> 
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[nil](#nil)><div id="get_guild_bans"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="get_guild_bans"></div>
 
 ### get_guild_bans
 
@@ -1468,7 +1468,7 @@ get_guild_bans: (self: DiscordExecutor, data: GetGuildBansOptions) -> promise.Lu
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyBanObjectList](#LazyBanObjectList)><div id="get_guild_roles"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyBanObjectList](#LazyBanObjectList)&gt;<div id="get_guild_roles"></div>
 
 ### get_guild_roles
 
@@ -1502,7 +1502,7 @@ get_guild_roles: (self: DiscordExecutor, guild_id: discord.Snowflake) -> promise
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyRolesMap](#LazyRolesMap)><div id="get_messages"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyRolesMap](#LazyRolesMap)&gt;<div id="get_messages"></div>
 
 ### get_messages
 
@@ -1536,7 +1536,7 @@ get_messages: (self: DiscordExecutor, data: GetMessagesOptions) -> promise.LuaPr
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyMessagesObject](#LazyMessagesObject)><div id="get_message"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessagesObject](#LazyMessagesObject)&gt;<div id="get_message"></div>
 
 ### get_message
 
@@ -1570,7 +1570,7 @@ get_message: (self: DiscordExecutor, data: GetMessageOptions) -> promise.LuaProm
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyMessageObject](#LazyMessageObject)><div id="create_message"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="create_message"></div>
 
 ### create_message
 
@@ -1604,7 +1604,7 @@ create_message: (self: DiscordExecutor, data: CreateMessageOptions) -> promise.L
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyMessageObject](#LazyMessageObject)><div id="create_interaction_response"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="create_interaction_response"></div>
 
 ### create_interaction_response
 
@@ -1638,7 +1638,7 @@ create_interaction_response: (self: DiscordExecutor, data: CreateInteractionResp
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[nil](#nil)><div id="create_followup_message"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="create_followup_message"></div>
 
 ### create_followup_message
 
@@ -1672,7 +1672,7 @@ create_followup_message: (self: DiscordExecutor, data: CreateFollowupMessageOpti
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyMessageObject](#LazyMessageObject)><div id="get_original_interaction_response"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="get_original_interaction_response"></div>
 
 ### get_original_interaction_response
 
@@ -1706,7 +1706,7 @@ get_original_interaction_response: (self: DiscordExecutor, interaction_token: st
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyMessageObject](#LazyMessageObject)><div id="get_guild_commands"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="get_guild_commands"></div>
 
 ### get_guild_commands
 
@@ -1730,7 +1730,7 @@ get_guild_commands: (self: DiscordExecutor) -> promise.LuaPromise<LazyApplicatio
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyApplicationCommandObject](#LazyApplicationCommandObject)><div id="create_guild_command"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyApplicationCommandObject](#LazyApplicationCommandObject)&gt;<div id="create_guild_command"></div>
 
 ### create_guild_command
 
@@ -1764,7 +1764,7 @@ create_guild_command: (self: DiscordExecutor, data: CreateCommandOptions) -> pro
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)<[LazyApplicationCommandObject](#LazyApplicationCommandObject)><div id="Functions"></div>
+[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyApplicationCommandObject](#LazyApplicationCommandObject)&gt;<div id="Functions"></div>
 
 # Functions
 

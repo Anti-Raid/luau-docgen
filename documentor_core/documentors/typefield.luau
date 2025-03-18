@@ -203,7 +203,7 @@ local function parseFunctionInline(
     if #generics > 0 then 
         parsedFields[#parsedFields + 1] = {
             type = "Text" :: "Text",
-            text = markdown.NewMarkdownText_FromRaw("<"),
+            text = markdown.NewMarkdownText_FromRaw("<", true),
             inline = true
         } :: any
         for i, generic in generics do 
@@ -356,7 +356,7 @@ function parseTypeFieldType(
             return {
                 {
                     type = "Text" :: "Text",
-                    text = markdown.NewMarkdownText_FromRaw(fieldtype.data, true),
+                    text = markdown.NewMarkdownText_FromRaw(tostring(fieldtype.data), true),
                     inline = true
                 } :: markdown.MarkdownNode
             }
@@ -730,7 +730,7 @@ function parseTypeFieldType(
                     if not hasAddedBracket then
                         irNodes[#irNodes + 1] = {
                             type = "Text" :: "Text",
-                            text = markdown.NewMarkdownText_FromRaw("<"),
+                            text = markdown.NewMarkdownText_FromRaw("<", true),
                             inline = true
                         } :: any
                     end
@@ -738,7 +738,7 @@ function parseTypeFieldType(
                     if not hasAddedBracket then
                         irNodes[#irNodes + 1] = {
                             type = "Text" :: "Text",
-                            text = markdown.NewMarkdownText_FromRaw(">"),
+                            text = markdown.NewMarkdownText_FromRaw(">", true),
                             inline = true
                         } :: any
                         hasAddedBracket = true
@@ -863,7 +863,7 @@ function parseTypeFieldType(
         if #fieldtype.data.generics > 0 then
             nodes[#nodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("<"),
+                text = markdown.NewMarkdownText_FromRaw("<", true),
                 inline = true
             } :: any
         end
@@ -891,7 +891,7 @@ function parseTypeFieldType(
         if #fieldtype.data.generics > 0 then
             nodes[#nodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw(">"),
+                text = markdown.NewMarkdownText_FromRaw(">", true),
                 inline = true
             } :: any
         end

@@ -2714,7 +2714,7 @@ type Separated<Node, Sep> = {Pair<Node, Sep>}
 
 </details>
 
-{[Pair](#Pair)<[Node](#Node), [Sep](#Sep)>}
+{[Pair](#Pair)&lt;[Node](#Node), [Sep](#Sep)&gt;}
 
 <div id="Delim"></div>
 
@@ -2852,19 +2852,19 @@ The angles surrounding the generic declaration; the `<>` in
 
 `<A, B, C...>`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"&lt;">, [TokenKind](#TokenKind)<"&gt;">><div id="names"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"&lt;"&gt;, [TokenKind](#TokenKind)&lt;"&gt;"&gt;&gt;<div id="names"></div>
 
 ### names
 
 The generic types; the `A, B,` in `A, B, C...`.
 
-[Separated](#Separated)<[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<",">><div id="packs"></div>
+[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="packs"></div>
 
 ### packs
 
 The generic type packs; the `C...` in `A, B, C...`.
 
-[Separated](#Separated)<[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<"...">, [TokenKind](#TokenKind)<",">><div id="GenericDeclarationWithDefaults"></div>
+[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="GenericDeclarationWithDefaults"></div>
 
 ## GenericDeclarationWithDefaults
 
@@ -2955,7 +2955,7 @@ The angles surrounding the generic declaration; the `<>` in
 
 `<A = number, B... = (number, ...string)>`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"&lt;">, [TokenKind](#TokenKind)<"&gt;">><div id="names"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"&lt;"&gt;, [TokenKind](#TokenKind)&lt;"&gt;"&gt;&gt;<div id="names"></div>
 
 ### names
 
@@ -2963,7 +2963,7 @@ The generic types; the `A = number,` in
 
 `<A = number, B... = (number, ...string)>`.
 
-[Separated](#Separated)<[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<"=">, [Type](#Type)?, [TokenKind](#TokenKind)<",">><div id="packs"></div>
+[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"="&gt;, [Type](#Type)?, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="packs"></div>
 
 ### packs
 
@@ -2971,7 +2971,7 @@ The generic type packs; the `B... = (number, ...string)` in
 
 `<A = number, B... = (number, ...string)>`.
 
-[Separated](#Separated)<[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<"...">, [TokenKind](#TokenKind)<"=">, [TypePack](#TypePack)?, [TokenKind](#TokenKind)<",">><div id="TypeArg"></div>
+[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;"="&gt;, [TypePack](#TypePack)?, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="TypeArg"></div>
 
 ## TypeArg
 
@@ -3067,7 +3067,7 @@ This token should only have values of `read` or `write`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="name"></div>
 
@@ -3075,13 +3075,13 @@ This token should only have values of `read` or `write`.
 
 The name; the `foo` in `foo: bar`.
 
-[TokenKind](#TokenKind)<"ident"><div id="colon"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="colon"></div>
 
 ### colon
 
 The colon; the `:` in `foo: bar`.
 
-[TokenKind](#TokenKind)<":"><div id="type"></div>
+[TokenKind](#TokenKind)&lt;":"&gt;<div id="type"></div>
 
 ### type
 
@@ -3147,7 +3147,7 @@ This token should only have values of `read` or `write`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="bracks"></div>
 
@@ -3155,19 +3155,19 @@ This token should only have values of `read` or `write`.
 
 The brackets surrounding the key; the `[]` in `["foo"]: bar`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"[">, [TokenKind](#TokenKind)<"]">><div id="key"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"["&gt;, [TokenKind](#TokenKind)&lt;"]"&gt;&gt;<div id="key"></div>
 
 ### key
 
 The key; the `"foo"` in `["foo"]: bar`.
 
-[TokenKind](#TokenKind)<"string"><div id="colon"></div>
+[TokenKind](#TokenKind)&lt;"string"&gt;<div id="colon"></div>
 
 ### colon
 
 The colon; the `:` in `["foo"]: bar`.
 
-[TokenKind](#TokenKind)<":"><div id="type"></div>
+[TokenKind](#TokenKind)&lt;":"&gt;<div id="type"></div>
 
 ### type
 
@@ -3233,7 +3233,7 @@ This token should only have values of `read` or `write`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="bracks"></div>
 
@@ -3241,7 +3241,7 @@ This token should only have values of `read` or `write`.
 
 The brackets surrounding the key; the `[]` in `[number]: string`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"[">, [TokenKind](#TokenKind)<"]">><div id="key"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"["&gt;, [TokenKind](#TokenKind)&lt;"]"&gt;&gt;<div id="key"></div>
 
 ### key
 
@@ -3255,7 +3255,7 @@ The key; the `number` in `[number]: string`.
 
 The colon; the `:` in `[number]: string`.
 
-[TokenKind](#TokenKind)<":"><div id="type"></div>
+[TokenKind](#TokenKind)&lt;":"&gt;<div id="type"></div>
 
 ### type
 
@@ -3340,7 +3340,7 @@ type Type_Nil = {
 
 The `nil` token.
 
-[TokenKind](#TokenKind)<"nil"><div id="Type_Boolean"></div>
+[TokenKind](#TokenKind)&lt;"nil"&gt;<div id="Type_Boolean"></div>
 
 ## Type_Boolean
 
@@ -3380,12 +3380,12 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-[TokenKind](#TokenKind)<"true"></details>
+[TokenKind](#TokenKind)&lt;"true"&gt;</details>
 
 <details>
 <summary>Variant 2</summary>
 
-[TokenKind](#TokenKind)<"false"></details>
+[TokenKind](#TokenKind)&lt;"false"&gt;</details>
 
 <div id="Type_String"></div>
 
@@ -3422,7 +3422,7 @@ type Type_String = {
 
 The string token.
 
-[TokenKind](#TokenKind)<"string"><div id="Type_Reference"></div>
+[TokenKind](#TokenKind)&lt;"string"&gt;<div id="Type_Reference"></div>
 
 ## Type_Reference
 
@@ -3478,7 +3478,7 @@ The optional prefix; the `foo.` in `foo.bar<baz>`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<".">?
+[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"."&gt;?
 
 <div id="name"></div>
 
@@ -3486,7 +3486,7 @@ The optional prefix; the `foo.` in `foo.bar<baz>`.
 
 The name; the `bar` in `foo.bar<baz>`.
 
-[TokenKind](#TokenKind)<"ident"><div id="generics"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="generics"></div>
 
 ### generics
 
@@ -3494,7 +3494,7 @@ The optional generics; the `<baz>` in `foo.bar<baz>`.
 
 *This field is optional and may not be specified*
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"&lt;">, [TokenKind](#TokenKind)<"&gt;">>, [Separated](#Separated)<[TypeArg](#TypeArg), [TokenKind](#TokenKind)<",">>?
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"&lt;"&gt;, [TokenKind](#TokenKind)&lt;"&gt;"&gt;&gt;, [Separated](#Separated)&lt;[TypeArg](#TypeArg), [TokenKind](#TokenKind)&lt;","&gt;&gt;?
 
 <div id="Type_Typeof"></div>
 
@@ -3537,13 +3537,13 @@ type Type_Typeof = {
 
 The `typeof` token.
 
-[TokenKind](#TokenKind)<"ident"><div id="parens"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="parens"></div>
 
 ### parens
 
 The parentheses surrounding the expr; the `()` in `typeof(foo)`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="expr"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="expr"></div>
 
 ### expr
 
@@ -3589,7 +3589,7 @@ type Type_Array = {
 
 The braces surrounding the type; the `{}` in `{ number }`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"{">, [TokenKind](#TokenKind)<"}">><div id="type"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"{"&gt;, [TokenKind](#TokenKind)&lt;"}"&gt;&gt;<div id="type"></div>
 
 ### type
 
@@ -3635,13 +3635,13 @@ type Type_Table = {
 
 The braces surrounding the type; the `{}` in `{ foo: bar }`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"{">, [TokenKind](#TokenKind)<"}">><div id="fields"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"{"&gt;, [TokenKind](#TokenKind)&lt;"}"&gt;&gt;<div id="fields"></div>
 
 ### fields
 
 The fields; the `foo: bar` in `{ foo: bar }`.
 
-[Separated](#Separated)<[TableTypeField](#TableTypeField), ([TokenKind](#TokenKind)<","> | [TokenKind](#TokenKind)<";">)><div id="Type_Function"></div>
+[Separated](#Separated)&lt;[TableTypeField](#TableTypeField), ([TokenKind](#TokenKind)&lt;","&gt; | [TokenKind](#TokenKind)&lt;";"&gt;)&gt;<div id="Type_Function"></div>
 
 ## Type_Function
 
@@ -3719,13 +3719,13 @@ The parentheses surrounding the arguments; the `()` in
 
 `<T>(foo: T, ...bar) -> baz`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="params"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="params"></div>
 
 ### params
 
 The parameters; the `foo: T,` in `<T>(foo: T, ...bar) -> baz`.
 
-[Separated](#Separated)<[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<":">?, [Type](#Type), [TokenKind](#TokenKind)<",">><div id="varargs"></div>
+[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;":"&gt;?, [Type](#Type), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="varargs"></div>
 
 ### varargs
 
@@ -3741,7 +3741,7 @@ The optional varargs; the `...bar` in `<T>(foo: T, ...bar) -> baz`.
 
 The arrow; the `->` in `<T>(foo: T, ...bar) -> baz`.
 
-[TokenKind](#TokenKind)<"-&gt;"><div id="ret"></div>
+[TokenKind](#TokenKind)&lt;"-&gt;"&gt;<div id="ret"></div>
 
 ### ret
 
@@ -3787,7 +3787,7 @@ type Type_Paren = {
 
 The parentheses surrounding the type; the `()` in `(foo)`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="type"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="type"></div>
 
 ### type
 
@@ -3841,7 +3841,7 @@ The type; the `foo` in `foo?`.
 
 The question mark; the `?` in `foo?`.
 
-[TokenKind](#TokenKind)<"?"><div id="Type_Union"></div>
+[TokenKind](#TokenKind)&lt;"?"&gt;<div id="Type_Union"></div>
 
 ## Type_Union
 
@@ -3881,7 +3881,7 @@ The optional leading pipe; the `|` in `| foo | bar`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"|">?
+[TokenKind](#TokenKind)&lt;"|"&gt;?
 
 <div id="types"></div>
 
@@ -3889,7 +3889,7 @@ The optional leading pipe; the `|` in `| foo | bar`.
 
 The types; the `foo | bar` in `| foo | bar`.
 
-[Separated](#Separated)<[Type](#Type), [TokenKind](#TokenKind)<"|">><div id="Type_Intersection"></div>
+[Separated](#Separated)&lt;[Type](#Type), [TokenKind](#TokenKind)&lt;"|"&gt;&gt;<div id="Type_Intersection"></div>
 
 ## Type_Intersection
 
@@ -3929,7 +3929,7 @@ The optional leading ampersand; the `&` in `& foo & bar`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"&">?
+[TokenKind](#TokenKind)&lt;"&"&gt;?
 
 <div id="types"></div>
 
@@ -3937,7 +3937,7 @@ The optional leading ampersand; the `&` in `& foo & bar`.
 
 The types; the `foo & bar` in `& foo & bar`.
 
-[Separated](#Separated)<[Type](#Type), [TokenKind](#TokenKind)<"&">><div id="Type"></div>
+[Separated](#Separated)&lt;[Type](#Type), [TokenKind](#TokenKind)&lt;"&"&gt;&gt;<div id="Type"></div>
 
 ## Type
 
@@ -4086,7 +4086,7 @@ type VariadicTypePack = {
 
 The dots; the `...` in `...foo`.
 
-[TokenKind](#TokenKind)<"..."><div id="type"></div>
+[TokenKind](#TokenKind)&lt;"..."&gt;<div id="type"></div>
 
 ### type
 
@@ -4132,13 +4132,13 @@ type GenericTypePack = {
 
 The name; the `foo` in `foo...`.
 
-[TokenKind](#TokenKind)<"ident"><div id="dots"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="dots"></div>
 
 ### dots
 
 The dots; the `...` in `foo...`.
 
-[TokenKind](#TokenKind)<"..."><div id="TypeList"></div>
+[TokenKind](#TokenKind)&lt;"..."&gt;<div id="TypeList"></div>
 
 ## TypeList
 
@@ -4182,13 +4182,13 @@ The parentheses surrounding the type pack; the `()` in
 
 `(foo, bar, baz...)`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="types"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="types"></div>
 
 ### types
 
 The types; the `foo, bar,` in `(foo, bar, baz...)`.
 
-[Separated](#Separated)<[Type](#Type), [TokenKind](#TokenKind)<",">><div id="tail"></div>
+[Separated](#Separated)&lt;[Type](#Type), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="tail"></div>
 
 ### tail
 
@@ -4344,7 +4344,7 @@ type Binding = {
 
 The name; the `foo` in `foo: bar`.
 
-[TokenKind](#TokenKind)<"ident"><div id="type"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="type"></div>
 
 ### type
 
@@ -4352,7 +4352,7 @@ The optional type; the `: bar` in `foo: bar`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<":">, [Type](#Type)?
+[TokenKind](#TokenKind)&lt;":"&gt;, [Type](#Type)?
 
 <div id="IString_Simple"></div>
 
@@ -4389,7 +4389,7 @@ type IString_Simple = {
 
 The string token.
 
-[TokenKind](#TokenKind)<"istring_simple"><div id="IString_Complex"></div>
+[TokenKind](#TokenKind)&lt;"istring_simple"&gt;<div id="IString_Complex"></div>
 
 ## IString_Complex
 
@@ -4435,7 +4435,7 @@ type IString_Complex = {
 
 The first segment; the `'foo {'` in `'foo {1} bar {2} baz'`.
 
-[TokenKind](#TokenKind)<"istring_first"><div id="middle"></div>
+[TokenKind](#TokenKind)&lt;"istring_first"&gt;<div id="middle"></div>
 
 ### middle
 
@@ -4445,13 +4445,13 @@ The middle segments; the `1} bar {2` in `'foo {1} bar {2} baz'`.
 
 This needs better documentation. Someone please remind me to do this.
 
-[Separated](#Separated)<[Expr](#Expr), [TokenKind](#TokenKind)<"istring_middle">><div id="last"></div>
+[Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;"istring_middle"&gt;&gt;<div id="last"></div>
 
 ### last
 
 The last segment; the `} baz'` in `'foo {1} bar {2} baz'`.
 
-[TokenKind](#TokenKind)<"istring_last"><div id="IString"></div>
+[TokenKind](#TokenKind)&lt;"istring_last"&gt;<div id="IString"></div>
 
 ## IString
 
@@ -4525,7 +4525,7 @@ The condition; the `foo` in `foo then bar`.
 
 The `then` token; the `then` in `foo then bar`.
 
-[TokenKind](#TokenKind)<"then"><div id="body"></div>
+[TokenKind](#TokenKind)&lt;"then"&gt;<div id="body"></div>
 
 ### body
 
@@ -4554,22 +4554,22 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-[TokenKind](#TokenKind)<"+"></details>
+[TokenKind](#TokenKind)&lt;"+"&gt;</details>
 
 <details>
 <summary>Variant 2</summary>
 
-[TokenKind](#TokenKind)<"-"></details>
+[TokenKind](#TokenKind)&lt;"-"&gt;</details>
 
 <details>
 <summary>Variant 3</summary>
 
-[TokenKind](#TokenKind)<"not"></details>
+[TokenKind](#TokenKind)&lt;"not"&gt;</details>
 
 <details>
 <summary>Variant 4</summary>
 
-[TokenKind](#TokenKind)<"#"></details>
+[TokenKind](#TokenKind)&lt;"#"&gt;</details>
 
 <div id="BinaryOperator"></div>
 
@@ -4595,82 +4595,82 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-[TokenKind](#TokenKind)<"+"></details>
+[TokenKind](#TokenKind)&lt;"+"&gt;</details>
 
 <details>
 <summary>Variant 2</summary>
 
-[TokenKind](#TokenKind)<"-"></details>
+[TokenKind](#TokenKind)&lt;"-"&gt;</details>
 
 <details>
 <summary>Variant 3</summary>
 
-[TokenKind](#TokenKind)<"*"></details>
+[TokenKind](#TokenKind)&lt;"*"&gt;</details>
 
 <details>
 <summary>Variant 4</summary>
 
-[TokenKind](#TokenKind)<"/"></details>
+[TokenKind](#TokenKind)&lt;"/"&gt;</details>
 
 <details>
 <summary>Variant 5</summary>
 
-[TokenKind](#TokenKind)<"//"></details>
+[TokenKind](#TokenKind)&lt;"//"&gt;</details>
 
 <details>
 <summary>Variant 6</summary>
 
-[TokenKind](#TokenKind)<"%"></details>
+[TokenKind](#TokenKind)&lt;"%"&gt;</details>
 
 <details>
 <summary>Variant 7</summary>
 
-[TokenKind](#TokenKind)<"^"></details>
+[TokenKind](#TokenKind)&lt;"^"&gt;</details>
 
 <details>
 <summary>Variant 8</summary>
 
-[TokenKind](#TokenKind)<".."></details>
+[TokenKind](#TokenKind)&lt;".."&gt;</details>
 
 <details>
 <summary>Variant 9</summary>
 
-[TokenKind](#TokenKind)<"&lt;"></details>
+[TokenKind](#TokenKind)&lt;"&lt;"&gt;</details>
 
 <details>
 <summary>Variant 10</summary>
 
-[TokenKind](#TokenKind)<"&lt;="></details>
+[TokenKind](#TokenKind)&lt;"&lt;="&gt;</details>
 
 <details>
 <summary>Variant 11</summary>
 
-[TokenKind](#TokenKind)<"&gt;"></details>
+[TokenKind](#TokenKind)&lt;"&gt;"&gt;</details>
 
 <details>
 <summary>Variant 12</summary>
 
-[TokenKind](#TokenKind)<"&gt;="></details>
+[TokenKind](#TokenKind)&lt;"&gt;="&gt;</details>
 
 <details>
 <summary>Variant 13</summary>
 
-[TokenKind](#TokenKind)<"=="></details>
+[TokenKind](#TokenKind)&lt;"=="&gt;</details>
 
 <details>
 <summary>Variant 14</summary>
 
-[TokenKind](#TokenKind)<"~="></details>
+[TokenKind](#TokenKind)&lt;"~="&gt;</details>
 
 <details>
 <summary>Variant 15</summary>
 
-[TokenKind](#TokenKind)<"and"></details>
+[TokenKind](#TokenKind)&lt;"and"&gt;</details>
 
 <details>
 <summary>Variant 16</summary>
 
-[TokenKind](#TokenKind)<"or"></details>
+[TokenKind](#TokenKind)&lt;"or"&gt;</details>
 
 <div id="Expr_Nil"></div>
 
@@ -4707,7 +4707,7 @@ type Expr_Nil = {
 
 The `nil` token.
 
-[TokenKind](#TokenKind)<"nil"><div id="Expr_Boolean"></div>
+[TokenKind](#TokenKind)&lt;"nil"&gt;<div id="Expr_Boolean"></div>
 
 ## Expr_Boolean
 
@@ -4747,12 +4747,12 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-[TokenKind](#TokenKind)<"true"></details>
+[TokenKind](#TokenKind)&lt;"true"&gt;</details>
 
 <details>
 <summary>Variant 2</summary>
 
-[TokenKind](#TokenKind)<"false"></details>
+[TokenKind](#TokenKind)&lt;"false"&gt;</details>
 
 <div id="Expr_Number"></div>
 
@@ -4789,7 +4789,7 @@ type Expr_Number = {
 
 The number token.
 
-[TokenKind](#TokenKind)<"number"><div id="Expr_String"></div>
+[TokenKind](#TokenKind)&lt;"number"&gt;<div id="Expr_String"></div>
 
 ## Expr_String
 
@@ -4824,7 +4824,7 @@ type Expr_String = {
 
 The string token.
 
-[TokenKind](#TokenKind)<"string"><div id="Expr_Varargs"></div>
+[TokenKind](#TokenKind)&lt;"string"&gt;<div id="Expr_Varargs"></div>
 
 ## Expr_Varargs
 
@@ -4859,7 +4859,7 @@ type Expr_Varargs = {
 
 The `...` token.
 
-[TokenKind](#TokenKind)<"..."><div id="Expr_IString"></div>
+[TokenKind](#TokenKind)&lt;"..."&gt;<div id="Expr_IString"></div>
 
 ## Expr_IString
 
@@ -4984,7 +4984,7 @@ The function attributes; the `@native` in
 
 `@native function(foo, bar) return foo + bar end`.
 
-{[TokenKind](#TokenKind)<"attribute">}
+{[TokenKind](#TokenKind)&lt;"attribute"&gt;}
 
 <div id="function_tok"></div>
 
@@ -4992,7 +4992,7 @@ The function attributes; the `@native` in
 
 The `function` token.
 
-[TokenKind](#TokenKind)<"function"><div id="body"></div>
+[TokenKind](#TokenKind)&lt;"function"&gt;<div id="body"></div>
 
 ### body
 
@@ -5052,7 +5052,7 @@ The `if` token; the `if` in
 
 `if foo then bar elseif baz then qux else quux`.
 
-[TokenKind](#TokenKind)<"if"><div id="branches"></div>
+[TokenKind](#TokenKind)&lt;"if"&gt;<div id="branches"></div>
 
 ### branches
 
@@ -5060,7 +5060,7 @@ The branches; the `foo then bar elseif baz then qux` in
 
 `if foo then bar elseif baz then qux else quux`.
 
-[Separated](#Separated)<[IfElseExprBranch](#IfElseExprBranch), [TokenKind](#TokenKind)<"elseif">><div id="else_tok"></div>
+[Separated](#Separated)&lt;[IfElseExprBranch](#IfElseExprBranch), [TokenKind](#TokenKind)&lt;"elseif"&gt;&gt;<div id="else_tok"></div>
 
 ### else_tok
 
@@ -5068,7 +5068,7 @@ The `else` token; the `else` in
 
 `if foo then bar elseif baz then qux else quux`.
 
-[TokenKind](#TokenKind)<"else"><div id="else_body"></div>
+[TokenKind](#TokenKind)&lt;"else"&gt;<div id="else_body"></div>
 
 ### else_body
 
@@ -5164,7 +5164,7 @@ The expr; the `foo` in `foo :: bar`.
 
 The double colon; the `::` in `foo :: bar`.
 
-[TokenKind](#TokenKind)<"::"><div id="type"></div>
+[TokenKind](#TokenKind)&lt;"::"&gt;<div id="type"></div>
 
 ### type
 
@@ -5435,13 +5435,13 @@ type FunctionArg_Pack = {
 
 The parens surrounding the pack; the `()` in `()`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="exprs"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="exprs"></div>
 
 ### exprs
 
 The exprs; the `foo, bar` in `(foo, bar)`.
 
-[Separated](#Separated)<[Expr](#Expr), [TokenKind](#TokenKind)<",">><div id="FunctionArg_Table"></div>
+[Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="FunctionArg_Table"></div>
 
 ## FunctionArg_Table
 
@@ -5513,7 +5513,7 @@ type FunctionArg_String = {
 
 The string token.
 
-[TokenKind](#TokenKind)<"string"><div id="FunctionArg"></div>
+[TokenKind](#TokenKind)&lt;"string"&gt;<div id="FunctionArg"></div>
 
 ## FunctionArg
 
@@ -5587,7 +5587,7 @@ type VarRoot_Name = {
 
 The name token.
 
-[TokenKind](#TokenKind)<"ident"><div id="VarRoot_Paren"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="VarRoot_Paren"></div>
 
 ## VarRoot_Paren
 
@@ -5625,7 +5625,7 @@ type VarRoot_Paren = {
 
 The parentheses surrounding the expr; the `()` in `(foo)`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="expr"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="expr"></div>
 
 ### expr
 
@@ -5703,13 +5703,13 @@ type VarSuffix_NameIndex = {
 
 The dot; the `.` in `.foo`.
 
-[TokenKind](#TokenKind)<"."><div id="name"></div>
+[TokenKind](#TokenKind)&lt;"."&gt;<div id="name"></div>
 
 ### name
 
 The name; the `foo` in `.foo`.
 
-[TokenKind](#TokenKind)<"ident"><div id="VarSuffix_ExprIndex"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="VarSuffix_ExprIndex"></div>
 
 ## VarSuffix_ExprIndex
 
@@ -5747,7 +5747,7 @@ type VarSuffix_ExprIndex = {
 
 The brackets surrounding the expr; the `[]` in `[foo]`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"[">, [TokenKind](#TokenKind)<"]">><div id="expr"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"["&gt;, [TokenKind](#TokenKind)&lt;"]"&gt;&gt;<div id="expr"></div>
 
 ### expr
 
@@ -5801,7 +5801,7 @@ The optional method; the `:method` in `root:method(foo)`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<":">, [TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;":"&gt;, [TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="arg"></div>
 
@@ -5947,13 +5947,13 @@ type TableField_NameKey = {
 
 The name; the `foo` in `foo = bar`.
 
-[TokenKind](#TokenKind)<"ident"><div id="equals"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="equals"></div>
 
 ### equals
 
 The equals sign; the `=` in `foo = bar`.
 
-[TokenKind](#TokenKind)<"="><div id="value"></div>
+[TokenKind](#TokenKind)&lt;"="&gt;<div id="value"></div>
 
 ### value
 
@@ -6005,7 +6005,7 @@ type TableField_ExprKey = {
 
 The brackets surrounding the key; the `[]` in `[foo] = bar`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"[">, [TokenKind](#TokenKind)<"]">><div id="key"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"["&gt;, [TokenKind](#TokenKind)&lt;"]"&gt;&gt;<div id="key"></div>
 
 ### key
 
@@ -6019,7 +6019,7 @@ The key; the `foo` in `[foo] = bar`.
 
 The equals sign; the `=` in `[foo] = bar`.
 
-[TokenKind](#TokenKind)<"="><div id="value"></div>
+[TokenKind](#TokenKind)&lt;"="&gt;<div id="value"></div>
 
 ### value
 
@@ -6131,13 +6131,13 @@ type Table = {
 
 The braces surrounding the table; the `{}` in `{ foo = bar }`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"{">, [TokenKind](#TokenKind)<"}">><div id="fields"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"{"&gt;, [TokenKind](#TokenKind)&lt;"}"&gt;&gt;<div id="fields"></div>
 
 ### fields
 
 The fields; the `foo = bar` in `{ foo = bar }`.
 
-[Separated](#Separated)<[TableField](#TableField), ([TokenKind](#TokenKind)<","> | [TokenKind](#TokenKind)<";">)><div id="FunctionBody"></div>
+[Separated](#Separated)&lt;[TableField](#TableField), ([TokenKind](#TokenKind)&lt;","&gt; | [TokenKind](#TokenKind)&lt;";"&gt;)&gt;<div id="FunctionBody"></div>
 
 ## FunctionBody
 
@@ -6228,7 +6228,7 @@ The parentheses surrounding the parameters; the `()` in
 
 `<T>(foo: T, ...: bar): baz return 10 end`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"(">, [TokenKind](#TokenKind)<")">><div id="params"></div>
+[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"("&gt;, [TokenKind](#TokenKind)&lt;")"&gt;&gt;<div id="params"></div>
 
 ### params
 
@@ -6236,7 +6236,7 @@ The parameters; the `foo: T,` in
 
 `<T>(foo: T, ...: bar): baz return 10 end`.
 
-[Separated](#Separated)<[Binding](#Binding), [TokenKind](#TokenKind)<",">><div id="varargs"></div>
+[Separated](#Separated)&lt;[Binding](#Binding), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="varargs"></div>
 
 ### varargs
 
@@ -6246,7 +6246,7 @@ The optional varargs; the `...: bar` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"...">, [TokenKind](#TokenKind)<":">, ([Type](#Type) | [GenericTypePack](#GenericTypePack))??
+[TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;":"&gt;, ([Type](#Type) | [GenericTypePack](#GenericTypePack))??
 
 <div id="ret"></div>
 
@@ -6258,7 +6258,7 @@ The return type; the `: baz` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<":">, [ReturnType](#ReturnType)?
+[TokenKind](#TokenKind)&lt;":"&gt;, [ReturnType](#ReturnType)?
 
 <div id="block"></div>
 
@@ -6278,7 +6278,7 @@ The `end` token; the `end` in
 
 `<T>(foo: T, ...: bar): baz return 10 end`.
 
-[TokenKind](#TokenKind)<"end"><div id="IfStatBranch"></div>
+[TokenKind](#TokenKind)&lt;"end"&gt;<div id="IfStatBranch"></div>
 
 ## IfStatBranch
 
@@ -6317,7 +6317,7 @@ The condition; the `foo` in `foo then bar()`.
 
 The `then` token.
 
-[TokenKind](#TokenKind)<"then"><div id="block"></div>
+[TokenKind](#TokenKind)&lt;"then"&gt;<div id="block"></div>
 
 ### block
 
@@ -6346,42 +6346,42 @@ Union with variants:
 <details>
 <summary>Variant 1</summary>
 
-[TokenKind](#TokenKind)<"+="></details>
+[TokenKind](#TokenKind)&lt;"+="&gt;</details>
 
 <details>
 <summary>Variant 2</summary>
 
-[TokenKind](#TokenKind)<"-="></details>
+[TokenKind](#TokenKind)&lt;"-="&gt;</details>
 
 <details>
 <summary>Variant 3</summary>
 
-[TokenKind](#TokenKind)<"*="></details>
+[TokenKind](#TokenKind)&lt;"*="&gt;</details>
 
 <details>
 <summary>Variant 4</summary>
 
-[TokenKind](#TokenKind)<"/="></details>
+[TokenKind](#TokenKind)&lt;"/="&gt;</details>
 
 <details>
 <summary>Variant 5</summary>
 
-[TokenKind](#TokenKind)<"//="></details>
+[TokenKind](#TokenKind)&lt;"//="&gt;</details>
 
 <details>
 <summary>Variant 6</summary>
 
-[TokenKind](#TokenKind)<"%="></details>
+[TokenKind](#TokenKind)&lt;"%="&gt;</details>
 
 <details>
 <summary>Variant 7</summary>
 
-[TokenKind](#TokenKind)<"^="></details>
+[TokenKind](#TokenKind)&lt;"^="&gt;</details>
 
 <details>
 <summary>Variant 8</summary>
 
-[TokenKind](#TokenKind)<"..="></details>
+[TokenKind](#TokenKind)&lt;"..="&gt;</details>
 
 <div id="Stat_Assign"></div>
 
@@ -6428,13 +6428,13 @@ The left side of the assignment; the `foo, bar` in
 
 `foo, bar = baz, qux`.
 
-[Separated](#Separated)<[Var](#Var), [TokenKind](#TokenKind)<",">><div id="equals"></div>
+[Separated](#Separated)&lt;[Var](#Var), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="equals"></div>
 
 ### equals
 
 The equals sign; the `=` in `foo, bar = baz, qux`.
 
-[TokenKind](#TokenKind)<"="><div id="right"></div>
+[TokenKind](#TokenKind)&lt;"="&gt;<div id="right"></div>
 
 ### right
 
@@ -6442,7 +6442,7 @@ The right side of the assignment; the `baz, qux` in
 
 `foo, bar = baz, qux`.
 
-[Separated](#Separated)<[Expr](#Expr), [TokenKind](#TokenKind)<",">><div id="Stat_CompoundAssign"></div>
+[Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="Stat_CompoundAssign"></div>
 
 ## Stat_CompoundAssign
 
@@ -6588,7 +6588,7 @@ type Stat_Do = {
 
 The `do` token.
 
-[TokenKind](#TokenKind)<"do"><div id="block"></div>
+[TokenKind](#TokenKind)&lt;"do"&gt;<div id="block"></div>
 
 ### block
 
@@ -6602,7 +6602,7 @@ The block within the do; the `foo()` in `do foo() end`.
 
 The `end` token.
 
-[TokenKind](#TokenKind)<"end"><div id="Stat_While"></div>
+[TokenKind](#TokenKind)&lt;"end"&gt;<div id="Stat_While"></div>
 
 ## Stat_While
 
@@ -6649,7 +6649,7 @@ type Stat_While = {
 
 The `while` token.
 
-[TokenKind](#TokenKind)<"while"><div id="condition"></div>
+[TokenKind](#TokenKind)&lt;"while"&gt;<div id="condition"></div>
 
 ### condition
 
@@ -6663,7 +6663,7 @@ The condition; the `foo` in `while foo do bar() end`.
 
 The `do` token.
 
-[TokenKind](#TokenKind)<"do"><div id="block"></div>
+[TokenKind](#TokenKind)&lt;"do"&gt;<div id="block"></div>
 
 ### block
 
@@ -6677,7 +6677,7 @@ The block; the `bar()` in `while foo do bar() end`.
 
 The `end` token.
 
-[TokenKind](#TokenKind)<"end"><div id="Stat_Repeat"></div>
+[TokenKind](#TokenKind)&lt;"end"&gt;<div id="Stat_Repeat"></div>
 
 ## Stat_Repeat
 
@@ -6721,7 +6721,7 @@ type Stat_Repeat = {
 
 The `repeat` token.
 
-[TokenKind](#TokenKind)<"repeat"><div id="block"></div>
+[TokenKind](#TokenKind)&lt;"repeat"&gt;<div id="block"></div>
 
 ### block
 
@@ -6735,7 +6735,7 @@ The block; the `foo()` in `repeat foo() until bar`.
 
 The `until` token.
 
-[TokenKind](#TokenKind)<"until"><div id="condition"></div>
+[TokenKind](#TokenKind)&lt;"until"&gt;<div id="condition"></div>
 
 ### condition
 
@@ -6798,7 +6798,7 @@ type Stat_If = {
 
 The `if` token.
 
-[TokenKind](#TokenKind)<"if"><div id="branches"></div>
+[TokenKind](#TokenKind)&lt;"if"&gt;<div id="branches"></div>
 
 ### branches
 
@@ -6806,7 +6806,7 @@ The branches; the `foo then bar() elseif baz then qux()` in
 
 `if foo then bar() elseif baz then qux() else quux() end`.
 
-[Separated](#Separated)<[IfStatBranch](#IfStatBranch), [TokenKind](#TokenKind)<"elseif">><div id="else_branch"></div>
+[Separated](#Separated)&lt;[IfStatBranch](#IfStatBranch), [TokenKind](#TokenKind)&lt;"elseif"&gt;&gt;<div id="else_branch"></div>
 
 ### else_branch
 
@@ -6816,7 +6816,7 @@ The optional else branch; the `else quux()` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"else">, [Block](#Block)?
+[TokenKind](#TokenKind)&lt;"else"&gt;, [Block](#Block)?
 
 <div id="end_tok"></div>
 
@@ -6824,7 +6824,7 @@ The optional else branch; the `else quux()` in
 
 The `end` token.
 
-[TokenKind](#TokenKind)<"end"><div id="Stat_NumericFor"></div>
+[TokenKind](#TokenKind)&lt;"end"&gt;<div id="Stat_NumericFor"></div>
 
 ## Stat_NumericFor
 
@@ -6895,7 +6895,7 @@ type Stat_NumericFor = {
 
 The `for` token.
 
-[TokenKind](#TokenKind)<"for"><div id="binding"></div>
+[TokenKind](#TokenKind)&lt;"for"&gt;<div id="binding"></div>
 
 ### binding
 
@@ -6909,7 +6909,7 @@ The binding; the `foo` in `for foo = 1, 2, 3  do bar() end`.
 
 The equals token; the `=` in `for foo = 1, 2, 3 do bar() end`.
 
-[TokenKind](#TokenKind)<"="><div id="start_expr"></div>
+[TokenKind](#TokenKind)&lt;"="&gt;<div id="start_expr"></div>
 
 ### start_expr
 
@@ -6925,7 +6925,7 @@ The comma between the start and end; the first comma in
 
 `for foo = 1, 2, 3 do bar() end`.
 
-[TokenKind](#TokenKind)<","><div id="end_expr"></div>
+[TokenKind](#TokenKind)&lt;","&gt;<div id="end_expr"></div>
 
 ### end_expr
 
@@ -6941,7 +6941,7 @@ The optional step; the `, 3` in `for foo = 1, 2, 3 do bar() end`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<",">, [Expr](#Expr)?
+[TokenKind](#TokenKind)&lt;","&gt;, [Expr](#Expr)?
 
 <div id="do_tok"></div>
 
@@ -6949,7 +6949,7 @@ The optional step; the `, 3` in `for foo = 1, 2, 3 do bar() end`.
 
 The `do` token.
 
-[TokenKind](#TokenKind)<"do"><div id="block"></div>
+[TokenKind](#TokenKind)&lt;"do"&gt;<div id="block"></div>
 
 ### block
 
@@ -6963,7 +6963,7 @@ The block; the `bar()` in `for foo = 1, 2, 3 do bar() end`.
 
 The `end` token.
 
-[TokenKind](#TokenKind)<"end"><div id="Stat_ForIn"></div>
+[TokenKind](#TokenKind)&lt;"end"&gt;<div id="Stat_ForIn"></div>
 
 ## Stat_ForIn
 
@@ -7019,7 +7019,7 @@ type Stat_ForIn = {
 
 The `for` token.
 
-[TokenKind](#TokenKind)<"for"><div id="bindings"></div>
+[TokenKind](#TokenKind)&lt;"for"&gt;<div id="bindings"></div>
 
 ### bindings
 
@@ -7027,13 +7027,13 @@ The bindings; the `foo: bar, baz` in
 
 `for foo: bar, baz in qux, quux do quuz() end`.
 
-[Separated](#Separated)<[Binding](#Binding), [TokenKind](#TokenKind)<",">><div id="in_tok"></div>
+[Separated](#Separated)&lt;[Binding](#Binding), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="in_tok"></div>
 
 ### in_tok
 
 The `in` token.
 
-[TokenKind](#TokenKind)<"in"><div id="exprs"></div>
+[TokenKind](#TokenKind)&lt;"in"&gt;<div id="exprs"></div>
 
 ### exprs
 
@@ -7041,13 +7041,13 @@ The exprs; the `qux, quux` in
 
 `for foo: bar, baz in qux, quux do quuz() end`.
 
-[Separated](#Separated)<[Expr](#Expr), [TokenKind](#TokenKind)<",">><div id="do_tok"></div>
+[Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="do_tok"></div>
 
 ### do_tok
 
 The `do` token.
 
-[TokenKind](#TokenKind)<"do"><div id="block"></div>
+[TokenKind](#TokenKind)&lt;"do"&gt;<div id="block"></div>
 
 ### block
 
@@ -7063,7 +7063,7 @@ The block; the `quuz()` in
 
 The `end` token.
 
-[TokenKind](#TokenKind)<"end"><div id="Stat_Function"></div>
+[TokenKind](#TokenKind)&lt;"end"&gt;<div id="Stat_Function"></div>
 
 ## Stat_Function
 
@@ -7125,7 +7125,7 @@ The attributes; the `@native` in
 
 `@native function foo.bar:baz() return 1 end`.
 
-{[TokenKind](#TokenKind)<"attribute">}
+{[TokenKind](#TokenKind)&lt;"attribute"&gt;}
 
 <div id="function_tok"></div>
 
@@ -7133,7 +7133,7 @@ The attributes; the `@native` in
 
 The `function` token.
 
-[TokenKind](#TokenKind)<"function"><div id="names"></div>
+[TokenKind](#TokenKind)&lt;"function"&gt;<div id="names"></div>
 
 ### names
 
@@ -7141,7 +7141,7 @@ The name; the `foo.bar` in
 
 `@native function foo.bar:baz() return 1 end`.
 
-[Separated](#Separated)<[TokenKind](#TokenKind)<"ident">, [TokenKind](#TokenKind)<".">><div id="method"></div>
+[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"."&gt;&gt;<div id="method"></div>
 
 ### method
 
@@ -7151,7 +7151,7 @@ The optional method; the `:baz` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<":">, [TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;":"&gt;, [TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="body"></div>
 
@@ -7217,7 +7217,7 @@ The attributes; the `@native` in
 
 `@native local function foo() return 1 end`.
 
-{[TokenKind](#TokenKind)<"attribute">}
+{[TokenKind](#TokenKind)&lt;"attribute"&gt;}
 
 <div id="local_tok"></div>
 
@@ -7225,19 +7225,19 @@ The attributes; the `@native` in
 
 The `local` token.
 
-[TokenKind](#TokenKind)<"local"><div id="function_tok"></div>
+[TokenKind](#TokenKind)&lt;"local"&gt;<div id="function_tok"></div>
 
 ### function_tok
 
 The `function` token.
 
-[TokenKind](#TokenKind)<"function"><div id="name"></div>
+[TokenKind](#TokenKind)&lt;"function"&gt;<div id="name"></div>
 
 ### name
 
 The name; the `foo` in `@native local function foo() return 1 end`.
 
-[TokenKind](#TokenKind)<"ident"><div id="body"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="body"></div>
 
 ### body
 
@@ -7309,7 +7309,7 @@ will result in a syntax error.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="type_tok"></div>
 
@@ -7317,19 +7317,19 @@ will result in a syntax error.
 
 The `type` token.
 
-[TokenKind](#TokenKind)<"type"><div id="function_tok"></div>
+[TokenKind](#TokenKind)&lt;"type"&gt;<div id="function_tok"></div>
 
 ### function_tok
 
 The `function` token.
 
-[TokenKind](#TokenKind)<"function"><div id="name"></div>
+[TokenKind](#TokenKind)&lt;"function"&gt;<div id="name"></div>
 
 ### name
 
 The name; the `foo` in `type function foo() return 1 end`.
 
-[TokenKind](#TokenKind)<"ident"><div id="body"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="body"></div>
 
 ### body
 
@@ -7388,7 +7388,7 @@ type Stat_LocalVariable = {
 
 The `local` token.
 
-[TokenKind](#TokenKind)<"local"><div id="bindings"></div>
+[TokenKind](#TokenKind)&lt;"local"&gt;<div id="bindings"></div>
 
 ### bindings
 
@@ -7396,7 +7396,7 @@ The bindings; the `foo: bar, baz` in
 
 `local foo: bar, baz = qux, quux, quuz`.
 
-[Separated](#Separated)<[Binding](#Binding), [TokenKind](#TokenKind)<",">><div id="values"></div>
+[Separated](#Separated)&lt;[Binding](#Binding), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="values"></div>
 
 ### values
 
@@ -7406,7 +7406,7 @@ The optional values; the `= qux, quux, quuz` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"=">, [Separated](#Separated)<[Expr](#Expr), [TokenKind](#TokenKind)<",">>?
+[TokenKind](#TokenKind)&lt;"="&gt;, [Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;?
 
 <div id="Stat_Type"></div>
 
@@ -7472,7 +7472,7 @@ will result in a syntax error.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)<"ident">?
+[TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="type_tok"></div>
 
@@ -7486,13 +7486,13 @@ Note that the value of this identifier must be `type` otherwise this
 
 will result in a syntax error.
 
-[TokenKind](#TokenKind)<"ident"><div id="name"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="name"></div>
 
 ### name
 
 The name of the type; the `foo` in `export type foo<bar> = baz`.
 
-[TokenKind](#TokenKind)<"ident"><div id="generics"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="generics"></div>
 
 ### generics
 
@@ -7508,7 +7508,7 @@ The optional generic declarations; the `<bar>` in `export type foo<bar> = baz`.
 
 The equals token; the `=` in `export type foo<bar> = baz`.
 
-[TokenKind](#TokenKind)<"="><div id="type"></div>
+[TokenKind](#TokenKind)&lt;"="&gt;<div id="type"></div>
 
 ### type
 
@@ -7670,13 +7670,13 @@ type LastStat_Return = {
 
 The `return` token.
 
-[TokenKind](#TokenKind)<"return"><div id="exprs"></div>
+[TokenKind](#TokenKind)&lt;"return"&gt;<div id="exprs"></div>
 
 ### exprs
 
 The returned exprs; the `foo, bar, baz` in `return foo, bar, baz`.
 
-[Separated](#Separated)<[Expr](#Expr), [TokenKind](#TokenKind)<",">><div id="LastStat_Break"></div>
+[Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="LastStat_Break"></div>
 
 ## LastStat_Break
 
@@ -7711,7 +7711,7 @@ type LastStat_Break = {
 
 The `break` token.
 
-[TokenKind](#TokenKind)<"break"><div id="LastStat_Continue"></div>
+[TokenKind](#TokenKind)&lt;"break"&gt;<div id="LastStat_Continue"></div>
 
 ## LastStat_Continue
 
@@ -7755,7 +7755,7 @@ Note that the value of this identifier must be `continue` otherwise this
 
 will result in a syntax error.
 
-[TokenKind](#TokenKind)<"ident"><div id="LastStat"></div>
+[TokenKind](#TokenKind)&lt;"ident"&gt;<div id="LastStat"></div>
 
 ## LastStat
 
@@ -7831,7 +7831,7 @@ type Block = {
 
 The stats, the `foo(); bar();` in `foo(); bar(); return baz;`.
 
-[Separated](#Separated)<[Stat](#Stat), [TokenKind](#TokenKind)<";">><div id="last_stat"></div>
+[Separated](#Separated)&lt;[Stat](#Stat), [TokenKind](#TokenKind)&lt;";"&gt;&gt;<div id="last_stat"></div>
 
 ### last_stat
 
@@ -7839,7 +7839,7 @@ The optional laststat, the `return baz;` in `foo(); bar(); return baz;`.
 
 *This field is optional and may not be specified*
 
-[LastStat](#LastStat), [TokenKind](#TokenKind)<";">??
+[LastStat](#LastStat), [TokenKind](#TokenKind)&lt;";"&gt;??
 
 <div id="Cst"></div>
 
@@ -7877,4 +7877,4 @@ The block of stats.
 
 The eof token.
 
-[TokenKind](#TokenKind)<"eof">
+[TokenKind](#TokenKind)&lt;"eof"&gt;

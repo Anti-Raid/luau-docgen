@@ -15,7 +15,7 @@ type Partial<T> = MakePartial<T>
 
 </details>
 
-[MakePartial](#MakePartial)<[T](#T)><div id="Snowflake"></div>
+[MakePartial](#MakePartial)&lt;[T](#T)&gt;<div id="Snowflake"></div>
 
 ## Snowflake
 
@@ -6259,7 +6259,7 @@ type AttachmentObject = Partial<{
 
 </details>
 
-[Partial](#Partial)<[Snowflake](#Snowflake), [string](#string), [string](#string)?, [string](#string)?, [string](#string)?, [number](#number), [string](#string), [string](#string), [number](#number)?, [number](#number)?, [boolean](#boolean)?, [number](#number)?, [string](#string)?, [number](#number)><div id="EmbedFooterObject"></div>
+[Partial](#Partial)&lt;[Snowflake](#Snowflake), [string](#string), [string](#string)?, [string](#string)?, [string](#string)?, [number](#number), [string](#string), [string](#string), [number](#number)?, [number](#number)?, [boolean](#boolean)?, [number](#number)?, [string](#string)?, [number](#number)&gt;<div id="EmbedFooterObject"></div>
 
 ## EmbedFooterObject
 
@@ -7235,7 +7235,7 @@ type ButtonComponentObject = Partial<{
 
 </details>
 
-[Partial](#Partial)<[number](#number), [ButtonStyle](#ButtonStyle), [string](#string)?, [EmojiObject](#EmojiObject)?, [string](#string)?, [string](#string)?, [string](#string)?, [boolean](#boolean)?><div id="SelectMenuComponentObject"></div>
+[Partial](#Partial)&lt;[number](#number), [ButtonStyle](#ButtonStyle), [string](#string)?, [EmojiObject](#EmojiObject)?, [string](#string)?, [string](#string)?, [string](#string)?, [boolean](#boolean)?&gt;<div id="SelectMenuComponentObject"></div>
 
 ## SelectMenuComponentObject
 
@@ -7603,7 +7603,7 @@ type PollMediaObject = {
 
 *This field is optional and may not be specified*
 
-[Partial](#Partial)<[EmojiObject](#EmojiObject)>?
+[Partial](#Partial)&lt;[EmojiObject](#EmojiObject)&gt;?
 
 <div id="PollAnswerObject"></div>
 
@@ -11100,5 +11100,5 @@ type InteractionResponseObject = {
 
 *This field is optional and may not be specified*
 
-([Partial](#Partial)<[MessageObject](#MessageObject)> | [InteractionCallbackAutocompleteObject](#InteractionCallbackAutocompleteObject) | [InteractionCallbackModalObject](#InteractionCallbackModalObject))?
+([Partial](#Partial)&lt;[MessageObject](#MessageObject)&gt; | [InteractionCallbackAutocompleteObject](#InteractionCallbackAutocompleteObject) | [InteractionCallbackModalObject](#InteractionCallbackModalObject))?
 
