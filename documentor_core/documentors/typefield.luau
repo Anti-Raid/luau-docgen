@@ -366,6 +366,10 @@ function parseTypeFieldType(
         -- TODO: make this look nicer
         local irNodes: {markdown.MarkdownNode} = {} 
 
+        if fieldtype.data == "nil" then
+            return irNodes -- Nil as a type is pretty useless in documentation
+        end
+
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = istate.plugin.resolveType(fieldtype.type, fieldtype.data),

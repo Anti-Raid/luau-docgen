@@ -98,6 +98,24 @@ function TypeFieldKeyImpl.new(
     return setmetatable(data, TypeFieldKeyImpl) :: types.TypeFieldKey
 end
 
+local TypeFieldTypeFunctionImpl = {}
+TypeFieldTypeFunctionImpl.__index = TypeFieldTypeFunctionImpl
+
+function TypeFieldTypeFunctionImpl.new(
+    --- The generic arguments of the function
+    generics: {types.TypedArgument},
+    --- The arguments of the function
+    args: {types.TypedArgument},
+    --- The return type of the function
+    ret: types.TypeFieldType
+): types.TypeFieldTypeFunction
+    return setmetatable({
+        generics = generics,
+        args = args,
+        ret = ret,
+    }, TypeFieldTypeFunctionImpl) :: types.TypeFieldTypeFunction
+end
+
 -- A hack to convert a statement to a string
 local function stmtToString(node: cst.Stat) 
     local cst: cst.Cst = {
@@ -172,6 +190,96 @@ local function exprToString(node: cst.Expr)
     }
 
     return util.tostring(cst):gsub("return ", "")
+end
+
+--[[
+pub fn create_typed_arguments_from_generic_declaration(
+    &mut self,
+    generic: &GenericDeclaration,
+) -> Vec<TypedArgument> {
+    let mut generics = Vec::with_capacity(generic.generics().len());
+    for generic_decl_param in generic.generics() {
+        let default_type = generic_decl_param
+            .default_type()
+            .map(|t| TypeFieldType::from_luau_typeinfo(self, t));
+
+        let name = match generic_decl_param.parameter() {
+            GenericParameterInfo::Name(name) => extract_name_from_tokenref(name),
+            GenericParameterInfo::Variadic { name, .. } => {
+                format!("...{}", extract_name_from_tokenref(name))
+            }
+            _ => {
+                self.warn_unsupported("Only simple function generics are supported!");
+                continue;
+            }
+        };
+
+        generics.push(TypedArgument {
+            name: Some(name),
+            typ: default_type,
+            punctuation: None,
+        })
+    }
+
+    generics
+}
+]]
+local function create_typed_arguments_from_generic_declaration_with_default(generic_decl: cst.GenericDeclarationWithDefaults): {types.TypedArgument}
+    local generics = {}
+
+    for _, generic_decl_param in generic_decl.names do
+        local typ: types.TypeFieldType? = nil
+
+        if generic_decl_param.node.default then 
+            typ = from_luau_typeinfo_to_typefieldtype(generic_decl_param.node.default.type)
+        end
+
+        local generic: types.TypedArgument = {
+            name = generic_decl_param.node.name.text,
+            typ = typ,
+            punctuation = nil,
+        }
+        table.insert(generics, generic)
+    end
+
+    for _, generic_decl_pack in generic_decl.packs do
+        local typ: types.TypeFieldType? = nil
+        if generic_decl_pack.node.default then 
+            typ = from_luau_typeinfo_to_typefieldtype(generic_decl_pack.node.default.pack)
+        end
+        local generic: types.TypedArgument = {
+            name = generic_decl_pack.node.name.text,
+            typ = typ,
+            punctuation = nil,
+        }
+        table.insert(generics, generic)
+    end
+
+    return generics
+end
+
+local function create_typed_arguments_from_generic_declaration(generic_decl: cst.GenericDeclaration): {types.TypedArgument}
+    local generics = {}
+
+    for _, generic_decl_param in generic_decl.names do
+        local generic: types.TypedArgument = {
+            name = generic_decl_param.node.text,
+            typ = nil,
+            punctuation = nil,
+        }
+        table.insert(generics, generic)
+    end
+
+    for _, generic_decl_pack in generic_decl.packs do
+        local generic: types.TypedArgument = {
+            name = generic_decl_pack.node.name.text,
+            typ = nil,
+            punctuation = nil,
+        }
+        table.insert(generics, generic)
+    end
+
+    return generics
 end
 
 --[[
@@ -480,6 +588,125 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             type = "Table",
             data = fields,
         })
+    elseif typ.kind == "function" then
+        typ = typ :: cst.Type_Function
+        local args = {}
+        for _, arg in typ.params do
+            --[[
+                    let typ = TypeFieldType::from_luau_typeinfo(tbv, arg.type_info());
+
+                    let Some((name, punctuation)) = arg.name() else {
+                        args.push(TypedArgument {
+                            name: None,
+                            typ: Some(typ),
+                            punctuation: None,
+                        });
+                        continue;
+                    };
+
+                    let name = extract_name_from_tokenref(name);
+
+                    args.push(TypedArgument {
+                        name: Some(name),
+                        typ: Some(typ),
+                        punctuation: Some(punctuation.to_string()),
+                    });
+            ]]
+
+            local n = from_luau_typeinfo_to_typefieldtype(arg.node.type)
+            local name: string? = nil
+            local punctuation: string? = nil
+            if arg.node.name then
+                name = arg.node.name.name.text
+                punctuation = arg.node.name.colon.text
+            end
+            table.insert(args, {
+                name = name,
+                typ = n,
+                punctuation = punctuation,
+            })
+        end
+
+        if typ.varargs then
+            local n = from_luau_typeinfo_to_typefieldtype(typ.varargs)
+            table.insert(args, {
+                name = "...",
+                typ = n,
+                punctuation = nil,
+            })
+        end
+
+        local generics: {types.TypedArgument} = {}
+        if typ.generics then
+            generics = create_typed_arguments_from_generic_declaration(typ.generics)
+        end
+
+        return TypeFieldTypeImpl.new({
+            type = "Function",
+            data = TypeFieldTypeFunctionImpl.new(
+                generics,
+                args,
+                from_luau_typeinfo_to_typefieldtype(typ.ret)
+            ),
+        })
+    elseif typ.kind == "paren" then 
+        return from_luau_typeinfo_to_typefieldtype(typ.type)
+    elseif typ.kind == "optional" then
+        typ = typ :: cst.Type_Optional
+        return TypeFieldTypeImpl.new({
+            type = "Optional",
+            data = from_luau_typeinfo_to_typefieldtype(typ.type),
+        })
+    elseif typ.kind == "union" then
+        typ = typ :: cst.Type_Union
+        local types = {}
+        for _, t in typ.types do
+            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node) :: types.TypeFieldType)
+        end
+
+        return TypeFieldTypeImpl.new({
+            type = "Union",
+            data = types,
+        })
+    elseif typ.kind == "intersection" then
+        typ = typ :: cst.Type_Intersection
+        local types = {}
+        for _, t in typ.types do
+            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node) :: types.TypeFieldType)
+        end
+
+        return TypeFieldTypeImpl.new({
+            type = "Union",
+            data = types,
+        })
+    elseif typ.kind == "variadic" then
+        typ = typ :: cst.VariadicTypePack
+        return TypeFieldTypeImpl.new({
+            type = "Variadic",
+            data = from_luau_typeinfo_to_typefieldtype(typ.type),
+        })
+    elseif typ.kind == "generic" then 
+        typ = typ :: cst.GenericTypePack
+        return TypeFieldTypeImpl.new({
+            type = "GenericPack",
+            data = typ.name.text,
+        })
+    elseif typ.kind == "list" then -- Tuple, basically
+        typ = typ :: cst.TypeList
+        local types = {}
+        for _, t in typ.types do
+            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node))
+        end
+
+        if typ.tail then
+            table.insert(types, from_luau_typeinfo_to_typefieldtype(typ.tail))
+        end
+        return TypeFieldTypeImpl.new({
+            type = "Tuple",
+            data = types,
+        })
+    else
+        error("Unsupported feature: " .. typ.kind)
     end
 end
 
@@ -571,53 +798,6 @@ local function parseCst(cst: cst.Cst): {
     local ts = TypeSetImpl.new()
     local unsupported_count = 0
     local function_depth = 0
-
-    --[[
-    pub fn create_typed_arguments_from_generic_declaration(
-        &mut self,
-        generic: &GenericDeclaration,
-    ) -> Vec<TypedArgument> {
-        let mut generics = Vec::with_capacity(generic.generics().len());
-        for generic_decl_param in generic.generics() {
-            let default_type = generic_decl_param
-                .default_type()
-                .map(|t| TypeFieldType::from_luau_typeinfo(self, t));
-
-            let name = match generic_decl_param.parameter() {
-                GenericParameterInfo::Name(name) => extract_name_from_tokenref(name),
-                GenericParameterInfo::Variadic { name, .. } => {
-                    format!("...{}", extract_name_from_tokenref(name))
-                }
-                _ => {
-                    self.warn_unsupported("Only simple function generics are supported!");
-                    continue;
-                }
-            };
-
-            generics.push(TypedArgument {
-                name: Some(name),
-                typ: default_type,
-                punctuation: None,
-            })
-        }
-
-        generics
-    }
-    ]]
-    local function create_typed_arguments_from_generic_declaration(generic_decl: cst.GenericDeclaration): {types.TypedArgument}
-        local generics = {}
-
-        for _, generic_decl_param in generic_decl.packs do
-            local generic: types.TypedArgument = {
-                name = generic_decl_param.node.name.text,
-                typ = nil,
-                punctuation = nil,
-            }
-            table.insert(generics, generic)
-        end
-
-        return generics
-    end
 
     local visitor = visit.visitor()
 
