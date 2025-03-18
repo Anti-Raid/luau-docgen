@@ -625,7 +625,7 @@ type Token = {
 
 </details>
 
-("eof", [Span](#Span), {[Trivia](#Trivia)} | "error", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "ident", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "number", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "string", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "istring_simple", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "istring_first", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "istring_middle", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "istring_last", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "attribute", [string](#string), [Span](#Span), {[Trivia](#Trivia)} | "and", [Span](#Span), {[Trivia](#Trivia)} | "break", [Span](#Span), {[Trivia](#Trivia)} | "do", [Span](#Span), {[Trivia](#Trivia)} | "else", [Span](#Span), {[Trivia](#Trivia)} | "elseif", [Span](#Span), {[Trivia](#Trivia)} | "end", [Span](#Span), {[Trivia](#Trivia)} | "false", [Span](#Span), {[Trivia](#Trivia)} | "for", [Span](#Span), {[Trivia](#Trivia)} | "function", [Span](#Span), {[Trivia](#Trivia)} | "if", [Span](#Span), {[Trivia](#Trivia)} | "in", [Span](#Span), {[Trivia](#Trivia)} | "local", [Span](#Span), {[Trivia](#Trivia)} | "nil", [Span](#Span), {[Trivia](#Trivia)} | "not", [Span](#Span), {[Trivia](#Trivia)} | "or", [Span](#Span), {[Trivia](#Trivia)} | "repeat", [Span](#Span), {[Trivia](#Trivia)} | "return", [Span](#Span), {[Trivia](#Trivia)} | "then", [Span](#Span), {[Trivia](#Trivia)} | "true", [Span](#Span), {[Trivia](#Trivia)} | "until", [Span](#Span), {[Trivia](#Trivia)} | "while", [Span](#Span), {[Trivia](#Trivia)} | "+=", [Span](#Span), {[Trivia](#Trivia)} | "-=", [Span](#Span), {[Trivia](#Trivia)} | "*=", [Span](#Span), {[Trivia](#Trivia)} | "/=", [Span](#Span), {[Trivia](#Trivia)} | "//=", [Span](#Span), {[Trivia](#Trivia)} | "%=", [Span](#Span), {[Trivia](#Trivia)} | "^=", [Span](#Span), {[Trivia](#Trivia)} | "..=", [Span](#Span), {[Trivia](#Trivia)} | "+", [Span](#Span), {[Trivia](#Trivia)} | "-", [Span](#Span), {[Trivia](#Trivia)} | "*", [Span](#Span), {[Trivia](#Trivia)} | "/", [Span](#Span), {[Trivia](#Trivia)} | "//", [Span](#Span), {[Trivia](#Trivia)} | "%", [Span](#Span), {[Trivia](#Trivia)} | "^", [Span](#Span), {[Trivia](#Trivia)} | "..", [Span](#Span), {[Trivia](#Trivia)} | "&lt;", [Span](#Span), {[Trivia](#Trivia)} | "&lt;=", [Span](#Span), {[Trivia](#Trivia)} | "&gt;", [Span](#Span), {[Trivia](#Trivia)} | "&gt;=", [Span](#Span), {[Trivia](#Trivia)} | "==", [Span](#Span), {[Trivia](#Trivia)} | "~=", [Span](#Span), {[Trivia](#Trivia)} | "#", [Span](#Span), {[Trivia](#Trivia)} | "...", [Span](#Span), {[Trivia](#Trivia)} | "&", [Span](#Span), {[Trivia](#Trivia)} | "|", [Span](#Span), {[Trivia](#Trivia)} | "?", [Span](#Span), {[Trivia](#Trivia)} | ":", [Span](#Span), {[Trivia](#Trivia)} | "::", [Span](#Span), {[Trivia](#Trivia)} | "-&gt;", [Span](#Span), {[Trivia](#Trivia)} | "=", [Span](#Span), {[Trivia](#Trivia)} | ",", [Span](#Span), {[Trivia](#Trivia)} | ";", [Span](#Span), {[Trivia](#Trivia)} | ".", [Span](#Span), {[Trivia](#Trivia)} | "(", [Span](#Span), {[Trivia](#Trivia)} | ")", [Span](#Span), {[Trivia](#Trivia)} | "{", [Span](#Span), {[Trivia](#Trivia)} | "}", [Span](#Span), {[Trivia](#Trivia)} | "[", [Span](#Span), {[Trivia](#Trivia)} | "]", [Span](#Span), {[Trivia](#Trivia)})<div id="TokenKind"></div>
+(kind: "eof", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "error", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "ident", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "number", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "string", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "istring_simple", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "istring_first", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "istring_middle", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "istring_last", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "attribute", text: [string](#string), span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "and", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "break", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "do", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "else", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "elseif", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "end", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "false", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "for", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "function", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "if", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "in", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "local", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "nil", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "not", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "or", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "repeat", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "return", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "then", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "true", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "until", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "while", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "+=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "-=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "*=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "/=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "//=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "%=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "^=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "..=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "+", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "-", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "*", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "/", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "//", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "%", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "^", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "..", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "&lt;", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "&lt;=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "&gt;", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "&gt;=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "==", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "~=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "#", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "...", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "&", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "|", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "?", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: ":", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "::", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "-&gt;", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "=", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: ",", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: ";", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: ".", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "(", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: ")", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "{", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "}", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "[", span: [Span](#Span), trivia: {[Trivia](#Trivia)} | kind: "]", span: [Span](#Span), trivia: {[Trivia](#Trivia)})<div id="TokenKind"></div>
 
 ## TokenKind
 
@@ -891,7 +891,7 @@ The generic types; the `A, B,` in `A, B, C...`.
 
 The generic type packs; the `C...` in `A, B, C...`.
 
-[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="GenericDeclarationWithDefaults"></div>
+[Separated](#Separated)&lt;name: [TokenKind](#TokenKind)&lt;"ident"&gt;, dots: [TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="GenericDeclarationWithDefaults"></div>
 
 ## GenericDeclarationWithDefaults
 
@@ -990,7 +990,7 @@ The generic types; the `A = number,` in
 
 `<A = number, B... = (number, ...string)>`.
 
-[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"="&gt;, [Type](#Type)?, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="packs"></div>
+[Separated](#Separated)&lt;name: [TokenKind](#TokenKind)&lt;"ident"&gt;, default: equals: [TokenKind](#TokenKind)&lt;"="&gt;, type: [Type](#Type)?, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="packs"></div>
 
 ### packs
 
@@ -998,7 +998,7 @@ The generic type packs; the `B... = (number, ...string)` in
 
 `<A = number, B... = (number, ...string)>`.
 
-[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;"="&gt;, [TypePack](#TypePack)?, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="TypeArg"></div>
+[Separated](#Separated)&lt;name: [TokenKind](#TokenKind)&lt;"ident"&gt;, dots: [TokenKind](#TokenKind)&lt;"..."&gt;, default: equals: [TokenKind](#TokenKind)&lt;"="&gt;, pack: [TypePack](#TypePack)?, [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="TypeArg"></div>
 
 ## TypeArg
 
@@ -1505,7 +1505,7 @@ The optional prefix; the `foo.` in `foo.bar<baz>`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;"."&gt;?
+name: [TokenKind](#TokenKind)&lt;"ident"&gt;, dot: [TokenKind](#TokenKind)&lt;"."&gt;?
 
 <div id="name"></div>
 
@@ -1521,7 +1521,7 @@ The optional generics; the `<baz>` in `foo.bar<baz>`.
 
 *This field is optional and may not be specified*
 
-[Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"&lt;"&gt;, [TokenKind](#TokenKind)&lt;"&gt;"&gt;&gt;, [Separated](#Separated)&lt;[TypeArg](#TypeArg), [TokenKind](#TokenKind)&lt;","&gt;&gt;?
+angles: [Delim](#Delim)&lt;[TokenKind](#TokenKind)&lt;"&lt;"&gt;, [TokenKind](#TokenKind)&lt;"&gt;"&gt;&gt;, types: [Separated](#Separated)&lt;[TypeArg](#TypeArg), [TokenKind](#TokenKind)&lt;","&gt;&gt;?
 
 <div id="Type_Typeof"></div>
 
@@ -1752,7 +1752,7 @@ The parentheses surrounding the arguments; the `()` in
 
 The parameters; the `foo: T,` in `<T>(foo: T, ...bar) -> baz`.
 
-[Separated](#Separated)&lt;[TokenKind](#TokenKind)&lt;"ident"&gt;, [TokenKind](#TokenKind)&lt;":"&gt;?, [Type](#Type), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="varargs"></div>
+[Separated](#Separated)&lt;name: name: [TokenKind](#TokenKind)&lt;"ident"&gt;, colon: [TokenKind](#TokenKind)&lt;":"&gt;?, type: [Type](#Type), [TokenKind](#TokenKind)&lt;","&gt;&gt;<div id="varargs"></div>
 
 ### varargs
 
@@ -2293,7 +2293,7 @@ The optional type; the `: bar` in `foo: bar`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;":"&gt;, [Type](#Type)?
+colon: [TokenKind](#TokenKind)&lt;":"&gt;, type: [Type](#Type)?
 
 <div id="IString_Simple"></div>
 
@@ -3567,7 +3567,7 @@ The optional method; the `:method` in `root:method(foo)`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;":"&gt;, [TokenKind](#TokenKind)&lt;"ident"&gt;?
+colon: [TokenKind](#TokenKind)&lt;":"&gt;, name: [TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="arg"></div>
 
@@ -4012,7 +4012,7 @@ The optional varargs; the `...: bar` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;"..."&gt;, [TokenKind](#TokenKind)&lt;":"&gt;, ([Type](#Type) | [GenericTypePack](#GenericTypePack))??
+dots: [TokenKind](#TokenKind)&lt;"..."&gt;, type: colon: [TokenKind](#TokenKind)&lt;":"&gt;, type: ([Type](#Type) | [GenericTypePack](#GenericTypePack))??
 
 <div id="ret"></div>
 
@@ -4024,7 +4024,7 @@ The return type; the `: baz` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;":"&gt;, [ReturnType](#ReturnType)?
+colon: [TokenKind](#TokenKind)&lt;":"&gt;, type: [ReturnType](#ReturnType)?
 
 <div id="block"></div>
 
@@ -4540,7 +4540,7 @@ The optional else branch; the `else quux()` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;"else"&gt;, [Block](#Block)?
+else_tok: [TokenKind](#TokenKind)&lt;"else"&gt;, block: [Block](#Block)?
 
 <div id="end_tok"></div>
 
@@ -4665,7 +4665,7 @@ The optional step; the `, 3` in `for foo = 1, 2, 3 do bar() end`.
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;","&gt;, [Expr](#Expr)?
+comma: [TokenKind](#TokenKind)&lt;","&gt;, expr: [Expr](#Expr)?
 
 <div id="do_tok"></div>
 
@@ -4875,7 +4875,7 @@ The optional method; the `:baz` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;":"&gt;, [TokenKind](#TokenKind)&lt;"ident"&gt;?
+colon: [TokenKind](#TokenKind)&lt;":"&gt;, name: [TokenKind](#TokenKind)&lt;"ident"&gt;?
 
 <div id="body"></div>
 
@@ -5130,7 +5130,7 @@ The optional values; the `= qux, quux, quuz` in
 
 *This field is optional and may not be specified*
 
-[TokenKind](#TokenKind)&lt;"="&gt;, [Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;?
+equals: [TokenKind](#TokenKind)&lt;"="&gt;, exprs: [Separated](#Separated)&lt;[Expr](#Expr), [TokenKind](#TokenKind)&lt;","&gt;&gt;?
 
 <div id="Stat_Type"></div>
 
@@ -5463,7 +5463,7 @@ The optional laststat, the `return baz;` in `foo(); bar(); return baz;`.
 
 *This field is optional and may not be specified*
 
-[LastStat](#LastStat), [TokenKind](#TokenKind)&lt;";"&gt;??
+stat: [LastStat](#LastStat), semicolon: [TokenKind](#TokenKind)&lt;";"&gt;??
 
 <div id="Cst"></div>
 

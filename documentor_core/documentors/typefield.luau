@@ -1114,15 +1114,36 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
     end
 
     if inline then 
-        return parseTypeFieldType(
-            {
-                istate = istate,
-                originRepr = transformRepr.transformTypeFieldReprWithPat(typ, nil, "\n"),
-                typ = typ.field_type, 
-                convertedComments = convertedComments,
-                inline = true
-            }
+        local nodes: {markdown.MarkdownNode} = {}
+
+        -- Insert type field name
+        local fieldName = transformRepr.transformTypeFieldKey(typ.field_name)
+        nodes[#nodes + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw(fieldName),
+            inline = true
+        } :: markdown.MarkdownNode
+
+        nodes[#nodes + 1] = {
+            type = "Text" :: "Text",
+            text = markdown.NewMarkdownText_FromRaw(": "),
+            inline = true
+        } :: markdown.MarkdownNode
+        
+        tableext.extend(
+            nodes, 
+            parseTypeFieldType(
+                {
+                    istate = istate,
+                    originRepr = transformRepr.transformTypeFieldReprWithPat(typ, nil, "\n"),
+                    typ = typ.field_type, 
+                    convertedComments = convertedComments,
+                    inline = true
+                }
+            )
         )
+
+        return nodes
     end
 
     local fieldName = transformRepr.transformTypeFieldKey(typ.field_name)
