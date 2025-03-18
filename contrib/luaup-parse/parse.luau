@@ -517,6 +517,154 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
     return TypeFieldImpl.new(comments, key, itype)
 end
 
+--[[
+    pub fn create_type_from_function(
+        &mut self,
+        comments: Vec<String>,
+        name: String,
+        body: &FunctionBody,
+        function_type: FunctionType,
+    ) -> Type {
+        // Get the generics
+        let generics = if let Some(generic) = body.generics() {
+            self.create_typed_arguments_from_generic_declaration(generic)
+        } else {
+            Vec::with_capacity(0)
+        };
+
+        // Convert the args to Vec<(Option<String>, TypeFieldType)>
+        let mut params = Vec::new();
+        for param in body.parameters() {
+            let tokenref = match param {
+                Parameter::Name(name) => name,
+                Parameter::Ellipsis(ellipsis) => ellipsis,
+                _ => {
+                    self.warn_unsupported("Only simple function parameters are supported!");
+                    continue;
+                }
+            };
+
+            params.push(extract_name_from_tokenref(tokenref));
+        }
+
+        let mut typs = Vec::new();
+
+        // The type specifiers of the variables, in the order that they were assigned. (foo: number, bar, baz: boolean) returns an iterator containing: Some(TypeSpecifier(number)), None, Some(TypeSpecifier(boolean)).
+        for typ_specifier in body.type_specifiers() {
+            let Some(typ_specifier) = typ_specifier else {
+                typs.push(None);
+                continue;
+            };
+
+            typs.push(Some(TypeFieldType::from_luau_typeinfo(
+                self,
+                typ_specifier.type_info(),
+            )));
+        }
+
+        let mut args = Vec::with_capacity(params.len());
+        for (param, typ) in params.into_iter().zip(typs) {
+            args.push(TypedArgument {
+                name: Some(param),
+                typ,
+                punctuation: None,
+            });
+        }
+
+        // Get the return type
+        let ret = body
+            .return_type()
+            .map(|typ| TypeFieldType::from_luau_typeinfo(self, typ.type_info()));
+
+        // Create the type
+        Type::Function {
+            inner: TypeFunction {
+                name,
+                type_comments: comments,
+                generics,
+                args,
+                ret,
+                function_type,
+            }
+            .into(),
+        }
+    }
+]]
+local function create_type_from_function(
+    comments: {string},
+    name: string,
+    body: cst.FunctionBody,
+    function_type: "Normal" | "Local"
+): types.TypeFunction 
+    local generics: {types.TypedArgument} = {}
+    if body.generics then
+        generics = create_typed_arguments_from_generic_declaration(body.generics)
+    end
+
+    local args: {types.TypedArgument} = {}
+    for _, param in body.params do
+        local paramname = param.node.name.text
+        local typ: types.TypeFieldType? = nil
+        local punctuation: string? = nil
+        if param.node.type then 
+            typ = from_luau_typeinfo_to_typefieldtype(param.node.type.type)
+            punctuation = param.node.type.colon.text
+        end
+
+        table.insert(args, {
+            name = paramname,
+            typ = typ,
+            punctuation = punctuation,
+        })
+    end
+
+    if body.varargs then 
+        local typ: types.TypeFieldType? = nil
+        if body.varargs.type then 
+            typ = from_luau_typeinfo_to_typefieldtype(body.varargs.type)
+        end
+        table.insert(args, {
+            name = "...",
+            typ = typ,
+            punctuation = nil,
+        })
+    end
+
+    local typs = {}
+
+    for _, typ_specifier in body.type_specifiers do
+        if typ_specifier == nil then
+            table.insert(typs, nil)
+            continue;
+        end
+
+        table.insert(typs, from_luau_typeinfo_to_typefieldtype(typ_specifier.type_info))
+    end
+
+    local args = {}
+    for i, param in params do
+        table.insert(args, {
+            name = param.name.text,
+            typ = typs[i],
+            punctuation = nil,
+        })
+    end
+
+    local ret: types.TypeFieldType? = nil
+    if body.return_type then 
+        ret = from_luau_typeinfo_to_typefieldtype(body.return_type.type_info)
+    end
+
+    return {
+        name = name,
+        type_comments = comments,
+        generics = generics,
+        args = args,
+        ret = ret,
+        function_type = function_type,
+    }
+end
+
 local function parseCst(cst: cst.Cst): {
     unsupported_count: number,
     typeset: types.TypeSet,

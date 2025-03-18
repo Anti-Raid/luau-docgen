@@ -351,7 +351,16 @@ function parseTypeFieldType(
             fieldtype.data.args,
             fieldtype.data.ret
         )
-    elseif fieldtype.type == "String" or fieldtype.type == "Boolean" then                                
+    elseif fieldtype.type == "String" or fieldtype.type == "Boolean" then     
+        if inline then
+            return {
+                {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(fieldtype.data),
+                    inline = true
+                } :: markdown.MarkdownNode
+            }
+        end                           
         -- TODO: make this look nicer
         local irNodes: {markdown.MarkdownNode} = {} 
 
@@ -365,10 +374,6 @@ function parseTypeFieldType(
     elseif fieldtype.type == "Basic" then
         -- TODO: make this look nicer
         local irNodes: {markdown.MarkdownNode} = {} 
-
-        if fieldtype.data == "nil" then
-            return irNodes -- Nil as a type is pretty useless in documentation
-        end
 
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
