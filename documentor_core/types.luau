@@ -81,10 +81,6 @@ export type Globals = {
 export type TypeIterator = (() -> Type)
 
 export type TypeSet = {
-    --- the raw types of the type set as a table
-    dbg__raw_types_table: any,
-    --- the raw types in the type set as userdata
-    raw_types: {Type},
     --- Creates an iterator over the typedefs in the set
     iter_typedefs: (self: TypeSet) -> TypeIterator,
     --- Creates an iterator over the functions in the set
@@ -95,8 +91,6 @@ export type TypeSet = {
 
 --- A documentable type 
 export type Type = {
-    --- the inner data of the type
-    dbg__inner: any,
     --- Extract out the type and variant name
     extract: (self: Type) -> {
         type: "TypeDef",
@@ -113,7 +107,6 @@ export type Type = {
 
 --- A type definition
 export type TypeDef = {
-    dbg__inner: any,
     --- Name of the typedef
     name: string,
     --- generic arguments of the typedef
@@ -126,8 +119,6 @@ export type TypeDef = {
 
 --- A type function
 export type TypeFunction = {
-    --- the inner data of the type
-    dbg__inner: any,
     --- Name of the function
     name: string,
     --- type comments attached to the function
@@ -165,17 +156,19 @@ export type TypeDefTypeTypeofSetMetatable = {
     metatable_fields: {TypeField},
 }
 
+export type TypeFieldKey_Inner = {
+    type: "Name",
+    name: string
+} | {
+    type: "IndexSignature",
+    start_tok: string,
+    inner: TypeFieldType,
+    end_tok: string
+}
+
 export type TypeFieldKey = {
     --- Extract out the type field and variant name
-    extract: (self: TypeFieldKey) -> {
-        type: "Name",
-        name: string
-    } | {
-        type: "IndexSignature",
-        start_tok: string,
-        inner: TypeFieldType,
-        end_tok: string
-    }
+    extract: (self: TypeFieldKey) -> TypeFieldKey_Inner
 }
 
 --- A type field used within table types. The foo: number in { foo: number }.
@@ -188,99 +181,100 @@ export type TypeField = {
     field_type: TypeFieldType,
 }
 
+export type TypeFieldType_Inner = {
+    type: "Basic",
+    data: string,
+} | 
+--- A string singleton ("hello")
+{
+    type: "String",
+    data: string,
+} | 
+--- A boolean singleton (true, false)
+{
+    type: "Boolean",
+    data: boolean
+} | 
+--- An array of a type
+{
+    type: "Array",
+    data: TypeFieldType,
+} | 
+--- A variadic type, similar to Array ...number
+{
+    type: "Variadic",
+    data: TypeFieldType,
+} | 
+--- A variadic type pack: ...T in Function<...T>
+{
+    type: "VariadicPack",
+    data: string,
+} | 
+--- A function type
+{
+    type: "Function",
+    data: TypeFieldTypeFunction,
+} | 
+--- Contains the inner table fields
+{
+    type: "Table",
+    data: {TypeField},
+} | 
+--- A type using generics, such as map<number, string>.
+{
+    type: "Generic",
+    data: TypeFieldTypeGeneric,
+} | 
+--- T...
+{
+    type: "GenericPack",
+    data: string,
+} |
+--- A union type (e.g. string | number)
+{
+    type: "Union",
+    data: {TypeFieldType},
+} |
+--- A type intersection (e.g. string & number)
+{
+    type: "Intersection",
+    data: {TypeFieldType},
+} |
+--- A module
+{
+    type: "Module",
+    data: TypeFieldTypeModule,
+} | 
+--- Unknown module
+---
+--- Contains the module name, which may be an empty string    
+{
+    type: "UnknownModule",
+    data: string,
+} | 
+--- An optional type
+{
+    type: "Optional",
+    data: TypeFieldType,
+} |
+--- Tuple type
+{
+    type: "Tuple",
+    data: {TypeFieldType},
+} | 
+--- A typeof statement
+---
+--- Inner is the contents of the statement
+{
+    type: "TypeOf",
+    data: string,
+}
+
 --- Compact type information (Any type, such as string, boolean?, number | boolean, etc)
+-- A basic primitive type (string, number, etc)
 export type TypeFieldType = {
     --- Extract out the type and variant name
-    extract: (self: TypeFieldType) -> 
-    -- A basic primitive type (string, number, etc)
-    {
-        type: "Basic",
-        data: string,
-    } | 
-    --- A string singleton ("hello")
-    {
-        type: "String",
-        data: string,
-    } | 
-    --- A boolean singleton (true, false)
-    {
-        type: "Boolean",
-        data: boolean
-    } | 
-    --- An array of a type
-    {
-        type: "Array",
-        data: TypeFieldType,
-    } | 
-    --- A variadic type, similar to Array ...number
-    {
-        type: "Variadic",
-        data: TypeFieldType,
-    } | 
-    --- A variadic type pack: ...T in Function<...T>
-    {
-        type: "VariadicPack",
-        data: string,
-    } | 
-    --- A function type
-    {
-        type: "Function",
-        data: TypeFieldTypeFunction,
-    } | 
-    --- Contains the inner table fields
-    {
-        type: "Table",
-        data: {TypeField},
-    } | 
-    --- A type using generics, such as map<number, string>.
-    {
-        type: "Generic",
-        data: TypeFieldTypeGeneric,
-    } | 
-    --- T...
-    {
-        type: "GenericPack",
-        data: string,
-    } |
-    --- A union type (e.g. string | number)
-    {
-        type: "Union",
-        data: {TypeFieldType},
-    } |
-    --- A type intersection (e.g. string & number)
-    {
-        type: "Intersection",
-        data: {TypeFieldType},
-    } |
-    --- A module
-    {
-        type: "Module",
-        data: TypeFieldTypeModule,
-    } | 
-    --- Unknown module
-    ---
-    --- Contains the module name, which may be an empty string    
-    {
-        type: "UnknownModule",
-        data: string,
-    } | 
-    --- An optional type
-    {
-        type: "Optional",
-        data: TypeFieldType,
-    } |
-    --- Tuple type
-    {
-        type: "Tuple",
-        data: {TypeFieldType},
-    } | 
-    --- A typeof statement
-    ---
-    --- Inner is the contents of the statement
-    {
-        type: "TypeOf",
-        data: string,
-    },
+    extract: (self: TypeFieldType) -> TypeFieldType_Inner
 }
 
 --- A typed argument with an optional name and typ

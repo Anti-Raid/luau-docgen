@@ -21,8 +21,25 @@ export type a = {
 }
 
 --Comment here
-local function foo(a, b: number) end
-local function bar(a: string, b: number) end
+local function foo(a, b: number) 
+  local function shouldNotBeDocumented() 
+    function shouldAlsoNotBeDocumentedI() end
+  end
+
+  function shouldAlsoNotBeDocumented() end
+
+  export type abc = {
+    c: "A",
+    b: number
+  } | {
+    c: "B",
+    d: string
+  }
+end
+
+local function bar(a: string, b: number) 
+  function shouldAlsoNotBeDocumented() end
+end
 
 -- Meow
 ---@field a Input string

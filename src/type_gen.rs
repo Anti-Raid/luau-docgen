@@ -478,6 +478,7 @@ pub struct TypeBlockVisitor {
     pub found_types: Vec<Type>,
     pub include_nonexported_types: bool,
     pub unsupported_count: usize,
+    pub function_depth: usize, // Book keeping to avoid documenting inner function
 
     /// Book keeping to avoid typedef duplication
     ///
@@ -788,6 +789,12 @@ impl TypeBlockVisitor {
 
 impl Visitor for TypeBlockVisitor {
     fn visit_function_declaration(&mut self, node: &full_moon::ast::FunctionDeclaration) {
+        if self.function_depth > 0 {
+            self.function_depth += 1;
+            return;
+        }
+
+        self.function_depth += 1;
         let comments = get_comments_from_token_ref(node.function_token());
         let node_names = node.name().to_string();
         let typ =
@@ -795,7 +802,17 @@ impl Visitor for TypeBlockVisitor {
         self.found_types.push(typ);
     }
 
+    fn visit_function_declaration_end(&mut self, _node: &full_moon::ast::FunctionDeclaration) {
+        self.function_depth -= 1;
+    }
+
     fn visit_local_function(&mut self, node: &LocalFunction) {
+        if self.function_depth > 0 {
+            self.function_depth += 1;
+            return;
+        }
+
+        self.function_depth += 1;
         let comments = get_comments_from_token_ref(node.local_token());
         let node_name = extract_name_from_tokenref(node.name());
         let typ =
@@ -803,7 +820,15 @@ impl Visitor for TypeBlockVisitor {
         self.found_types.push(typ);
     }
 
+    fn visit_local_function_end(&mut self, _node: &LocalFunction) {
+        self.function_depth -= 1;
+    }
+
     fn visit_exported_type_declaration(&mut self, node: &ExportedTypeDeclaration) {
+        if self.function_depth > 0 {
+            return; // Don't document inner exported types
+        }
+
         let Some(typ) = self.create_type_from_type_decl(
             get_comments_from_token_ref(node.export_token()),
             node.type_declaration(),
@@ -817,6 +842,10 @@ impl Visitor for TypeBlockVisitor {
     }
 
     fn visit_type_declaration(&mut self, node: &TypeDeclaration) {
+        if self.function_depth > 0 {
+            return; // Don't document inner types
+        }
+
         if self.include_nonexported_types {
             let type_name = extract_name_from_tokenref(node.type_name());
 

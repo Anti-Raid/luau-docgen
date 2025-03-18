@@ -5,6 +5,7 @@ local documentor = require("./documentor_core/documentor")
 local types = require("./documentor_core/types")
 local getrt = require("./contrib/luaup-parse/rtenhance/getrt")
 local pp = require("./documentor_core/pp")
+local parseContentsToTypeset = require("./contrib/luaup-parse/parse")
 
 local rtspecific = getrt()
 
@@ -24,7 +25,7 @@ local globals: types.Globals = {
         unsupported_count: number,
         typeset: types.TypeSet,
     }
-        error("Parsing to typeset is not yet supported")
+        return parseContentsToTypeset(opts.contents)
     end,
     --[[
     fs_readfile: (path: string) -> string, -- returns the contents of the file

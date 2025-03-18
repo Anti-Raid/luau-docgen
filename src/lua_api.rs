@@ -320,50 +320,17 @@ impl LuaUserData for Globals {
 
 pub struct TypeSet {
     types: Vec<Type>,
-    cached_data: RefCell<Option<LuaValue>>,
 }
 
 impl TypeSet {
     pub fn new(types: Vec<crate::type_gen::Type>) -> Self {
         Self {
             types: types.into_iter().map(|t| Type { inner_typ: t }).collect(),
-            cached_data: RefCell::new(None),
         }
     }
 }
 
 impl LuaUserData for TypeSet {
-    fn add_fields<F: LuaUserDataFields<Self>>(fields: &mut F) {
-        // Returns the full internal representation of the type set as a table
-        fields.add_field_method_get("dbg__raw_types_table", |lua, this| {
-            // Check for cached serialized data
-            let mut cached_data = this
-                .cached_data
-                .try_borrow_mut()
-                .map_err(|e| LuaError::external(e.to_string()))?;
-
-            if let Some(v) = cached_data.as_ref() {
-                return Ok(v.clone());
-            }
-
-            let v = lua.to_value_with(
-                &this.types,
-                LuaSerializeOptions::new().serialize_none_to_null(false),
-            )?;
-
-            *cached_data = Some(v.clone());
-
-            Ok(v)
-        });
-
-        // Returns the types in the set as userdata
-        fields.add_field_method_get("raw_types", |_lua, this| {
-            let types = this.types.clone();
-
-            Ok(types)
-        });
-    }
-
     fn add_methods<M: LuaUserDataMethods<Self>>(methods: &mut M) {
         // Creates an iterator over the typedefs in the set
         methods.add_method("iter_typedefs", |_, this, ()| {
