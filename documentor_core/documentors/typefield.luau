@@ -384,7 +384,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             fieldtype.data.args,
             fieldtype.data.ret
         )
-    elseif fieldtype.type == "String" or fieldtype.type == "Boolean" then     
+    elseif fieldtype.type == "String" or fieldtype.type == "Boolean" then  
         if data.inline then
             return {
                 {

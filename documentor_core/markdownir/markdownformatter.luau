@@ -39,7 +39,8 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
             )
         )
         return "`" .. stringified .. "`"    
-    elseif n.style == "Unstyled" then return "" .. n.text:gsub("*", "\*"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("=", "\=") .. ""
+    elseif n.style == "Unstyled" then 
+        return "" .. n.text:gsub("*", "\\*"):gsub("<", "&lt;"):gsub(">", "&gt;") .. ""
     elseif n.style == "Raw" then return n.text
     else return n.node end
 end
