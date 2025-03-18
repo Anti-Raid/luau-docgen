@@ -203,7 +203,7 @@ local function parseFunctionInline(
     if #generics > 0 then 
         parsedFields[#parsedFields + 1] = {
             type = "Text" :: "Text",
-            text = markdown.NewMarkdownText_FromRaw("<", true),
+            text = markdown.NewMarkdownText_FromRaw("<"),
             inline = true
         } :: any
         for i, generic in generics do 
@@ -356,7 +356,7 @@ function parseTypeFieldType(
             return {
                 {
                     type = "Text" :: "Text",
-                    text = markdown.NewMarkdownText_FromRaw(tostring(fieldtype.data), true),
+                    text = markdown.NewMarkdownText_FromUnstyled(tostring(fieldtype.data)),
                     inline = true
                 } :: markdown.MarkdownNode
             }
@@ -730,7 +730,7 @@ function parseTypeFieldType(
                     if not hasAddedBracket then
                         irNodes[#irNodes + 1] = {
                             type = "Text" :: "Text",
-                            text = markdown.NewMarkdownText_FromRaw("<", true),
+                            text = markdown.NewMarkdownText_FromUnstyled("<"),
                             inline = true
                         } :: any
                     end
@@ -738,7 +738,7 @@ function parseTypeFieldType(
                     if not hasAddedBracket then
                         irNodes[#irNodes + 1] = {
                             type = "Text" :: "Text",
-                            text = markdown.NewMarkdownText_FromRaw(">", true),
+                            text = markdown.NewMarkdownText_FromUnstyled(">"),
                             inline = true
                         } :: any
                         hasAddedBracket = true
@@ -855,7 +855,7 @@ function parseTypeFieldType(
             {
                 type = "Link" :: "Link",
                 url = istate.plugin.resolveType(fieldtype.type, fieldtype.data.base),
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+                text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data.base),
                 inline = true
             }
         } :: {markdown.MarkdownNode}
@@ -863,7 +863,7 @@ function parseTypeFieldType(
         if #fieldtype.data.generics > 0 then
             nodes[#nodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("<", true),
+                text = markdown.NewMarkdownText_FromUnstyled("<"),
                 inline = true
             } :: any
         end
@@ -891,7 +891,7 @@ function parseTypeFieldType(
         if #fieldtype.data.generics > 0 then
             nodes[#nodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw(">", true),
+                text = markdown.NewMarkdownText_FromUnstyled(">"),
                 inline = true
             } :: any
         end
@@ -980,7 +980,7 @@ function parseTypeFieldType(
         local blockNodes: {markdown.MarkdownNode} = {}
         blockNodes[#blockNodes + 1] = {
             type = "Text" :: "Text",
-            text = markdown.NewMarkdownText_FromRaw("[Documentor] Unsupported type: " .. fieldtype.type)
+            text = markdown.NewMarkdownText_FromUnstyled("[Documentor] Unsupported type: " .. fieldtype.type)
         } :: markdown.MarkdownNode
     end
 

@@ -3,7 +3,6 @@
 export type MarkdownTextNode = {
     text: string,
     style: "Raw",
-    escapeAngles: boolean?
 } | {
     node: {MarkdownTextNode},
     style: "Bold"
@@ -67,11 +66,10 @@ local function NewMarkdownTextNode_Unstyled(node: string): MarkdownTextNode
     }
 end
 
-local function NewMarkdownTextNode_Raw(node: string, escapeAngles: boolean?): MarkdownTextNode
+local function NewMarkdownTextNode_Raw(node: string): MarkdownTextNode
     return {
         text = node,
         style = "Raw",
-        escapeAngles = escapeAngles
     }
 end
 
@@ -79,10 +77,18 @@ export type MarkdownText = {
     nodes: {MarkdownTextNode}
 }
 
-local function NewMarkdownText_FromRaw(text: string, escapeAngles: boolean?): MarkdownText
+local function NewMarkdownText_FromRaw(text: string): MarkdownText
     return {
         nodes = {
-            NewMarkdownTextNode_Raw(text, escapeAngles)
+            NewMarkdownTextNode_Raw(text)
+        }
+    }
+end
+
+local function NewMarkdownText_FromUnstyled(text: string): MarkdownText
+    return {
+        nodes = {
+            NewMarkdownTextNode_Unstyled(text)
         }
     }
 end
@@ -165,6 +171,7 @@ return {
     NewMarkdownTextNode_Code = NewMarkdownTextNode_Code,
     NewMarkdownTextNode_Unstyled = NewMarkdownTextNode_Unstyled,
     NewMarkdownTextNode_Raw = NewMarkdownTextNode_Raw,
+    NewMarkdownText_FromUnstyled = NewMarkdownText_FromUnstyled,
     NewMarkdownText_FromNodeArray = NewMarkdownText_FromNodeArray,
     NewMarkdownText_FromNodes = NewMarkdownText_FromNodes,
     NewMarkdownText_FromRaw = NewMarkdownText_FromRaw,
