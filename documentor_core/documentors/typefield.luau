@@ -421,6 +421,13 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             -- Special code for inline tables
             local parsedFields: {markdown.MarkdownNode} = {}
 
+            -- Start with the opening bracket
+            parsedFields[#parsedFields + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw("{"),
+                inline = true
+            } :: markdown.MarkdownNode
+
             for i, field in fieldtype.data do 
                 tableext.extend(parsedFields, parseTypeField(data.istate, field, data.inline))
                 if i < #fieldtype.data then
@@ -432,6 +439,13 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 end
             end
 
+            -- End with the closing bracket
+            parsedFields[#parsedFields + 1] = {
+                type = "Text" :: "Text",
+                text = markdown.NewMarkdownText_FromRaw("}"),
+                inline = true
+            } :: markdown.MarkdownNode
+
             local blockNodes: {markdown.MarkdownNode} = {}
             if #parsedFields > 0 then
                 blockNodes[#blockNodes + 1] = {
@@ -442,6 +456,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             end
             return blockNodes    
         end
+        
         local parsedFields: {markdown.MarkdownNode} = {
             {
                 type = "Text" :: "Text",
