@@ -693,7 +693,7 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         })
     elseif typ.kind == "list" then -- Tuple, basically
         typ = typ :: cst.TypeList
-        local types = {}
+        local types: {types.TypeFieldType} = {}
         for _, t in typ.types do
             table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node))
         end
