@@ -2852,7 +2852,7 @@ The angles surrounding the generic declaration; the `<>` in
 
 `<A, B, C...>`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"<">, [TokenKind](#TokenKind)<">">><div id="names"></div>
+[Delim](#Delim)<[TokenKind](#TokenKind)<"&lt;">, [TokenKind](#TokenKind)<"&gt;">><div id="names"></div>
 
 ### names
 
@@ -2955,7 +2955,7 @@ The angles surrounding the generic declaration; the `<>` in
 
 `<A = number, B... = (number, ...string)>`.
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"<">, [TokenKind](#TokenKind)<">">><div id="names"></div>
+[Delim](#Delim)<[TokenKind](#TokenKind)<"&lt;">, [TokenKind](#TokenKind)<"&gt;">><div id="names"></div>
 
 ### names
 
@@ -3494,7 +3494,7 @@ The optional generics; the `<baz>` in `foo.bar<baz>`.
 
 *This field is optional and may not be specified*
 
-[Delim](#Delim)<[TokenKind](#TokenKind)<"<">, [TokenKind](#TokenKind)<">">>, [Separated](#Separated)<[TypeArg](#TypeArg), [TokenKind](#TokenKind)<",">>?
+[Delim](#Delim)<[TokenKind](#TokenKind)<"&lt;">, [TokenKind](#TokenKind)<"&gt;">>, [Separated](#Separated)<[TypeArg](#TypeArg), [TokenKind](#TokenKind)<",">>?
 
 <div id="Type_Typeof"></div>
 
@@ -3741,7 +3741,7 @@ The optional varargs; the `...bar` in `<T>(foo: T, ...bar) -> baz`.
 
 The arrow; the `->` in `<T>(foo: T, ...bar) -> baz`.
 
-[TokenKind](#TokenKind)<"->"><div id="ret"></div>
+[TokenKind](#TokenKind)<"-&gt;"><div id="ret"></div>
 
 ### ret
 
@@ -4635,22 +4635,22 @@ Union with variants:
 <details>
 <summary>Variant 9</summary>
 
-[TokenKind](#TokenKind)<"<"></details>
+[TokenKind](#TokenKind)<"&lt;"></details>
 
 <details>
 <summary>Variant 10</summary>
 
-[TokenKind](#TokenKind)<"<="></details>
+[TokenKind](#TokenKind)<"&lt;="></details>
 
 <details>
 <summary>Variant 11</summary>
 
-[TokenKind](#TokenKind)<">"></details>
+[TokenKind](#TokenKind)<"&gt;"></details>
 
 <details>
 <summary>Variant 12</summary>
 
-[TokenKind](#TokenKind)<">="></details>
+[TokenKind](#TokenKind)<"&gt;="></details>
 
 <details>
 <summary>Variant 13</summary>

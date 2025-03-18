@@ -356,7 +356,7 @@ function parseTypeFieldType(
             return {
                 {
                     type = "Text" :: "Text",
-                    text = markdown.NewMarkdownText_FromRaw(fieldtype.data),
+                    text = markdown.NewMarkdownText_FromRaw(fieldtype.data, true),
                     inline = true
                 } :: markdown.MarkdownNode
             }
