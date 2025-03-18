@@ -12,7 +12,7 @@ local function parseAnonymousArgData(
     local retComment: string = ""
 
     local potComment: string? = nil
-
+  
     if docsMap[tostring(i)] then 
         potComment = docsMap[tostring(i)]
     elseif i == 1 then 

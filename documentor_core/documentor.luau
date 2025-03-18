@@ -42,27 +42,25 @@ local function init(globals: types.Globals)
         plugin = istatemod.DefaultPlugin, 
     }
 
-    -- Load the plugin if it exists
-    if md.plugin then
-        istate.plugin = istatemod.loadPlugin(istate, md.plugin)
-    end
-
+    -- Load all plugins
+    istate.plugin = istatemod.loadAllPlugins(istate, istate.md.plugins)
+ 
     -- Before doing anything else, make sure we can safely require stuff
     print("Running reqtest self-test for requires")
     local a = require"./reqtest/a"
     assert(a.a == 1) -- Ensure stable requires
     print("Passed reqtest self-test for requires")
-
+ 
     -- Read files, document and save
-    istate.plugin.onInitialize(istate)
+    istate.plugin.onInitialize(istate) 
 
-    for _, fileIn in md.files do
+    for _, fileIn in md.files do 
         local contents = globals.fs_readfile(fileIn)
-        if not contents then
+        if not contents then 
             error("Failed to read file: " .. fileIn)
-        end
-
-        -- Parse the file
+        end 
+    
+        -- Parse the file  
         local resultTab = globals.parsetotypeset({
             contents = contents,
             include_nonexported_types = md.ignorenonexportedtypes

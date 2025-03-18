@@ -12,7 +12,7 @@ serde = "1"
 include_dir = "0.7.4"
 
 # Scripting
-mlua = { git = "https://github.com/Anti-Raid/mlua", branch = "dev", features = ["luau", "serialize"] }
+mlua = { git = "https://github.com/mlua-rs/mlua", features = ["luau", "serialize"] }
 
 [features]
 default = []

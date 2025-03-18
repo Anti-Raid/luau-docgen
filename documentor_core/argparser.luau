@@ -8,7 +8,7 @@ export type ParsedArgumentResult = {
     --- Files to document
     files: {string},
     --- What plugin file (if any) to load
-    plugin: string?,
+    plugins: {string},
     --- Ignore non exported types or not
     ignorenonexportedtypes: boolean,
     --- Whether or not to error on unsupported types
@@ -79,10 +79,12 @@ local argmap: ArgMap = {
     },
     plugin = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-            output.plugin = values[1]
+            for _, plugin in values do
+                output.plugins[#output.plugins + 1] = plugin
+            end
         end,
-        opts = "<plugin file>",
-        description = "Plugin file to load",
+        opts = "<plugin files>",
+        description = "Plugin files to load",
     },
     help = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
@@ -100,7 +102,7 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
     local output: ParsedArgumentResult = {
         modname = "",
         files = {},
-        plugin = nil,
+        plugins = {},
         ignorenondoc = false,
         debugmode = false,
         erroronunsupported = false,

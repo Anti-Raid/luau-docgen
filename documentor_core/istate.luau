@@ -1,13 +1,28 @@
 --!strict
 
 local types = require("./types")
+local convertComments = require("./convertcomments")
 local argparser = require("./argparser")
+local partial = require("./partial")
 
 -- Common internal state
 export type IState = {
     globals: types.Globals,
     md: argparser.ParsedArgumentResult,
     plugin: Plugin
+}
+
+--- Data passed to typefieldtype
+export type ParseTypeFieldTypeData = {
+    istate: IState,
+    --- Full repr of the type originally prior to descent
+    originRepr: string?, 
+    --- The type being parsed
+    typ: types.TypeFieldType,
+    --- Converted comments for the type field itself 
+    convertedComments: convertComments.ConvertCommentResponse,
+    --- Whether the type field is inline or not
+    inline: boolean?
 }
 
 --- The header that must be set in the plugin
@@ -43,12 +58,20 @@ Can be used to modify the istate before the documentor runs as tables are passed
     ]]
     onInitialize: (istate: IState) -> (),
 
-    --- Resolves a module to a link/url
-    resolveModule: (module: string) -> string,
-
     --- Resolves a type to a link/url
-    resolveType: (fieldtype: string, type: string) -> string,
+    resolveTypeToUrl: (fieldtype: string, type: string) -> string,
+
+    --- Resolves a module type to the module url and type url
+    resolveModuleToUrl: (fieldtype: string, module: string, type: string) -> {
+        moduleUrl: string,
+        typeUrl: string,
+    },
+
+    --- Called when a type field is being parsed. Can be used to modify how types are parsed
+    onParseTypeFieldType: (data: ParseTypeFieldTypeData) -> (),
 }
+
+export type OptionalPlugin = partial.Partial<Plugin>
 
 local DefaultPlugin: Plugin = {
     plugin_header = PLUGIN_HEADER,
@@ -60,21 +83,99 @@ local DefaultPlugin: Plugin = {
         -- Do nothing
     end,
 
-    resolveModule = function(module: string): string
+    resolveModuleToUrl = function(fieldtype: string, module: string, type: string): {
+        moduleUrl: string,
+        typeUrl: string
+    }
         -- Default implementation
-        return `#module.{module}`
+        return {
+            moduleUrl = `#module.{module}`,
+            typeUrl = `#{type}`,
+        }
     end,
 
-    resolveType = function(fieldtype: string, type: string): string
+    resolveTypeToUrl = function(fieldtype: string, type: string): string
         -- Default implementation
         return `#{type}`
     end,
+
+    onParseTypeFieldType = function(data: ParseTypeFieldTypeData)
+        -- Do nothing
+    end,
 }
+
+local ChainPlugin = {}
+ChainPlugin.__index = ChainPlugin
+
+function ChainPlugin.new(plugins: {OptionalPlugin}): Plugin
+    local ChainPlugin = {
+        plugin_header = PLUGIN_HEADER,
+    }
+
+    function ChainPlugin.chainWith(plugin: Plugin)
+        table.insert(plugins, plugin)
+    end
+
+    function ChainPlugin.setTypeSet(typeset: types.TypeSet)
+        for _, plugin in plugins do
+            if plugin.setTypeSet then
+                plugin.setTypeSet(typeset)
+            end
+        end
+    end
+
+    function ChainPlugin.onInitialize(istate: IState)
+        for _, plugin in plugins do
+            if plugin.onInitialize then
+                plugin.onInitialize(istate)
+            end
+        end
+    end
+
+    function ChainPlugin.resolveModuleToUrl(fieldtype: string, module: string, type: string): {
+        moduleUrl: string,
+        typeUrl: string,
+    }
+        for _, plugin in plugins do
+            if plugin.resolveModuleToUrl then
+                local url = plugin.resolveModuleToUrl(fieldtype, module, type)
+                if url and url.moduleUrl and url.typeUrl and url.moduleUrl ~= "" and url.typeUrl ~= "" then
+                    return url
+                end
+            end
+        end
+
+        return DefaultPlugin.resolveModuleToUrl(fieldtype, module, type)
+    end
+
+    function ChainPlugin.resolveTypeToUrl(fieldtype: string, type: string): string
+        for _, plugin in plugins do
+            if plugin.resolveTypeToUrl then
+                local url = plugin.resolveTypeToUrl(fieldtype, type)
+                if url and url ~= "" then
+                    return url
+                end
+            end
+        end
+
+        return DefaultPlugin.resolveTypeToUrl(fieldtype, type)
+    end
+
+    function ChainPlugin.onParseTypeFieldType(data: ParseTypeFieldTypeData)
+        for _, plugin in plugins do
+            if plugin.onParseTypeFieldType then
+                plugin.onParseTypeFieldType(data)
+            end
+        end
+    end
+
+    return setmetatable(ChainPlugin, ChainPlugin)
+end
 
 --- Attempts to load a plugin at path
 local function loadPlugin(istate: IState, path: string): Plugin
     istate.globals.require_builtins = false
-    local ok, plugin: Plugin? = pcall(require, istate.md.plugin)
+    local ok, plugin: Plugin? = pcall(require, path)
     
     if not ok then
         istate.globals.require_builtins = true -- Reset to default to avoid side effects
@@ -88,14 +189,33 @@ local function loadPlugin(istate: IState, path: string): Plugin
 
     istate.globals.require_builtins = true -- Reset to default to avoid side effects
 
+    -- If type(plugin) is a function, then call it with the current istate to allow for plugin chaining
+
     assert(type(plugin) == "table" or type(plugin) == "userdata", "Invalid plugin load request. Plugin is not a table or userdata: " .. tostring(plugin))
     assert(plugin.plugin_header == PLUGIN_HEADER, "Invalid plugin load request. Plugin header mismatch: " .. tostring(plugin.plugin_header) .. " != " .. PLUGIN_HEADER)
 
     return plugin
 end
 
+--- Attempts to load all plugins desired
+local function loadAllPlugins(istate: IState, plugins: {string}): Plugin
+    local loadedPlugins: {OptionalPlugin} = {}
+
+    for _, plugin in plugins do
+        loadedPlugins[#loadedPlugins + 1] = loadPlugin(istate, plugin) :: OptionalPlugin
+    end
+
+    if #loadedPlugins == 0 then
+        return DefaultPlugin
+    end
+
+    -- Otherwise, chain them together
+    return ChainPlugin.new(loadedPlugins)
+end
+
 return {
     PLUGIN_HEADER = PLUGIN_HEADER,
-    DefaultPlugin = DefaultPlugin,
+    DefaultPlugin = DefaultPlugin, 
     loadPlugin = loadPlugin,
+    loadAllPlugins = loadAllPlugins,
 }

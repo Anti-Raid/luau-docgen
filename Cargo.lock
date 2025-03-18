@@ -330,9 +330,9 @@ dependencies = [
 
 [[package]]
 name = "luau0-src"
-version = "0.11.2+luau653"
+version = "0.12.3+luau663"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02313a53daf1fae25e82f7e7ca56180b72d1f08c514426672877cd957298201c"
+checksum = "76ae337c644bbf86a8d8e9ce3ee023311833d41741baf5e51acc31b37843aba1"
 dependencies = [
  "cc",
 ]
@@ -345,8 +345,8 @@ checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "mlua"
-version = "0.10.2"
-source = "git+https://github.com/Anti-Raid/mlua?branch=dev#0e84d814918dbf07dc0bcdf775dacea6709a96bc"
+version = "0.10.3"
+source = "git+https://github.com/mlua-rs/mlua#edbf1e91500b4703ec2b6dfc590593b3ce632acd"
 dependencies = [
  "bstr",
  "either",
@@ -356,14 +356,15 @@ dependencies = [
  "num-traits",
  "parking_lot",
  "rustc-hash",
+ "rustversion",
  "serde",
  "serde-value",
 ]
 
 [[package]]
 name = "mlua-sys"
-version = "0.6.6"
-source = "git+https://github.com/Anti-Raid/mlua?branch=dev#0e84d814918dbf07dc0bcdf775dacea6709a96bc"
+version = "0.6.7"
+source = "git+https://github.com/mlua-rs/mlua#edbf1e91500b4703ec2b6dfc590593b3ce632acd"
 dependencies = [
  "cc",
  "cfg-if",
@@ -506,6 +507,12 @@ name = "rustc-hash"
 version = "2.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "357703d41365b4b27c590e3ed91eabb1b663f07c4c084095e60cbed4362dff0d"
+
+[[package]]
+name = "rustversion"
+version = "1.0.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eded382c5f5f786b989652c49544c4877d9f015cc22e145a5ea8ea66c2921cd2"
 
 [[package]]
 name = "scopeguard"

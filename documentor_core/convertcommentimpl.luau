@@ -17,7 +17,7 @@ export type Comment = {
     --- List of comments (in order of appearance)
     comments: {InnerComment},
 }
-
+ 
 -- Define InnerComment enum equivalent as a table with functions to create variants
 local InnerComment = {}
 InnerComment.__index = InnerComment

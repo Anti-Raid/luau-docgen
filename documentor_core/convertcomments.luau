@@ -12,7 +12,7 @@ export type ConvertCommentResponse = {
     genericDocs: {[string]: string}, -- Useful to document functions etc
     returns: {[string]: string}, -- Useful to document functions etc
 }
-
+ 
 -- Modify this function to change how special comments are converted to markdown
 local specialcommentmap = {
     warning = function(output: ConvertCommentResponse, data: string)

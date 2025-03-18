@@ -9,7 +9,7 @@ local function arraymap<A, B>(table: {A}, f: (A) -> B): {B}
         new[k] = f(v)
     end
 
-    return new
+    return new 
 end
 
 local function map<K, A, B>(table: {[K]: A}, f: (A) -> B): {[K]: B}
