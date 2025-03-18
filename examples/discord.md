@@ -38,7 +38,7 @@ The action type to filter by
 
 *This field is optional and may not be specified*
 
-[discord](#module.discord).[#AuditLogEventType](#AuditLogEventType)?
+[discord](#module.discord).[AuditLogEventType](#AuditLogEventType)?
 
 <div id="user_id"></div>
 
@@ -48,7 +48,7 @@ The user ID to filter by
 
 *This field is optional and may not be specified*
 
-[discord](#module.discord).[#Snowflake](#Snowflake)?
+[discord](#module.discord).[Snowflake](#Snowflake)?
 
 <div id="before"></div>
 
@@ -58,7 +58,7 @@ The audit log entry ID to filter
 
 *This field is optional and may not be specified*
 
-[discord](#module.discord).[#Snowflake](#Snowflake)?
+[discord](#module.discord).[Snowflake](#Snowflake)?
 
 <div id="limit"></div>
 
@@ -95,7 +95,7 @@ type GetAutoModerationRuleOptions = {
 
 The rule ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="CreateAutoModerationRuleOptions"></div>
 
@@ -133,7 +133,7 @@ The reason for creating the rule
 
 The data to create the rule with
 
-[discordRest](#module.discordRest).[#CreateAutoModerationRuleRequest](#CreateAutoModerationRuleRequest)
+[discordRest](#module.discordRest).[CreateAutoModerationRuleRequest](#CreateAutoModerationRuleRequest)
 
 <div id="EditAutoModerationRuleOptions"></div>
 
@@ -166,7 +166,7 @@ type EditAutoModerationRuleOptions = {
 
 The rule ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -182,7 +182,7 @@ The reason for editing the rule
 
 The data to edit the rule with
 
-[discordRest](#module.discordRest).[#ModifyAutoModerationRuleRequest](#ModifyAutoModerationRuleRequest)
+[discordRest](#module.discordRest).[ModifyAutoModerationRuleRequest](#ModifyAutoModerationRuleRequest)
 
 <div id="DeleteAutoModerationRuleOptions"></div>
 
@@ -212,7 +212,7 @@ type DeleteAutoModerationRuleOptions = {
 
 The rule ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -247,7 +247,7 @@ type GetChannelOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="EditChannelOptions"></div>
 
@@ -280,7 +280,7 @@ type EditChannelOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -296,7 +296,7 @@ The reason for the edit
 
 The data to edit the channel with
 
-[discordRest](#module.discordRest).[#ModifyChannelRequest](#ModifyChannelRequest)
+[discordRest](#module.discordRest).[ModifyChannelRequest](#ModifyChannelRequest)
 
 <div id="DeleteChannelOptions"></div>
 
@@ -326,7 +326,7 @@ type DeleteChannelOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -376,7 +376,7 @@ type EditChannelPermissionsOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="target_id"></div>
 
@@ -384,7 +384,7 @@ The channel ID
 
 The target ID to edit permissions of
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="allow"></div>
 
@@ -392,7 +392,7 @@ The target ID to edit permissions of
 
 The allow permissions
 
-[typesext](#module.typesext).[#MultiOption](#MultiOption)&lt;[string](#string)&gt;
+[typesext](#module.typesext).[MultiOption](#MultiOption)&lt;[string](#string)&gt;
 
 <div id="deny"></div>
 
@@ -400,7 +400,7 @@ The allow permissions
 
 The deny permissions
 
-[typesext](#module.typesext).[#MultiOption](#MultiOption)&lt;[string](#string)&gt;
+[typesext](#module.typesext).[MultiOption](#MultiOption)&lt;[string](#string)&gt;
 
 <div id="kind"></div>
 
@@ -408,7 +408,7 @@ The deny permissions
 
 The type of the target
 
-[discord](#module.discord).[#OverwriteObjectType](#OverwriteObjectType)
+[discord](#module.discord).[OverwriteObjectType](#OverwriteObjectType)
 
 <div id="reason"></div>
 
@@ -449,7 +449,7 @@ type AddGuildMemberRoleOptions = {
 
 The member ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="role_id"></div>
 
@@ -457,7 +457,7 @@ The member ID
 
 The role ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -498,7 +498,7 @@ type RemoveGuildMemberRoleOptions = {
 
 The member ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="role_id"></div>
 
@@ -506,7 +506,7 @@ The member ID
 
 The role ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -544,7 +544,7 @@ type RemoveGuildMemberOptions = {
 
 The member ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="reason"></div>
 
@@ -603,7 +603,7 @@ Before a certain user ID
 
 *This field is optional and may not be specified*
 
-[discord](#module.discord).[#Snowflake](#Snowflake)?
+[discord](#module.discord).[Snowflake](#Snowflake)?
 
 <div id="after"></div>
 
@@ -613,7 +613,7 @@ After a certain user ID
 
 *This field is optional and may not be specified*
 
-[discord](#module.discord).[#Snowflake](#Snowflake)?
+[discord](#module.discord).[Snowflake](#Snowflake)?
 
 <div id="CreateMessageOptions"></div>
 
@@ -643,7 +643,7 @@ type CreateMessageOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="data"></div>
 
@@ -651,7 +651,7 @@ The channel ID
 
 The data to send the message with
 
-[discordRest](#module.discordRest).[#CreateMessageRequest](#CreateMessageRequest)
+[discordRest](#module.discordRest).[CreateMessageRequest](#CreateMessageRequest)
 
 <div id="CreateCommandOptions"></div>
 
@@ -678,7 +678,7 @@ type CreateCommandOptions = {
 
 The data to create the command with
 
-[discordRest](#module.discordRest).[#CreateGuildApplicationCommandRequest](#CreateGuildApplicationCommandRequest)
+[discordRest](#module.discordRest).[CreateGuildApplicationCommandRequest](#CreateGuildApplicationCommandRequest)
 
 <div id="CreateInteractionResponseOptions"></div>
 
@@ -711,7 +711,7 @@ type CreateInteractionResponseOptions = {
 
 The interaction ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="interaction_token"></div>
 
@@ -727,7 +727,7 @@ The interaction token
 
 The data to create the interaction response with
 
-[discordRest](#module.discordRest).[#CreateInteractionRequest](#CreateInteractionRequest)
+[discordRest](#module.discordRest).[CreateInteractionRequest](#CreateInteractionRequest)
 
 <div id="CreateFollowupMessageOptions"></div>
 
@@ -765,7 +765,7 @@ The interaction token
 
 The data to create the followup message with
 
-[discordRest](#module.discordRest).[#CreateFollowupMessageRequest](#CreateFollowupMessageRequest)
+[discordRest](#module.discordRest).[CreateFollowupMessageRequest](#CreateFollowupMessageRequest)
 
 <div id="MessagePagination"></div>
 
@@ -824,7 +824,7 @@ Union with variants:
 
 ### id
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="GetMessagesOptions"></div>
 
@@ -857,7 +857,7 @@ type GetMessagesOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="target"></div>
 
@@ -907,7 +907,7 @@ type GetMessageOptions = {
 
 The channel ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="message_id"></div>
 
@@ -915,7 +915,7 @@ The channel ID
 
 The message ID
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="DiscordExecutor"></div>
 
@@ -1036,7 +1036,7 @@ get_audit_logs: (self: DiscordExecutor, data: GetAuditLogOptions) -> promise.Lua
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAuditLogObject](#LazyAuditLogObject)&gt;<div id="list_auto_moderation_rules"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyAuditLogObject](#LazyAuditLogObject)&gt;<div id="list_auto_moderation_rules"></div>
 
 ### list_auto_moderation_rules
 
@@ -1060,7 +1060,7 @@ list_auto_moderation_rules: (self: DiscordExecutor) -> promise.LuaPromise<LazyAu
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObjectList](#LazyAutomoderationRuleObjectList)&gt;<div id="get_auto_moderation_rule"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObjectList](#LazyAutomoderationRuleObjectList)&gt;<div id="get_auto_moderation_rule"></div>
 
 ### get_auto_moderation_rule
 
@@ -1094,7 +1094,7 @@ get_auto_moderation_rule: (self: DiscordExecutor, data: GetAutoModerationRuleOpt
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="create_auto_moderation_rule"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="create_auto_moderation_rule"></div>
 
 ### create_auto_moderation_rule
 
@@ -1128,7 +1128,7 @@ create_auto_moderation_rule: (self: DiscordExecutor, data: CreateAutoModerationR
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="edit_auto_moderation_rule"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="edit_auto_moderation_rule"></div>
 
 ### edit_auto_moderation_rule
 
@@ -1162,7 +1162,7 @@ edit_auto_moderation_rule: (self: DiscordExecutor, data: EditAutoModerationRuleO
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="delete_auto_moderation_rule"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="delete_auto_moderation_rule"></div>
 
 ### delete_auto_moderation_rule
 
@@ -1196,7 +1196,7 @@ delete_auto_moderation_rule: (self: DiscordExecutor, data: DeleteAutoModerationR
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="get_channel"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyAutomoderationRuleObject](#LazyAutomoderationRuleObject)&gt;<div id="get_channel"></div>
 
 ### get_channel
 
@@ -1230,7 +1230,7 @@ get_channel: (self: DiscordExecutor, data: GetChannelOptions) -> promise.LuaProm
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="edit_channel"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="edit_channel"></div>
 
 ### edit_channel
 
@@ -1264,7 +1264,7 @@ edit_channel: (self: DiscordExecutor, data: EditChannelOptions) -> promise.LuaPr
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="delete_channel"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="delete_channel"></div>
 
 ### delete_channel
 
@@ -1298,7 +1298,7 @@ delete_channel: (self: DiscordExecutor, data: DeleteChannelOptions) -> promise.L
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="edit_channel_permissions"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyChannelObject](#LazyChannelObject)&gt;<div id="edit_channel_permissions"></div>
 
 ### edit_channel_permissions
 
@@ -1332,7 +1332,7 @@ edit_channel_permissions: (self: DiscordExecutor, data: EditChannelPermissionsOp
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="add_guild_member_role"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="add_guild_member_role"></div>
 
 ### add_guild_member_role
 
@@ -1366,7 +1366,7 @@ add_guild_member_role: (self: DiscordExecutor, data: AddGuildMemberRoleOptions) 
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="remove_guild_member_role"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="remove_guild_member_role"></div>
 
 ### remove_guild_member_role
 
@@ -1400,7 +1400,7 @@ remove_guild_member_role: (self: DiscordExecutor, data: RemoveGuildMemberRoleOpt
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="remove_guild_member"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="remove_guild_member"></div>
 
 ### remove_guild_member
 
@@ -1434,7 +1434,7 @@ remove_guild_member: (self: DiscordExecutor, data: RemoveGuildMemberOptions) -> 
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="get_guild_bans"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="get_guild_bans"></div>
 
 ### get_guild_bans
 
@@ -1468,7 +1468,7 @@ get_guild_bans: (self: DiscordExecutor, data: GetGuildBansOptions) -> promise.Lu
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyBanObjectList](#LazyBanObjectList)&gt;<div id="get_guild_roles"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyBanObjectList](#LazyBanObjectList)&gt;<div id="get_guild_roles"></div>
 
 ### get_guild_roles
 
@@ -1492,7 +1492,7 @@ get_guild_roles: (self: DiscordExecutor, guild_id: discord.Snowflake) -> promise
 
 ##### guild_id
 
-[discord](#module.discord).[#Snowflake](#Snowflake)
+[discord](#module.discord).[Snowflake](#Snowflake)
 
 <div id="Returns"></div>
 
@@ -1502,7 +1502,7 @@ get_guild_roles: (self: DiscordExecutor, guild_id: discord.Snowflake) -> promise
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyRolesMap](#LazyRolesMap)&gt;<div id="get_messages"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyRolesMap](#LazyRolesMap)&gt;<div id="get_messages"></div>
 
 ### get_messages
 
@@ -1536,7 +1536,7 @@ get_messages: (self: DiscordExecutor, data: GetMessagesOptions) -> promise.LuaPr
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessagesObject](#LazyMessagesObject)&gt;<div id="get_message"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyMessagesObject](#LazyMessagesObject)&gt;<div id="get_message"></div>
 
 ### get_message
 
@@ -1570,7 +1570,7 @@ get_message: (self: DiscordExecutor, data: GetMessageOptions) -> promise.LuaProm
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="create_message"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="create_message"></div>
 
 ### create_message
 
@@ -1604,7 +1604,7 @@ create_message: (self: DiscordExecutor, data: CreateMessageOptions) -> promise.L
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="create_interaction_response"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="create_interaction_response"></div>
 
 ### create_interaction_response
 
@@ -1638,7 +1638,7 @@ create_interaction_response: (self: DiscordExecutor, data: CreateInteractionResp
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="create_followup_message"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[nil](#nil)&gt;<div id="create_followup_message"></div>
 
 ### create_followup_message
 
@@ -1672,7 +1672,7 @@ create_followup_message: (self: DiscordExecutor, data: CreateFollowupMessageOpti
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="get_original_interaction_response"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="get_original_interaction_response"></div>
 
 ### get_original_interaction_response
 
@@ -1706,7 +1706,7 @@ get_original_interaction_response: (self: DiscordExecutor, interaction_token: st
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="get_guild_commands"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyMessageObject](#LazyMessageObject)&gt;<div id="get_guild_commands"></div>
 
 ### get_guild_commands
 
@@ -1730,7 +1730,7 @@ get_guild_commands: (self: DiscordExecutor) -> promise.LuaPromise<LazyApplicatio
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyApplicationCommandObject](#LazyApplicationCommandObject)&gt;<div id="create_guild_command"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyApplicationCommandObject](#LazyApplicationCommandObject)&gt;<div id="create_guild_command"></div>
 
 ### create_guild_command
 
@@ -1764,7 +1764,7 @@ create_guild_command: (self: DiscordExecutor, data: CreateCommandOptions) -> pro
 
 ##### ret1
 
-[promise](#module.promise).[#LuaPromise](#LuaPromise)&lt;[LazyApplicationCommandObject](#LazyApplicationCommandObject)&gt;<div id="Functions"></div>
+[promise](#module.promise).[LuaPromise](#LuaPromise)&lt;[LazyApplicationCommandObject](#LazyApplicationCommandObject)&gt;<div id="Functions"></div>
 
 # Functions
 
@@ -1789,7 +1789,7 @@ function new(token: Primitives.TemplateContext, scope: ExecutorScope.ExecutorSco
 
 ### token
 
-[Primitives](#module.Primitives).[#TemplateContext](#TemplateContext)
+[Primitives](#module.Primitives).[TemplateContext](#TemplateContext)
 
 <div id="scope"></div>
 
@@ -1797,7 +1797,7 @@ function new(token: Primitives.TemplateContext, scope: ExecutorScope.ExecutorSco
 
 *This field is optional and may not be specified*
 
-[ExecutorScope](#module.ExecutorScope).[#ExecutorScope](#ExecutorScope)?
+[ExecutorScope](#module.ExecutorScope).[ExecutorScope](#ExecutorScope)?
 
 <div id="Returns"></div>
 

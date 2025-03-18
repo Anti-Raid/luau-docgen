@@ -717,7 +717,7 @@ function parseTypeFieldType(
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = istate.plugin.resolveType(fieldtype.type, fieldtype.data.base),
-            text = markdown.NewMarkdownText_FromRaw(istate.plugin.resolveType(fieldtype.type, fieldtype.data.base)),
+            text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
             inline = true
         } :: any
 
