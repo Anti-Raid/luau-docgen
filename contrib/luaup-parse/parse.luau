@@ -659,9 +659,9 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         })
     elseif typ.kind == "union" then
         typ = typ :: cst.Type_Union
-        local types = {}
+        local types: {types.TypeFieldType} = {}
         for _, t in typ.types do
-            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node) :: types.TypeFieldType)
+            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node))
         end
 
         return TypeFieldTypeImpl.new({
@@ -670,9 +670,9 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         })
     elseif typ.kind == "intersection" then
         typ = typ :: cst.Type_Intersection
-        local types = {}
+        local types: {types.TypeFieldType} = {}
         for _, t in typ.types do
-            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node) :: types.TypeFieldType)
+            table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node))
         end
 
         return TypeFieldTypeImpl.new({
