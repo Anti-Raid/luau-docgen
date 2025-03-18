@@ -2996,23 +2996,7 @@ type TypeArg = Type | TypePack
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[Type](#Type)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TypePack](#TypePack)
-
-</details>
-
-<div id="TableTypeField_NameProp"></div>
+([Type](#Type) | [TypePack](#TypePack))<div id="TableTypeField_NameProp"></div>
 
 ## TableTypeField_NameProp
 
@@ -3282,30 +3266,7 @@ type TableTypeField = TableTypeField_NameProp | TableTypeField_StringProp | Tabl
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[TableTypeField_NameProp](#TableTypeField_NameProp)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TableTypeField_StringProp](#TableTypeField_StringProp)
-
-</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[TableTypeField_Indexer](#TableTypeField_Indexer)
-
-</details>
-
-<div id="Type_Nil"></div>
+([TableTypeField_NameProp](#TableTypeField_NameProp) | [TableTypeField_StringProp](#TableTypeField_StringProp) | [TableTypeField_Indexer](#TableTypeField_Indexer))<div id="Type_Nil"></div>
 
 ## Type_Nil
 
@@ -3375,19 +3336,7 @@ type Type_Boolean = {
 
 The `true` or `false` token.
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[TokenKind](#TokenKind)&lt;"true"&gt;</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TokenKind](#TokenKind)&lt;"false"&gt;</details>
-
-<div id="Type_String"></div>
+([TokenKind](#TokenKind)&lt;"true"&gt; | [TokenKind](#TokenKind)&lt;"false"&gt;)<div id="Type_String"></div>
 
 ## Type_String
 
@@ -3962,7 +3911,93 @@ type Type = Type_Nil | Type_Boolean | Type_String | Type_Reference | Type_Typeof
 
 </details>
 
-([Type_Nil](#Type_Nil) | [Type_Boolean](#Type_Boolean) | [Type_String](#Type_String) | [Type_Reference](#Type_Reference) | [Type_Typeof](#Type_Typeof) | [Type_Array](#Type_Array) | [Type_Table](#Type_Table) | [Type_Function](#Type_Function) | [Type_Paren](#Type_Paren) | [Type_Optional](#Type_Optional) | [Type_Union](#Type_Union) | [Type_Intersection](#Type_Intersection))<div id="VariadicTypePack"></div>
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[Type_Nil](#Type_Nil)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[Type_Boolean](#Type_Boolean)
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+[Type_String](#Type_String)
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+[Type_Reference](#Type_Reference)
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+[Type_Typeof](#Type_Typeof)
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+[Type_Array](#Type_Array)
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+[Type_Table](#Type_Table)
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+[Type_Function](#Type_Function)
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+[Type_Paren](#Type_Paren)
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+[Type_Optional](#Type_Optional)
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+[Type_Union](#Type_Union)
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+[Type_Intersection](#Type_Intersection)
+
+</details>
+
+<div id="VariadicTypePack"></div>
 
 ## VariadicTypePack
 
@@ -4128,23 +4163,7 @@ type TailType = VariadicTypePack | GenericTypePack
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[VariadicTypePack](#VariadicTypePack)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[GenericTypePack](#GenericTypePack)
-
-</details>
-
-<div id="TypePack"></div>
+([VariadicTypePack](#VariadicTypePack) | [GenericTypePack](#GenericTypePack))<div id="TypePack"></div>
 
 ## TypePack
 
@@ -4160,30 +4179,7 @@ type TypePack = VariadicTypePack | GenericTypePack | TypeList
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[VariadicTypePack](#VariadicTypePack)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[GenericTypePack](#GenericTypePack)
-
-</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[TypeList](#TypeList)
-
-</details>
-
-<div id="ReturnType"></div>
+([VariadicTypePack](#VariadicTypePack) | [GenericTypePack](#GenericTypePack) | [TypeList](#TypeList))<div id="ReturnType"></div>
 
 ## ReturnType
 
@@ -4199,23 +4195,7 @@ type ReturnType = Type | TypePack
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[Type](#Type)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TypePack](#TypePack)
-
-</details>
-
-<div id="Binding"></div>
+([Type](#Type) | [TypePack](#TypePack))<div id="Binding"></div>
 
 ## Binding
 
@@ -4384,23 +4364,7 @@ type IString = IString_Simple | IString_Complex
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[IString_Simple](#IString_Simple)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[IString_Complex](#IString_Complex)
-
-</details>
-
-<div id="IfElseExprBranch"></div>
+([IString_Simple](#IString_Simple) | [IString_Complex](#IString_Complex))<div id="IfElseExprBranch"></div>
 
 ## IfElseExprBranch
 
@@ -4463,29 +4427,7 @@ type UnaryOperator = TokenKind<"+"> | TokenKind<"-"> | TokenKind<"not"> | TokenK
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[TokenKind](#TokenKind)&lt;"+"&gt;</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TokenKind](#TokenKind)&lt;"-"&gt;</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[TokenKind](#TokenKind)&lt;"not"&gt;</details>
-
-<details>
-<summary>Variant 4</summary>
-
-[TokenKind](#TokenKind)&lt;"#"&gt;</details>
-
-<div id="BinaryOperator"></div>
+([TokenKind](#TokenKind)&lt;"+"&gt; | [TokenKind](#TokenKind)&lt;"-"&gt; | [TokenKind](#TokenKind)&lt;"not"&gt; | [TokenKind](#TokenKind)&lt;"#"&gt;)<div id="BinaryOperator"></div>
 
 ## BinaryOperator
 
@@ -4504,7 +4446,89 @@ type BinaryOperator = TokenKind<"+"> | TokenKind<"-"> | TokenKind<"*"> | TokenKi
 
 </details>
 
-([TokenKind](#TokenKind)&lt;"+"&gt; | [TokenKind](#TokenKind)&lt;"-"&gt; | [TokenKind](#TokenKind)&lt;"\*"&gt; | [TokenKind](#TokenKind)&lt;"/"&gt; | [TokenKind](#TokenKind)&lt;"//"&gt; | [TokenKind](#TokenKind)&lt;"%"&gt; | [TokenKind](#TokenKind)&lt;"^"&gt; | [TokenKind](#TokenKind)&lt;".."&gt; | [TokenKind](#TokenKind)&lt;"&lt;"&gt; | [TokenKind](#TokenKind)&lt;"&lt;="&gt; | [TokenKind](#TokenKind)&lt;"&gt;"&gt; | [TokenKind](#TokenKind)&lt;"&gt;="&gt; | [TokenKind](#TokenKind)&lt;"=="&gt; | [TokenKind](#TokenKind)&lt;"~="&gt; | [TokenKind](#TokenKind)&lt;"and"&gt; | [TokenKind](#TokenKind)&lt;"or"&gt;)<div id="Expr_Nil"></div>
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[TokenKind](#TokenKind)&lt;"+"&gt;</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[TokenKind](#TokenKind)&lt;"-"&gt;</details>
+
+<details>
+<summary>Variant 3</summary>
+
+[TokenKind](#TokenKind)&lt;"\*"&gt;</details>
+
+<details>
+<summary>Variant 4</summary>
+
+[TokenKind](#TokenKind)&lt;"/"&gt;</details>
+
+<details>
+<summary>Variant 5</summary>
+
+[TokenKind](#TokenKind)&lt;"//"&gt;</details>
+
+<details>
+<summary>Variant 6</summary>
+
+[TokenKind](#TokenKind)&lt;"%"&gt;</details>
+
+<details>
+<summary>Variant 7</summary>
+
+[TokenKind](#TokenKind)&lt;"^"&gt;</details>
+
+<details>
+<summary>Variant 8</summary>
+
+[TokenKind](#TokenKind)&lt;".."&gt;</details>
+
+<details>
+<summary>Variant 9</summary>
+
+[TokenKind](#TokenKind)&lt;"&lt;"&gt;</details>
+
+<details>
+<summary>Variant 10</summary>
+
+[TokenKind](#TokenKind)&lt;"&lt;="&gt;</details>
+
+<details>
+<summary>Variant 11</summary>
+
+[TokenKind](#TokenKind)&lt;"&gt;"&gt;</details>
+
+<details>
+<summary>Variant 12</summary>
+
+[TokenKind](#TokenKind)&lt;"&gt;="&gt;</details>
+
+<details>
+<summary>Variant 13</summary>
+
+[TokenKind](#TokenKind)&lt;"=="&gt;</details>
+
+<details>
+<summary>Variant 14</summary>
+
+[TokenKind](#TokenKind)&lt;"~="&gt;</details>
+
+<details>
+<summary>Variant 15</summary>
+
+[TokenKind](#TokenKind)&lt;"and"&gt;</details>
+
+<details>
+<summary>Variant 16</summary>
+
+[TokenKind](#TokenKind)&lt;"or"&gt;</details>
+
+<div id="Expr_Nil"></div>
 
 ## Expr_Nil
 
@@ -4574,19 +4598,7 @@ type Expr_Boolean = {
 
 The `true` or `false` token.
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[TokenKind](#TokenKind)&lt;"true"&gt;</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TokenKind](#TokenKind)&lt;"false"&gt;</details>
-
-<div id="Expr_Number"></div>
+([TokenKind](#TokenKind)&lt;"true"&gt; | [TokenKind](#TokenKind)&lt;"false"&gt;)<div id="Expr_Number"></div>
 
 ## Expr_Number
 
@@ -5136,7 +5148,100 @@ type Expr = Expr_Nil | Expr_Boolean | Expr_Number | Expr_String | Expr_Varargs |
 
 </details>
 
-([Expr_Nil](#Expr_Nil) | [Expr_Boolean](#Expr_Boolean) | [Expr_Number](#Expr_Number) | [Expr_String](#Expr_String) | [Expr_Varargs](#Expr_Varargs) | [Expr_IString](#Expr_IString) | [Expr_Table](#Expr_Table) | [Expr_Function](#Expr_Function) | [Expr_IfElse](#Expr_IfElse) | [Expr_Var](#Expr_Var) | [Expr_Assertion](#Expr_Assertion) | [Expr_Unary](#Expr_Unary) | [Expr_Binary](#Expr_Binary))<div id="FunctionArg_Pack"></div>
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[Expr_Nil](#Expr_Nil)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[Expr_Boolean](#Expr_Boolean)
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+[Expr_Number](#Expr_Number)
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+[Expr_String](#Expr_String)
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+[Expr_Varargs](#Expr_Varargs)
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+[Expr_IString](#Expr_IString)
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+[Expr_Table](#Expr_Table)
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+[Expr_Function](#Expr_Function)
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+[Expr_IfElse](#Expr_IfElse)
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+[Expr_Var](#Expr_Var)
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+[Expr_Assertion](#Expr_Assertion)
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+[Expr_Unary](#Expr_Unary)
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+[Expr_Binary](#Expr_Binary)
+
+</details>
+
+<div id="FunctionArg_Pack"></div>
 
 ## FunctionArg_Pack
 
@@ -5268,30 +5373,7 @@ type FunctionArg = FunctionArg_Pack | FunctionArg_Table | FunctionArg_String
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[FunctionArg_Pack](#FunctionArg_Pack)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[FunctionArg_Table](#FunctionArg_Table)
-
-</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[FunctionArg_String](#FunctionArg_String)
-
-</details>
-
-<div id="VarRoot_Name"></div>
+([FunctionArg_Pack](#FunctionArg_Pack) | [FunctionArg_Table](#FunctionArg_Table) | [FunctionArg_String](#FunctionArg_String))<div id="VarRoot_Name"></div>
 
 ## VarRoot_Name
 
@@ -5388,23 +5470,7 @@ type VarRoot = VarRoot_Name | VarRoot_Paren
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[VarRoot_Name](#VarRoot_Name)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[VarRoot_Paren](#VarRoot_Paren)
-
-</details>
-
-<div id="VarSuffix_NameIndex"></div>
+([VarRoot_Name](#VarRoot_Name) | [VarRoot_Paren](#VarRoot_Paren))<div id="VarSuffix_NameIndex"></div>
 
 ## VarSuffix_NameIndex
 
@@ -5566,30 +5632,7 @@ type VarSuffix = VarSuffix_NameIndex | VarSuffix_ExprIndex | VarSuffix_Call
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[VarSuffix_NameIndex](#VarSuffix_NameIndex)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[VarSuffix_ExprIndex](#VarSuffix_ExprIndex)
-
-</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[VarSuffix_Call](#VarSuffix_Call)
-
-</details>
-
-<div id="Var"></div>
+([VarSuffix_NameIndex](#VarSuffix_NameIndex) | [VarSuffix_ExprIndex](#VarSuffix_ExprIndex) | [VarSuffix_Call](#VarSuffix_Call))<div id="Var"></div>
 
 ## Var
 
@@ -5819,30 +5862,7 @@ type TableField = TableField_NameKey | TableField_ExprKey | TableField_NoKey
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[TableField_NameKey](#TableField_NameKey)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[TableField_ExprKey](#TableField_ExprKey)
-
-</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[TableField_NoKey](#TableField_NoKey)
-
-</details>
-
-<div id="Table"></div>
+([TableField_NameKey](#TableField_NameKey) | [TableField_ExprKey](#TableField_ExprKey) | [TableField_NoKey](#TableField_NoKey))<div id="Table"></div>
 
 ## Table
 
@@ -6080,7 +6100,49 @@ type CompoundOperator = TokenKind<"+="> | TokenKind<"-="> | TokenKind<"*="> | To
 
 </details>
 
-([TokenKind](#TokenKind)&lt;"+="&gt; | [TokenKind](#TokenKind)&lt;"-="&gt; | [TokenKind](#TokenKind)&lt;"\*="&gt; | [TokenKind](#TokenKind)&lt;"/="&gt; | [TokenKind](#TokenKind)&lt;"//="&gt; | [TokenKind](#TokenKind)&lt;"%="&gt; | [TokenKind](#TokenKind)&lt;"^="&gt; | [TokenKind](#TokenKind)&lt;"..="&gt;)<div id="Stat_Assign"></div>
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[TokenKind](#TokenKind)&lt;"+="&gt;</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[TokenKind](#TokenKind)&lt;"-="&gt;</details>
+
+<details>
+<summary>Variant 3</summary>
+
+[TokenKind](#TokenKind)&lt;"\*="&gt;</details>
+
+<details>
+<summary>Variant 4</summary>
+
+[TokenKind](#TokenKind)&lt;"/="&gt;</details>
+
+<details>
+<summary>Variant 5</summary>
+
+[TokenKind](#TokenKind)&lt;"//="&gt;</details>
+
+<details>
+<summary>Variant 6</summary>
+
+[TokenKind](#TokenKind)&lt;"%="&gt;</details>
+
+<details>
+<summary>Variant 7</summary>
+
+[TokenKind](#TokenKind)&lt;"^="&gt;</details>
+
+<details>
+<summary>Variant 8</summary>
+
+[TokenKind](#TokenKind)&lt;"..="&gt;</details>
+
+<div id="Stat_Assign"></div>
 
 ## Stat_Assign
 
@@ -7229,7 +7291,107 @@ type Stat = Stat_Assign | Stat_CompoundAssign | Stat_Call | Stat_Do | Stat_While
 
 </details>
 
-([Stat_Assign](#Stat_Assign) | [Stat_CompoundAssign](#Stat_CompoundAssign) | [Stat_Call](#Stat_Call) | [Stat_Do](#Stat_Do) | [Stat_While](#Stat_While) | [Stat_Repeat](#Stat_Repeat) | [Stat_If](#Stat_If) | [Stat_NumericFor](#Stat_NumericFor) | [Stat_ForIn](#Stat_ForIn) | [Stat_Function](#Stat_Function) | [Stat_LocalFunction](#Stat_LocalFunction) | [Stat_TypeFunction](#Stat_TypeFunction) | [Stat_LocalVariable](#Stat_LocalVariable) | [Stat_Type](#Stat_Type))<div id="LastStat_Return"></div>
+Union with variants:
+
+<details>
+<summary>Variant 1</summary>
+
+[Stat_Assign](#Stat_Assign)
+
+</details>
+
+<details>
+<summary>Variant 2</summary>
+
+[Stat_CompoundAssign](#Stat_CompoundAssign)
+
+</details>
+
+<details>
+<summary>Variant 3</summary>
+
+[Stat_Call](#Stat_Call)
+
+</details>
+
+<details>
+<summary>Variant 4</summary>
+
+[Stat_Do](#Stat_Do)
+
+</details>
+
+<details>
+<summary>Variant 5</summary>
+
+[Stat_While](#Stat_While)
+
+</details>
+
+<details>
+<summary>Variant 6</summary>
+
+[Stat_Repeat](#Stat_Repeat)
+
+</details>
+
+<details>
+<summary>Variant 7</summary>
+
+[Stat_If](#Stat_If)
+
+</details>
+
+<details>
+<summary>Variant 8</summary>
+
+[Stat_NumericFor](#Stat_NumericFor)
+
+</details>
+
+<details>
+<summary>Variant 9</summary>
+
+[Stat_ForIn](#Stat_ForIn)
+
+</details>
+
+<details>
+<summary>Variant 10</summary>
+
+[Stat_Function](#Stat_Function)
+
+</details>
+
+<details>
+<summary>Variant 11</summary>
+
+[Stat_LocalFunction](#Stat_LocalFunction)
+
+</details>
+
+<details>
+<summary>Variant 12</summary>
+
+[Stat_TypeFunction](#Stat_TypeFunction)
+
+</details>
+
+<details>
+<summary>Variant 13</summary>
+
+[Stat_LocalVariable](#Stat_LocalVariable)
+
+</details>
+
+<details>
+<summary>Variant 14</summary>
+
+[Stat_Type](#Stat_Type)
+
+</details>
+
+<div id="LastStat_Return"></div>
 
 ## LastStat_Return
 
@@ -7368,30 +7530,7 @@ type LastStat = LastStat_Return | LastStat_Break | LastStat_Continue
 
 </details>
 
-Union with variants:
-
-<details>
-<summary>Variant 1</summary>
-
-[LastStat_Return](#LastStat_Return)
-
-</details>
-
-<details>
-<summary>Variant 2</summary>
-
-[LastStat_Break](#LastStat_Break)
-
-</details>
-
-<details>
-<summary>Variant 3</summary>
-
-[LastStat_Continue](#LastStat_Continue)
-
-</details>
-
-<div id="Block"></div>
+([LastStat_Return](#LastStat_Return) | [LastStat_Break](#LastStat_Break) | [LastStat_Continue](#LastStat_Continue))<div id="Block"></div>
 
 ## Block
 
