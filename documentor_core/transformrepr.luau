@@ -22,7 +22,7 @@ local function transformTypeFieldTypeRepr(s: types.TypeFieldType, optdepth: numb
     elseif self.type == "Variadic" then
         return string.format("...%s", transformTypeFieldTypeRepr(self.data, depth, transformStr))
     elseif self.type == "Generic" then
-        return transformGenericRepr(self.data, transformStr)
+        return transformGenericRepr(self.data, depth, transformStr)
     elseif self.type == "GenericPack" then
         return self.data
     elseif self.type == "Module" then
@@ -115,10 +115,11 @@ function transformTypeFieldKey(s: types.TypeFieldKey, opttransformStr: ((typ: st
     end
 end
 
-function transformGenericRepr(s: types.TypeFieldTypeGeneric, transformStr: (typ: string, string) -> string) 
+function transformGenericRepr(s: types.TypeFieldTypeGeneric, optdepth: number?, transformStr: (typ: string, string) -> string) 
+    local depth = optdepth or 0
     local generics_str_list = {}
     for i, g in ipairs(s.generics) do
-        table.insert(generics_str_list, transformTypeFieldTypeRepr(g, 0, transformStr))
+        table.insert(generics_str_list, transformTypeFieldTypeRepr(g, depth, transformStr))
     end
 
     local generics_str = table.concat(generics_str_list, ", ")

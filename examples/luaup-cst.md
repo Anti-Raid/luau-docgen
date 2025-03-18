@@ -2833,12 +2833,12 @@ type GenericDeclaration = {
 
 	--- The generic type packs; the `C...` in `A, B, C...`.
 	packs: Separated<{
-	--- The name; the `C` in `C...`.
-	name: TokenKind<"ident">,
+		--- The name; the `C` in `C...`.
+		name: TokenKind<"ident">,
 
-	--- The dots; the `...` in `C...`.
-	dots: TokenKind<"...">
-}, TokenKind<",">>
+		--- The dots; the `...` in `C...`.
+		dots: TokenKind<"...">
+	}, TokenKind<",">>
 }
 ```
 
@@ -2910,38 +2910,38 @@ type GenericDeclarationWithDefaults = {
 	--- The generic types; the `A = number,` in
 	--- `<A = number, B... = (number, ...string)>`.
 	names: Separated<{
-	--- The name; the `A` in `A = number`.
-	name: TokenKind<"ident">,
+		--- The name; the `A` in `A = number`.
+		name: TokenKind<"ident">,
 
-	--- The default type; the `= number` in `A = number`.
-	default: {
-		--- The equals sign; the `=` in `= number`.
-		equals: TokenKind<"=">,
+		--- The default type; the `= number` in `A = number`.
+		default: {
+			--- The equals sign; the `=` in `= number`.
+			equals: TokenKind<"=">,
 
-		--- The type; the `number` in `= number`.
-		type: Type
-	}?
-}, TokenKind<",">>,
+			--- The type; the `number` in `= number`.
+			type: Type
+		}?
+	}, TokenKind<",">>,
 
 	--- The generic type packs; the `B... = (number, ...string)` in
 	--- `<A = number, B... = (number, ...string)>`.
 	packs: Separated<{
-	--- The name; the `B` in `B... = (number, ...string)`.
-	name: TokenKind<"ident">,
+		--- The name; the `B` in `B... = (number, ...string)`.
+		name: TokenKind<"ident">,
 
-	--- The dots; the first `...` in `B... = (number, ...string)`.
-	dots: TokenKind<"...">,
+		--- The dots; the first `...` in `B... = (number, ...string)`.
+		dots: TokenKind<"...">,
 
-	--- The default type; the `= (number, ...string)` in
-	--- `B... = (number, ...string)`.
-	default: {
-		--- The equals sign; the `=` in `= (number, ...string)`.
-		equals: TokenKind<"=">,
+		--- The default type; the `= (number, ...string)` in
+		--- `B... = (number, ...string)`.
+		default: {
+			--- The equals sign; the `=` in `= (number, ...string)`.
+			equals: TokenKind<"=">,
 
-		--- The type; the `(number, ...string)` in `= (number, ...string)`.
-		pack: TypePack
-	}?
-}, TokenKind<",">>
+			--- The type; the `(number, ...string)` in `= (number, ...string)`.
+			pack: TypePack
+		}?
+	}, TokenKind<",">>
 }
 ```
 
@@ -3665,18 +3665,18 @@ type Type_Function = {
 
 	--- The parameters; the `foo: T,` in `<T>(foo: T, ...bar) -> baz`.
 	params: Separated<{
-	--- The optional name of the parameter; the `foo:` in `foo: T`.
-	name: {
-		--- The name; the `foo` in `foo:`.
-		name: TokenKind<"ident">,
+		--- The optional name of the parameter; the `foo:` in `foo: T`.
+		name: {
+			--- The name; the `foo` in `foo:`.
+			name: TokenKind<"ident">,
 
-		--- The colon; the `:` in `foo:`.
-		colon: TokenKind<":">
-	}?,
+			--- The colon; the `:` in `foo:`.
+			colon: TokenKind<":">
+		}?,
 
-	--- The type of the parameter; the `T` in `foo: T`.
-	type: Type
-}, TokenKind<",">>,
+		--- The type of the parameter; the `T` in `foo: T`.
+		type: Type
+	}, TokenKind<",">>,
 
 	--- The optional varargs; the `...bar` in `<T>(foo: T, ...bar) -> baz`.
 	varargs: TailType?,
