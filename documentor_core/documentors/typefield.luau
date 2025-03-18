@@ -40,7 +40,7 @@ local function parseFunction(
             local baseNodes: {markdown.MarkdownNode} = {
                 {
                     type = "Heading" :: "Heading",
-                    headingText = markdown.NewMarkdownText_FromRaw(generic.name or ("generic" .. tostring(i)))
+                    headingText = markdown.NewMarkdownText_FromUnstyled(generic.name or ("generic" .. tostring(i)))
                 } :: markdown.MarkdownNode
             }
 
@@ -99,7 +99,7 @@ local function parseFunction(
             local baseNodes: {markdown.MarkdownNode} = {
                 {
                     type = "Heading" :: "Heading",
-                    headingText = markdown.NewMarkdownText_FromRaw(arg.name or ("arg" .. tostring(i)))
+                    headingText = markdown.NewMarkdownText_FromUnstyled(arg.name or ("arg" .. tostring(i)))
                 } :: markdown.MarkdownNode
             }
 
@@ -411,7 +411,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = data.istate.plugin.resolveTypeToUrl(fieldtype.type, fieldtype.data),
-            text = markdown.NewMarkdownText_FromRaw(transformRepr.transformTypeFieldTypeRepr(data.typ)),
+            text = markdown.NewMarkdownText_FromUnstyled(transformRepr.transformTypeFieldTypeRepr(data.typ)),
             inline = data.inline
         } :: any
         
@@ -456,7 +456,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             end
             return blockNodes    
         end
-        
+
         local parsedFields: {markdown.MarkdownNode} = {
             {
                 type = "Text" :: "Text",
@@ -806,7 +806,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = urls.moduleUrl,
-            text = markdown.NewMarkdownText_FromRaw(fieldtype.data.module),
+            text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data.module),
             inline = true
         } :: any
 
@@ -819,7 +819,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         irNodes[#irNodes + 1] = {
             type = "Link" :: "Link",
             url = urls.typeUrl,
-            text = markdown.NewMarkdownText_FromRaw(fieldtype.data.base),
+            text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data.base),
             inline = true
         } :: any
 
@@ -1027,7 +1027,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         return {
             {
                 type = "Link" :: "Link",
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data),
+                text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data),
                 url = data.istate.plugin.resolveTypeToUrl(fieldtype.type, fieldtype.data),
                 inline = data.inline
             } :: markdown.MarkdownNode,
@@ -1046,7 +1046,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             } :: markdown.MarkdownNode,
             {
                 type = "Link" :: "Link",
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data),
+                text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data),
                 url = data.istate.plugin.resolveTypeToUrl(fieldtype.type, fieldtype.data),
                 inline = data.inline
             } :: markdown.MarkdownNode,
@@ -1060,7 +1060,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         return {
             {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data),
+                text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data),
                 inline = data.inline
             } :: markdown.MarkdownNode
         }
@@ -1101,7 +1101,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             } :: markdown.MarkdownNode,
             {
                 type = "Link" :: "Link",
-                text = markdown.NewMarkdownText_FromRaw(fieldtype.data),
+                text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data),
                 url = data.istate.plugin.resolveTypeToUrl(fieldtype.type, fieldtype.data),
                 inline = data.inline
             } :: markdown.MarkdownNode
@@ -1135,7 +1135,7 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
         local fieldName = transformRepr.transformTypeFieldKey(typ.field_name)
         nodes[#nodes + 1] = {
             type = "Text" :: "Text",
-            text = markdown.NewMarkdownText_FromRaw(fieldName),
+            text = markdown.NewMarkdownText_FromUnstyled(fieldName),
             inline = true
         } :: markdown.MarkdownNode
 
@@ -1167,7 +1167,7 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
     blockNodes[#blockNodes + 1] = {
         type = "Heading" :: "Heading",
         level = nil :: number?, -- Bug in luau new type solver needs this (for now)
-        headingText = markdown.NewMarkdownText_FromRaw(fieldName)    
+        headingText = markdown.NewMarkdownText_FromUnstyled(fieldName)    
     }
 
     if #convertedComments.output > 0 then
