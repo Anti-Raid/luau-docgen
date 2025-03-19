@@ -1,7 +1,7 @@
 -- Plugin to try inlining unions heuristically if there are too many variants
 --!strict
 
-local maxVariantsForInlining = 5
+local MAX_VARIANTS_FOR_INLING = 5
 
 local istate = require("../documentor_core/istate")
 
@@ -12,7 +12,7 @@ local inliner: istate.OptionalPlugin = {
         if inline then return end -- Already inlined
         local fieldtype = data.typ
         if fieldtype.type == "Union" then
-            if #fieldtype.data > maxVariantsForInlining then
+            if #fieldtype.data > MAX_VARIANTS_FOR_INLING then
                 return
             end
 
@@ -24,7 +24,7 @@ local inliner: istate.OptionalPlugin = {
                 end
             end
 
-            if #fieldtype.data <= maxVariantsForInlining then
+            if #fieldtype.data <= MAX_VARIANTS_FOR_INLING then
                 data.inline = true :: boolean?
             end
         end

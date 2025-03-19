@@ -10,11 +10,13 @@ local function parseCst(cst: cst.Cst): {
     unsupported_count: number, 
     typeset: types.TypeSet,
 }
-    local ts = parseimpl.TypeSet.new()
-    local unsupported_count = 0 
+    local ts: types.TypeSet = {
+        types = {}
+    }
+    local unsupported_count = 0
     local function_depth = 0
 
-    local visitor = visit.visitor()
+    local visitor = visit.visitor() 
 
     function visitor.visit_stat_function(_, node: cst.Stat_Function) 
         if function_depth > 0 then

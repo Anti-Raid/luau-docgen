@@ -9,115 +9,6 @@ local types = require("../../documentor_core/types")
 local cst = require("./luaup/lossless/cst")
 local util = requireNoTypecheck("./luaup/lossless/util")
 
-local TypeSetImpl = {}
-TypeSetImpl.__index = TypeSetImpl
-
-function TypeSetImpl.new(): types.TypeSet
-    return setmetatable({
-        typedefs = {},
-        functions = {},
-    }, TypeSetImpl) :: types.TypeSet
-end
-
-function TypeSetImpl:iter_typedefs()
-    return ipairs(self.typedefs)
-end
-
-function TypeSetImpl:iter_functions()
-    return ipairs(self.functions)
-end
-
-local TypeFieldTypeImpl = {}
-TypeFieldTypeImpl.__index = TypeFieldTypeImpl
-
-function TypeFieldTypeImpl.new(
-    data: types.TypeFieldType_Inner
-): types.TypeFieldType
-    return setmetatable(data, TypeFieldTypeImpl) :: types.TypeFieldType
-end
-
-function TypeFieldTypeImpl.extract(self: types.TypeFieldType): types.TypeFieldType_Inner
-    return (self :: any).inner :: types.TypeFieldType_Inner
-end
-
-local TypeFieldTypeModuleImpl = {}
-TypeFieldTypeModuleImpl.__index = TypeFieldTypeModuleImpl
-
-function TypeFieldTypeModuleImpl.new(
-    --- The module name of the type
-    module: string,
-    --- The base type name of the module
-    base: string,
-    --- The generic arguments of the module (if the type is generic e.g. promise.Promise<T>)
-    generics: {types.TypeFieldType}?  
-): types.TypeFieldTypeModule 
-    return setmetatable({
-        module = module,
-        base = base,
-        generics = generics,
-    }, TypeFieldTypeModuleImpl) :: types.TypeFieldTypeModule
-end
-
-local TypeFieldTypeGenericImpl = {}
-TypeFieldTypeGenericImpl.__index = TypeFieldTypeGenericImpl
-
-function TypeFieldTypeGenericImpl.new(
-    --- The base type name of the generic
-    base: string,
-    --- The generic arguments of the generic (e.g. map<number, string>)
-    generics: {types.TypeFieldType}
-): types.TypeFieldTypeGeneric
-    return setmetatable({
-        base = base,
-        generics = generics,
-    }, TypeFieldTypeGenericImpl) :: types.TypeFieldTypeGeneric
-end
-
-local TypeFieldImpl = {}
-TypeFieldImpl.__index = TypeFieldImpl
-
-function TypeFieldImpl.new(
-    --- The comments associated with the type field
-    comments: {string},
-    --- The name of the field
-    field_name: types.TypeFieldKey,
-    --- The type of the field
-    field_type: types.TypeFieldType
-): types.TypeField
-    return setmetatable({
-        comments = comments,
-        field_name = field_name,
-        field_type = field_type,
-    }, TypeFieldImpl) :: types.TypeField
-end
-
-local TypeFieldKeyImpl = {}
-TypeFieldKeyImpl.__index = TypeFieldKeyImpl
-
-function TypeFieldKeyImpl.new(
-    data: types.TypeFieldKey_Inner
-): types.TypeFieldKey
-    return setmetatable(data, TypeFieldKeyImpl) :: types.TypeFieldKey
-end
-
-local TypeFieldTypeFunctionImpl = {}
-TypeFieldTypeFunctionImpl.__index = TypeFieldTypeFunctionImpl
-
-function TypeFieldTypeFunctionImpl.new(
-    --- The generic arguments of the function
-    generics: {types.TypedArgument},
-    --- The arguments of the function
-    args: {types.TypedArgument},
-    --- The return type of the function
-    ret: types.TypeFieldType
-): types.TypeFieldTypeFunction
-    return setmetatable({
-        generics = generics,
-        args = args,
-        ret = ret,
-    }, TypeFieldTypeFunctionImpl) :: types.TypeFieldTypeFunction
-end
-
 -- A hack to convert a statement to a string 
 local function stmtToString(node: cst.Stat) 
     local cst: cst.Cst = {
@@ -295,20 +186,20 @@ end
 
 function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): types.TypeFieldType
     if typ.kind == "nil" then
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Basic",
             data = "nil",
-        })
+        }
     elseif typ.kind == "boolean" then
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Basic",
             data = typ.tok.text,
-        })
+        }
     elseif typ.kind == "string" then
-        return TypeFieldTypeImpl.new({
+        return {
             type = "String",
             data = typ.tok.text,
-        })
+        }
     elseif typ.kind == "reference" then
         typ = typ :: cst.Type_Reference -- Luau bug
         if typ.prefix then 
@@ -328,43 +219,45 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
                 data.generics = generics
             end            
 
-            return TypeFieldTypeImpl.new({
+            return {
                 type = "Module",
                 data = data,
-            })
+            }
         elseif typ.generics and #typ.generics.types > 0 then
             -- This is a TypeFieldTypeGeneric
-            local generics = {}
+            local generics: {types.TypeFieldType} = {}
 
             for _, generic in typ.generics.types do
                 local n = from_luau_typeinfo_to_typefieldtype(generic.node)
                 table.insert(generics, n)
             end
 
-            return TypeFieldTypeImpl.new({
+            return {
                 type = "Generic",
-                data = TypeFieldTypeGenericImpl.new(
-                    typ.name.text,
-                    generics
-                ),
-            })
+                data = {
+                    base = typ.name.text,
+                    generics = generics
+                } :: types.TypeFieldTypeGeneric,
+            }
         else
-            return TypeFieldTypeImpl.new({
+            return {
                 type = "Basic",
                 data = typ.name.text,
-            })
+            }
         end
     elseif typ.kind == "typeof" then
         typ = typ :: cst.Type_Typeof
-        return TypeFieldTypeImpl.new({
+        return {
             type = "TypeOf",
             data = exprToString(typ.expr),
-        })
+        }
     elseif typ.kind == "array" then
-        return TypeFieldTypeImpl.new({
+        -- Code is too complex to typecheck
+        local typefieldtype: any = from_luau_typeinfo_to_typefieldtype(typ.type :: any)
+        return {
             type = "Array",
-            data = from_luau_typeinfo_to_typefieldtype(typ.type),
-        })  
+            data = typefieldtype :: types.TypeFieldType,
+        }
     elseif typ.kind == "table" then
         typ = typ :: cst.Type_Table
         local fields = {}
@@ -372,10 +265,10 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             table.insert(fields, from_tabletypefield_to_typefield(field.node))
         end
 
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Table",
             data = fields,
-        })
+        }
     elseif typ.kind == "function" then
         typ = typ :: cst.Type_Function
         local args = {}
@@ -408,22 +301,22 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             generics = create_typed_arguments_from_generic_declaration(typ.generics)
         end
 
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Function",
-            data = TypeFieldTypeFunctionImpl.new(
-                generics,
-                args,
-                from_luau_typeinfo_to_typefieldtype(typ.ret)
-            ),
-        })
+            data = {
+                generics = generics,
+                args = args,
+                ret = from_luau_typeinfo_to_typefieldtype(typ.ret)
+            } :: types.TypeFieldTypeFunction,
+        }
     elseif typ.kind == "paren" then 
         return from_luau_typeinfo_to_typefieldtype(typ.type)
     elseif typ.kind == "optional" then
         typ = typ :: cst.Type_Optional
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Optional",
             data = from_luau_typeinfo_to_typefieldtype(typ.type),
-        })
+        }
     elseif typ.kind == "union" then
         typ = typ :: cst.Type_Union
         local types: {types.TypeFieldType} = {}
@@ -431,10 +324,10 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node))
         end
 
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Union",
             data = types,
-        })
+        }
     elseif typ.kind == "intersection" then
         typ = typ :: cst.Type_Intersection
         local types: {types.TypeFieldType} = {}
@@ -442,22 +335,22 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             table.insert(types, from_luau_typeinfo_to_typefieldtype(t.node))
         end
 
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Union",
             data = types,
-        })
+        }
     elseif typ.kind == "variadic" then
         typ = typ :: cst.VariadicTypePack
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Variadic",
             data = from_luau_typeinfo_to_typefieldtype(typ.type),
-        })
+        }
     elseif typ.kind == "generic" then 
         typ = typ :: cst.GenericTypePack
-        return TypeFieldTypeImpl.new({
+        return {
             type = "GenericPack",
             data = typ.name.text,
-        })
+        }
     elseif typ.kind == "list" then -- Tuple, basically
         typ = typ :: cst.TypeList
         local types: {types.TypeFieldType} = {}
@@ -468,10 +361,10 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         if typ.tail then
             table.insert(types, from_luau_typeinfo_to_typefieldtype(typ.tail))
         end
-        return TypeFieldTypeImpl.new({
+        return {
             type = "Tuple",
             data = types,
-        })
+        }
     else
         error("Unsupported feature: " .. typ.kind)
     end
@@ -487,28 +380,28 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
     end
 
     if typ.kind == "nameprop" then
-        key = TypeFieldKeyImpl.new({
+        key = {
             type = "Name",
             name = typ.name.text,
-        })
+        }
         comments = extractcommentsfromtrivia(comments, typ.name.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
     elseif typ.kind == "stringprop" then
-        key = TypeFieldKeyImpl.new({
+        key = {
             type = "Name",
             name = `{typ.bracks.open.text}{typ.key.text}{typ.bracks.close.text}`,
-        })
+        }
         comments = extractcommentsfromtrivia(comments, typ.bracks.open.trivia)
         comments = extractcommentsfromtrivia(comments, typ.key.trivia)
         comments = extractcommentsfromtrivia(comments, typ.bracks.close.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
     elseif typ.kind == "indexer" then 
-        key = TypeFieldKeyImpl.new({
+        key = {
             type = "IndexSignature",
             start_tok = typ.bracks.open.text,
             inner = from_luau_typeinfo_to_typefieldtype(typ.key),
             end_tok = typ.bracks.close.text,
-        })
+        }
         comments = extractcommentsfromtrivia(comments, typ.bracks.open.trivia)
         comments = extractcommentsfromtrivia(comments, typ.bracks.close.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
@@ -516,7 +409,7 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
         error("Unsupported feature: " .. typ.kind)
     end
 
-    return TypeFieldImpl.new(comments, key, itype)
+    return {comments = comments, field_name = key, field_type = itype}
 end
 
 --[[
@@ -648,14 +541,6 @@ local function create_type_from_function(
 end
 
 return {
-    TypeSet = TypeSetImpl,
-    TypeFieldType = TypeFieldTypeImpl,
-    TypeFieldTypeModule = TypeFieldTypeModuleImpl,
-    TypeFieldTypeGeneric = TypeFieldTypeGenericImpl,
-    TypeField = TypeFieldImpl,
-    TypeFieldKey = TypeFieldKeyImpl,
-    TypeFieldTypeFunction = TypeFieldTypeFunctionImpl,
-
     stmtToString = stmtToString,
     exprToString = exprToString,
 
