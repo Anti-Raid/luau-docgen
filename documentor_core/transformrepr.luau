@@ -7,43 +7,42 @@ local types = require("./types")
 
 --- Returns the string representation of a type field type
 --- @public_api
-local function transformTypeFieldTypeRepr(s: types.TypeFieldType, optdepth: number?, opttransformStr: ((typ: string, string) -> string)?)
+local function transformTypeFieldTypeRepr(tft: types.TypeFieldType, optdepth: number?, opttransformStr: ((typ: string, string) -> string)?)
     local depth: number = optdepth or 0
-    local transformStr = opttransformStr or function(_: string, s: string) return s end
-    local self = s:extract()
-    if self.type == "Basic" then
-        return transformStr("Basic", self.data)
-    elseif self.type == "String" then
-        return transformStr("String", self.data)
-    elseif self.type == "Boolean" then
-        return transformStr("Boolean", tostring(self.data))
-    elseif self.type == "Array" then
-        return string.format("{%s}", transformTypeFieldTypeRepr(self.data, depth, transformStr))
-    elseif self.type == "Variadic" then
-        return string.format("...%s", transformTypeFieldTypeRepr(self.data, depth, transformStr))
-    elseif self.type == "Generic" then
-        return transformGenericRepr(self.data, depth, transformStr)
-    elseif self.type == "GenericPack" then
-        return self.data
-    elseif self.type == "Module" then
-        return transformTypeFieldTypeModuleRepr(self.data, transformStr)
-    elseif self.type == "UnknownModule" then
-        return self.data
-    elseif self.type == "TypeOf" then
-        return self.data
-    elseif self.type == "Optional" then
-        return string.format("%s?", transformTypeFieldTypeRepr(self.data, depth, transformStr))
-    elseif self.type == "Function" then
-        return transformTypeFieldTypeFunctionRepr(self.data, transformStr)
-    elseif self.type == "Table" then
-        if #self.data == 0 then
+    local transformStr = (opttransformStr or function(_: string, s: string) return s end) :: (typ: string, string) -> string
+    local s = tft -- Luau typechecker bug with refinement, define a local 's' instead
+    if s.type == "Basic" then
+        return transformStr("Basic", s.data)
+    elseif s.type == "String" then
+        return transformStr("String", s.data)
+    elseif s.type == "Boolean" then 
+        return transformStr("Boolean", tostring(s.data))
+    elseif s.type == "Array" then
+        return string.format("{%s}", transformTypeFieldTypeRepr(s.data, depth, transformStr))
+    elseif s.type == "Variadic" then
+        return string.format("...%s", transformTypeFieldTypeRepr(s.data, depth, transformStr))
+    elseif s.type == "Generic" then
+        return transformGenericRepr(s.data, depth, transformStr)
+    elseif s.type == "GenericPack" then
+        return s.data
+    elseif s.type == "Module" then
+        return transformTypeFieldTypeModuleRepr(s.data, transformStr)
+    elseif s.type == "UnknownModule" then
+        return s.data
+    elseif s.type == "TypeOf" then
+        return s.data
+    elseif s.type == "Optional" then
+        return string.format("%s?", transformTypeFieldTypeRepr(s.data, depth, transformStr))
+    elseif s.type == "Function" then
+        return transformTypeFieldTypeFunctionRepr(s.data, transformStr)
+    elseif s.type == "Table" then
+        if #s.data == 0 then
             return "{}"
         end
 
-
         local fieldsStr = table.concat(
             tableext.arraymap(
-                self.data, 
+                s.data, 
                 function(a: types.TypeField) : string
                     return transformTypeFieldReprWithPat(a, depth+1, string.format("\n%s", string.rep("\t", depth+1)), transformStr)
                 end
@@ -57,25 +56,25 @@ local function transformTypeFieldTypeRepr(s: types.TypeFieldType, optdepth: numb
             fieldsStr,
             string.rep("\t", depth)
         )
-    elseif self.type == "Tuple" then
+    elseif s.type == "Tuple" then
         local types_str_list = {}
-        for i, t in ipairs(self.data) do
+        for i, t in ipairs(s.data) do
             table.insert(types_str_list, transformTypeFieldTypeRepr(t, depth, transformStr))
         end
         local types_str = table.concat(types_str_list, ", ")
         return string.format("(%s)", types_str)
-    elseif self.type == "VariadicPack" then
-        return string.format("...%s", self.data)
-    elseif self.type == "Union" then
+    elseif s.type == "VariadicPack" then
+        return string.format("...%s", s.data)
+    elseif s.type == "Union" then
         local types_str_list = {}
-        for i, t in ipairs(self.data) do
+        for i, t in ipairs(s.data) do
             table.insert(types_str_list, transformTypeFieldTypeRepr(t, depth, transformStr))
         end
         local types_str = table.concat(types_str_list, " | ")
         return types_str
-    elseif self.type == "Intersection" then
+    elseif s.type == "Intersection" then
         local types_str_list = {}
-        for i, t in ipairs(self.data) do
+        for i, t in ipairs(s.data) do
             table.insert(types_str_list, transformTypeFieldTypeRepr(t, depth, transformStr))
         end
         local types_str = table.concat(types_str_list, " & ")
@@ -105,11 +104,10 @@ end
 
 function transformTypeFieldKey(s: types.TypeFieldKey, opttransformStr: ((typ: string, string) -> string)?)
     local transformStr = opttransformStr or function(_: string, c: string) return c end
-    local extracted = s:extract()
-    if extracted.type == "Name" then
-        return extracted.name
-    elseif extracted.type == "IndexSignature" then
-        return string.format("%s%s%s", extracted.start_tok, transformTypeFieldTypeRepr(extracted.inner, 0, transformStr), extracted.end_tok)
+    if s.type == "Name" then
+        return s.name
+    elseif s.type == "IndexSignature" then
+        return string.format("%s%s%s", s.start_tok, transformTypeFieldTypeRepr(s.inner, 0, transformStr), s.end_tok)
     else
         error("ICE: transformRepr failed")
     end
@@ -228,7 +226,7 @@ function transformTypeDefRepr(s: types.TypeDef, fields_join_pat: string, generic
     repr ..= " = "
 
     -- Match on self.type_def_type
-    local extracted = s.type_def_type:extract()
+    local extracted = s.type_def_type
     if extracted.type == "Table" then
         local fields = extracted.data
         if #fields == 0 then

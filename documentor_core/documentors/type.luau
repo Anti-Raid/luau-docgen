@@ -14,7 +14,7 @@ local function parseTypeFieldListOfTypeDef(istate: istate.IState, typefields: {t
     local methods: {types.TypeField} = {}
     local fields: {types.TypeField} = {}
     for _, field in typefields do 
-        if field.field_type:extract().type == "Function" then
+        if field.field_type.type == "Function" then
             methods[#methods + 1] = field
         else
             fields[#fields + 1] = field
@@ -83,7 +83,7 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
         text = transformrepr.transformTypeDefRepr(typ, ",\n\n\t", ", ")
     })
 
-    local extractedType = typ.type_def_type:extract()
+    local extractedType = typ.type_def_type
 
     if extractedType.type == "Table" then 
         tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(istate, extractedType.data))

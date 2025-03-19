@@ -133,56 +133,17 @@ local function parseFunction(
     end
 
     if ret then
-        local extractedRet = ret:extract()
-        if extractedRet.type ~= "Tuple" or #extractedRet.data > 0 then 
-            blockNodes[#blockNodes + 1] = {
-                type = "Heading" :: "Heading",
-                level = nil :: number?, -- Bug in luau new type solver needs this (for now)
-                headingText = markdown.NewMarkdownText_FromRaw("Returns")
-            } :: markdown.MarkdownNode
-
-            if extractedRet.type == "Tuple" then 
-                -- Special case for tuples
-                for i, ret in extractedRet.data do 
-                    -- Returns have special constraints
-                    local retName, retComment = arg.parseAnonymousArgData(`ret{i}`, convertedComments.returns, i)
-
-                    local baseNodes: {markdown.MarkdownNode} = {
-                        {
-                            type = "Heading" :: "Heading",
-                            headingText = markdown.NewMarkdownText_FromRaw(retName)
-                        } :: markdown.MarkdownNode
-                    }
-
-                    if retComment ~= "" then
-                        baseNodes[#baseNodes + 1] = {
-                            type = "Text" :: "Text",
-                            text = markdown.NewMarkdownText_FromRaw(retComment)
-                        } :: markdown.MarkdownNode
-                    end
-
-                    tableext.extend(baseNodes, parseTypeFieldType({
-                        istate = istate, 
-                        originRepr = transformRepr.transformTypeFieldTypeRepr(ret), 
-                        typ = ret, 
-                        convertedComments = convertedComments
-                    }))
-
-                    blockNodes[#blockNodes + 1] = {
-                        type = "Block" :: "Block",
-                        nodes = baseNodes
-                    }        
-                end
-            else
+        if ret.type == "Tuple" then 
+            -- Special case for tuples
+            local baseNodes: {markdown.MarkdownNode} = {}
+            for i, retdata in ret.data do 
                 -- Returns have special constraints
-                local retName, retComment = arg.parseAnonymousArgData(`ret1`, convertedComments.returns, 1)
+                local retName, retComment = arg.parseAnonymousArgData(`ret{i}`, convertedComments.returns, i)
 
-                local baseNodes: {markdown.MarkdownNode} = {
-                    {
-                        type = "Heading" :: "Heading",
-                        headingText = markdown.NewMarkdownText_FromRaw(retName)
-                    } :: markdown.MarkdownNode
-                }
+                baseNodes[#baseNodes + 1] = {
+                    type = "Heading" :: "Heading",
+                    headingText = markdown.NewMarkdownText_FromRaw(retName)
+                }  :: markdown.MarkdownNode
 
                 if retComment ~= "" then
                     baseNodes[#baseNodes + 1] = {
@@ -193,17 +154,62 @@ local function parseFunction(
 
                 tableext.extend(baseNodes, parseTypeFieldType({
                     istate = istate, 
-                    originRepr = transformRepr.transformTypeFieldTypeRepr(ret), 
-                    typ = ret, 
-                    convertedComments = convertedComments, 
-                    inline = true
+                    originRepr = transformRepr.transformTypeFieldTypeRepr(retdata), 
+                    typ = retdata, 
+                    convertedComments = convertedComments
                 }))
+            end
+
+            if #baseNodes > 0 then
+                blockNodes[#blockNodes + 1] = {
+                    type = "Heading" :: "Heading",
+                    level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+                    headingText = markdown.NewMarkdownText_FromRaw("Returns")
+                } :: markdown.MarkdownNode
 
                 blockNodes[#blockNodes + 1] = {
                     type = "Block" :: "Block",
                     nodes = baseNodes
-                }        
+                }       
+            end 
+        else 
+            -- Returns have special constraints
+            local retName, retComment = arg.parseAnonymousArgData(`ret1`, convertedComments.returns, 1)
+
+            local baseNodes: {markdown.MarkdownNode} = {
+                {
+                    type = "Heading" :: "Heading",
+                    headingText = markdown.NewMarkdownText_FromRaw(retName)
+                } :: markdown.MarkdownNode
+            }
+
+            if retComment ~= "" then
+                baseNodes[#baseNodes + 1] = {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(retComment)
+                } :: markdown.MarkdownNode
             end
+
+            tableext.extend(baseNodes, parseTypeFieldType({
+                istate = istate, 
+                originRepr = transformRepr.transformTypeFieldTypeRepr(ret), 
+                typ = ret, 
+                convertedComments = convertedComments, 
+                inline = true
+            }))
+
+            if #baseNodes > 0 then
+                blockNodes[#blockNodes + 1] = {
+                    type = "Heading" :: "Heading",
+                    level = nil :: number?, -- Bug in luau new type solver needs this (for now)
+                    headingText = markdown.NewMarkdownText_FromRaw("Returns")
+                } :: markdown.MarkdownNode
+
+                blockNodes[#blockNodes + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = baseNodes
+                }       
+            end 
         end
     end
 
@@ -362,7 +368,7 @@ end
 
 --- Parses a TypeFieldType (number or () -> number etc.) in a table
 function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.MarkdownNode} 
-    local fieldtype = data.typ:extract()
+    local fieldtype = data.typ
     data.istate.plugin.onParseTypeFieldType(data)
     if fieldtype.type == "Function" then
         if data.inline then 

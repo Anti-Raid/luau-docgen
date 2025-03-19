@@ -78,31 +78,17 @@ export type Globals = {
     }, -- stats the file for info about it
 }
 
-export type TypeIterator = (() -> Type)
-
 export type TypeSet = {
-    --- Creates an iterator over the typedefs in the set
-    iter_typedefs: (self: TypeSet) -> TypeIterator,
-    --- Creates an iterator over the functions in the set
-    iter_functions: (self: TypeSet) -> TypeIterator,
-    --- Creates an iterator over the types in the set
-    iter_all: (self: TypeSet) -> TypeIterator,
+    types: {Type},
 }
 
 --- A documentable type 
 export type Type = {
-    --- Extract out the type and variant name
-    extract: (self: Type) -> {
-        type: "TypeDef",
-        data: TypeDef,
-    } | {
-        type: "Function",
-        data: TypeFunction,
-    },
-    --- the name of the type
-    name: (self: Type) -> string,
-    --- the type comments attached to the type
-    type_comments: (self: Type) -> {string},
+    type: "TypeDef",
+    data: TypeDef,
+} | {
+    type: "Function",
+    data: TypeFunction,
 }
 
 --- A type definition
@@ -135,17 +121,14 @@ export type TypeFunction = {
 
 --- specifialized type definition type information
 export type TypeDefType = {
-    --- Extract out the type and variant name
-    extract: (self: TypeDefType) -> {
-        type: "Table",
-        data: {TypeField}
-    } | {
-        type: "TypeOfSetMetatable",
-        data: TypeDefTypeTypeofSetMetatable,
-    } | {
-        type: "Uncategorized",
-        data: TypeFieldType,
-    }
+    type: "Table",
+    data: {TypeField}
+} | {
+    type: "TypeOfSetMetatable",
+    data: TypeDefTypeTypeofSetMetatable,
+} | {
+    type: "Uncategorized",
+    data: TypeFieldType,
 }
 
 --- Inner data of a TypeOf SetMetatable declaration
@@ -156,7 +139,7 @@ export type TypeDefTypeTypeofSetMetatable = {
     metatable_fields: {TypeField},
 }
 
-export type TypeFieldKey_Inner = {
+export type TypeFieldKey = {
     type: "Name",
     name: string
 } | {
@@ -164,11 +147,6 @@ export type TypeFieldKey_Inner = {
     start_tok: string,
     inner: TypeFieldType,
     end_tok: string
-}
-
-export type TypeFieldKey = {
-    --- Extract out the type field and variant name
-    extract: (self: TypeFieldKey) -> TypeFieldKey_Inner
 }
 
 --- A type field used within table types. The foo: number in { foo: number }.
@@ -181,7 +159,7 @@ export type TypeField = {
     field_type: TypeFieldType,
 }
 
-export type TypeFieldType_Inner = {
+export type TypeFieldType = {
     type: "Basic",
     data: string,
 } | 
@@ -268,13 +246,6 @@ export type TypeFieldType_Inner = {
 {
     type: "TypeOf",
     data: string,
-}
-
---- Compact type information (Any type, such as string, boolean?, number | boolean, etc)
--- A basic primitive type (string, number, etc)
-export type TypeFieldType = {
-    --- Extract out the type and variant name
-    extract: (self: TypeFieldType) -> TypeFieldType_Inner
 }
 
 --- A typed argument with an optional name and typ

@@ -10,7 +10,7 @@ local inliner: istate.OptionalPlugin = {
     onParseTypeFieldType = function(data: istate.ParseTypeFieldTypeData)
         local inline = data.inline
         if inline then return end -- Already inlined
-        local fieldtype = data.typ:extract()
+        local fieldtype = data.typ
         if fieldtype.type == "Union" then
             if #fieldtype.data > maxVariantsForInlining then
                 return
@@ -18,7 +18,7 @@ local inliner: istate.OptionalPlugin = {
 
             -- If theres a table type in the union, then inlining is not a good idea design-wise
             for _, variant in fieldtype.data do
-                local extracted = variant:extract()
+                local extracted = variant -- Avoid typechecker refinement issues
                 if extracted.type == "Table" then
                     return
                 end

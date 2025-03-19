@@ -81,6 +81,7 @@ pub struct TypeFieldTypeFunction {
 
 /// Compact type information (Any type, such as string, boolean?, number | boolean, etc)
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[serde(tag = "type", content = "data")]
 pub enum TypeFieldType {
     /// A basic primitive type (`string`, `number`, etc)
     Basic(String),
@@ -303,6 +304,7 @@ impl TypeFieldType {
 
 /// Originates from a LuauTypeField: A type field used within table types. The foo: number in { foo: number }.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[serde(tag = "type")]
 pub enum TypeFieldKey {
     Name {
         name: String,
@@ -394,15 +396,23 @@ pub struct TypeDefTypeTypeofSetMetatable {
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[serde(tag = "type")]
 pub enum TypeDefType {
     /// type T = { ... }
-    Table { fields: Vec<Rc<TypeField>> },
+    Table {
+        #[serde(rename = "data")]
+        fields: Vec<Rc<TypeField>>,
+    },
     /// typeof(setmetatable) is so common, its a special type
     TypeOfSetMetatable {
+        #[serde(rename = "data")]
         type_info: TypeDefTypeTypeofSetMetatable,
     },
     /// Anything else
-    Uncategorized { type_info: Rc<TypeFieldType> },
+    Uncategorized {
+        #[serde(rename = "data")]
+        type_info: Rc<TypeFieldType>,
+    },
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -437,40 +447,18 @@ pub struct TypeFunction {
 ///
 /// This is an Rc to make it cheap to clone
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[serde(tag = "type")]
 pub enum Type {
     TypeDef {
+        #[serde(rename = "data")]
         /// The inner type definition
         inner: Rc<TypeDef>,
     },
     Function {
+        #[serde(rename = "data")]
+        /// The inner function type
         inner: Rc<TypeFunction>,
     },
-}
-
-impl Type {
-    /// Returns the name of the type
-    pub fn name(&self) -> &str {
-        match self {
-            Type::TypeDef { inner } => inner.name.as_ref(),
-            Type::Function { inner, .. } => inner.name.as_ref(),
-        }
-    }
-
-    /// Returns the comments associated with the type
-    pub fn type_comments(&self) -> Vec<String> {
-        match self {
-            Type::TypeDef { inner } => inner
-                .type_comments
-                .iter()
-                .map(|s| s.trim().to_string())
-                .collect(),
-            Type::Function { inner } => inner
-                .type_comments
-                .iter()
-                .map(|s| s.trim().to_string())
-                .collect(),
-        }
-    }
 }
 
 #[derive(Default, Debug, Clone)]

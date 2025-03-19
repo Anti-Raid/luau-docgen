@@ -4265,7 +4265,7 @@ type ApplicationObject = {
 
 *This field is optional and may not be specified*
 
-[boolean](#boolean)?
+{[ApplicationIntegrationType]: [boolean](#boolean)}?
 
 <div id="custom_install_url"></div>
 
@@ -6227,39 +6227,39 @@ https://discord.com/developers/docs/resources/channel#attachment-object
 ```luau
 -- https://discord.com/developers/docs/resources/channel#attachment-object
 type AttachmentObject = Partial<{
-	id: Snowflake,
+		id: Snowflake,
 
-	filename: string,
+		filename: string,
 
-	title: string?,
+		title: string?,
 
-	description: string?,
+		description: string?,
 
-	content_type: string?,
+		content_type: string?,
 
-	size: number,
+		size: number,
 
-	url: string,
+		url: string,
 
-	proxy_url: string,
+		proxy_url: string,
 
-	height: number?,
+		height: number?,
 
-	width: number?,
+		width: number?,
 
-	ephemeral: boolean?,
+		ephemeral: boolean?,
 
-	duration_secs: number?,
+		duration_secs: number?,
 
-	waveform: string?,
+		waveform: string?,
 
-	flags: number
-}>
+		flags: number
+	}>
 ```
 
 </details>
 
-[Partial](#Partial)&lt;[Snowflake](#Snowflake), [string](#string), [string](#string)?, [string](#string)?, [string](#string)?, [number](#number), [string](#string), [string](#string), [number](#number)?, [number](#number)?, [boolean](#boolean)?, [number](#number)?, [string](#string)?, [number](#number)&gt;<div id="EmbedFooterObject"></div>
+[Partial](#Partial)&lt;{id: [Snowflake](#Snowflake), filename: [string](#string), title: [string](#string)?, description: [string](#string)?, content_type: [string](#string)?, size: [number](#number), url: [string](#string), proxy_url: [string](#string), height: [number](#number)?, width: [number](#number)?, ephemeral: [boolean](#boolean)?, duration_secs: [number](#number)?, waveform: [string](#string)?, flags: [number](#number)}&gt;<div id="EmbedFooterObject"></div>
 
 ## EmbedFooterObject
 
@@ -7215,27 +7215,27 @@ https://discord.com/developers/docs/interactions/message-components#button-objec
 ```luau
 -- https://discord.com/developers/docs/interactions/message-components#button-object
 type ButtonComponentObject = Partial<{
-	type: number,
+		type: number,
 
-	style: ButtonStyle,
+		style: ButtonStyle,
 
-	label: string?,
+		label: string?,
 
-	emoji: EmojiObject?,
+		emoji: EmojiObject?,
 
-	custom_id: string?,
+		custom_id: string?,
 
-	sku_id: string?,
+		sku_id: string?,
 
-	url: string?,
+		url: string?,
 
-	disabled: boolean?
-}>
+		disabled: boolean?
+	}>
 ```
 
 </details>
 
-[Partial](#Partial)&lt;[number](#number), [ButtonStyle](#ButtonStyle), [string](#string)?, [EmojiObject](#EmojiObject)?, [string](#string)?, [string](#string)?, [string](#string)?, [boolean](#boolean)?&gt;<div id="SelectMenuComponentObject"></div>
+[Partial](#Partial)&lt;{type: [number](#number), style: [ButtonStyle](#ButtonStyle), label: [string](#string)?, emoji: [EmojiObject](#EmojiObject)?, custom_id: [string](#string)?, sku_id: [string](#string)?, url: [string](#string)?, disabled: [boolean](#boolean)?}&gt;<div id="SelectMenuComponentObject"></div>
 
 ## SelectMenuComponentObject
 
@@ -8694,7 +8694,7 @@ type ApplicationRoleConnectionMetadataObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="description"></div>
 
@@ -8708,7 +8708,7 @@ type ApplicationRoleConnectionMetadataObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="ApplicationCommandOptionChoiceObject"></div>
 
@@ -8746,7 +8746,7 @@ type ApplicationCommandOptionChoiceObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="value"></div>
 
@@ -8834,7 +8834,7 @@ type ApplicationCommandOptionObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="description"></div>
 
@@ -8850,7 +8850,7 @@ type ApplicationCommandOptionObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="required"></div>
 
@@ -9018,7 +9018,7 @@ type ApplicationCommandObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="description"></div>
 
@@ -9032,7 +9032,7 @@ type ApplicationCommandObject = {
 
 *This field is optional and may not be specified*
 
-[string](#string)?
+{[LanguageLocales]: [string](#string)}?
 
 <div id="options"></div>
 
