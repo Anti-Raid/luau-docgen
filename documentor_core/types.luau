@@ -81,7 +81,6 @@ export type Globals = {
 export type TypeSet = {
     types: {Type},
 }
-
 --- A documentable type 
 export type Type = {
     type: "TypeDef",
