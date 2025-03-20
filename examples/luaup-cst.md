@@ -2650,6 +2650,8 @@ type TokenKind<Kind> = {
 
 ## Pair
 
+Token & { kind: Kind }
+
 A pair of a node and optional separator, such as `node,` or `node`.
 
 
@@ -2662,6 +2664,7 @@ passed to a function, which would be `Separated<Expr>`.
 <summary>Raw Type</summary>
 
 ```luau
+-- Token & { kind: Kind }
 --- A pair of a node and optional separator, such as `node,` or `node`.
 --- 
 --- This is used within `Separated` to represent nodes like the arguments

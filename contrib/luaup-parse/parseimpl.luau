@@ -319,7 +319,11 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             } :: types.TypeFieldTypeFunction,
         }
     elseif typ.kind == "paren" then 
-        return from_luau_typeinfo_to_typefieldtype(typ.type)
+        local typ = from_luau_typeinfo_to_typefieldtype(typ.type)
+        return {
+            type = "Tuple",
+            data = {typ},
+        }
     elseif typ.kind == "optional" then
         typ = typ :: cst.Type_Optional
         return {
@@ -345,7 +349,7 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         end
 
         return {
-            type = "Union",
+            type = "Intersection",
             data = types,
         }
     elseif typ.kind == "variadic" then
@@ -755,7 +759,7 @@ local function create_type_from_type_declaration(stattype: cst.Stat_Type): types
     local generics: {types.TypedArgument} = {}
 
     if stattype.generics then
-        generics = create_typed_arguments_from_generic_declaration_with_defaults(stattype.generics)
+        generics = create_typed_arguments_from_generic_declaration_with_default(stattype.generics)
     end
 
     local type = stattype.type

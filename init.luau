@@ -1,5 +1,7 @@
--- Pure luau variant of the Rust full-moon based documentor
+--!optimize 2
 --!strict
+
+-- Pure luau variant of the Rust full-moon based documentor
 
 local documentor = require("./documentor_core/documentor")
 local types = require("./documentor_core/types")
