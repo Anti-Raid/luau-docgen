@@ -175,6 +175,37 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         end
     elseif typ.kind == "typeof" then
         typ = typ :: cst.Type_Typeof
+
+        -- Create typeof specializations if we can
+        if typ.expr.kind == "var" then 
+            local var = typ.expr.var
+            if var.root.kind == "name" then 
+                local name = var.root.tok.text
+                -- Case: typeof setmetatable
+                if name == "setmetatable" then 
+                    if #var.suffixes == 1 and var.suffixes[1].kind == "call" and not var.suffixes[1].method then 
+                        local suffixes: cst.VarSuffix_Call = var.suffixes[1] :: cst.VarSuffix_Call
+                        if suffixes.arg.kind == "pack" then -- 2 args case 
+                            local funcargs = suffixes.arg
+                            if #funcargs.exprs == 2 and funcargs.exprs[1].node.kind == "assertion" and funcargs.exprs[2].node.kind == "assertion" then 
+                                local fields = from_luau_typeinfo_to_typefieldtype(funcargs.exprs[1].node.type)
+                                local metatablefields = from_luau_typeinfo_to_typefieldtype(funcargs.exprs[2].node.type)
+                                if fields.type == "Table" and metatablefields.type == "Table" then 
+                                    return {
+                                        type = "TypeOfSetMetatable",
+                                        data = {
+                                            fields = fields.data,
+                                            metatable_fields = metatablefields.data,
+                                        } :: types.TypeFieldTypeTypeofSetMetatable,
+                                    }
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
         return {
             type = "TypeOf",
             data = stringify.exprToString(typ.expr),
