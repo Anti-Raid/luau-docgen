@@ -3,7 +3,6 @@
 local types = require("./types")
 local convertComments = require("./convertcomments")
 local argparser = require("./argparser")
-local partial = require("./partial")
 
 -- Common internal state
 export type IState = {
@@ -71,7 +70,44 @@ Can be used to modify the istate before the documentor runs as tables are passed
     onParseTypeFieldType: (data: ParseTypeFieldTypeData) -> (),
 }
 
-export type OptionalPlugin = partial.Partial<Plugin>
+export type OptionalPlugin = {
+    -- This field must be set to `PLUGIN_HEADER` to ensure return type is correct
+    plugin_header: string,
+
+    -- Called upon a new typeset being used/found
+    --
+    -- This is usually the first function called of the plugin
+    setTypeSet: ((typeset: types.TypeSet) -> ())?,
+
+    --[[ 
+Called when the documentor is first initialized 
+
+Can be used to modify the istate before the documentor runs as tables are passed by reference in Lua
+    
+```luau
+> a = {a = 1}
+> a.a
+1
+> function b(c) c.a = 2 end
+> b(a)
+> a.a
+2 
+``` 
+    ]]
+    onInitialize: ((istate: IState) -> ())?,
+
+    --- Resolves a type to a link/url
+    resolveTypeToUrl: ((fieldtype: string, type: string) -> string)?,
+
+    --- Resolves a module type to the module url and type url
+    resolveModuleToUrl: ((fieldtype: string, module: string, type: string) -> {
+        moduleUrl: string,
+        typeUrl: string,
+    })?,
+
+    --- Called when a type field is being parsed. Can be used to modify how types are parsed
+    onParseTypeFieldType: ((data: ParseTypeFieldTypeData) -> ())?,    
+}
 
 local DefaultPlugin: Plugin = {
     plugin_header = PLUGIN_HEADER,

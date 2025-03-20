@@ -25,7 +25,7 @@ local globals: types.Globals = {
         unsupported_count: number,
         typeset: types.TypeSet,
     }
-        return parseContentsToTypeset(opts.contents)
+        return parseContentsToTypeset(opts.contents, opts.include_nonexported_types)
     end,
     --[[
     fs_readfile: (path: string) -> string, -- returns the contents of the file

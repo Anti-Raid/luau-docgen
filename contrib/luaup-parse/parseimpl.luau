@@ -88,7 +88,14 @@ end
 local function extractcommentsfromtrivia(comments: {string}, trivia: {cst.Trivia}): {string}
     for _, t in trivia do
         if t.kind == "comment" then
-            table.insert(comments, t.text:gsub("-- ", "") :: string)
+            local text, _ = t.text:gsub("^%-%-%s*", "")
+
+            -- If the comment does not start with `-`, add a space
+            if string.sub(text, 1, 1) ~= "-" then
+                text = " " .. text
+            end
+
+            table.insert(comments, text)
         end
     end
     return comments
@@ -398,9 +405,9 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
     elseif typ.kind == "indexer" then 
         key = {
             type = "IndexSignature",
-            start_tok = typ.bracks.open.text,
+            start_tok = typ.bracks.open.kind,
             inner = from_luau_typeinfo_to_typefieldtype(typ.key),
-            end_tok = typ.bracks.close.text,
+            end_tok = typ.bracks.close.kind,
         }
         comments = extractcommentsfromtrivia(comments, typ.bracks.open.trivia)
         comments = extractcommentsfromtrivia(comments, typ.bracks.close.trivia)
@@ -540,12 +547,252 @@ local function create_type_from_function(
     }
 end
 
+--[[
+    pub fn create_type_from_type_decl(
+        &mut self,
+        comments: Vec<String>,
+        node: &TypeDeclaration,
+    ) -> Option<Type> {
+        // Get node type name
+        let name = extract_name_from_tokenref(node.type_name());
+
+        // Get generics
+        let generics = if let Some(generic) = node.generics() {
+            self.create_typed_arguments_from_generic_declaration(generic)
+        } else {
+            Vec::with_capacity(0)
+        };
+
+        // For now, we only want the actual type declarations (not aliases etc)
+        //println!("{:?}", node.type_declaration().type_definition());
+        match node.type_definition() {
+            TypeInfo::Table {
+                fields: tfields, ..
+            } => {
+                //println!("Table: {:?}", tfields);
+
+                let mut fields = Vec::new();
+
+                // Add in all the fields
+                for pair in tfields.pairs() {
+                    match pair {
+                        Pair::Punctuated(field, _) | Pair::End(field) => {
+                            let field = TypeField::from_luau_type_field(self, field);
+                            fields.push(field);
+                        }
+                    }
+                }
+
+                return Some(Type::TypeDef {
+                    inner: TypeDef {
+                        name,
+                        generics,
+                        type_comments: comments,
+                        type_def_type: TypeDefType::Table { fields },
+                    }
+                    .into(),
+                });
+            }
+            TypeInfo::Typeof { inner, .. } => {
+                #[allow(clippy::single_match)]
+                // Handle setmetatable
+                match &**inner {
+                    Expression::FunctionCall(fc) => {
+                        //println!("{:?}", fc.prefix());
+
+                        let Prefix::Name(s) = fc.prefix() else {
+                            self.warn_unsupported(
+                                "Only simple typeof setmetatable cases are supported!",
+                            );
+                            return None;
+                        };
+
+                        if extract_name_from_tokenref(s) == "setmetatable" {
+                            // Handle typeof setmetatable case
+                            let mut typ = None;
+                            for suffix in fc.suffixes() {
+                                //println!("Suffix: {}", suffix);
+
+                                match suffix {
+                                    Suffix::Call(call) => {
+                                        let fargs = match call {
+                                            Call::AnonymousCall(fargs) => fargs,
+                                            Call::MethodCall(mc) => mc.args(),
+                                            _ => {
+                                                self.warn_unsupported(
+                                                            "Only simple typeof setmetatable cases [Call unsupported] are supported!",
+                                                        );
+                                                continue;
+                                            }
+                                        };
+
+                                        let mut type_assertions = Vec::new();
+                                        match fargs {
+                                            FunctionArgs::Parentheses { arguments, .. } => {
+                                                for arg in arguments {
+                                                    if let Expression::TypeAssertion {
+                                                        type_assertion,
+                                                        ..
+                                                    } = arg
+                                                    {
+                                                        type_assertions.push(type_assertion);
+                                                    }
+                                                }
+                                            }
+                                            FunctionArgs::String(_) => {
+                                                self.warn_unsupported(
+                                                            "Only simple typeof setmetatable cases [String unsupported] are supported!",
+                                                        );
+                                                continue;
+                                            }
+                                            FunctionArgs::TableConstructor(_) => {
+                                                self.warn_unsupported(
+                                                            "Only simple typeof setmetatable cases [TableConstructor unsupported] are supported!",
+                                                        );
+                                            }
+                                            _ => {
+                                                self.warn_unsupported(
+                                                            "Only simple typeof setmetatable cases [FunctionArgs unsupported] are supported!",
+                                                        );
+                                                continue;
+                                            }
+                                        };
+
+                                        //println!("Call: {:?}", fargs);
+                                        //println!("Type Assertions: {:?}", type_assertions);
+                                        let mut typ_field = (None, None);
+                                        for type_assertion in type_assertions {
+                                            let type_info = TypeFieldType::from_luau_typeinfo(
+                                                self,
+                                                type_assertion.cast_to(),
+                                            );
+
+                                            let type_fields = match *type_info {
+                                                TypeFieldType::Table(ref fields) => fields.to_vec(),
+                                                _ => {
+                                                    self.warn_unsupported(
+                                                                "Only simple typeof setmetatable cases [non-table TypeFieldType unsupported] are supported!",
+                                                            );
+                                                    continue;
+                                                }
+                                            };
+
+                                            if typ_field.0.is_none() {
+                                                typ_field.0 = Some(type_fields); // fields
+                                            } else if typ_field.1.is_none() {
+                                                typ_field.1 = Some(type_fields); // metatable
+                                            } else {
+                                                break; // Shouldn't be more than 2 type assertions
+                                            }
+                                        }
+
+                                        if let (Some(fields), Some(metatable)) = typ_field {
+                                            typ = Some(TypeDefTypeTypeofSetMetatable {
+                                                fields,
+                                                metatable_fields: metatable,
+                                            });
+                                        }
+                                    }
+                                    Suffix::Index(_) => {
+                                        self.warn_unsupported("Only simple typeof setmetatable cases [Suffix::Index unsupported] are supported!");
+                                        continue;
+                                    }
+                                    _ => {
+                                        self.warn_unsupported("Only simple typeof setmetatable cases [Suffix unsupported] are supported!");
+                                        continue;
+                                    }
+                                }
+                            }
+
+                            if let Some(typ) = typ {
+                                return Some(Type::TypeDef {
+                                    inner: TypeDef {
+                                        name,
+                                        generics,
+                                        type_comments: comments,
+                                        type_def_type: TypeDefType::TypeOfSetMetatable {
+                                            type_info: typ,
+                                        },
+                                    }
+                                    .into(),
+                                });
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            _ => {}
+        };
+
+        // Go default on type definition if not specially supported
+        Some(Type::TypeDef {
+            inner: TypeDef {
+                name,
+                generics,
+                type_comments: comments,
+                type_def_type: TypeDefType::Uncategorized {
+                    type_info: TypeFieldType::from_luau_typeinfo(self, node.type_definition()),
+                },
+            }
+            .into(),
+        })
+    }
+]]
+local function create_type_from_type_declaration(stattype: cst.Stat_Type): types.TypeDef
+    local comments: {string} = {}
+
+    if stattype.export_tok then
+        comments = extractcommentsfromtrivia(comments, stattype.export_tok.trivia)
+    else
+        comments = extractcommentsfromtrivia(comments, stattype.type_tok.trivia)
+    end
+
+    local name = stattype.name.text
+
+    local generics: {types.TypedArgument} = {}
+
+    if stattype.generics then
+        generics = create_typed_arguments_from_generic_declaration_with_defaults(stattype.generics)
+    end
+
+    local type = stattype.type
+    local typedeftype: types.TypeDefType? = nil
+    if type.kind == "table" then 
+        local fields: {types.TypeField} = {}
+        for _, field in type.fields do
+            table.insert(fields, from_tabletypefield_to_typefield(field.node :: any))
+        end
+
+        typedeftype = {
+            type = "Table",
+            data = fields,
+        } 
+    elseif type.kind == "typeof" then
+        error("typeof support is a WIP")
+    else
+        typedeftype = {
+            type = "Uncategorized",
+            data = from_luau_typeinfo_to_typefieldtype(type),
+        }
+    end
+
+    return {
+        name = name,
+        generics = generics,
+        type_comments = comments,
+        type_def_type = typedeftype,
+    } :: types.TypeDef
+end
+
 return {
     stmtToString = stmtToString,
     exprToString = exprToString,
+    extractcommentsfromtrivia = extractcommentsfromtrivia,
 
     create_typed_arguments_from_generic_declaration_with_default = create_typed_arguments_from_generic_declaration_with_default,
     from_luau_typeinfo_to_typefieldtype = from_luau_typeinfo_to_typefieldtype,
     from_tabletypefield_to_typefield = from_tabletypefield_to_typefield,
     create_type_from_function = create_type_from_function,
+    create_type_from_type_declaration = create_type_from_type_declaration
 }
