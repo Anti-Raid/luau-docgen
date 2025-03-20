@@ -188,8 +188,8 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
                         if suffixes.arg.kind == "pack" then -- 2 args case 
                             local funcargs = suffixes.arg
                             if #funcargs.exprs == 2 and funcargs.exprs[1].node.kind == "assertion" and funcargs.exprs[2].node.kind == "assertion" then 
-                                local fields = from_luau_typeinfo_to_typefieldtype(funcargs.exprs[1].node.type)
-                                local metatablefields = from_luau_typeinfo_to_typefieldtype(funcargs.exprs[2].node.type)
+                                local fields = from_luau_typeinfo_to_typefieldtype(funcargs.exprs[1].node.type :: any)
+                                local metatablefields = from_luau_typeinfo_to_typefieldtype(funcargs.exprs[2].node.type :: any)
                                 if fields.type == "Table" and metatablefields.type == "Table" then 
                                     return {
                                         type = "TypeOfSetMetatable",

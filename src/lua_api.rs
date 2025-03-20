@@ -268,7 +268,6 @@ impl LuaUserData for Globals {
             Ok(result_table)
         });
 
-        // TODO: Think of a better way
         methods.add_function("fs_readfile", |_lua, path: String| {
             let contents = std::fs::read_to_string(&path)
                 .map_err(|e| LuaError::external(format!("Failed to read file: {}", e)))?;
@@ -283,49 +282,5 @@ impl LuaUserData for Globals {
                 Ok(())
             },
         );
-
-        methods.add_function("fs_mkdirall", |_lua, path: String| {
-            std::fs::create_dir_all(&path)
-                .map_err(|e| LuaError::external(format!("Failed to create directory: {}", e)))?;
-            Ok(())
-        });
-
-        methods.add_function("fs_rmdirall", |_lua, path: String| {
-            std::fs::remove_dir_all(path)
-                .map_err(|e| LuaError::external(format!("Failed to remove directory: {}", e)))?;
-            Ok(())
-        });
-
-        methods.add_function("fs_exists", |_lua, path: String| {
-            let exists = std::fs::exists(&path).unwrap_or_default();
-            Ok(exists)
-        });
-
-        methods.add_function("fs_remove", |_lua, path: String| {
-            std::fs::remove_file(path)
-                .map_err(|e| LuaError::external(format!("Failed to remove file: {}", e)))?;
-            Ok(())
-        });
-
-        methods.add_function("fs_stat", |lua, path: String| {
-            let metadata = std::fs::metadata(&path)
-                .map_err(|e| LuaError::external(format!("Failed to stat file: {}", e)))?;
-            let result_table = lua.create_table()?;
-            result_table.set("is_dir", metadata.is_dir())?;
-            result_table.set("is_file", metadata.is_file())?;
-            result_table.set("size", metadata.len())?;
-            if let Ok(modified) = metadata.modified() {
-                if let Ok(elapsed) = modified.elapsed() {
-                    result_table.set("modified", elapsed.as_secs())?;
-                }
-            }
-            if let Ok(created) = metadata.created() {
-                if let Ok(elapsed) = created.elapsed() {
-                    result_table.set("created", elapsed.as_secs())?;
-                }
-            }
-            result_table.set("permissions_readonly", metadata.permissions().readonly())?;
-            Ok(result_table)
-        });
     }
 }

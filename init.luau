@@ -36,11 +36,6 @@ local globals: types.Globals = {
     end,
     fs_readfile = rtspecific.fsOps.fs_readfile,
     fs_writefile = rtspecific.fsOps.fs_writefile,
-    fs_mkdirall = rtspecific.fsOps.fs_mkdirall,
-    fs_rmdirall = rtspecific.fsOps.fs_rmdirall,
-    fs_exists = rtspecific.fsOps.fs_exists,
-    fs_remove = rtspecific.fsOps.fs_remove,
-    fs_stat = rtspecific.fsOps.fs_stat
 }
 
 return documentor(globals)
