@@ -69,18 +69,18 @@ Represents trivia unimportant to parsing: comments and whitespace.
 ```luau
 --- Represents trivia unimportant to parsing: comments and whitespace.
 type Trivia = {
-		kind: "whitespace",
+	kind: "whitespace",
 
-		text: string,
+	text: string,
 
-		span: Span
-	} | {
-		kind: "comment",
+	span: Span
+} | {
+	kind: "comment",
 
-		text: string,
+	text: string,
 
-		span: Span
-	}
+	span: Span
+}
 ```
 
 </details>
@@ -177,450 +177,450 @@ instance, such as identifiers or strings.
 --- field is only present for tokens that can have different text in each
 --- instance, such as identifiers or strings.
 type Token = {
-		kind: "eof",
+	kind: "eof",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "error",
+	trivia: {Trivia}
+} | {
+	kind: "error",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "ident",
+	trivia: {Trivia}
+} | {
+	kind: "ident",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "number",
+	trivia: {Trivia}
+} | {
+	kind: "number",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "string",
+	trivia: {Trivia}
+} | {
+	kind: "string",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "istring_simple",
+	trivia: {Trivia}
+} | {
+	kind: "istring_simple",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "istring_first",
+	trivia: {Trivia}
+} | {
+	kind: "istring_first",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "istring_middle",
+	trivia: {Trivia}
+} | {
+	kind: "istring_middle",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "istring_last",
+	trivia: {Trivia}
+} | {
+	kind: "istring_last",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "attribute",
+	trivia: {Trivia}
+} | {
+	kind: "attribute",
 
-		text: string,
+	text: string,
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "and",
+	trivia: {Trivia}
+} | {
+	kind: "and",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "break",
+	trivia: {Trivia}
+} | {
+	kind: "break",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "do",
+	trivia: {Trivia}
+} | {
+	kind: "do",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "else",
+	trivia: {Trivia}
+} | {
+	kind: "else",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "elseif",
+	trivia: {Trivia}
+} | {
+	kind: "elseif",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "end",
+	trivia: {Trivia}
+} | {
+	kind: "end",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "false",
+	trivia: {Trivia}
+} | {
+	kind: "false",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "for",
+	trivia: {Trivia}
+} | {
+	kind: "for",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "function",
+	trivia: {Trivia}
+} | {
+	kind: "function",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "if",
+	trivia: {Trivia}
+} | {
+	kind: "if",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "in",
+	trivia: {Trivia}
+} | {
+	kind: "in",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "local",
+	trivia: {Trivia}
+} | {
+	kind: "local",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "nil",
+	trivia: {Trivia}
+} | {
+	kind: "nil",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "not",
+	trivia: {Trivia}
+} | {
+	kind: "not",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "or",
+	trivia: {Trivia}
+} | {
+	kind: "or",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "repeat",
+	trivia: {Trivia}
+} | {
+	kind: "repeat",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "return",
+	trivia: {Trivia}
+} | {
+	kind: "return",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "then",
+	trivia: {Trivia}
+} | {
+	kind: "then",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "true",
+	trivia: {Trivia}
+} | {
+	kind: "true",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "until",
+	trivia: {Trivia}
+} | {
+	kind: "until",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "while",
+	trivia: {Trivia}
+} | {
+	kind: "while",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "+=",
+	trivia: {Trivia}
+} | {
+	kind: "+=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "-=",
+	trivia: {Trivia}
+} | {
+	kind: "-=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "*=",
+	trivia: {Trivia}
+} | {
+	kind: "*=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "/=",
+	trivia: {Trivia}
+} | {
+	kind: "/=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "//=",
+	trivia: {Trivia}
+} | {
+	kind: "//=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "%=",
+	trivia: {Trivia}
+} | {
+	kind: "%=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "^=",
+	trivia: {Trivia}
+} | {
+	kind: "^=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "..=",
+	trivia: {Trivia}
+} | {
+	kind: "..=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "+",
+	trivia: {Trivia}
+} | {
+	kind: "+",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "-",
+	trivia: {Trivia}
+} | {
+	kind: "-",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "*",
+	trivia: {Trivia}
+} | {
+	kind: "*",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "/",
+	trivia: {Trivia}
+} | {
+	kind: "/",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "//",
+	trivia: {Trivia}
+} | {
+	kind: "//",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "%",
+	trivia: {Trivia}
+} | {
+	kind: "%",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "^",
+	trivia: {Trivia}
+} | {
+	kind: "^",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "..",
+	trivia: {Trivia}
+} | {
+	kind: "..",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "<",
+	trivia: {Trivia}
+} | {
+	kind: "<",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "<=",
+	trivia: {Trivia}
+} | {
+	kind: "<=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ">",
+	trivia: {Trivia}
+} | {
+	kind: ">",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ">=",
+	trivia: {Trivia}
+} | {
+	kind: ">=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "==",
+	trivia: {Trivia}
+} | {
+	kind: "==",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "~=",
+	trivia: {Trivia}
+} | {
+	kind: "~=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "#",
+	trivia: {Trivia}
+} | {
+	kind: "#",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "...",
+	trivia: {Trivia}
+} | {
+	kind: "...",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "&",
+	trivia: {Trivia}
+} | {
+	kind: "&",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "|",
+	trivia: {Trivia}
+} | {
+	kind: "|",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "?",
+	trivia: {Trivia}
+} | {
+	kind: "?",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ":",
+	trivia: {Trivia}
+} | {
+	kind: ":",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "::",
+	trivia: {Trivia}
+} | {
+	kind: "::",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "->",
+	trivia: {Trivia}
+} | {
+	kind: "->",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "=",
+	trivia: {Trivia}
+} | {
+	kind: "=",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ",",
+	trivia: {Trivia}
+} | {
+	kind: ",",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ";",
+	trivia: {Trivia}
+} | {
+	kind: ";",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ".",
+	trivia: {Trivia}
+} | {
+	kind: ".",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "(",
+	trivia: {Trivia}
+} | {
+	kind: "(",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: ")",
+	trivia: {Trivia}
+} | {
+	kind: ")",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "{",
+	trivia: {Trivia}
+} | {
+	kind: "{",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "}",
+	trivia: {Trivia}
+} | {
+	kind: "}",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "[",
+	trivia: {Trivia}
+} | {
+	kind: "[",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	} | {
-		kind: "]",
+	trivia: {Trivia}
+} | {
+	kind: "]",
 
-		span: Span,
+	span: Span,
 
-		trivia: {Trivia}
-	}
+	trivia: {Trivia}
+}
 ```
 
 </details>

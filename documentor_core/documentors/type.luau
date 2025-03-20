@@ -7,53 +7,6 @@ local typefieldDocumentor = require("./typefield")
 local istate = require("../istate")
 local transformrepr = require("../transformrepr")
 
-local function parseTypeFieldListOfTypeDef(istate: istate.IState, typefields: {types.TypeField}): {markdown.MarkdownNode}
-    local blockNodes: {markdown.MarkdownNode} = {}
- 
-    -- First seperate out the data as either methods or fields (which are everything outside of methods)
-    local methods: {types.TypeField} = {}
-    local fields: {types.TypeField} = {}
-    for _, field in typefields do 
-        if field.field_type.type == "Function" then
-            methods[#methods + 1] = field
-        else
-            fields[#fields + 1] = field
-        end
-    end
-
-    -- Parse fields
-    if #fields > 0 then            
-        local parsedFields: {markdown.MarkdownNode} = {}
-        for _, field in fields do 
-            tableext.extend(parsedFields, typefieldDocumentor.parseTypeField(istate, field))
-        end
-
-        if #parsedFields > 0 then
-            blockNodes[#blockNodes + 1] = {
-                type = "Block" :: "Block",
-                nodes = parsedFields
-            }
-        end
-    end
-
-    -- Parse methods
-    if #methods > 0 then
-        local parsedFields: {markdown.MarkdownNode} = {}
-        for _, field in methods do 
-            tableext.extend(parsedFields, typefieldDocumentor.parseTypeField(istate, field))
-        end
-
-        if #parsedFields > 0 then
-            blockNodes[#blockNodes + 1] = {
-                type = "Block" :: "Block",
-                nodes = parsedFields
-            }
-        end
-    end
-
-    return blockNodes
-end
-
 local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdown.MarkdownNode} 
     local convComments = convertComments.convertComments(istate.globals, typ.type_comments, istate.md.ignorenondoc)
 
@@ -83,44 +36,15 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
         text = transformrepr.transformTypeDefRepr(typ, ",\n\n\t", ", ")
     })
 
-    local extractedType = typ.type_def_type
-
-    if extractedType.type == "Table" then 
-        tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(istate, extractedType.data))
-    elseif extractedType.type == "TypeOfSetMetatable" then
-        tableext.extend(blockNodes, parseTypeFieldListOfTypeDef(istate, extractedType.data.fields))
-
-        if #extractedType.data.metatable_fields then 
-            local metaNodes = tableext.extend(
-                {
-                    {
-                        type = "Heading" :: "Heading",
-                        headingText = markdown.NewMarkdownText_FromRaw("Metatable Fields")
-                    },
-                },
-                parseTypeFieldListOfTypeDef(istate, extractedType.data.metatable_fields)
-            )
-
-            blockNodes[#blockNodes + 1] = {
-                type = "Block" :: "Block",
-                nodes = metaNodes
-            } :: markdown.MarkdownNode
-        end
-    elseif extractedType.type == "Uncategorized" then
-        tableext.extend(blockNodes, typefieldDocumentor.parseTypeFieldType(
-            {
-                istate = istate, 
-                originRepr = transformrepr.transformTypeFieldTypeRepr(extractedType.data),
-                typ = extractedType.data,
-                convertedComments = convComments
-            }
-        ))
-    else 
-      blockNodes[#blockNodes + 1] = {
-            type = "Text" :: "Text",
-            text = markdown.NewMarkdownText_FromRaw("[Documentor]: Unsupported extracted type kind: " .. extractedType.type)
-        } :: markdown.MarkdownNode
-    end
+    tableext.extend(blockNodes, typefieldDocumentor.parseTypeFieldType(
+        {
+            istate = istate, 
+            originRepr = transformrepr.transformTypeFieldTypeRepr(typ.typ),
+            typ = typ.typ,
+            convertedComments = convComments,
+            depth = 0,
+        }
+    ))
 
     return blockNodes
 end 

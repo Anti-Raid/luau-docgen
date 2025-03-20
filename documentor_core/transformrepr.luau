@@ -31,6 +31,49 @@ local function transformTypeFieldTypeRepr(tft: types.TypeFieldType, optdepth: nu
         return s.data
     elseif s.type == "TypeOf" then
         return s.data
+    elseif s.type == "TypeOfSetMetatable" then
+        if #s.data.fields == 0 and #s.data.metatable_fields == 0 then
+            return "{}"
+        end
+
+        local fieldsStr = table.concat(
+            tableext.arraymap(
+                s.data.fields, 
+                function(a: types.TypeField) : string
+                    return transformTypeFieldReprWithPat(a, depth+1, string.format("\n%s", string.rep("\t", depth+1)), transformStr)
+                end
+            ), 
+            string.format(",\n\n%s", string.rep("\t", depth+1))
+        )
+
+        if #s.data.metatable_fields > 0 then
+            local metatableFieldsStr = table.concat(
+                tableext.arraymap(
+                    s.data.metatable_fields, 
+                    function(a: types.TypeField) : string
+                        return transformTypeFieldReprWithPat(a, depth+1, string.format("\n%s", string.rep("\t", depth+1)), transformStr)
+                    end
+                ), 
+                string.format(",\n%s", string.rep("\t", depth+1))
+            )
+
+            if metatableFieldsStr ~= "" then 
+                local metatableComment = string.format(
+                    ",\n\n%s-- Metatable\n%s",
+                    string.rep("\t", depth+1),
+                    string.rep("\t", depth+1)
+                )
+    
+                fieldsStr ..= metatableComment .. metatableFieldsStr    
+            end
+        end
+
+        return string.format(
+            "{\n%s%s\n%s}",
+            string.rep("\t", depth+1),
+            fieldsStr,
+            string.rep("\t", depth)
+        )
     elseif s.type == "Optional" then
         return string.format("%s?", transformTypeFieldTypeRepr(s.data, depth, transformStr))
     elseif s.type == "Function" then
@@ -223,43 +266,7 @@ function transformTypeDefRepr(s: types.TypeDef, fields_join_pat: string, generic
         repr ..= joined_generic_params .. ">"
     end
 
-    repr ..= " = "
-
-    -- Match on self.type_def_type
-    local extracted = s.type_def_type
-    if extracted.type == "Table" then
-        local fields = extracted.data
-        if #fields == 0 then
-            repr ..= "{}"
-        else
-            local fields_list = {}
-            for _, f in fields do
-                table.insert(fields_list, transformTypeFieldReprWithPat(f, 1, "\n\t", transformStr))
-            end
-            local fields_str = table.concat(fields_list, fields_join_pat)
-            repr ..= string.format("{\n\t%s\n}", fields_str)
-        end
-    elseif extracted.type == "TypeOfSetMetatable" then
-        local type_info = extracted.data
-        local fields_list = {}
-        for _, f in type_info.fields do
-            table.insert(fields_list, transformTypeFieldReprWithPat(f, 1, "\n\t", transformStr))
-        end
-        local fields_str = table.concat(fields_list, fields_join_pat)
-        fields_str = fields_str .. ",\n\n\t-- Metatable\n\t"
-        
-        local metatable_fields_list = {}
-        for _, f in type_info.metatable_fields do
-            table.insert(metatable_fields_list, transformTypeFieldReprWithPat(f, 1, "\n\t", transformStr))
-        end
-        local metatable_fields_str = table.concat(metatable_fields_list, ",\n\t")
-        fields_str = fields_str .. metatable_fields_str
-        
-        repr ..= string.format("{\n\t%s\n}", fields_str)
-    elseif extracted.type == "Uncategorized" then
-        local type_info = extracted.data
-        repr ..= transformTypeFieldTypeRepr(type_info, 1, transformStr)
-    end
+    repr ..= " = " .. transformTypeFieldTypeRepr(s.typ, 0, transformStr)
 
     return repr
 end

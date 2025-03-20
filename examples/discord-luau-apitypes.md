@@ -6227,34 +6227,34 @@ https://discord.com/developers/docs/resources/channel#attachment-object
 ```luau
 -- https://discord.com/developers/docs/resources/channel#attachment-object
 type AttachmentObject = Partial<{
-		id: Snowflake,
+	id: Snowflake,
 
-		filename: string,
+	filename: string,
 
-		title: string?,
+	title: string?,
 
-		description: string?,
+	description: string?,
 
-		content_type: string?,
+	content_type: string?,
 
-		size: number,
+	size: number,
 
-		url: string,
+	url: string,
 
-		proxy_url: string,
+	proxy_url: string,
 
-		height: number?,
+	height: number?,
 
-		width: number?,
+	width: number?,
 
-		ephemeral: boolean?,
+	ephemeral: boolean?,
 
-		duration_secs: number?,
+	duration_secs: number?,
 
-		waveform: string?,
+	waveform: string?,
 
-		flags: number
-	}>
+	flags: number
+}>
 ```
 
 </details>
@@ -7215,22 +7215,22 @@ https://discord.com/developers/docs/interactions/message-components#button-objec
 ```luau
 -- https://discord.com/developers/docs/interactions/message-components#button-object
 type ButtonComponentObject = Partial<{
-		type: number,
+	type: number,
 
-		style: ButtonStyle,
+	style: ButtonStyle,
 
-		label: string?,
+	label: string?,
 
-		emoji: EmojiObject?,
+	emoji: EmojiObject?,
 
-		custom_id: string?,
+	custom_id: string?,
 
-		sku_id: string?,
+	sku_id: string?,
 
-		url: string?,
+	url: string?,
 
-		disabled: boolean?
-	}>
+	disabled: boolean?
+}>
 ```
 
 </details>

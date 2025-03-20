@@ -762,32 +762,14 @@ local function create_type_from_type_declaration(stattype: cst.Stat_Type): types
         generics = create_typed_arguments_from_generic_declaration_with_default(stattype.generics)
     end
 
-    local type = stattype.type
-    local typedeftype: types.TypeDefType? = nil
-    if type.kind == "table" then 
-        local fields: {types.TypeField} = {}
-        for _, field in type.fields do
-            table.insert(fields, from_tabletypefield_to_typefield(field.node :: any))
-        end
-
-        typedeftype = {
-            type = "Table",
-            data = fields,
-        } 
-    elseif type.kind == "typeof" then
-        error("typeof support is a WIP")
-    else
-        typedeftype = {
-            type = "Uncategorized",
-            data = from_luau_typeinfo_to_typefieldtype(type),
-        }
-    end
+    local typ = stattype.type
+    local typefieldtype = from_luau_typeinfo_to_typefieldtype(typ)
 
     return {
         name = name,
         generics = generics,
         type_comments = comments,
-        type_def_type = typedeftype,
+        typ = typefieldtype
     } :: types.TypeDef
 end
 

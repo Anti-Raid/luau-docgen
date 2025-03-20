@@ -99,7 +99,7 @@ export type TypeDef = {
     --- type comments attached to the typedef
     type_comments: {string},
     --- The type definition type of the typedef
-    type_def_type: TypeDefType,
+    typ: TypeFieldType,
 }
 
 --- A type function
@@ -116,26 +116,6 @@ export type TypeFunction = {
     ret: TypeFieldType?,
     --- the function type of the function
     function_type: "Normal" | "Local",
-}
-
---- specifialized type definition type information
-export type TypeDefType = {
-    type: "Table",
-    data: {TypeField}
-} | {
-    type: "TypeOfSetMetatable",
-    data: TypeDefTypeTypeofSetMetatable,
-} | {
-    type: "Uncategorized",
-    data: TypeFieldType,
-}
-
---- Inner data of a TypeOf SetMetatable declaration
-export type TypeDefTypeTypeofSetMetatable = {
-    --- The fields of the type
-    fields: {TypeField},
-    --- The metatable fields of the type
-    metatable_fields: {TypeField},
 }
 
 export type TypeFieldKey = {
@@ -245,6 +225,11 @@ export type TypeFieldType = {
 {
     type: "TypeOf",
     data: string,
+} |
+--- A typeof(setmetatable) statement
+{
+    type: "TypeOfSetMetatable",
+    data: TypeFieldTypeTypeofSetMetatable,
 }
 
 --- A typed argument with an optional name and typ
@@ -287,6 +272,14 @@ export type TypeFieldTypeModule = {
     base: string,
     --- The generic arguments of the module (if the type is generic e.g. promise.Promise<T>)
     generics: {TypeFieldType}?,
+}
+
+--- Inner data of a TypeOf SetMetatable declaration
+export type TypeFieldTypeTypeofSetMetatable = {
+    --- The fields of the type
+    fields: {TypeField},
+    --- The metatable fields of the type
+    metatable_fields: {TypeField},
 }
 
 return {}

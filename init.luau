@@ -2,12 +2,17 @@
 --!strict
 
 -- Pure luau variant of the Rust full-moon based documentor
+local args: any = ...
 
 local documentor = require("./documentor_core/documentor")
 local types = require("./documentor_core/types")
 local getrt = require("./contrib/luaup-parse/rtenhance/getrt")
 local pp = require("./documentor_core/pp")
 local parseContentsToTypeset = require("./contrib/luaup-parse/parse")
+
+if type(args) == "userdata" and typeof(args) == "Globals" then
+    return documentor(args) -- Fastpath is available
+end
 
 local rtspecific = getrt()
 
@@ -29,15 +34,6 @@ local globals: types.Globals = {
     }
         return parseContentsToTypeset(opts.contents, opts.include_nonexported_types)
     end,
-    --[[
-    fs_readfile: (path: string) -> string, -- returns the contents of the file
-    fs_writefile: (path: string, contents: string) -> (), -- writes the contents to the file
-    fs_mkdirall: (path: string) -> (), -- creates the directory and all parent directories required
-    fs_rmdirall: (path: string) -> (), -- removes the directory and all parent directories required
-    fs_exists: (path: string) -> boolean, -- checks if the file exists
-    fs_remove: (path: string) -> boolean, -- removes the file
-    fs_stat: (path: string) -> {
-    ]]
     fs_readfile = rtspecific.fsOps.fs_readfile,
     fs_writefile = rtspecific.fsOps.fs_writefile,
     fs_mkdirall = rtspecific.fsOps.fs_mkdirall,
@@ -47,4 +43,4 @@ local globals: types.Globals = {
     fs_stat = rtspecific.fsOps.fs_stat
 }
 
-documentor(globals)
+return documentor(globals)

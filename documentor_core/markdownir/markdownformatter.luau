@@ -75,6 +75,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             depthToUse = 5
         end
 
+        assert(n.headingText, "Headings must have a headingText")
         local text = MarkdownText_String(globals, n.headingText)
 
         if inline then 

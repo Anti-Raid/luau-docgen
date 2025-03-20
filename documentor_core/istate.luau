@@ -21,7 +21,9 @@ export type ParseTypeFieldTypeData = {
     --- Converted comments for the type field itself 
     convertedComments: convertComments.ConvertCommentResponse,
     --- Whether the type field is inline or not
-    inline: boolean?
+    inline: boolean?,
+    --- Current depth of the type relative to the root
+    depth: number,
 }
 
 --- The header that must be set in the plugin

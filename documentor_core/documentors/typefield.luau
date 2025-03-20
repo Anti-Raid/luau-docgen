@@ -57,7 +57,8 @@ local function parseFunction(
                     istate = istate, 
                     originRepr = transformRepr.transformTypedArgumentRepr(generic, true, false), 
                     typ = typ, 
-                    convertedComments = convertedComments
+                    convertedComments = convertedComments,
+                    depth = 1
                 }))
             else
                 baseNodes[#baseNodes + 1] = {
@@ -116,7 +117,8 @@ local function parseFunction(
                     istate = istate, 
                     originRepr = transformRepr.transformTypedArgumentRepr(arg), 
                     typ = typ, 
-                    convertedComments = convertedComments
+                    convertedComments = convertedComments,
+                    depth = 1
                 }))
             else
                 baseNodes[#baseNodes + 1] = {
@@ -156,7 +158,8 @@ local function parseFunction(
                     istate = istate, 
                     originRepr = transformRepr.transformTypeFieldTypeRepr(retdata), 
                     typ = retdata, 
-                    convertedComments = convertedComments
+                    convertedComments = convertedComments,
+                    depth = 1
                 }))
             end
 
@@ -195,7 +198,8 @@ local function parseFunction(
                 originRepr = transformRepr.transformTypeFieldTypeRepr(ret), 
                 typ = ret, 
                 convertedComments = convertedComments, 
-                inline = true
+                inline = true,
+                depth = 1
             }))
 
             if #baseNodes > 0 then
@@ -246,7 +250,8 @@ local function parseFunctionInline(
                     originRepr = transformRepr.transformTypedArgumentRepr(generic, true, false), 
                     typ = generic.typ, 
                     convertedComments = convertedComments, 
-                    inline = true
+                    inline = true,
+                    depth = 1
                 })
 
                 if #typNodes > 0 then 
@@ -325,7 +330,8 @@ local function parseFunctionInline(
                 originRepr = transformRepr.transformTypeFieldTypeRepr(argument.typ), 
                 typ = argument.typ, 
                 convertedComments = convertedComments, 
-                inline = true
+                inline = true,
+                depth = 1
             })
 
             tableext.extend(parsedFields, typNodes)
@@ -358,7 +364,8 @@ local function parseFunctionInline(
             originRepr = transformRepr.transformTypeFieldTypeRepr(ret), 
             typ = ret, 
             convertedComments = convertedComments, 
-            inline = true
+            inline = true,
+            depth = 1
         })
         tableext.extend(parsedFields, retNodes)
     end
@@ -463,8 +470,31 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             return blockNodes    
         end
 
-        local parsedFields: {markdown.MarkdownNode} = {
-            {
+        -- First seperate out the data as either methods or fields (which are everything outside of methods)
+        local methods: {types.TypeField} = {}
+        local fields: {types.TypeField} = {}
+        for _, field in fieldtype.data do 
+            if field.field_type.type == "Function" then
+                methods[#methods + 1] = field
+            else
+                fields[#fields + 1] = field
+            end
+        end
+
+        -- Ensure methods come first before fields
+        local finalFields: {types.TypeField} = {}
+        for _, method in methods do 
+            finalFields[#finalFields + 1] = method
+        end
+
+        for _, field in fields do 
+            finalFields[#finalFields + 1] = field
+        end
+
+        local parsedFields: {markdown.MarkdownNode} = {}
+
+        if data.depth > 0 then 
+            parsedFields[#parsedFields + 1] = {
                 type = "Text" :: "Text",
                 text = markdown.NewMarkdownText_FromNodes(
                     markdown.NewMarkdownTextNode_Italics(
@@ -472,8 +502,9 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     )
                 )
             } :: markdown.MarkdownNode
-        }
-        for _, field in fieldtype.data do 
+        end
+
+        for _, field in finalFields do 
             tableext.extend(parsedFields, parseTypeField(data.istate, field))
         end
 
@@ -495,7 +526,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 originRepr = data.originRepr, 
                 typ = fieldtype.data, 
                 convertedComments = data.convertedComments, 
-                inline = true
+                inline = true,
+                depth = data.depth+1
             }))
 
             if #parsedFields > 0 then
@@ -524,7 +556,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             originRepr = data.originRepr, 
             typ = fieldtype.data, 
             convertedComments = data.convertedComments, 
-            inline = true
+            inline = true,
+            depth = data.depth+1
         })
 
         if #nodes > 0 then
@@ -556,7 +589,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 originRepr = data.originRepr, 
                 typ = fieldtype.data, 
                 convertedComments = data.convertedComments, 
-                inline = true
+                inline = true,
+                depth = data.depth -- For Optionals, the depth should remain the same 
             }))
 
             if #parsedFields > 0 then
@@ -585,7 +619,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 originRepr = data.originRepr, 
                 typ = fieldtype.data, 
                 convertedComments = data.convertedComments, 
-                inline = true
+                inline = true,
+                depth = data.depth -- For Optionals, the depth should remain the same 
             })
         ) :: {markdown.MarkdownNode}
 
@@ -607,12 +642,13 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 originRepr = data.originRepr, 
                 typ = fieldtype.data[1], 
                 convertedComments = data.convertedComments, 
-                inline = data.inline
+                inline = data.inline,
+                depth = data.depth -- For tuples of length 1, keep same depth
             })
         end
 
         if data.inline then 
-            -- Special code for inline unions separated by |
+            -- Special code for inline tuples
             local parsedFields: {markdown.MarkdownNode} = {}
 
             for i, field in fieldtype.data do 
@@ -621,7 +657,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     originRepr = data.originRepr, 
                     typ = field, 
                     convertedComments = data.convertedComments, 
-                    inline = true
+                    inline = true,
+                    depth = data.depth + 1
                 }))
                 if i < #fieldtype.data then
                     parsedFields[#parsedFields + 1] = {
@@ -651,7 +688,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     istate = data.istate, 
                     originRepr = data.originRepr, 
                     typ = typ, 
-                    convertedComments = data.convertedComments
+                    convertedComments = data.convertedComments,
+                    depth = data.depth + 1
                 })
             end
         )
@@ -718,7 +756,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     originRepr = data.originRepr, 
                     typ = field, 
                     convertedComments = data.convertedComments, 
-                    inline = true
+                    inline = true,
+                    depth = data.depth + 1
                 }))
                 if i < #fieldtype.data then
                     parsedFields[#parsedFields + 1] = {
@@ -757,7 +796,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     istate = data.istate, 
                     originRepr = data.originRepr, 
                     typ = typ, 
-                    convertedComments = data.convertedComments
+                    convertedComments = data.convertedComments,
+                    depth = data.depth + 1
                 })
             end
         )
@@ -837,7 +877,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     originRepr = transformRepr.transformTypeFieldTypeRepr(generic), 
                     typ = generic, 
                     convertedComments = data.convertedComments, 
-                    inline = true
+                    inline = true,
+                    depth = data.depth + 1
                 })
 
                 if #genericNodes > 0 then
@@ -889,7 +930,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     originRepr = data.originRepr, 
                     typ = field, 
                     convertedComments = data.convertedComments, 
-                    inline = true
+                    inline = true,
+                    depth = data.depth + 1
                 }))
                 if i < #fieldtype.data then
                     parsedFields[#parsedFields + 1] = {
@@ -928,7 +970,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                     istate = data.istate, 
                     originRepr = data.originRepr, 
                     typ = typ, 
-                    convertedComments = data.convertedComments
+                    convertedComments = data.convertedComments,
+                    depth = data.depth + 1
                 })
             end
         )
@@ -999,7 +1042,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 originRepr = transformRepr.transformTypeFieldTypeRepr(generic), 
                 typ = generic, 
                 convertedComments = data.convertedComments, 
-                inline = true
+                inline = true,
+                depth = data.depth + 1
             })
 
             if #genericNodes > 0 then
@@ -1062,6 +1106,42 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
                 inline = data.inline
             } :: markdown.MarkdownNode
         } 
+    elseif fieldtype.type == "TypeOfSetMetatable" then 
+        local parsedFields: {markdown.MarkdownNode} = {}
+        for _, field in fieldtype.data.fields do 
+            tableext.extend(parsedFields, parseTypeField(data.istate, field))
+        end
+
+        if #fieldtype.data.metatable_fields > 0 then 
+            local metaFields: {markdown.MarkdownNode} = {}
+
+            for _, field in fieldtype.data.metatable_fields do 
+                tableext.extend(metaFields, parseTypeField(data.istate, field))
+            end
+
+            if #metaFields > 0 then 
+                parsedFields[#parsedFields + 1] = {
+                    type = "Heading" :: "Heading",
+                    headingText = markdown.NewMarkdownText_FromRaw("Metatable Fields"),
+                    inline = data.inline
+                } :: markdown.MarkdownNode
+
+                parsedFields[#parsedFields + 1] = {
+                    type = "Block" :: "Block",
+                    nodes = metaFields    
+                }
+            end
+        end
+
+        local blockNodes: {markdown.MarkdownNode} = {}
+        if #parsedFields > 0 then
+            blockNodes[#blockNodes + 1] = {
+                type = "Block" :: "Block",
+                nodes = parsedFields
+            }
+        end
+
+        return blockNodes
     elseif fieldtype.type == "UnknownModule" then
         return {
             {
@@ -1086,7 +1166,8 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             originRepr = data.originRepr, 
             typ = fieldtype.data, 
             convertedComments = data.convertedComments, 
-            inline = true
+            inline = true,
+            depth = data.depth + 1
         }))
 
         if not data.inline then
@@ -1125,7 +1206,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
 end
 
 --- Parses a TypeField (foo: number or foo: () -> number etc.)
-function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boolean?): {markdown.MarkdownNode}    
+function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boolean?, depth: number?): {markdown.MarkdownNode}    
     --print(pp(convertComments(globals, typ.comments)))
     local convertedComments = convertComments.convertComments(istate.globals, typ.comments, istate.md.ignorenondoc);
 
@@ -1159,7 +1240,8 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
                     originRepr = transformRepr.transformTypeFieldReprWithPat(typ, nil, "\n"),
                     typ = typ.field_type, 
                     convertedComments = convertedComments,
-                    inline = true
+                    inline = true,
+                    depth = if depth then depth + 1 else 1
                 }
             )
         )
@@ -1189,7 +1271,8 @@ function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boo
                 originRepr = transformRepr.transformTypeFieldReprWithPat(typ, nil, "\n"),
                 typ = typ.field_type, 
                 convertedComments = convertedComments,
-                inline = if convertedComments.inlineFields[fieldName] then true else false
+                inline = if convertedComments.inlineFields[fieldName] then true else false,
+                depth = if depth then depth + 1 else 1
             }
         )
     }
