@@ -1,95 +1,14 @@
 --!strict
 
--- Forcefully drop typechecking for this require
-local function requireNoTypecheck(path: string)
-    return require(path) :: any
-end
-
 local types = require("../../documentor_core/types")
 local cst = require("./luaup/lossless/cst")
-local util = requireNoTypecheck("./luaup/lossless/util")
-
--- A hack to convert a statement to a string 
-local function stmtToString(node: cst.Stat) 
-    local cst: cst.Cst = {
-        block = {
-            stats = {{node = node}}
-        },
-        eof = {
-            kind = "eof",
-            trivia = {},
-            text = "",
-            span = {
-                x = 0,
-                y = 0,
-                z = 0,
-            }
-        }
-    }
-
-    return util.tostring(cst)
-end
-
--- A hack to convert an expression to a string
-local function exprToString(node: cst.Expr): string
-    -- Create a wrapper statement
-    local wrapperStmt: cst.LastStat_Return = {
-        kind = "return",
-        return_tok = {
-            kind = "return",
-            text = "return",
-            span = {
-                x = 0,
-                y = 0,
-                z = 0,
-            },
-            trivia = {},
-        },
-        exprs = {
-            {
-                node :: cst.Expr, 
-                sep = {
-                    kind = ",",
-                    trivia = {},
-                    text = ",",
-                    span = {
-                        x = 0,
-                        y = 0,
-                        z = 0,
-                    }
-                } :: cst.TokenKind<",">
-            } :: cst.Pair<cst.Expr, cst.TokenKind<",">>     
-        },
-        sep = nil
-    }
-
-    local cst: cst.Cst = {
-        block = {
-            stats = {},
-            last_stat = {
-                stat = wrapperStmt,
-            }
-        },
-        eof = {
-            kind = "eof",
-            trivia = {},
-            text = "",
-            span = {
-                x = 0,
-                y = 0,
-                z = 0,
-            }
-        }
-    }
-
-    return util.tostring(cst):gsub("return ", "") :: string
-end
+local stringify = require("./stringify")
 
 local function extractcommentsfromtrivia(comments: {string}, trivia: {cst.Trivia}): {string}
     for _, t in trivia do
         if t.kind == "comment" then
             -- A comment may have either 2 or 3 minuses, remove them here
-            local text, _ = t.text
+            local text = t.text
 
             if text:sub(1, 2) == "--" then
                 text = text:sub(3)
@@ -258,8 +177,8 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
         typ = typ :: cst.Type_Typeof
         return {
             type = "TypeOf",
-            data = exprToString(typ.expr),
-        }
+            data = stringify.exprToString(typ.expr),
+        } :: types.TypeFieldType
     elseif typ.kind == "array" then
         -- Code is too complex to typecheck
         local typefieldtype: any = from_luau_typeinfo_to_typefieldtype(typ.type :: any)
@@ -319,11 +238,11 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             } :: types.TypeFieldTypeFunction,
         }
     elseif typ.kind == "paren" then 
-        local typ = from_luau_typeinfo_to_typefieldtype(typ.type)
+        local innerTyp = from_luau_typeinfo_to_typefieldtype(typ.type)
         return {
             type = "Tuple",
-            data = {typ},
-        }
+            data = {innerTyp},
+        } :: types.TypeFieldType
     elseif typ.kind == "optional" then
         typ = typ :: cst.Type_Optional
         return {
@@ -414,7 +333,7 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
             start_tok = typ.bracks.open.kind,
             inner = from_luau_typeinfo_to_typefieldtype(typ.key),
             end_tok = typ.bracks.close.kind,
-        }
+        } :: types.TypeFieldKey
         comments = extractcommentsfromtrivia(comments, typ.bracks.open.trivia)
         comments = extractcommentsfromtrivia(comments, typ.bracks.close.trivia)
         itype = from_luau_typeinfo_to_typefieldtype(typ.type)
@@ -422,7 +341,7 @@ function from_tabletypefield_to_typefield(typ: cst.TableTypeField): types.TypeFi
         error("Unsupported feature: " .. typ.kind)
     end
 
-    return {comments = comments, field_name = key, field_type = itype}
+    return {comments = comments, field_name = key, field_type = itype} :: types.TypeField
 end
 
 --[[
@@ -774,8 +693,8 @@ local function create_type_from_type_declaration(stattype: cst.Stat_Type): types
 end
 
 return {
-    stmtToString = stmtToString,
-    exprToString = exprToString,
+    stmtToString = stringify.stmtToString,
+    exprToString = stringify.exprToString,
     extractcommentsfromtrivia = extractcommentsfromtrivia,
 
     create_typed_arguments_from_generic_declaration_with_default = create_typed_arguments_from_generic_declaration_with_default,

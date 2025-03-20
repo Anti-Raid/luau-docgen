@@ -27,7 +27,7 @@ end
 Add a self parameter to the function and inline it into ``tab`` as a field.
 ]]
 local function normalizeFunction(typedefs: {types.Type}, functions: {types.Type})
-    -- Helper method to inline a function into a table
+--[[    -- Helper method to inline a function into a table
     local function inlineFunction(targetIdx: number, functionIdx: number, functionName: string, ismethod: boolean)
         local target = typedefs[targetIdx]
         local func = functions[functionIdx]
@@ -52,5 +52,5 @@ local function normalizeFunction(typedefs: {types.Type}, functions: {types.Type}
         tab.data.fields[func.name] = func
 
         return tab
-    end
+    end]]
 end

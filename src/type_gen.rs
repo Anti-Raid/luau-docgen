@@ -504,7 +504,7 @@ pub enum FunctionType {
 pub struct TypeDef {
     /// The name of the type
     pub name: String,
-    /// The generics of the function
+    /// The generics associated with the typedef
     pub generics: Vec<TypedArgument>,
     /// The comments associated with the type
     pub type_comments: Vec<String>,

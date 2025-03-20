@@ -1088,24 +1088,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             } :: markdown.MarkdownNode
         } 
     elseif fieldtype.type == "TypeOf" then 
-        return {
-            {
-                type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("typeof("),
-                inline = data.inline
-            } :: markdown.MarkdownNode,
-            {
-                type = "Link" :: "Link",
-                text = markdown.NewMarkdownText_FromUnstyled(fieldtype.data),
-                url = data.istate.plugin.resolveTypeToUrl(fieldtype.type, fieldtype.data),
-                inline = data.inline
-            } :: markdown.MarkdownNode,
-            {
-                type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw(")"),
-                inline = data.inline
-            } :: markdown.MarkdownNode
-        } 
+        return {} -- Not much else we can say here for a complex generalized typeof 
     elseif fieldtype.type == "TypeOfSetMetatable" then 
         local parsedFields: {markdown.MarkdownNode} = {}
         for _, field in fieldtype.data.fields do 
