@@ -88,11 +88,13 @@ end
 local function extractcommentsfromtrivia(comments: {string}, trivia: {cst.Trivia}): {string}
     for _, t in trivia do
         if t.kind == "comment" then
-            local text, _ = t.text:gsub("^%-%-%s*", "")
+            -- A comment may have either 2 or 3 minuses, remove them here
+            local text, _ = t.text
 
-            -- If the comment does not start with `-`, add a space
-            if string.sub(text, 1, 1) ~= "-" then
-                text = " " .. text
+            if text:sub(1, 2) == "--" then
+                text = text:sub(3)
+            elseif text:sub(1, 3) == "---" then
+                text = text:sub(4)
             end
 
             table.insert(comments, text)
