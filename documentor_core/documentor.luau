@@ -5,8 +5,11 @@ local argparser = require("./argparser")
 local tableext = require("./table")
 local istatemod = require("./istate")
 local typesetDocumentor = require("./documentors/typeset")
+local pp = require("./pp")
 
 local function init(globals: types.Globals)
+    print("Using runtime " .. globals.runtime .. " with args: " .. pp(globals.documentor_args))
+
     local p1 = tableext.extend({2}, {4})
     assert(p1[1] == 2, "Inconsistent state: tableext.arrayextend failed to copy over 1")
     assert(p1[2] == 4, "Inconsistent state: tableext.arrayextend failed to copy over 2")
@@ -19,7 +22,6 @@ local function init(globals: types.Globals)
         print("No files to document. Please provide at least one file.")
         md.help = true
     end
-
 
     if md.help then 
         print("Usage:")
@@ -44,27 +46,51 @@ local function init(globals: types.Globals)
 
     -- Load all plugins
     istate.plugin = istatemod.loadAllPlugins(istate, istate.md.plugins)
- 
-    -- Before doing anything else, make sure we can safely require stuff
-    print("Running reqtest self-test for requires")
-    local a = require"./reqtest/a"
-    assert(a.a == 1) -- Ensure stable requires
-    print("Passed reqtest self-test for requires")
- 
+  
     -- Read files, document and save
     istate.plugin.onInitialize(istate) 
 
-    for _, fileIn in md.files do 
-        local contents = globals.fs_readfile(fileIn)
-        if not contents then 
-            error("Failed to read file: " .. fileIn)
-        end 
-    
+    for _, fileIn in md.files do  
         -- Parse the file  
-        local resultTab = globals.parsetotypeset({
-            contents = contents,
-            include_nonexported_types = md.ignorenonexportedtypes
-        })
+        local resultTab: types.ParseToTypeSetResponse
+        if md.useFullMoon then 
+            if not globals.fs_ops then 
+                error("Filesystem operations not available. Cannot use full-moon extension.")
+            end 
+
+            if not globals.proc_ops then 
+                error("Process spawn operations not available. Cannot use full-moon extension.")
+            end
+
+            for _, file in {"target/release/luau-docgen", "target/release/luau-docgen.exe", "target/debug/luau-docgen", "target/debug/luau-docgen.exe", "luau-docgen", "luau-docgen.exe"} do
+                if globals.fs_ops.fs_fileexists(file) then 
+                    local jsonOut = globals.proc_ops.run(file, {"file://" .. fileIn, tostring(md.ignorenonexportedtypes)})
+                    resultTab = globals.proc_ops.json_parse(jsonOut)
+                    break
+                end
+            end
+        else          
+            local contents: string
+
+            -- Check if the file starts with inline:
+            if string.sub(fileIn, 1, 7) == "inline:" then
+                contents = string.sub(fileIn, 8)
+            else
+                if not globals.fs_ops then 
+                    error("Filesystem operations not available. Cannot read files")
+                end
+    
+                contents = globals.fs_ops.fs_readfile(fileIn)
+                if not contents then 
+                    error("Failed to read file: " .. fileIn)
+                end        
+            end    
+            
+            resultTab = globals.parsetotypeset({
+                contents = contents,
+                include_nonexported_types = md.ignorenonexportedtypes
+            })    
+        end
 
         if resultTab.unsupported_count > 0 and md.erroronunsupported then
             error("Error: Found " .. tostring(resultTab.unsupported_count) .. " unsupported types")
@@ -79,7 +105,11 @@ local function init(globals: types.Globals)
         if md.output == "stdout" then
             print(documentedFile)
         else
-            globals.fs_writefile(md.output, documentedFile)
+            if not globals.fs_ops then 
+                error("Filesystem operations not available. Cannot write files")
+            end
+
+            globals.fs_ops.fs_writefile(md.output, documentedFile)
         end
     end
 end

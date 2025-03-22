@@ -49,21 +49,37 @@ export type ParseToTypeSetArgs = {
     include_nonexported_types: boolean?,
 }
 
+export type ParseToTypeSetResponse = {
+    unsupported_count: number,
+    typeset: TypeSet,
+}
+
+--- Fields needed for accelerated/custom parser runtime support
+export type ProcOps = {
+    --- Run a command and return the output
+    run: (command: string, args: {string}) -> string, -- returns the output of the command
+    --- JSON parse a string
+    json_parse: (json: string) -> any, -- returns the parsed JSON object
+}
+
+export type FsOps = {
+    --- Filesystem operations
+    fs_readfile: (path: string) -> string, -- returns the contents of the file
+    fs_writefile: (path: string, contents: string) -> (), -- writes the contents to the file
+    fs_fileexists: (path: string) -> boolean, -- checks if the file exists
+}
+
 --- Globals
 export type Globals = {
     --- Documentor args
     read documentor_args: {string},
-    --- Whether requires should require on a builtin or a local file. Can be modified
-    require_builtins: boolean,
+    
     --- Parse to typeset
-    parsetotypeset: (opts: ParseToTypeSetArgs) -> {
-        unsupported_count: number,
-        typeset: TypeSet,
-    },
+    parsetotypeset: (opts: ParseToTypeSetArgs) -> ParseToTypeSetResponse,
 
-    --- Filesystem operations
-    fs_readfile: (path: string) -> string, -- returns the contents of the file
-    fs_writefile: (path: string, contents: string) -> (), -- writes the contents to the file
+    runtime: string, -- Runtime being used
+    fs_ops: FsOps?, -- filesystem operations
+    proc_ops: ProcOps?, -- optional proc ops
 }
 
 export type TypeSet = {

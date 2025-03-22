@@ -9,7 +9,19 @@ See ``a.md`` as an example of the current output. While the project is a work-in
 To document a file called ``~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau`` to a file called ``discord-luau-apitypes.md``:
 
 ```bash
-luau-docgen ~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau --output discord-luau-apitypes.md
+lune run init.luau ~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau --output discord-luau-apitypes.md
+```
+
+To use the Rust-accelerated IR generation (full-moon instead of luaup), compile the Rust code with:
+
+```bash
+cargo build --release
+```
+
+Then add the ``--use-full-moon`` flag to the command:
+
+```bash
+lune run init.luau ~/staging/infra/templating-types/discord-luau-corrections/apiTypes.luau --output discord-luau-apitypes.md --use-full-moon
 ```
 
 ## Differences from moonwave

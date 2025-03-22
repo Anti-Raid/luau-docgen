@@ -1,78 +1,70 @@
-mod lua_api;
 mod type_gen;
 
-use include_dir::{Dir, include_dir};
-use lua_api::Globals;
-use mlua::prelude::*;
-use std::{cell::RefCell, path::PathBuf, rc::Rc};
-
-pub static BUILTINS: Dir = include_dir!("$CARGO_MANIFEST_DIR/documentor_core");
+use full_moon::visitors::Visitor;
 
 fn main() {
-    env_logger::init();
+    eprintln!("luau-docgen rust extension started");
 
     // Parse command line arguments skipping the first one
     // which is the program name
     let args = std::env::args().skip(1).collect::<Vec<_>>();
 
-    // We always have to use the builtin documentor initially (which can then shell out and load other documentors if desired)
-    let documentor = BUILTINS
-        .get_file("documentor.luau")
-        .expect("Failed to get documentor.luau")
-        .contents_utf8()
-        .expect("Failed to get documentor.luau contents as UTF-8")
-        .to_string();
+    if args.len() != 2 {
+        eprintln!(
+            "Usage: {} <path to luau file> <whether or not to include nonexported types>",
+            args[0]
+        );
+        std::process::exit(1);
+    }
 
-    // Setup Luau
-    let lua =
-        Lua::new_with(LuaStdLib::ALL_SAFE, LuaOptions::default()).expect("Failed to create Lua");
-
-    let compiler = mlua::Compiler::new()
-        .set_mutable_globals(vec!["_G".to_string()])
-        .set_optimization_level(2);
-
-    lua.set_compiler(compiler);
-
-    let require_builtins: Rc<RefCell<bool>> = Rc::new(RefCell::new(true));
-    let lua_api_require_builtins = require_builtins.clone();
-
-    let current_path: Rc<RefCell<std::path::PathBuf>> = Rc::new(RefCell::new(PathBuf::from("/")));
-    let requires_cache: Rc<RefCell<std::collections::HashMap<String, LuaMultiValue>>> =
-        Rc::new(RefCell::new(std::collections::HashMap::new()));
-    lua.globals()
-        .set(
-            "require",
-            lua.create_function(move |lua, pat: String| {
-                let require_builtins = *require_builtins.borrow();
-                lua_api::require(lua, &current_path, pat, require_builtins, &requires_cache)
-            })
-            .expect("Failed to create require function"),
-        )
-        .expect("Failed to set require global");
-
-    lua.sandbox(true).expect("Sandboxed VM"); // Sandbox VM
-
-    let args_mv = (Globals {
-        documentor_args: args,
-        require_builtins: lua_api_require_builtins,
-    })
-    .into_lua_multi(&lua)
-    .expect("Failed to convert TypeSet to LuaMultiValue");
-
-    let init_func = match lua
-        .load(documentor)
-        .set_name("documentor")
-        .call::<LuaFunction>(())
-    {
-        Ok(func) => func,
-        Err(err) => {
-            eprintln!("{}", err);
-            std::process::exit(1);
+    let contents = {
+        if args[0].starts_with("file://") {
+            let path = &args[0][7..];
+            std::fs::read_to_string(path).expect("Failed to read file")
+        } else {
+            args[0].clone()
         }
     };
 
-    if let Err(err) = init_func.call::<()>(args_mv) {
-        eprintln!("{}", err);
+    let include_nonexported_types = args[1].parse::<bool>().unwrap_or(false);
+
+    let result = full_moon::parse_fallible(&contents, full_moon::LuaVersion::luau());
+    if !result.errors().is_empty() {
+        let mut error = "ParseScriptFileError\n".to_string();
+        for err in result.errors() {
+            error.push_str(&format!("{}\n", err));
+        }
+        eprintln!("{}", error);
         std::process::exit(1);
     }
+
+    let mut type_visitor = crate::type_gen::TypeBlockVisitor {
+        include_nonexported_types,
+        ..Default::default()
+    };
+
+    let ast = result.into_ast();
+
+    type_visitor.visit_ast(&ast);
+
+    #[derive(serde::Serialize)]
+    struct TypeSet {
+        types: Vec<crate::type_gen::Type>,
+    }
+
+    #[derive(serde::Serialize)]
+    struct Result {
+        unsupported_count: usize,
+        typeset: TypeSet,
+    }
+
+    let typeset = serde_json::to_string(&Result {
+        typeset: TypeSet {
+            types: type_visitor.found_types,
+        },
+        unsupported_count: type_visitor.unsupported_count,
+    })
+    .expect("Failed to serialize typeset");
+
+    print!("{}", typeset);
 }

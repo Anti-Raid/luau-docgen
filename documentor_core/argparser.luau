@@ -22,6 +22,8 @@ export type ParsedArgumentResult = {
     -- Options set by the user
     -- This is a table of the parsed arguments
     optionsSet: types.ParsedArgs,
+    --- Whether or not to use full-moon (if the Rust extension process has been compiled and is available)
+    useFullMoon: boolean,
     -- Whether or not to show help
     help: boolean,
 }
@@ -44,21 +46,21 @@ local argmap: ArgMap = {
     },
     ignorenondoc = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-            output.ignorenondoc = (values[1] == "true")
+            output.ignorenondoc = (values[1] ~= "false")
         end,
         opts = "<true|false>",
         description = "Ignore non doc comments",
     },
     debugmode = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-            output.debugmode = (values[1] == "true")
+            output.debugmode = (values[1] ~= "false")
         end,
         opts = "<true|false>",
         description = "Enable debug mode",
     },
     ignore_nonexported_types = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
-            output.ignorenonexportedtypes = (values[1] == "true")
+            output.ignorenonexportedtypes = values[1] ~= "false"
         end,
         opts = "<true|false>",
         description = "Ignore non exported types",
@@ -93,6 +95,13 @@ local argmap: ArgMap = {
         opts = "",
         description = "Show help",
     },
+    ["use-full-moon"] = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.useFullMoon = (values[1] ~= "false")
+        end,
+        opts = "<true|false>",
+        description = "Use full-moon (if available)",
+    },
 }
 
 -- Parses arguments from globals.documentor_args into a set of parsed arguments 
@@ -109,6 +118,7 @@ local function parseArguments(globals: types.Globals): ParsedArgumentResult
         ignorenonexportedtypes = false,
         output = "stdout",
         optionsSet = parsedArgs,
+        useFullMoon = false,
         help = false,
     }
 
