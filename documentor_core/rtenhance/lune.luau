@@ -34,7 +34,7 @@ local procOps: types.ProcOps = {
     json_parse = function(jsonStr: string): any
         local ok, result = pcall(serde.decode, "json", jsonStr)
         if not ok then
-            error("Failed to parse JSON: " .. tostring(result))
+            error("Failed to parse JSON from process: " .. tostring(result))
         end
         return result
     end,
