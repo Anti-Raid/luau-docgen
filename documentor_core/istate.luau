@@ -212,20 +212,15 @@ end
 
 --- Attempts to load a plugin at path
 local function loadPlugin(istate: IState, path: string): Plugin
-    istate.globals.require_builtins = false
     local ok, plugin: Plugin? = pcall(require, path)
     
     if not ok then
-        istate.globals.require_builtins = true -- Reset to default to avoid side effects
         error("Failed to load plugin: " .. path .. " - " .. tostring(plugin) .. " - " .. tostring(ok))
     end
     
     if not plugin then
-        istate.globals.require_builtins = true -- Reset to default to avoid side effects
         error("Requested plugin " .. path .. " returned no result")
     end
-
-    istate.globals.require_builtins = true -- Reset to default to avoid side effects
 
     -- If type(plugin) is a function, then call it with the current istate to allow for plugin chaining
 
