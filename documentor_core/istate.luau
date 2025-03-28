@@ -251,4 +251,5 @@ return {
     DefaultPlugin = DefaultPlugin, 
     loadPlugin = loadPlugin,
     loadAllPlugins = loadAllPlugins,
+    ChainPlugin = ChainPlugin,
 }
