@@ -7,7 +7,7 @@ local istatemod = require("./istate")
 local typesetDocumentor = require("./documentors/typeset")
 local pp = require("./pp")
 
-local function init(globals: types.Globals)
+local function init(globals: types.Globals, customIstateInit: ((istate: istatemod.IState) -> ())?)
     print("Using runtime " .. globals.runtime .. " with args: " .. pp(globals.documentor_args))
 
     local p1 = tableext.extend({2}, {4})
@@ -16,7 +16,6 @@ local function init(globals: types.Globals)
 
     -- Parse arguments at top-level
     local md = argparser.parseArguments(globals)
-
 
     if #md.files == 0 then
         print("No files to document. Please provide at least one file.")
@@ -46,6 +45,10 @@ local function init(globals: types.Globals)
 
     -- Load all plugins
     istate.plugin = istatemod.loadAllPlugins(istate, istate.md.plugins)
+
+    if customIstateInit then 
+        customIstateInit(istate)
+    end
   
     -- Read files, document and save
     istate.plugin.onInitialize(istate) 
