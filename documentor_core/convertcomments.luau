@@ -98,6 +98,8 @@ local specialcommentmap = {
     end,
 }
 
+specialcommentmap["return"] = specialcommentmap.returns
+
 --- Converts comments to markdown (with other metadata attached to it)
 local function convertComments(globals: types.Globals, typecomments: {string}, ignorenondoc: boolean?): ConvertCommentResponse 
     local comments = convertcommentimpl.parsecomments(typecomments, ignorenondoc)
@@ -125,6 +127,7 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
             if specialcommentmap[typ] then
                 specialcommentmap[typ](output, data)
             else
+                print("Including unknown special comment: "..typ)
                 output.output[#output.output + 1] = {
                     type = "Text" :: "Text",
                     text = markdown.NewMarkdownText_FromRaw("@" .. typ .. " " .. data) -- Default to just outputting the comment
