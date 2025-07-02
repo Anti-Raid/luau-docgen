@@ -139,6 +139,16 @@ local function convertComments(globals: types.Globals, typecomments: {string}, i
     return output
 end
 
+--- Registers a new special comment
+local function registerSpecialComment(typ: string, callback: (output: ConvertCommentResponse, data: string) -> ())
+    if specialcommentmap[typ] then
+        error("Special comment type '" .. typ .. "' is already registered")
+    end
+
+    specialcommentmap[typ] = callback
+end
+
 return {
     convertComments = convertComments,
+    registerSpecialComment = registerSpecialComment,
 }
