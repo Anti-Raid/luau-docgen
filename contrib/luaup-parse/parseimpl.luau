@@ -115,13 +115,13 @@ end
 function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): types.TypeFieldType
     if typ.kind == "nil" then
         return {
-            type = "Basic",
-            data = "nil",
+            type = "Basic" :: "Basic",
+            data = "nil", 
         }
     elseif typ.kind == "boolean" then
         return {
-            type = "Basic",
-            data = typ.tok.text,
+            type = "Basic" :: "Basic",
+            data = typ.tok.kind,
         }
     elseif typ.kind == "string" then
         return {

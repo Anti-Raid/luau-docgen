@@ -24,7 +24,7 @@ local function transformTypeFieldTypeRepr(tft: types.TypeFieldType, optdepth: nu
     elseif s.type == "Generic" then
         return transformGenericRepr(s.data, depth, transformStr)
     elseif s.type == "GenericPack" then
-        return s.data
+        return s.data or error("ICE: transformRepr failed, GenericPack data is nil")
     elseif s.type == "Module" then
         return transformTypeFieldTypeModuleRepr(s.data, transformStr)
     elseif s.type == "UnknownModule" then
@@ -140,7 +140,7 @@ function transformTypeFieldReprWithPat(s: types.TypeField, optdepth: number?, co
         end
     end
 
-    repr ..= string.format("%s: %s", transformTypeFieldKey(s.field_name, transformStr), transformTypeFieldTypeRepr(s.field_type, depth, transformStr))
+    repr ..= string.format("%s: %s", transformTypeFieldKey(s.field_name, transformStr), transformTypeFieldTypeRepr(s.field_type, depth, transformStr) or error("ICE: transformRepr failed, field_type is nil"))
 
     return repr
 end
