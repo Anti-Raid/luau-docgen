@@ -121,11 +121,11 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
     elseif typ.kind == "boolean" then
         return {
             type = "Basic" :: "Basic",
-            data = typ.tok.kind,
+            data = typ.tok.kind :: string,
         }
     elseif typ.kind == "string" then
         return {
-            type = "String",
+            type = "String" :: "String",
             data = typ.tok.text,
         }
     elseif typ.kind == "reference" then
@@ -148,7 +148,7 @@ function from_luau_typeinfo_to_typefieldtype(typ: cst.Type | cst.TypePack): type
             end            
 
             return {
-                type = "Module",
+                type = "Module" :: "Module",
                 data = data,
             }
         elseif typ.generics and #typ.generics.types > 0 then
