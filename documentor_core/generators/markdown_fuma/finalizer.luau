@@ -50,7 +50,7 @@ local function finalize(modname: string, description: string, typedefsBlock: {{m
             nodes = nodes
         } :: markdown.MarkdownNode
 
-        return fmt.MarkdownNode_String(block, true, 0, "Root") -- Convert to markdown
+        return header .. "\n\n" .. fmt.MarkdownNode_String(block, true, 0, "Root") -- Convert to markdown
     else
         local nodes: {markdown.MarkdownNode} = {} :: {markdown.MarkdownNode}
 
