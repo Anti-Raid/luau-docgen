@@ -617,53 +617,25 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         end
 
         -- FUMA-SPECIFIC
-        if data.depth == 0 then
-            -- In fuma, we can use a type table if at top level and not inline
-            local columns: {markdown.FumaTypeTableColumn} = {}
-
-            for _, field in finalFields do 
-                local convertedComments = convertComments.convertCommentsInline(field.comments, true);
-
-                if convertedComments.skip then
-                    continue -- Skip this field if it is marked as skip
-                end
-
-                local column: markdown.FumaTypeTableColumn = {
-                    field = transformRepr.transformTypeFieldKey(field.field_name),
-                    typename = parseTypeFieldTypeInline(data.istate, field.field_type),
-                    description = markdown.NewMarkdownText_FromNodeArray(convertedComments.output) or markdown.NewMarkdownText_FromRaw("No description provided"),
-                    required = field.field_type.type ~= "Optional"
-                }
-                columns[#columns + 1] = column
-            end
-            return {markdown.MarkdownNode_FumaTypeTable(columns)}
-        end
-
-        local parsedFields: {markdown.MarkdownNode} = {}
-
-        if data.depth > 0 then 
-            parsedFields[#parsedFields + 1] = {
-                type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromNodes(
-                    markdown.NewMarkdownTextNode_Italics(
-                        markdown.NewMarkdownTextNode_Unstyled("This is an inline table type with the following fields")
-                    )
-                )
-            } :: markdown.MarkdownNode
-        end
+        -- In fuma, we can use a type table if not inline
+        local columns: {markdown.FumaTypeTableColumn} = {}
 
         for _, field in finalFields do 
-            tableext.extend(parsedFields, parseTypeField(data.istate, field))
-        end
+            local convertedComments = convertComments.convertCommentsInline(field.comments, true);
 
-        local blockNodes: {markdown.MarkdownNode} = {}
-        if #parsedFields > 0 then
-            blockNodes[#blockNodes + 1] = {
-                type = "Block" :: "Block",
-                nodes = parsedFields
+            if convertedComments.skip then
+                continue -- Skip this field if it is marked as skip
+            end
+
+            local column: markdown.FumaTypeTableColumn = {
+                field = transformRepr.transformTypeFieldKey(field.field_name),
+                typename = parseTypeFieldTypeInline(data.istate, field.field_type),
+                description = markdown.NewMarkdownText_FromNodeArray(convertedComments.output) or markdown.NewMarkdownText_FromRaw("No description provided"),
+                required = field.field_type.type ~= "Optional"
             }
+            columns[#columns + 1] = column
         end
-        return blockNodes
+        return {markdown.MarkdownNode_FumaTypeTable(columns)}
     elseif fieldtype.type == "Array" then 
         local nodes: {markdown.MarkdownNode} = parseTypeFieldType({
             istate = data.istate, 
@@ -999,71 +971,33 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         return {} -- Not much else we can say here for a complex generalized typeof 
     elseif fieldtype.type == "TypeOfSetMetatable" then 
         -- FUMA-SPECIFIC
-        if data.depth == 0 then
-            -- In fuma, we can use a type table if at top level and not inline
-            local finalFields: {types.TypeField} = {}
-            for _, field in fieldtype.data.fields do
-                finalFields[#finalFields + 1] = field
-            end
-            for _, field in fieldtype.data.metatable_fields do
-                finalFields[#finalFields + 1] = field
-            end
-
-            local columns: {markdown.FumaTypeTableColumn} = {}
-
-            for _, field in finalFields do 
-                local convertedComments = convertComments.convertCommentsInline(field.comments, true);
-
-                if convertedComments.skip then
-                    continue -- Skip this field if it is marked as skip
-                end
-
-                local column: markdown.FumaTypeTableColumn = {
-                    field = transformRepr.transformTypeFieldKey(field.field_name),
-                    typename = parseTypeFieldTypeInline(data.istate, field.field_type),
-                    description = markdown.NewMarkdownText_FromNodeArray(convertedComments.output) or markdown.NewMarkdownText_FromRaw("No description provided"),
-                    required = field.field_type.type ~= "Optional"
-                }
-                columns[#columns + 1] = column
-            end
-            return {markdown.MarkdownNode_FumaTypeTable(columns)}
+        -- In fuma, we can use a type table if at top level and not inline
+        local finalFields: {types.TypeField} = {}
+        for _, field in fieldtype.data.fields do
+            finalFields[#finalFields + 1] = field
+        end
+        for _, field in fieldtype.data.metatable_fields do
+            finalFields[#finalFields + 1] = field
         end
 
-        local parsedFields: {markdown.MarkdownNode} = {}
-        for _, field in fieldtype.data.fields do 
-            tableext.extend(parsedFields, parseTypeField(data.istate, field))
-        end
+        local columns: {markdown.FumaTypeTableColumn} = {}
 
-        if #fieldtype.data.metatable_fields > 0 then 
-            local metaFields: {markdown.MarkdownNode} = {}
+        for _, field in finalFields do 
+            local convertedComments = convertComments.convertCommentsInline(field.comments, true);
 
-            for _, field in fieldtype.data.metatable_fields do 
-                tableext.extend(metaFields, parseTypeField(data.istate, field))
+            if convertedComments.skip then
+                continue -- Skip this field if it is marked as skip
             end
 
-            if #metaFields > 0 then 
-                parsedFields[#parsedFields + 1] = {
-                    type = "Heading" :: "Heading",
-                    headingText = markdown.NewMarkdownText_FromRaw("Metatable Fields"),
-                    inline = data.inline
-                } :: markdown.MarkdownNode
-
-                parsedFields[#parsedFields + 1] = {
-                    type = "Block" :: "Block",
-                    nodes = metaFields    
-                }
-            end
-        end
-
-        local blockNodes: {markdown.MarkdownNode} = {}
-        if #parsedFields > 0 then
-            blockNodes[#blockNodes + 1] = {
-                type = "Block" :: "Block",
-                nodes = parsedFields
+            local column: markdown.FumaTypeTableColumn = {
+                field = transformRepr.transformTypeFieldKey(field.field_name),
+                typename = parseTypeFieldTypeInline(data.istate, field.field_type),
+                description = markdown.NewMarkdownText_FromNodeArray(convertedComments.output) or markdown.NewMarkdownText_FromRaw("No description provided"),
+                required = field.field_type.type ~= "Optional"
             }
+            columns[#columns + 1] = column
         end
-
-        return blockNodes
+        return {markdown.MarkdownNode_FumaTypeTable(columns)}
     elseif fieldtype.type == "UnknownModule" then
         return {
             {
