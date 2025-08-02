@@ -5,7 +5,7 @@ local markdown = require("./markdown")
 local pp = require("../../../pp")
 
 local function textEscaper(s: string): string
-    local str =  s:gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("%[", "\\["):gsub("%]", "\\]"):gsub("`", "\\`")
+    local str =  s:gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("%[", "\\["):gsub("%]", "\\]"):gsub("`", "\\`"):gsub("\{", "\\{"):gsub("\}", "\\}")
     return str
 end
 
