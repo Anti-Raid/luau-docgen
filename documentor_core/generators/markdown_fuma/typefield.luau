@@ -998,6 +998,37 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
     elseif fieldtype.type == "TypeOf" then 
         return {} -- Not much else we can say here for a complex generalized typeof 
     elseif fieldtype.type == "TypeOfSetMetatable" then 
+        -- FUMA-SPECIFIC
+        if data.depth == 0 then
+            -- In fuma, we can use a type table if at top level and not inline
+            local finalFields: {types.TypeField} = {}
+            for _, field in fieldtype.data.fields do
+                finalFields[#finalFields + 1] = field
+            end
+            for _, field in fieldtype.data.metatable_fields do
+                finalFields[#finalFields + 1] = field
+            end
+
+            local columns: {markdown.FumaTypeTableColumn} = {}
+
+            for _, field in finalFields do 
+                local convertedComments = convertComments.convertCommentsInline(field.comments, true);
+
+                if convertedComments.skip then
+                    continue -- Skip this field if it is marked as skip
+                end
+
+                local column: markdown.FumaTypeTableColumn = {
+                    field = transformRepr.transformTypeFieldKey(field.field_name),
+                    typename = parseTypeFieldTypeInline(data.istate, field.field_type),
+                    description = markdown.NewMarkdownText_FromNodeArray(convertedComments.output) or markdown.NewMarkdownText_FromRaw("No description provided"),
+                    required = field.field_type.type ~= "Optional"
+                }
+                columns[#columns + 1] = column
+            end
+            return {markdown.MarkdownNode_FumaTypeTable(columns)}
+        end
+
         local parsedFields: {markdown.MarkdownNode} = {}
         for _, field in fieldtype.data.fields do 
             tableext.extend(parsedFields, parseTypeField(data.istate, field))
