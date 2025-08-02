@@ -260,7 +260,7 @@ local function MarkdownNode_String(n: markdown.MarkdownNode, strictValidation: b
         end
 
         base ..= "\t}}\n"
-        base ..= ">\n"
+        base ..= "/>\n"
         return base
     else 
         print("Invalid IR: MarkdownNode must have a valid type: " .. pp(n.type) .. " with type " .. pp(n) .. " and label " .. tostring(label) .. "!") 
