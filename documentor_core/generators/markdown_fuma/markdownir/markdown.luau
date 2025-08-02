@@ -19,6 +19,9 @@ export type MarkdownTextNode = {
     text: {MarkdownTextNode},
     url: string,
     style: "Link", -- Special link node (useful for Fuma tables)
+} | {
+    text: string,
+    style: "RawUnescaped", -- Raw text that should not be escaped (inline etc.)
 }
 
 local function NewMarkdownTextNode_BoldArray(nodes: {MarkdownTextNode}): MarkdownTextNode
@@ -74,6 +77,13 @@ local function NewMarkdownTextNode_Raw(node: string): MarkdownTextNode
     return {
         text = node,
         style = "Raw" :: "Raw"
+    }
+end
+
+local function NewMarkdownTextNode_RawUnescaped(node: string): MarkdownTextNode
+    return {
+        text = node,
+        style = "RawUnescaped" :: "RawUnescaped"
     }
 end
 
@@ -202,6 +212,7 @@ return {
     NewMarkdownTextNode_Code = NewMarkdownTextNode_Code,
     NewMarkdownTextNode_Unstyled = NewMarkdownTextNode_Unstyled,
     NewMarkdownTextNode_Raw = NewMarkdownTextNode_Raw,
+    NewMarkdownTextNode_RawUnescaped = NewMarkdownTextNode_RawUnescaped,
     NewMarkdownText_FromUnstyled = NewMarkdownText_FromUnstyled,
     NewMarkdownText_FromNodeArray = NewMarkdownText_FromNodeArray,
     NewMarkdownText_FromNodes = NewMarkdownText_FromNodes,

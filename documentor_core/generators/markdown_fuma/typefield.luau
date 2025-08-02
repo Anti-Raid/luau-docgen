@@ -290,7 +290,7 @@ local function parseFunctionInline(
     parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw(")")
 
     if ret then
-        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw(" -> ")
+        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_RawUnescaped(" -> ")
 
         local retNodes = parseTypeFieldTypeInline(istate, ret)
         tableext.extend(parsedFields, retNodes.nodes)

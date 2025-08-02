@@ -44,11 +44,12 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
         )
         return "`" .. stringified .. "`"    
     elseif n.style == "Unstyled" then 
-        return "" .. n.text:gsub("*", "\\*"):gsub("<", "&lt;"):gsub(">", "&gt;") .. ""
+        return "" .. n.text:gsub("*", "\\*"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("`", "\\`") .. ""
     elseif n.style == "Raw" then return textEscaper(n.text)
+    elseif n.style == "RawUnescaped" then return n.text -- No escaping for raw unescaped text
     elseif n.style == "Link" then
-        local url = n.url:gsub("<", "."):gsub(">", ""):gsub(",", ".")
-        return "[" .. MarkdownTextNodeArray_String(n.text):gsub("<", "&lt;"):gsub(">", "&gt;") .. "](" .. url .. ")"
+        local url = n.url:gsub("<", "."):gsub(">", ""):gsub(",", "."):gsub("`", "\\`")
+        return "[" .. MarkdownTextNodeArray_String(n.text):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("`", "\\`") .. "](" .. url .. ")"
     else return n.node end
 end
 
