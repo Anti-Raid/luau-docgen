@@ -328,7 +328,7 @@ function parseTypeFieldTypeInline(istate: istate.IState, type: types.TypeFieldTy
         local parsedFields: {markdown.MarkdownTextNode} = {}
 
         -- Start with the opening bracket
-        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("\\{")
+        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("{")
 
         for i, field in type.data do 
             tableext.extend(parsedFields, parseTypeFieldInline(istate, field))
@@ -338,7 +338,7 @@ function parseTypeFieldTypeInline(istate: istate.IState, type: types.TypeFieldTy
         end
 
         -- End with the closing bracket
-        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("\\}")
+        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("}")
 
         return markdown.NewMarkdownText_FromNodeArray(parsedFields)
     elseif type.type == "Array" then
@@ -349,11 +349,11 @@ function parseTypeFieldTypeInline(istate: istate.IState, type: types.TypeFieldTy
 
         if #parsedFields > 0 then
             local blockNodes: {markdown.MarkdownTextNode} = {}
-            blockNodes[#blockNodes + 1] = markdown.NewMarkdownTextNode_Raw("\\{")
+            blockNodes[#blockNodes + 1] = markdown.NewMarkdownTextNode_Raw("{")
 
             tableext.extend(blockNodes, parsedFields)
 
-            blockNodes[#blockNodes + 1] = markdown.NewMarkdownTextNode_Raw("\\}")
+            blockNodes[#blockNodes + 1] = markdown.NewMarkdownTextNode_Raw("}")
 
             return markdown.NewMarkdownText_FromNodeArray(blockNodes)
         end
@@ -504,7 +504,7 @@ function parseTypeFieldTypeInline(istate: istate.IState, type: types.TypeFieldTy
         local parsedFields: {markdown.MarkdownTextNode} = {}
 
         -- Start with the opening bracket
-        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("\\{")
+        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("{")
 
         for i, field in fields do 
             tableext.extend(parsedFields, parseTypeFieldInline(istate, field))
@@ -514,7 +514,7 @@ function parseTypeFieldTypeInline(istate: istate.IState, type: types.TypeFieldTy
         end
 
         -- End with the closing bracket
-        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("\\}")
+        parsedFields[#parsedFields + 1] = markdown.NewMarkdownTextNode_Raw("}")
 
         return markdown.NewMarkdownText_FromNodeArray(parsedFields)
     elseif type.type == "UnknownModule" then
@@ -650,7 +650,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             local blockNodes: {markdown.MarkdownNode} = {}
             blockNodes[#blockNodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("\\{"), -- MDX workaround: escape braces
+                text = markdown.NewMarkdownText_FromRaw("{"),
                 inline = true
             } :: markdown.MarkdownNode
 
@@ -658,7 +658,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
 
             blockNodes[#blockNodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("\\}"), -- MDX workaround: escape braces
+                text = markdown.NewMarkdownText_FromRaw("}"),
             } :: markdown.MarkdownNode
 
             return blockNodes
