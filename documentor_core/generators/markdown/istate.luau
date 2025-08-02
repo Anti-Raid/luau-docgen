@@ -1,8 +1,9 @@
 --!strict
 
-local types = require("./types")
+local types = require("../../types")
+local convertcomments = require("./convertcomments")
 
--- Common internal state
+-- An IState stores data for markdown generation related tasks
 export type IState = {
     plugin: Plugin,
     --- Whether to ignore non doc comments
@@ -17,9 +18,7 @@ export type ParseTypeFieldTypeData = {
     --- The type being parsed
     typ: types.TypeFieldType,
     --- Converted comments for the type field itself 
-    ---
-    --- The exact type here depends on the generator being used
-    convertedComments: any,
+    convertedComments: convertcomments.ConvertCommentResponse,
     --- Whether the type field is inline or not
     inline: boolean?,
     --- Current depth of the type relative to the root

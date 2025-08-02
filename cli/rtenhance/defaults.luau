@@ -1,5 +1,5 @@
 --!strict
-local types = require("./base")
+local types = require("../../documentor_core/types")
 local parseContentsToTypeset = require("../../contrib/luaup-parse/parse")
 
 return {

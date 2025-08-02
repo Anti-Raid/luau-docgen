@@ -3,7 +3,7 @@ local types = require("../../types")
 local markdown = require("./markdownir/markdown")
 local finalizer = require("./finalizer")
 local typeDocumentor = require("./type")
-local istatemod = require("../../istate")
+local istatemod = require("./istate")
 
 local function documentTypeSet(istate: istatemod.IState, ast: types.TypeSet, modname: string): string
     istate.plugin.setTypeSet(ast)

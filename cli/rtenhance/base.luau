@@ -1,3 +1,5 @@
+local types = require("../../documentor_core/types")
+
 --- Process op support (needed for accelerated/custom parser runtime support)
 export type ProcOps = {
     --- Run a command and return the output
@@ -19,7 +21,7 @@ export type Globals = {
     read documentor_args: {string},
     
     --- Parse to typeset
-    parsetotypeset: (opts: ParseToTypeSetArgs) -> ParseToTypeSetResponse,
+    parsetotypeset: (opts: types.ParseToTypeSetArgs) -> types.ParseToTypeSetResponse,
 
     runtime: string, -- Runtime being used
     fs_ops: FsOps?, -- filesystem operations

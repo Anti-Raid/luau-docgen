@@ -4,7 +4,7 @@ local markdown = require("./markdownir/markdown")
 local convertComments = require("./convertcomments")
 local tableext = require("../../table")
 local typefieldDocumentor = require("./typefield")
-local istate = require("../../istate")
+local istate = require("./istate")
 local transformrepr = require("../../transformrepr")
 
 local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdown.MarkdownNode} 

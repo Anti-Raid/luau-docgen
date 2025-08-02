@@ -1,5 +1,5 @@
 local argparser = require("./argparser")
-local istatemod = require("../documentor_core/istate")
+local istatemod = require("../documentor_core/generators/markdown/istate")
 local markdownDocumentor = require("../documentor_core/generators/markdown/typeset")
 local typeparser = require("../documentor_core/typeparser")
 local types = require("./rtenhance/base")
@@ -48,8 +48,8 @@ local function cli(globals: types.Globals)
 
         local data = typeparser.parseContents({
             contents = contents,
-            useFullMoon = md.useFullMoon,
-            include_nonexported_types = md.include_nonexported_types,
+            usefullmoon = md.useFullMoon,
+            includenonexportedtypes = md.include_nonexported_types,
             erroronunsupported = md.erroronunsupported,
             json_parse = if globals.proc_ops then globals.proc_ops.json_parse else nil,
             run = if globals.proc_ops then globals.proc_ops.run else nil,
@@ -60,10 +60,10 @@ local function cli(globals: types.Globals)
 
         if md.output == "stdout" then
             print(output)
+        else 
+            globals.fs_ops.fs_writefile(md.output, output)
+            print("Documentation generated successfully at " .. md.output)        
         end
-
-        globals.fs_ops.fs_writefile(md.output, output)
-        print("Documentation generated successfully at " .. md.output)
     end
 end
 

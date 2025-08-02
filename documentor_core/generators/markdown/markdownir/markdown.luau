@@ -20,56 +20,56 @@ export type MarkdownTextNode = {
 local function NewMarkdownTextNode_BoldArray(nodes: {MarkdownTextNode}): MarkdownTextNode
     return {
         node = nodes,
-        style = "Bold"
+        style = "Bold" :: "Bold"
     }
 end
 
 local function NewMarkdownTextNode_Bold(...: MarkdownTextNode): MarkdownTextNode
     return {
         node = {...},
-        style = "Bold"
+        style = "Bold" :: "Bold"
     }
 end
 
 local function NewMarkdownTextNode_ItalicsArray(nodes: {MarkdownTextNode}): MarkdownTextNode
     return {
         node = nodes,
-        style = "Italics"
+        style = "Italics" :: "Italics"
     }
 end
 
 local function NewMarkdownTextNode_Italics(...: MarkdownTextNode): MarkdownTextNode
     return {
         node = {...},
-        style = "Italics"
+        style = "Italics" :: "Italics"
     }
 end
 
 local function NewMarkdownTextNode_CodeArray(nodes: {MarkdownTextNode}): MarkdownTextNode
     return {
         node = nodes,
-        style = "Code"
+        style = "Code" :: "Code"
     }
 end
 
 local function NewMarkdownTextNode_Code(...: MarkdownTextNode): MarkdownTextNode
     return {
         node = {...},
-        style = "Code"
+        style = "Code" :: "Code"
     }
 end
 
 local function NewMarkdownTextNode_Unstyled(node: string): MarkdownTextNode
     return {
         text = node,
-        style = "Unstyled"
+        style = "Unstyled" :: "Unstyled"
     }
 end
 
 local function NewMarkdownTextNode_Raw(node: string): MarkdownTextNode
     return {
         text = node,
-        style = "Raw",
+        style = "Raw" :: "Raw"
     }
 end
 

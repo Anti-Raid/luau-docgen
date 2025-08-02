@@ -5,7 +5,7 @@ local markdown = require("./markdownir/markdown")
 local convertComments = require("./convertcomments")
 local tableext = require("../../table")
 local parseAnonymousArgData = require("../../parseanonymousargdata").parseAnonymousArgData
-local istate = require("../../istate")
+local istate = require("./istate")
 local transformRepr = require("../../transformrepr")
 
 --- Helper method to process a function
