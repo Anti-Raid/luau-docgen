@@ -73,3 +73,7 @@ b[#b + 1] = {
   d = "n"
 }
 end
+
+export type NetworkRequest = 
+        { type: "GET", url: string } |
+        { type: "POST", url: string, body: any }

@@ -165,7 +165,8 @@ export type MarkdownNode = {
 }
 
 export type FumaTypeTableColumn = {
-    typename: string, -- The name of the type
+    field: string, -- The name of the field
+    typename: MarkdownText, -- The type of the field
     description: MarkdownText, -- The description of the type
     required: boolean, -- Whether the 
 }

@@ -622,14 +622,21 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             local columns: {markdown.FumaTypeTableColumn} = {}
 
             for _, field in finalFields do 
-                local description = parseTypeFieldTypeInline(data.istate, field.field_type)
+                local convertedComments = convertComments.convertCommentsInline(field.comments, true);
+
+                if convertedComments.skip then
+                    continue -- Skip this field if it is marked as skip
+                end
+
                 local column: markdown.FumaTypeTableColumn = {
-                    typename = transformRepr.transformTypeFieldKey(field.field_name),
-                    description = description,
+                    field = transformRepr.transformTypeFieldKey(field.field_name),
+                    typename = parseTypeFieldTypeInline(data.istate, field.field_type),
+                    description = markdown.NewMarkdownText_FromNodeArray(convertedComments.output) or markdown.NewMarkdownText_FromRaw("No description provided"),
                     required = field.field_type.type ~= "Optional"
                 }
                 columns[#columns + 1] = column
             end
+            return {markdown.MarkdownNode_FumaTypeTable(columns)}
         end
 
         local parsedFields: {markdown.MarkdownNode} = {}
