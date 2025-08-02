@@ -23,14 +23,6 @@ fn main() {
         if args[0].starts_with("file://") {
             let path = &args[0][7..];
             std::fs::read_to_string(path).expect("Failed to read file")
-        } else if args[0] == "-" {
-            // Read from stdin
-            let mut input = String::new();
-            std::io::stdin()
-                .read_to_string(&mut input)
-                .expect("Failed to read from stdin");
-
-            input
         } else {
             args[0].clone()
         }

@@ -143,6 +143,12 @@ local function parseArguments(args: {string}): ParsedArgumentResult
             output.files[#output.files + 1] = arg.name
         elseif argmap[arg.name] then
             argmap[arg.name].fn(output, arg.values, arg.arg_type)
+        else
+            local validArgs = {}
+            for k in argmap do
+                validArgs[#validArgs + 1] = k
+            end
+            error("Unknown argument: " .. arg.name .. ", choose from: " .. table.concat(validArgs, ", "))
         end
     end
 

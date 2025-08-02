@@ -41,10 +41,7 @@ local function cli(globals: types.Globals)
 
     --- Document the typeset
     for _, file in md.files do
-        local contents = globals.fs_ops.fs_readfile(file)
-        if not contents then
-            error("Failed to read file: " .. file)
-        end
+        local contents = if md.useFullMoon then `file://{file}` else globals.fs_ops.fs_readfile(file)
 
         local data = typeparser.parseContents({
             contents = contents,
@@ -53,6 +50,7 @@ local function cli(globals: types.Globals)
             erroronunsupported = md.erroronunsupported,
             json_parse = if globals.proc_ops then globals.proc_ops.json_parse else nil,
             run = if globals.proc_ops then globals.proc_ops.run else nil,
+            file_exists = if globals.fs_ops then globals.fs_ops.fs_fileexists else nil,
         })
 
         local ast = data.typeset

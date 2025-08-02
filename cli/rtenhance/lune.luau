@@ -23,10 +23,8 @@ local fsOps: types.FsOps = {
 }
 
 local procOps: types.ProcOps = {
-    run = function(command: string, args: {string}, stdin: string?): string
-        local result = process.exec(command, args, {
-            stdin = stdin
-        })
+    run = function(command: string, args: {string}): string
+        local result = process.exec(command, args)
         if not result.ok then
             error("Failed to run " .. command .. "\n" .. result.stdout .. "\n" .. result.stderr)
         end
