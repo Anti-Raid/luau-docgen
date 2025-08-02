@@ -145,7 +145,7 @@ function transformTypeFieldReprWithPat(s: types.TypeField, optdepth: number?, co
     return repr
 end
 
-function transformTypeFieldKey(s: types.TypeFieldKey, opttransformStr: ((typ: string, string) -> string)?)
+function transformTypeFieldKey(s: types.TypeFieldKey, opttransformStr: ((typ: string, string) -> string)?): string
     local transformStr = opttransformStr or function(_: string, c: string) return c end
     if s.type == "Name" then
         return s.name

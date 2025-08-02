@@ -246,6 +246,20 @@ local function MarkdownNode_String(n: markdown.MarkdownNode, strictValidation: b
         end
     
         return output    
+    elseif n.type == "FumaTypeTable" then
+        assert(not inline, "Inline FumaTypeTable is not supported")
+        local columns = n :: {markdown.FumaTypeTableColumn}
+
+        local base = "<TypeTable\n\ttype={{\n"
+        for i, column in columns do 
+            base ..= string.rep("\t", 2) .. column.typename .. ": {\n"
+            base ..= string.rep("\t", 3) .. "description: \"" .. MarkdownText_String(column.description):gsub("\"", "'") .. "\",\n"
+            base ..= string.rep("\t", 3) .. "required: " .. tostring(column.required) .. "\n"
+            base ..= string.rep("\t", 2) .. "},\n"
+        end
+
+        base ..= "\t}}\n"
+        return base
     else 
         print("Invalid IR: MarkdownNode must have a valid type: " .. pp(n.type) .. " with type " .. pp(n) .. " and label " .. tostring(label) .. "!") 
         error("Invalid IR: MarkdownNode must have a valid type. See above for more details")

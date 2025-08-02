@@ -615,7 +615,23 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         for _, field in fields do 
             finalFields[#finalFields + 1] = field
         end
-        
+
+        -- FUMA-SPECIFIC
+        if data.depth == 0 then
+            -- In fuma, we can use a type table if at top level and not inline
+            local columns: {markdown.FumaTypeTableColumn} = {}
+
+            for _, field in finalFields do 
+                local description = parseTypeFieldTypeInline(data.istate, field.field_type)
+                local column: markdown.FumaTypeTableColumn = {
+                    typename = transformRepr.transformTypeFieldKey(field.field_name),
+                    description = description,
+                    required = field.field_type.type ~= "Optional"
+                }
+                columns[#columns + 1] = column
+            end
+        end
+
         local parsedFields: {markdown.MarkdownNode} = {}
 
         if data.depth > 0 then 

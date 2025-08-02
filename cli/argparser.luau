@@ -39,6 +39,8 @@ export type ParsedArgumentResult = {
     optionsSet: ParsedArgs,
     --- Whether or not to use full-moon (if the Rust extension process has been compiled and is available)
     useFullMoon: boolean,
+    --- Set a different generator
+    generator: string?, -- If set, this will override the default generator
     -- Whether or not to show help
     help: boolean,
 }
@@ -109,6 +111,14 @@ local argmap: ArgMap = {
         end,
         opts = "",
         description = "Show help",
+    },
+    generator = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            assert(values[1] == "markdown" or values[1] == "markdown_fuma", "Invalid generator: " .. values[1])
+            output.generator = values[1]
+        end,
+        opts = "<markdown|markdown_fuma>",
+        description = "Use a different generator",
     },
     ["use-full-moon"] = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 

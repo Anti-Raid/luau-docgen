@@ -46,6 +46,6 @@ Basically, if your project:
 
 then luau-docgen might be a good fit for you.
 
-## Plugins
+## Generators
 
-*WIP feature*
+luau-docgen uses generators to generate its documentation. The default generator is the `markdown` generator, which generates markdown documentation for a generic markdown provider like mdbook. To specialize, simply copy paste the ``markdown`` generator and modify it to your needs. The generators are located in the ``documentor_core/generators`` directory.

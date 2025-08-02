@@ -1,6 +1,4 @@
 local argparser = require("./argparser")
-local istatemod = require("../documentor_core/generators/markdown/istate")
-local markdownDocumentor = require("../documentor_core/generators/markdown/typeset")
 local typeparser = require("./typeparser")
 local types = require("./rtenhance/base")
 
@@ -27,41 +25,86 @@ local function cli(globals: types.Globals)
         return
     end
 
-    -- Create istate
-    local istate: istatemod.IState = {
-        ignorenondoc = md.ignorenondoc,
-        plugin = istatemod.DefaultPlugin, 
-    }
+    if not md.generator or md.generator == "markdown" then
+        -- Create istate
+        local istatemod = require("../documentor_core/generators/markdown/istate")
+        local markdownDocumentor = require("../documentor_core/generators/markdown/typeset")
+        local istate: istatemod.IState = {
+            ignorenondoc = md.ignorenondoc,
+            plugin = istatemod.DefaultPlugin, 
+        }
 
-    -- Load all plugins
-    istate.plugin = istatemod.loadAllPlugins(istate, md.plugins)
-  
-    -- Initialize the plugin system
-    istate.plugin.onInitialize(istate) 
+        -- Load all plugins
+        istate.plugin = istatemod.loadAllPlugins(istate, md.plugins)
+    
+        -- Initialize the plugin system
+        istate.plugin.onInitialize(istate) 
 
-    --- Document the typeset
-    for _, file in md.files do
-        local contents = if md.useFullMoon then `file://{file}` else globals.fs_ops.fs_readfile(file)
+        --- Document the typeset
+        for _, file in md.files do
+            local contents = if md.useFullMoon then `file://{file}` else globals.fs_ops.fs_readfile(file)
 
-        local data = typeparser.parseContents({
-            contents = contents,
-            usefullmoon = md.useFullMoon,
-            includenonexportedtypes = md.include_nonexported_types,
-            erroronunsupported = md.erroronunsupported,
-            json_parse = if globals.proc_ops then globals.proc_ops.json_parse else nil,
-            run = if globals.proc_ops then globals.proc_ops.run else nil,
-            file_exists = if globals.fs_ops then globals.fs_ops.fs_fileexists else nil,
-        })
+            local data = typeparser.parseContents({
+                contents = contents,
+                usefullmoon = md.useFullMoon,
+                includenonexportedtypes = md.include_nonexported_types,
+                erroronunsupported = md.erroronunsupported,
+                json_parse = if globals.proc_ops then globals.proc_ops.json_parse else nil,
+                run = if globals.proc_ops then globals.proc_ops.run else nil,
+                file_exists = if globals.fs_ops then globals.fs_ops.fs_fileexists else nil,
+            })
 
-        local ast = data.typeset
-        local output = markdownDocumentor.documentTypeSet(istate, ast, md.modname)
+            local ast = data.typeset
+            local output = markdownDocumentor.documentTypeSet(istate, ast, md.modname)
 
-        if md.output == "stdout" then
-            print(output)
-        else 
-            globals.fs_ops.fs_writefile(md.output, output)
-            print("Documentation generated successfully at " .. md.output)        
+            if md.output == "stdout" then
+                print(output)
+            else 
+                globals.fs_ops.fs_writefile(md.output, output)
+                print("Documentation generated successfully at " .. md.output)        
+            end
         end
+    elseif md.generator == "markdown_fuma" then
+        -- Create istate
+        local istatemod = require("../documentor_core/generators/markdown_fuma/istate")
+        local markdownDocumentor = require("../documentor_core/generators/markdown_fuma/typeset")
+        local istate: istatemod.IState = {
+            ignorenondoc = md.ignorenondoc,
+            plugin = istatemod.DefaultPlugin, 
+        }
+
+        -- Load all plugins
+        istate.plugin = istatemod.loadAllPlugins(istate, md.plugins)
+    
+        -- Initialize the plugin system
+        istate.plugin.onInitialize(istate) 
+
+        --- Document the typeset
+        for _, file in md.files do
+            local contents = if md.useFullMoon then `file://{file}` else globals.fs_ops.fs_readfile(file)
+
+            local data = typeparser.parseContents({
+                contents = contents,
+                usefullmoon = md.useFullMoon,
+                includenonexportedtypes = md.include_nonexported_types,
+                erroronunsupported = md.erroronunsupported,
+                json_parse = if globals.proc_ops then globals.proc_ops.json_parse else nil,
+                run = if globals.proc_ops then globals.proc_ops.run else nil,
+                file_exists = if globals.fs_ops then globals.fs_ops.fs_fileexists else nil,
+            })
+
+            local ast = data.typeset
+            local output = markdownDocumentor.documentTypeSet(istate, ast, md.modname)
+
+            if md.output == "stdout" then
+                print(output)
+            else 
+                globals.fs_ops.fs_writefile(md.output, output)
+                print("Documentation generated successfully at " .. md.output)        
+            end
+        end
+    else 
+        error("Invalid generator: " .. md.generator .. ". Supported generators are: markdown, markdown_fuma")
     end
 end
 

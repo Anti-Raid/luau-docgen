@@ -18,7 +18,7 @@ export type MarkdownTextNode = {
 } | {
     text: {MarkdownTextNode},
     url: string,
-    style: "Link", -- Special link node
+    style: "Link", -- Special link node (useful for Fuma tables)
 }
 
 local function NewMarkdownTextNode_BoldArray(nodes: {MarkdownTextNode}): MarkdownTextNode
@@ -159,6 +159,15 @@ export type MarkdownNode = {
 } | {
     type: "List",
     entries: {MarkdownText}
+} | {
+    type: "FumaTypeTable",
+    columns: {FumaTypeTableColumn}, -- The columns of the table
+}
+
+export type FumaTypeTableColumn = {
+    typename: string, -- The name of the type
+    description: MarkdownText, -- The description of the type
+    required: boolean, -- Whether the 
 }
 
 local function MarkdownNode_CreateSnippet(
@@ -169,6 +178,15 @@ local function MarkdownNode_CreateSnippet(
         type = "Snippet",
         detailsText = detailsText,
         node = node
+    }
+end
+
+local function MarkdownNode_FumaTypeTable(
+    columns: {FumaTypeTableColumn}
+): MarkdownNode
+    return {
+        type = "FumaTypeTable",
+        columns = columns,
     }
 end
 
@@ -189,4 +207,5 @@ return {
     NewMarkdownText_FromRaw = NewMarkdownText_FromRaw,
     MarkdownNode_CreateSnippet = MarkdownNode_CreateSnippet,
     NewMarkdownTextNode_Link = NewMarkdownTextNode_Link,
+    MarkdownNode_FumaTypeTable = MarkdownNode_FumaTypeTable,
 }
