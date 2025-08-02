@@ -1,11 +1,11 @@
 --!strict
-local types = require("../types")
-local markdown = require("../markdownir/markdown")
-local finalizer = require("../finalizer/defaultfinalizer")
-local typeDocumentor = require("../documentors/type")
-local istatemod = require("../istate")
+local types = require("../../types")
+local markdown = require("./markdownir/markdown")
+local finalizer = require("./finalizer")
+local typeDocumentor = require("./type")
+local istatemod = require("../../istate")
 
-local function documentTypeSet(istate: istatemod.IState, ast: types.TypeSet)
+local function documentTypeSet(istate: istatemod.IState, ast: types.TypeSet, modname: string): string
     istate.plugin.setTypeSet(ast)
 
     local typedefs: {types.Type} = {}
@@ -41,7 +41,7 @@ local function documentTypeSet(istate: istatemod.IState, ast: types.TypeSet)
         functionsBlock[#functionsBlock + 1] = td -- Add to functionsBlock
     end
 
-    return finalizer.finalize(istate, typedefsBlock, functionsBlock)
+    return finalizer.finalize(modname, typedefsBlock, functionsBlock)
 end
 
 return {

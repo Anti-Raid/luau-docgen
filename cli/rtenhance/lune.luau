@@ -2,7 +2,7 @@
 local fs = require"@lune/fs"
 local process = require"@lune/process"
 local serde = require"@lune/serde"
-local types = require"../types"
+local types = require"./base"
 local defaults = require"./defaults"
 
 local fsOps: types.FsOps = {
@@ -23,8 +23,10 @@ local fsOps: types.FsOps = {
 }
 
 local procOps: types.ProcOps = {
-    run = function(command: string, args: {string}): string
-        local result = process.exec(command, args)
+    run = function(command: string, args: {string}, stdin: string?): string
+        local result = process.exec(command, args, {
+            stdin = stdin
+        })
         if not result.ok then
             error("Failed to run " .. command .. "\n" .. result.stdout .. "\n" .. result.stderr)
         end

@@ -1,14 +1,14 @@
 --!strict
-local types = require("../types")
-local markdown = require("../markdownir/markdown")
-local convertComments = require("../convertcomments")
-local tableext = require("../table")
+local types = require("../../types")
+local markdown = require("./markdownir/markdown")
+local convertComments = require("./convertcomments")
+local tableext = require("../../table")
 local typefieldDocumentor = require("./typefield")
-local istate = require("../istate")
-local transformrepr = require("../transformrepr")
+local istate = require("../../istate")
+local transformrepr = require("../../transformrepr")
 
 local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdown.MarkdownNode} 
-    local convComments = convertComments.convertComments(istate.globals, typ.type_comments, istate.md.ignorenondoc)
+    local convComments = convertComments.convertComments(typ.type_comments, istate.ignorenondoc)
 
     if convComments.skip then
         return {} -- Ignore explicitly skipped types
@@ -31,7 +31,7 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
 
     -- Add code block of the type
     blockNodes[#blockNodes + 1] = markdown.MarkdownNode_CreateSnippet("Raw Type", {
-        type = "CodeBlock", 
+        type = "CodeBlock" :: "CodeBlock", 
         language = "luau",
         text = transformrepr.transformTypeDefRepr(typ, ",\n\n\t", ", ")
     })
@@ -50,7 +50,7 @@ local function parseTypeDef(istate: istate.IState, typ: types.TypeDef): {markdow
 end 
 
 local function parseTypeFunction(istate: istate.IState, typ: types.TypeFunction): {markdown.MarkdownNode} 
-    local convComments = convertComments.convertComments(istate.globals, typ.type_comments, istate.md.ignorenondoc)
+    local convComments = convertComments.convertComments(typ.type_comments, istate.ignorenondoc)
 
     if convComments.skip then
         return {} -- Ignore explicitly skipped types

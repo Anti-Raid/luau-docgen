@@ -1,6 +1,21 @@
 --!strict
-local types = require("./types")
 local argparserimpl = require("./argparserimpl")
+
+--- Contains a single parsed argument from globals.parsedocumentorargs
+export type ParsedArg = {
+    --- The name of the argument
+    name: string,
+    --- The values passed to the argument
+    values: {string},
+    --- Whether the argument is short (-a) or long (--abc) or a value (abc)
+    arg_type: "Short" | "Long" | "Value",
+}
+
+--- Contains a parsed list of arguments from globals.parsedocumentorargs
+export type ParsedArgs = {
+    --- List of arguments (in order of appearance)
+    args: {ParsedArg},
+}
 
 export type ParsedArgumentResult = {
     --- Name of module being documented
@@ -21,7 +36,7 @@ export type ParsedArgumentResult = {
     output: string,
     -- Options set by the user
     -- This is a table of the parsed arguments
-    optionsSet: types.ParsedArgs,
+    optionsSet: ParsedArgs,
     --- Whether or not to use full-moon (if the Rust extension process has been compiled and is available)
     useFullMoon: boolean,
     -- Whether or not to show help
@@ -105,8 +120,8 @@ local argmap: ArgMap = {
 }
 
 -- Parses arguments from globals.documentor_args into a set of parsed arguments 
-local function parseArguments(globals: types.Globals): ParsedArgumentResult
-    local parsedArgs = argparserimpl.parsedocumentorargs(globals.documentor_args)
+local function parseArguments(args: {string}): ParsedArgumentResult
+    local parsedArgs = argparserimpl.parsedocumentorargs(args)
 
     local output: ParsedArgumentResult = {
         modname = "",

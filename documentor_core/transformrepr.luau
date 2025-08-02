@@ -272,46 +272,6 @@ function transformTypeDefRepr(s: types.TypeDef, fields_join_pat: string, generic
 end
 
 function transformTypeFunction(s: types.TypeFunction, args_join_pat: string, generics_join_pat: string, opttransformStr: ((typ: string, string) -> string)?): string
-    --[[
-        let mut repr = String::new();
-        for comment in self.type_comments.iter() {
-            writeln!(repr, "--{}", comment).expect("Failed to write comment to string");
-        }
-
-        write!(repr, "function {}", self.name).expect("Failed to write function to string");
-
-        // Add generics
-        if !self.generics.is_empty() {
-            write!(repr, "<").expect("Failed to write generics to string");
-
-            let generic_params = self
-                .generics
-                .iter()
-                .map(|arg| arg.string_repr(false, true))
-                .collect::<Vec<_>>()
-                .join(generics_join_pat);
-
-            write!(repr, "{}", generic_params).expect("Failed to write generics to string");
-            repr.push('>');
-        }
-
-        let func_args = self
-            .args
-            .iter()
-            .map(|arg| arg.string_repr(false, false))
-            .collect::<Vec<_>>()
-            .join(args_join_pat);
-
-        write!(repr, "({})", func_args).expect("Failed to write arguments to string");
-
-        if let Some(ref ret) = self.ret {
-            write!(repr, " -> {}", ret.string_repr(1))
-                .expect("Failed to write return type to string");
-        }
-        repr.push_str(" end");
-        repr
-    ]]
-
     local transformStr = (opttransformStr or function(_: string, c: string) return c end) :: (typ: string, string) -> string
     local repr = ""
 

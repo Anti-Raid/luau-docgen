@@ -1,9 +1,8 @@
 --!strict
 
-local types = require("../types")
-local tableext = require("../table")
+local tableext = require("../../../table")
 local markdown = require("./markdown")
-local pp = require("../pp")
+local pp = require("../../../pp")
 
 local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
     if n.style == "Italics" then 
@@ -45,7 +44,8 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
     else return n.node end
 end
 
-function MarkdownText_String(globals: types.Globals, t: markdown.MarkdownText): string 
+function MarkdownText_String(t: markdown.MarkdownText): string 
+    print(pp(t))
     assert(t.nodes, "Invalid IR: MarkdownText must have nodes: [" .. pp(t) .. "]")
     return table.concat(
         tableext.arraymap(
@@ -61,7 +61,7 @@ end
 --- Converts a markdown node to a string using mdbook-compatible formatting
 ---
 --- For other markdown variants, it may be desirable to make a custom markdown formatter
-local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownNode, strictValidation: boolean?, depth: number?, label: string?, inline: boolean?): string
+local function MarkdownNode_String(n: markdown.MarkdownNode, strictValidation: boolean?, depth: number?, label: string?, inline: boolean?): string
     local nodeDepth = depth or 0
     --print(n.type) --pp(n))
     --print("Processing " .. n.type .. " with depth " .. tostring(nodeDepth) .. " and label " .. tostring(label) .. " and fragment " .. pp(n))
@@ -76,7 +76,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
         end
 
         assert(n.headingText, "Headings must have a headingText")
-        local text = MarkdownText_String(globals, n.headingText)
+        local text = MarkdownText_String(n.headingText)
 
         if inline then 
             error("Inline headings are not supported yet")
@@ -102,7 +102,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             error("Inline snippets are not supported yet")
         end
 
-        return "<details>\n<summary>" .. detailsText .. "</summary>\n\n" .. MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Snippet@" .. tostring(nodeDepth), inline) .. "</details>\n\n"
+        return "<details>\n<summary>" .. detailsText .. "</summary>\n\n" .. MarkdownNode_String(node, strictValidation, nodeDepth+1, tostring(label) .. "/Snippet@" .. tostring(nodeDepth), inline) .. "</details>\n\n"
     elseif n.type == "Block" then 
         local nodes = n.nodes
         assert(nodes, "Invalid IR: Block node must have nodes")
@@ -117,7 +117,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
                 nodes, 
                 function(node: markdown.MarkdownNode): string
                     --print("Processing block node " .. pp(node) .. " with label " .. tostring(label))
-                    return MarkdownNode_String(globals, node, strictValidation, nodeDepth+1, tostring(label) .. "/Block@" .. tostring(nodeDepth), inline)
+                    return MarkdownNode_String(node, strictValidation, nodeDepth+1, tostring(label) .. "/Block@" .. tostring(nodeDepth), inline)
                 end,
                 sep
             )
@@ -136,7 +136,7 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
                 nodes, 
                 function(node: markdown.MarkdownNode): string
                     --print("Processing inline block node " .. pp(node) .. " with label " .. tostring(label))
-                    return MarkdownNode_String(globals, node, strictValidation, nodeDepth, tostring(label) .. "/InlineBlock", n.inline)
+                    return MarkdownNode_String(node, strictValidation, nodeDepth, tostring(label) .. "/InlineBlock", n.inline)
                 end,
                 sep
             )
@@ -149,23 +149,23 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
             error("Inline warnings are not supported yet")
         end
 
-        return "<div class=\"warning\">\n" .. MarkdownText_String(globals, text) .. "\n</div>\n\n"
+        return "<div class=\"warning\">\n" .. MarkdownText_String(text) .. "\n</div>\n\n"
     elseif n.type == "Text" then
         local text = n.text :: markdown.MarkdownText
         assert(text, "Invalid IR: Text node must have text")
 
         if inline or n.inline then 
-            return MarkdownText_String(globals, text)
+            return MarkdownText_String(text)
         end
 
-        return MarkdownText_String(globals, text) .. "\n\n"
+        return MarkdownText_String(text) .. "\n\n"
     elseif n.type == "Link" then
         local url = n.url
         local text = n.text :: markdown.MarkdownText
         assert(url, "Invalid IR: Link node must have a URL")
         assert(text, "Invalid IR: Link node must have text")
 
-        local link = "[" .. MarkdownText_String(globals, text):gsub("<", "&lt;"):gsub(">", "&gt;") .. "](" .. url:gsub("<", "."):gsub(">", ""):gsub(",", ".") .. ")"
+        local link = "[" .. MarkdownText_String(text):gsub("<", "&lt;"):gsub(">", "&gt;") .. "](" .. url:gsub("<", "."):gsub(">", ""):gsub(",", ".") .. ")"
         if inline or n.inline then 
             return link
         end
@@ -183,9 +183,9 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
         local output = ""
         for i, item in entries do
             if i == #entries then
-                output ..= "- " .. MarkdownText_String(globals, item) .. "\n\n"
+                output ..= "- " .. MarkdownText_String(item) .. "\n\n"
             else
-                output ..= "- " .. MarkdownText_String(globals, item) .. "\n"
+                output ..= "- " .. MarkdownText_String(item) .. "\n"
             end
         end
     
@@ -202,13 +202,13 @@ local function MarkdownNode_String(globals: types.Globals, n: markdown.MarkdownN
         end
 
         local function parseCell(cell: markdown.MarkdownText): string
-            return MarkdownText_String(globals, cell):gsub("\n", "<br>") :: string
+            return MarkdownText_String(cell):gsub("\n", "<br>") :: string
         end
     
         local output = "|"
     
         for _, header in ipairs(headers) do
-            output ..= MarkdownText_String(globals, header) .. "|"
+            output ..= MarkdownText_String(header) .. "|"
         end
     
         output ..= "\n|"

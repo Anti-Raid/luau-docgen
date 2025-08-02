@@ -1,4 +1,4 @@
---!strict
+-- TODO
 
 local types = require("../types")
 

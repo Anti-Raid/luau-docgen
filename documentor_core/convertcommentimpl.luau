@@ -23,11 +23,11 @@ local InnerComment = {}
 InnerComment.__index = InnerComment
 
 function InnerComment.Normal(data): InnerComment
-    return { comment_type = "Normal", data = data }
+    return { comment_type = "Normal" :: "Normal", data = data }
 end
 
 function InnerComment.Special(typ, data): InnerComment
-    return { comment_type = "Special", typ = typ, data = data }
+    return { comment_type = "Special" :: "Special", typ = typ, data = data }
 end
 
 -- Contains a parsed list of comments

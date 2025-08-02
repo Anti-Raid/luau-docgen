@@ -1,17 +1,16 @@
 --!strict
 
-local pp = require("../pp")
-local markdown = require("../markdownir/markdown")
-local fmt = require("../markdownir/markdownformatter")
-local istate = require("../istate")
+local markdown = require("./markdownir/markdown")
+local fmt = require("./markdownir/markdownformatter")
 
-local function finalize(istate: istate.IState, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
+--- Given the typedefs block, the functions block
+local function finalize(modname: string, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
     -- Finally, combine the two
-    if istate.md.modname ~= "" then
+    if modname ~= "" then
         local nodes: {markdown.MarkdownNode} = {
             {
                 type = "Heading" :: "Heading",
-                headingText = markdown.NewMarkdownText_FromRaw(istate.md.modname)
+                headingText = markdown.NewMarkdownText_FromRaw(modname)
             }, 
         } :: {markdown.MarkdownNode}
 
@@ -49,10 +48,7 @@ local function finalize(istate: istate.IState, typedefsBlock: {{markdown.Markdow
             nodes = nodes
         } :: markdown.MarkdownNode
 
-        if istate.md.debugmode then
-            print(pp(block))
-        end
-        return fmt.MarkdownNode_String(istate.globals, block, true, 0, "Root") -- Convert to markdown
+        return fmt.MarkdownNode_String(block, true, 0, "Root") -- Convert to markdown
     else
         local nodes: {markdown.MarkdownNode} = {} :: {markdown.MarkdownNode}
 
@@ -89,10 +85,7 @@ local function finalize(istate: istate.IState, typedefsBlock: {{markdown.Markdow
             nodes = nodes
         } :: markdown.MarkdownNode
 
-        if istate.md.debugmode then
-            print(pp(block))
-        end
-        return fmt.MarkdownNode_String(istate.globals, block, true, 0, "Root") -- Convert to markdown
+        return fmt.MarkdownNode_String(block, true, 0, "Root") -- Convert to markdown
     end
 end
 

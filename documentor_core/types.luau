@@ -23,22 +23,6 @@ export type Comment = {
     comments: {InnerComment},
 }
 
---- Contains a single parsed argument from globals.parsedocumentorargs
-export type ParsedArg = {
-    --- The name of the argument
-    name: string,
-    --- The values passed to the argument
-    values: {string},
-    --- Whether the argument is short (-a) or long (--abc) or a value (abc)
-    arg_type: "Short" | "Long" | "Value",
-}
-
---- Contains a parsed list of arguments from globals.parsedocumentorargs
-export type ParsedArgs = {
-    --- List of arguments (in order of appearance)
-    args: {ParsedArg},
-}
-
 export type ParseToTypeSetArgs = {
     -- The contents of the Luau file to parse
     contents: string,

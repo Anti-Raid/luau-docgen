@@ -1,6 +1,6 @@
 --!strict
 
-local types = require("../types")
+local types = require("./base")
 local defaults = require("./defaults")
 
 local function getrt(): types.Globals

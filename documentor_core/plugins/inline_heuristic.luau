@@ -3,7 +3,7 @@
 
 local MAX_VARIANTS_FOR_INLING = 5
 
-local istate = require("../documentor_core/istate")
+local istate = require("../../istate")
 
 local inliner: istate.OptionalPlugin = {
     plugin_header = istate.PLUGIN_HEADER,

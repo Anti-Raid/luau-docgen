@@ -1,5 +1,5 @@
 --!strict
-local types = require("../types")
+local types = require("./base")
 local parseContentsToTypeset = require("../../contrib/luaup-parse/parse")
 
 return {

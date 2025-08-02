@@ -1,6 +1,5 @@
 --!strict
-local types = require("./types")
-local convertcommentimpl = require("./convertcommentimpl")
+local convertcommentimpl = require("../../convertcommentimpl")
 local markdown = require("./markdownir/markdown")
 
 export type ConvertCommentResponse = {
@@ -98,10 +97,11 @@ local specialcommentmap = {
     end,
 }
 
+-- Aliases
 specialcommentmap["return"] = specialcommentmap.returns
 
 --- Converts comments to markdown (with other metadata attached to it)
-local function convertComments(globals: types.Globals, typecomments: {string}, ignorenondoc: boolean?): ConvertCommentResponse 
+local function convertComments(typecomments: {string}, ignorenondoc: boolean?): ConvertCommentResponse 
     local comments = convertcommentimpl.parsecomments(typecomments, ignorenondoc)
 
     local output: ConvertCommentResponse = {

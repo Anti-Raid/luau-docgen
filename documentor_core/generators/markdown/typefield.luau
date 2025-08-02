@@ -1,12 +1,12 @@
 --!strict
 
-local types = require("../types")
-local markdown = require("../markdownir/markdown")
-local convertComments = require("../convertcomments")
-local tableext = require("../table")
-local arg = require("./arg") 
-local istate = require("../istate")
-local transformRepr = require("../transformrepr")
+local types = require("../../types")
+local markdown = require("./markdownir/markdown")
+local convertComments = require("./convertcomments")
+local tableext = require("../../table")
+local parseAnonymousArgData = require("../../parseanonymousargdata").parseAnonymousArgData
+local istate = require("../../istate")
+local transformRepr = require("../../transformrepr")
 
 --- Helper method to process a function
 local function parseFunction(
@@ -22,7 +22,7 @@ local function parseFunction(
     -- Code block of the function as a string
     if originRepr then
         blockNodes[#blockNodes + 1] = markdown.MarkdownNode_CreateSnippet("Function Signature", {
-            type = "CodeBlock",
+            type = "CodeBlock" :: "CodeBlock",
             language = "luau",
             text = originRepr,
         })
@@ -140,7 +140,7 @@ local function parseFunction(
             local baseNodes: {markdown.MarkdownNode} = {}
             for i, retdata in ret.data do 
                 -- Returns have special constraints
-                local retName, retComment = arg.parseAnonymousArgData(`ret{i}`, convertedComments.returns, i)
+                local retName, retComment = parseAnonymousArgData(`ret{i}`, convertedComments.returns, i)
 
                 baseNodes[#baseNodes + 1] = {
                     type = "Heading" :: "Heading",
@@ -177,7 +177,7 @@ local function parseFunction(
             end 
         else 
             -- Returns have special constraints
-            local retName, retComment = arg.parseAnonymousArgData(`ret1`, convertedComments.returns, 1)
+            local retName, retComment = parseAnonymousArgData(`ret1`, convertedComments.returns, 1)
 
             local baseNodes: {markdown.MarkdownNode} = {
                 {
@@ -239,9 +239,11 @@ local function parseFunctionInline(
         } :: any
         for i, generic in generics do 
             local genericNodes: {markdown.MarkdownNode} = {
-                type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw(generic.name or "generic1"),
-                inline = true    
+                {
+                    type = "Text" :: "Text",
+                    text = markdown.NewMarkdownText_FromRaw(generic.name or "generic1"),
+                    inline = true   
+                } :: markdown.MarkdownNode
             }
 
             if generic.typ then 
@@ -705,7 +707,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
 
         for i, pnode in pnodes do 
             if #pnode > 0 then
-                local variantName, variantComment = arg.parseAnonymousArgData(`Value {i}`, data.convertedComments.variantDocs, i)
+                local variantName, variantComment = parseAnonymousArgData(`Value {i}`, data.convertedComments.variantDocs, i)
                 
                 if variantComment ~= "" then 
                     pnode = {
@@ -813,7 +815,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
 
         for i, pnode in pnodes do 
             if #pnode > 0 then
-                local variantName, variantComment = arg.parseAnonymousArgData(`Variant {i}`, data.convertedComments.variantDocs, i)
+                local variantName, variantComment = parseAnonymousArgData(`Variant {i}`, data.convertedComments.variantDocs, i)
                 
                 if variantComment ~= "" then 
                     pnode = {
@@ -912,7 +914,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
         return irNodes        
     elseif fieldtype.type == "Intersection" then
         if data.inline then 
-            -- Special code for inline unions separated by |
+            -- Special code for inline unions separated by &
             local parsedFields: {markdown.MarkdownNode} = {}
 
             if #fieldtype.data > 0 then 
@@ -987,7 +989,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
 
         for i, pnode in pnodes do 
             if #pnode > 0 then
-                local variantName, variantComment = arg.parseAnonymousArgData(`Variant {i}`, data.convertedComments.variantDocs, i)
+                local variantName, variantComment = parseAnonymousArgData(`Variant {i}`, data.convertedComments.variantDocs, i)
                 
                 if variantComment ~= "" then 
                     pnode = {
@@ -1190,8 +1192,7 @@ end
 
 --- Parses a TypeField (foo: number or foo: () -> number etc.)
 function parseTypeField(istate: istate.IState, typ: types.TypeField, inline: boolean?, depth: number?): {markdown.MarkdownNode}    
-    --print(pp(convertComments(globals, typ.comments)))
-    local convertedComments = convertComments.convertComments(istate.globals, typ.comments, istate.md.ignorenondoc);
+    local convertedComments = convertComments.convertComments(typ.comments, istate.ignorenondoc);
 
     local blockNodes: {markdown.MarkdownNode} = {}
     if convertedComments.skip then

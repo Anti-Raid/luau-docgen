@@ -1,14 +1,12 @@
 --!strict
 
 local types = require("./types")
-local convertComments = require("./convertcomments")
-local argparser = require("./argparser")
 
 -- Common internal state
 export type IState = {
-    globals: types.Globals,
-    md: argparser.ParsedArgumentResult,
-    plugin: Plugin
+    plugin: Plugin,
+    --- Whether to ignore non doc comments
+    ignorenondoc: boolean,
 }
 
 --- Data passed to typefieldtype
@@ -19,7 +17,9 @@ export type ParseTypeFieldTypeData = {
     --- The type being parsed
     typ: types.TypeFieldType,
     --- Converted comments for the type field itself 
-    convertedComments: convertComments.ConvertCommentResponse,
+    ---
+    --- The exact type here depends on the generator being used
+    convertedComments: any,
     --- Whether the type field is inline or not
     inline: boolean?,
     --- Current depth of the type relative to the root

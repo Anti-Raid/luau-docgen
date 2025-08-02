@@ -53,7 +53,7 @@ end
 
 -- Upsert an argument into the list of arguments
 function ParsedArgs:upsert(arg: ParsedArg)
-    for _, pot_arg in ipairs(self.args :: {string}) do
+    for _, pot_arg in (self.args :: {ParsedArg}) do
         if pot_arg.name == arg.name then
             for _, v in ipairs(arg.values) do
                 table.insert(pot_arg.values, v)
