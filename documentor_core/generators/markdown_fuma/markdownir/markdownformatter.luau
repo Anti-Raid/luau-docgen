@@ -252,7 +252,7 @@ local function MarkdownNode_String(n: markdown.MarkdownNode, strictValidation: b
 
         local base = "<TypeTable\n\ttype={{\n"
         for i, column in columns do 
-            base ..= string.rep("\t", 2) .. column.field .. ": {\n"
+            base ..= string.rep("\t", 2) .. `"{column.field:gsub("\"", "\'")}"` .. ": {\n"
             base ..= string.rep("\t", 3) .. "type: \"" .. MarkdownText_String(column.typename):gsub("\"", "'") .. "\",\n"
             base ..= string.rep("\t", 3) .. "description: \"" .. MarkdownText_String(column.description):gsub("\"", "'") .. "\",\n"
             base ..= string.rep("\t", 3) .. "required: " .. tostring(column.required) .. "\n"
