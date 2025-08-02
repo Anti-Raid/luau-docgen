@@ -20,6 +20,10 @@ export type ParsedArgs = {
 export type ParsedArgumentResult = {
     --- Name of module being documented
     modname: string,
+    --- Description of the module being documented
+    ---
+    --- Mainly useful for markdown_fuma
+    description: string,
     --- Files to document
     files: {string},
     --- What plugin file (if any) to load
@@ -60,6 +64,13 @@ local argmap: ArgMap = {
         end,
         opts = "<module name>",
         description = "Sets the name of the module being documented",
+    },
+    description = {
+        fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
+            output.description = table.concat(values, "|")
+        end,
+        opts = "<description>",
+        description = "Sets the description of the module being documented. This is mainly useful for markdown_fuma.",
     },
     ignorenondoc = {
         fn = function(output: ParsedArgumentResult, values: {string}, argtype: string) 
@@ -135,6 +146,7 @@ local function parseArguments(args: {string}): ParsedArgumentResult
 
     local output: ParsedArgumentResult = {
         modname = "",
+        description = "",
         files = {},
         plugins = {},
         ignorenondoc = false,

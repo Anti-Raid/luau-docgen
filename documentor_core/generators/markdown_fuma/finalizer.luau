@@ -4,7 +4,9 @@ local markdown = require("./markdownir/markdown")
 local fmt = require("./markdownir/markdownformatter")
 
 --- Given the typedefs block, the functions block
-local function finalize(modname: string, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
+local function finalize(modname: string, description: string, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
+    local header = `---\ntitle: "{modname and #modname > 0 or "Untitled"}"\ndescription: "{description and #description > 0 or "No description"}"\n---`
+    
     -- Finally, combine the two
     if modname ~= "" then
         local nodes: {markdown.MarkdownNode} = {
@@ -85,7 +87,7 @@ local function finalize(modname: string, typedefsBlock: {{markdown.MarkdownNode}
             nodes = nodes
         } :: markdown.MarkdownNode
 
-        return fmt.MarkdownNode_String(block, true, 0, "Root") -- Convert to markdown
+        return header .. "\n\n" .. fmt.MarkdownNode_String(block, true, 0, "Root") -- Convert to markdown
     end
 end
 

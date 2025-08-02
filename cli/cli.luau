@@ -94,7 +94,7 @@ local function cli(globals: types.Globals)
             })
 
             local ast = data.typeset
-            local output = markdownDocumentor.documentTypeSet(istate, ast, md.modname)
+            local output = markdownDocumentor.documentTypeSet(istate, ast, md.modname, md.description)
 
             if md.output == "stdout" then
                 print(output)
