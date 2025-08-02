@@ -1,6 +1,6 @@
 --!strict
 
-local types = require("./types")
+local types = require("../documentor_core/types")
 
 export type ParseContentsArg = {
     --- The file contents to parse

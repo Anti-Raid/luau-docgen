@@ -1,7 +1,7 @@
 local argparser = require("./argparser")
 local istatemod = require("../documentor_core/generators/markdown/istate")
 local markdownDocumentor = require("../documentor_core/generators/markdown/typeset")
-local typeparser = require("../documentor_core/typeparser")
+local typeparser = require("./typeparser")
 local types = require("./rtenhance/base")
 
 local function cli(globals: types.Globals) 
