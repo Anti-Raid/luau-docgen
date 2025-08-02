@@ -27,6 +27,7 @@ local function parseContents(parseOpts: ParseContentsArg): types.ParseToTypeSetR
     -- Parse the file  
     local resultTab: types.ParseToTypeSetResponse
     if parseOpts.usefullmoon then 
+        assert(string.sub(parseOpts.contents, 1, 8) == "file:///", "Full-moon requires the contents to be a file:// path")
         if not parseOpts.json_parse then 
             error("Process spawn operations not available. Cannot use full-moon extension.")
         end
@@ -49,6 +50,7 @@ local function parseContents(parseOpts: ParseContentsArg): types.ParseToTypeSetR
             error("Failed to parse contents with full-moon extension. No valid executable found.")
         end
     else     
+        assert(string.sub(parseOpts.contents, 1, 8) ~= "file:///", "Non-full-moon requires the contents to be raw Luau code")
         local parseContentsToTypeset = require("../contrib/luaup-parse/parse")             
         resultTab = parseContentsToTypeset(parseOpts.contents, parseOpts.includenonexportedtypes)    
     end
