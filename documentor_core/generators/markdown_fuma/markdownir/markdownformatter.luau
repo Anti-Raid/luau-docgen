@@ -4,6 +4,11 @@ local tableext = require("../../../table")
 local markdown = require("./markdown")
 local pp = require("../../../pp")
 
+local function textEscaper(s: string): string
+    local str =  s:gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("%[", "\\["):gsub("%]", "\\]"):gsub("`", "\\`")
+    return str
+end
+
 local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
     if n.style == "Italics" then 
         local stringified = table.concat(
@@ -40,7 +45,7 @@ local function MarkdownTextNode_String(n: markdown.MarkdownTextNode): string
         return "`" .. stringified .. "`"    
     elseif n.style == "Unstyled" then 
         return "" .. n.text:gsub("*", "\\*"):gsub("<", "&lt;"):gsub(">", "&gt;") .. ""
-    elseif n.style == "Raw" then return n.text
+    elseif n.style == "Raw" then return textEscaper(n.text)
     elseif n.style == "Link" then
         local url = n.url:gsub("<", "."):gsub(">", ""):gsub(",", ".")
         return "[" .. MarkdownTextNodeArray_String(n.text):gsub("<", "&lt;"):gsub(">", "&gt;") .. "](" .. url .. ")"
