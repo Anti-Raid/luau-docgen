@@ -678,7 +678,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
             local blockNodes: {markdown.MarkdownNode} = {}
             blockNodes[#blockNodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("{"),
+                text = markdown.NewMarkdownText_FromRaw("\{"), -- MDX workaround: escape braces
                 inline = true
             } :: markdown.MarkdownNode
 
@@ -686,7 +686,7 @@ function parseTypeFieldType(data: istate.ParseTypeFieldTypeData): {markdown.Mark
 
             blockNodes[#blockNodes + 1] = {
                 type = "Text" :: "Text",
-                text = markdown.NewMarkdownText_FromRaw("}"),
+                text = markdown.NewMarkdownText_FromRaw("\}"), -- MDX workaround: escape braces
             } :: markdown.MarkdownNode
 
             return blockNodes
