@@ -5,7 +5,9 @@ local fmt = require("./markdownir/markdownformatter")
 
 --- Given the typedefs block, the functions block
 local function finalize(modname: string, description: string, typedefsBlock: {{markdown.MarkdownNode}}, functionsBlock: {{markdown.MarkdownNode}}): string
-    local header = `---\ntitle: "{modname and #modname > 0 or "Untitled"}"\ndescription: "{description and #description > 0 or "No description"}"\n---`
+    local modname_h = if modname and #modname > 0 then modname else "Untitled"
+    local description_h = if description and #description > 0 then description else "No description"
+    local header = `---\ntitle: "{modname_h}"\ndescription: "{description_h}"\n---`
     
     -- Finally, combine the two
     if modname ~= "" then
