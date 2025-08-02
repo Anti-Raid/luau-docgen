@@ -96,7 +96,7 @@ local function MarkdownNode_String(n: markdown.MarkdownNode, strictValidation: b
             error("Inline headings are not supported yet")
         end
 
-        return "<div id=\"" .. text:gsub(" ", "") .. "\"></div>\n\n" .. string.rep("#", depthToUse) .. " " .. text .. "\n\n"
+        return "<div id=\"" .. text:gsub(" ", ""):gsub("%[", "t"):gsub("%]", "") .. "\"></div>\n\n" .. string.rep("#", depthToUse) .. " " .. text:gsub("%[", "t"):gsub("%]", "") .. "\n\n"
     elseif n.type == "CodeBlock" then 
         local language = n.language
         local text = n.text :: string
